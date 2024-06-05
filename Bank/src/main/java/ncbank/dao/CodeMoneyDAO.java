@@ -1,0 +1,22 @@
+package ncbank.dao;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import ncbank.beans.CodeMoneyBean;
+import ncbank.mapper.CodeMoneyMapper;
+
+@Repository
+public class CodeMoneyDAO {
+
+	@Autowired
+	private CodeMoneyMapper codeMoneyMapper;
+	
+	public List<CodeMoneyBean> getCodeMoneyList() {
+		List<CodeMoneyBean> codeMoneyList = codeMoneyMapper.getCodeMoneyList();
+		return codeMoneyList;
+	}
+ 	
+}

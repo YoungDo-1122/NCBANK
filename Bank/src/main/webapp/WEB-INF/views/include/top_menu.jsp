@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <c:set var="root" value="${pageContext.request.contextPath}"/>
+
+<link rel="stylesheet"
+   href="${pageContext.request.contextPath}/css/teststyle_top.css">
+<link rel="stylesheet"
+   href="${pageContext.request.contextPath}/css/teststyle_main.css">
+
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top shadow-lg">
     <a class="navbar-brand" href="${root}/main">

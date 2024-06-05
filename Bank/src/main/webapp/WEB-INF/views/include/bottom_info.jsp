@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<link rel="stylesheet"
+   href="${pageContext.request.contextPath}/css/teststyle_bottom.css">
+
 <footer>
       <!-- <div class="bottom_bar" style="width: 100% !important;"></div> -->    
       
