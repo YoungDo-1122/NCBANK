@@ -6,14 +6,14 @@ import ncbank.beans.UserBean;
 
 public interface UserMapper {
 
-	// jsp¿¡¼­ ? ·Î ¼³Á¤ÇÑ µÚ °ªÀ» Ã¤¿ò -> MyBatis ¿¡¼­ #{} À¸·Î ¹Ù·Î °ª ¼³Á¤
+	// jspì—ì„œ ? ë¡œ ì„¤ì •í•œ ë’¤ ê°’ì„ ì±„ì›€ -> MyBatis ì—ì„œ #{} ìœ¼ë¡œ ë°”ë¡œ ê°’ ì„¤ì •
 	@Select("SELECT COUNT(*) FROM login where id = #{id}")
 	public int checkUserIdExist(String id);
 
-//	// È¸¿ø °¡ÀÔ (ÀúÀå)
-//	@Insert("insert into user_table (user_idx, user_name, user_id, user_pw) " +
-//			"values (user_seq.nextval, #{user_name}, #{user_id}, #{user_pw})")
-//	public void addUserInfo(UserBean joinuserBean);
+//   // íšŒì› ê°€ì… (ì €ì¥)
+//   @Insert("insert into user_table (user_idx, user_name, user_id, user_pw) " +
+//         "values (user_seq.nextval, #{user_name}, #{user_id}, #{user_pw})")
+//   public void addUserInfo(UserBean joinuserBean);
 
 	@Select("SELECT COUNT(*) FROM login")
 	public int userCount();
@@ -25,13 +25,9 @@ public interface UserMapper {
 	@Insert("insert into login (user_num, id, pwd) values (#{user_num},#{id},#{pwd})")
 	public void addLogin(UserBean bean);
 
-	// ·Î±×ÀÎ ½Ã È¸¿ø°¡ÀÔ Á¤º¸ È®ÀÎ
-	@Select("SELECT m.user_num, m.name " +
-	        "FROM member m " +
-	        "JOIN login l ON m.user_num = l.user_num " +
-	        "WHERE l.id = #{id} AND l.pwd = #{pwd}")
+	// ë¡œê·¸ì¸ ì‹œ íšŒì›ê°€ì… ì •ë³´ í™•ì¸
+	@Select("SELECT m.user_num, m.name " + "FROM member m " + "JOIN login l ON m.user_num = l.user_num "
+			+ "WHERE l.id = #{id} AND l.pwd = #{pwd}")
 	UserBean getLoginUserInfo(UserBean tempLoginUserBean);
-	
-	
 
 }

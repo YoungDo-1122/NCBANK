@@ -63,11 +63,8 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Value("${db.password}")
 	private String db_password;
 
-	
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
-
-	/* ========== ========== */
 
 	// CSS, JavaScript, 사진, 영상, 소리, 정적 페이지 등 정적 컨텐츠 파일의 경로 설정
 	@Override

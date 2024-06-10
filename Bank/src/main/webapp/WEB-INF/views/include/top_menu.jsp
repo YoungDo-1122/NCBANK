@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}/" />
 
 <style>
 .nav-item.dropdown .nav-link {
@@ -15,7 +16,6 @@
 .nav-item.dropdown:hover .dropdown-menu { display: none; }
 </style>
 
-<c:set var="root" value="${pageContext.request.contextPath}/" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/teststyle_main.css">
 
@@ -35,11 +35,11 @@
 				class="nav-link dropdown-toggle" href="#" id="navbardrop">조회 및
 					이체</a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${root}/account/accountCreate">계좌
-						생성</a> <a class="dropdown-item" href="${root}/account/accountCheck">계좌
-						조회</a> <a class="dropdown-item" href="${root}/account/transferCheck">이체
-						내역 조회</a> <a class="dropdown-item" href="${root}/account/transfer">이체</a>
-					<a class="dropdown-item" href="${root}/account/transferAuto">자동
+					<a class="dropdown-item" href="${root}account/accountCreate">계좌
+						생성</a> <a class="dropdown-item" href="${root}account/accountCheck">계좌
+						조회</a> <a class="dropdown-item" href="${root}account/transferCheck">이체
+						내역 조회</a> <a class="dropdown-item" href="${root}account/transfer">이체</a>
+					<a class="dropdown-item" href="${root}account/transferAuto">자동
 						이체 등록</a> <a class="dropdown-item"
 						href="${root}/account/transferAutoFix">자동 이체 수정</a>
 				</div></li>
@@ -47,27 +47,27 @@
 				class="nav-link dropdown-toggle" href="#" id="navbardrop"> 모임통장
 			</a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${root}/groupAccount/about">모임통장이란</a>
-					<a class="dropdown-item" href="${root}/groupAccount/create">모임통장
-						개설</a> <a class="dropdown-item" href="${root}/groupAccount/invite">모임원
+					<a class="dropdown-item" href="${root}groupAccount/about">모임통장이란</a>
+					<a class="dropdown-item" href="${root}groupAccount/create">모임통장
+						개설</a> <a class="dropdown-item" href="${root}groupAccount/invite">모임원
 						초대하기</a> <a class="dropdown-item"
-						href="${root}/groupAccount/management">모임통장 관리</a>
+						href="${root}groupAccount/management">모임통장 관리</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbardrop"> 환전 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${root}/groupAccount/about">환전1</a>
-					<a class="dropdown-item" href="${root}/groupAccount/create">환전2</a>
-					<a class="dropdown-item" href="${root}/groupAccount/invite">환전3</a>
-					<a class="dropdown-item" href="${root}/groupAccount/management">환전4</a>
+					<a class="dropdown-item" href="${root}groupAccount/about">환전1</a> <a
+						class="dropdown-item" href="${root}groupAccount/create">환전2</a> <a
+						class="dropdown-item" href="${root}groupAccount/invite">환전3</a> <a
+						class="dropdown-item" href="${root}groupAccount/management">환전4</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbardrop"> 게시판 </a>
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="${root}/groupAccount/about">게시판1</a>
-					<a class="dropdown-item" href="${root}/groupAccount/create">게시판2</a>
-					<a class="dropdown-item" href="${root}/groupAccount/invite">게시판3</a>
-					<a class="dropdown-item" href="${root}/groupAccount/management">게시판4</a>
+					<a class="dropdown-item" href="${root}groupAccount/about">게시판1</a>
+					<a class="dropdown-item" href="${root}groupAccount/create">게시판2</a>
+					<a class="dropdown-item" href="${root}groupAccount/invite">게시판3</a>
+					<a class="dropdown-item" href="${root}groupAccount/management">게시판4</a>
 				</div></li>
 		</ul>
 		<ul class="navbar-nav ml-auto">

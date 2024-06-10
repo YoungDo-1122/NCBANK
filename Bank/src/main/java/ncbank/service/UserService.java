@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
 
-// ¼­ºñ½º¸¦ ¹Ş´Â´Ù - µ¥ÀÌÅÍ¸¦ °¡Á®¿Í¼­ °¡°øÀÛ¾÷À» ÇÑ´Ù.
+// ì„œë¹„ìŠ¤ë¥¼ ë°›ëŠ”ë‹¤ - ë°ì´í„°ë¥¼ ê°€ì ¸ì™€ì„œ ê°€ê³µì‘ì—…ì„ í•œë‹¤.
 @Service
 public class UserService {
 
@@ -39,12 +39,12 @@ public class UserService {
 	public void getLoginUserInfo(UserBean tempLoginUserBean) {
 
 		UserBean tempLoginUserBean2 = userDaO.getLoginUserInfo(tempLoginUserBean);
-		// °¡Á®¿Â µ¥ÀÌÅÍ°¡ ÀÖ´Ù¸é
+		// ê°€ì ¸ì˜¨ ë°ì´í„°ê°€ ìˆë‹¤ë©´
 		if (tempLoginUserBean2 != null) {
 			loginUserBean.setId(tempLoginUserBean2.getId());
 			loginUserBean.setName(tempLoginUserBean2.getName());
-			loginUserBean.setUserLogin(true); // ·Î±×ÀÎ »óÅÂ
+			loginUserBean.setUserLogin(true); // ë¡œê·¸ì¸ ìƒíƒœ
 		}
-	
+
 	}
 }

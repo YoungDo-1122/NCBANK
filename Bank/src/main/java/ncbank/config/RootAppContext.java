@@ -6,14 +6,14 @@ import org.springframework.web.context.annotation.SessionScope;
 
 import ncbank.beans.UserBean;
 
-//ÇÁ·ÎÁ§Æ® ÀÛ¾÷½Ã »ç¿ëÇÒ ÀÏ¹İ Beanµé Á¤ÀÇÇÏ´Â Å¬·¡½º
-@Configuration 
+// í”„ë¡œì íŠ¸ ì‘ì—…ì‹œ ì‚¬ìš©í•  ì¼ë°˜ Beanë“¤ ì •ì˜í•˜ëŠ” í´ë˜ìŠ¤
+@Configuration
 public class RootAppContext {
-	
+
 	@Bean("loginUserBean")
 	@SessionScope
 	public UserBean loginUserBean() {
 		return new UserBean();
 	}
-	
+
 }

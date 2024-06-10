@@ -13,10 +13,10 @@ public class CodeMoneyDAO {
 
 	@Autowired
 	private CodeMoneyMapper codeMoneyMapper;
-	
+
 	public List<CodeMoneyBean> getCodeMoneyList() {
 		List<CodeMoneyBean> codeMoneyList = codeMoneyMapper.getCodeMoneyList();
 		return codeMoneyList;
 	}
- 	
+
 }

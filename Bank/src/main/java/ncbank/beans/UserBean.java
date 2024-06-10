@@ -21,22 +21,22 @@ public class UserBean {
 	private int user_num = 0;
 
 	@Size(min = 2, max = 4)
-	@Pattern(regexp = "[°¡-ÆR]*") // ¤¡¿¡¼­ ºÎÅÍ ³¡±îÁö ÀĞÀ½
+	@Pattern(regexp = "[ê°€-í£]*") // ã„±ì—ì„œ ë¶€í„° ëê¹Œì§€ ì½ìŒ
 	private String name;
 	private String address;
-	@Pattern(regexp = "^0\\d{1,2}(-|\\))\\d{3,4}-\\d{4}$") // ÀüÈ­¹øÈ£ Çü½Ä
+	@Pattern(regexp = "^0\\d{1,2}(-|\\))\\d{3,4}-\\d{4}$") // ì „í™”ë²ˆí˜¸ í˜•ì‹
 	private String phone;
-	@Pattern(regexp = "\\d{6}\\-[1-4]\\d{6}") // ÁÖ¹Îµî·Ï¹øÈ£ Çü½Ä
-	private String resident; // ÁÖ¹Î¹øÈ£
-	private String email; // ÀÌ¸ŞÀÏ
+	@Pattern(regexp = "\\d{6}\\-[1-4]\\d{6}") // ì£¼ë¯¼ë“±ë¡ë²ˆí˜¸ í˜•ì‹
+	private String resident; // ì£¼ë¯¼ë²ˆí˜¸
+	private String email; // ì´ë©”ì¼
 	/* /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i */
 	private String join_date;
 	@Size(min = 4, max = 20)
-	@Pattern(regexp = "[a-zA-Z0-9]*") // ¿µ¾î ¶Ç´Â ¼ıÀÚ¸¸ ÀÔ·Â ÀÚÁÖ ¾²ÀÌ´Â Á¤±Ô½Ä(Regular Expression)
+	@Pattern(regexp = "[a-zA-Z0-9]*") // ì˜ì–´ ë˜ëŠ” ìˆ«ìë§Œ ì…ë ¥ ìì£¼ ì“°ì´ëŠ” ì •ê·œì‹(Regular Expression)
 	private String id;
 	@Size(min = 4, max = 20)
 	@Pattern(regexp = "[a-zA-Z0-9]*")
-	/* /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$ ¿µ¹® ¼ıÀÚ Æ¯¼ö±âÈ£ Á¶ÇÕ 8ÀÚ¸® ÀÌ»ó */
+	/* /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$ ì˜ë¬¸ ìˆ«ì íŠ¹ìˆ˜ê¸°í˜¸ ì¡°í•© 8ìë¦¬ ì´ìƒ */
 	private String pwd;
 	@Size(min = 4, max = 20)
 	@Pattern(regexp = "[a-zA-Z0-9]*")
@@ -46,7 +46,7 @@ public class UserBean {
 
 	private boolean userLogin;
 
-	// ÃÊ±â°ª ·Î±×ÀÎÀÌ ¾ÈµÇ¾î ÀÖ´Â »óÅÂ
+	// ì´ˆê¸°ê°’ ë¡œê·¸ì¸ì´ ì•ˆë˜ì–´ ìˆëŠ” ìƒíƒœ
 	public UserBean() {
 		this.userLogin = false;
 	}
