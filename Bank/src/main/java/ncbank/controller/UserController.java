@@ -30,11 +30,11 @@ public class UserController {
 
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
-  
+
 	@GetMapping("/login")
 	public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
 			@RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
-		model.addAttribute("fail", fail); 
+		model.addAttribute("fail", fail);
 		return "user/login";
 	}
 
@@ -86,9 +86,6 @@ public class UserController {
 
 			return "user/join";
 		}
-
-
-		userService.addUserInfo(joinUserBean);
 		userService.addUserInfo(mBean);
 
 		// 혹은 바로 login으로 넘어가도 무방

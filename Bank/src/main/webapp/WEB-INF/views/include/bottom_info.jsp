@@ -15,7 +15,7 @@
 			currencyImage.alt = `${selectedValue} 이미지`;
 		});
 	});
-</script>S
+</script>
 <footer>
 	<!-- <div class="bottom_bar" style="width: 100% !important;"></div> -->
 
@@ -51,10 +51,8 @@
 			</dl>
 			<div class="sns">
 				<a href="www.youtube.com"><img src="img/youtube5050.png"
-					alt="youtube"></a> 
-					<a href="www.instagram.com"><img
-					src="img/instagram5050.png" alt="instagram"></a> 
-					<a
+					alt="youtube"></a> <a href="www.instagram.com"><img
+					src="img/instagram5050.png" alt="instagram"></a> <a
 					href="www.facebook.com"><img src="img/facebook5050.png"
 					alt="facebook"></a>
 			</div>

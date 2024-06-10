@@ -7,26 +7,25 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ncbank.service.UserService;
 
-// Å©·Ñ¸µÀ» ÇØ¼­ ¾ò¾î¿Â µ¥ÀÌÅÍ¸¦ Service¿¡°Ô Àü´Ş
-// Rest : ºñµ¿±â½Ä - Å©·Ñ¸µ ÇØ¼­ °¡Á®¿Â µ¥ÀÌÅÍ¸¦ ÀÌ·±½ÄÀ¸·Î »ç¿ë
-// µ¥ÀÌÅÍ¸¦ ¹Ù·Î È­¸é¿¡ »Ñ·Á¾ßÇÑ´Ù -> Rest ·Î »ç¿ëÇØ¾ß ÇÔ
+// í¬ë¡¤ë§ì„ í•´ì„œ ì–»ì–´ì˜¨ ë°ì´í„°ë¥¼ Serviceì—ê²Œ ì „ë‹¬
+// Rest : ë¹„ë™ê¸°ì‹ - í¬ë¡¤ë§ í•´ì„œ ê°€ì ¸ì˜¨ ë°ì´í„°ë¥¼ ì´ëŸ°ì‹ìœ¼ë¡œ ì‚¬ìš©
+// ë°ì´í„°ë¥¼ ë°”ë¡œ í™”ë©´ì— ë¿Œë ¤ì•¼í•œë‹¤ -> Rest ë¡œ ì‚¬ìš©í•´ì•¼ í•¨
 @RestController
 public class RestApiController {
-	
+
 	@Autowired
 	private UserService userService = null;
-	
-	// ÇØ´ç °æ·Î·Î °¡¼­ µ¥ÀÌÅÍ¸¦ °¡Á®¿Í¶ó.
-	@GetMapping("/user/checkUserIdExist/{id}") // "/user/checkUserIdExist/?{user_id}" ¿Í °°À½
+
+	// í•´ë‹¹ ê²½ë¡œë¡œ ê°€ì„œ ë°ì´í„°ë¥¼ ê°€ì ¸ì™€ë¼.
+	@GetMapping("/user/checkUserIdExist/{id}") // "/user/checkUserIdExist/?{user_id}" ì™€ ê°™ìŒ
 	public String checkUserIdExist(@PathVariable String id) {
-		// @PathVariable : ÁÖ¼Ò¿¡ Á÷Á¢ µ¥ÀÌÅÍ ºÙÀÌ±â
-		
+		// @PathVariable : ì£¼ì†Œì— ì§ì ‘ ë°ì´í„° ë¶™ì´ê¸°
+
 		boolean check = userService.checkUserExist(id);
-		
+
 		// return check + "";
-		// valueOf() : String ¹İÈ¯ ±Ùµ¥ null ÀÌ¸é "null" ¹®ÀÚ¿­·Î Ã³¸®
-		return String.valueOf(check); // Servlet ¿¡¼­ jsp·Î °¡°Ô ¼³Á¤ÇØ³õÀ½
+		// valueOf() : String ë°˜í™˜ ê·¼ë° null ì´ë©´ "null" ë¬¸ìì—´ë¡œ ì²˜ë¦¬
+		return String.valueOf(check); // Servlet ì—ì„œ jspë¡œ ê°€ê²Œ ì„¤ì •í•´ë†“ìŒ
 	}
-	
-	
+
 }

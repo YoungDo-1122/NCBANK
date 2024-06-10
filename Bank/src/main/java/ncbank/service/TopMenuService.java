@@ -8,16 +8,15 @@ import org.springframework.stereotype.Service;
 import ncbank.beans.BoardInfoBean;
 import ncbank.dao.TopMenuDAO;
 
-
 @Service
 public class TopMenuService {
-	
+
 	@Autowired
 	private TopMenuDAO topMenuDAO;
-	
+
 	public List<BoardInfoBean> getTopMenuList() {
 		List<BoardInfoBean> topMenuList = topMenuDAO.getTopMenuList();
-		return topMenuList; // selelctÀÇ °á°ú°ªÀÌ ³Ñ¾î¿È
+		return topMenuList; // selelctì˜ ê²°ê³¼ê°’ì´ ë„˜ì–´ì˜´
 	}
 
 }

@@ -11,36 +11,36 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
-/* WebApplicationInitializer : Java ¿¡¼­ Web À¸·Î ºüÁ® ³ª°¡°Ú´Ù. */
-// ¼­ÇÃ¸´À» ¼­¹ö¿¡ ¿Ã¸°´Ù.
+/* WebApplicationInitializer : Java ì—ì„œ Web ìœ¼ë¡œ ë¹ ì ¸ ë‚˜ê°€ê² ë‹¤. */
+// ì„œí”Œë¦¿ì„ ì„œë²„ì— ì˜¬ë¦°ë‹¤.
 public class SpringConfigClass implements WebApplicationInitializer {
 
-	/* °¡Àå ¸ÕÀú ºÒ¸®´Â ÇÔ¼ö - (ServletContext : ¼­¹ö¿¡ ÁøÀÔÇÏ´Â ¸Å°³º¯¼ö) */
+	/* ê°€ì¥ ë¨¼ì € ë¶ˆë¦¬ëŠ” í•¨ìˆ˜ - (ServletContext : ì„œë²„ì— ì§„ì…í•˜ëŠ” ë§¤ê°œë³€ìˆ˜) */
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
-		// ÇÁ·¹ÀÓ¿öÅ© È¯°æ¼³Á¤À» À§ÇÑ ¼­¹ö Å¬·¡½º °´Ã¼ (À¥ÀÌ¶û ¿¬°áÀ» ´ã´ç)
+		// í”„ë ˆì„ì›Œí¬ í™˜ê²½ì„¤ì •ì„ ìœ„í•œ ì„œë²„ í´ë˜ìŠ¤ ê°ì²´ (ì›¹ì´ë‘ ì—°ê²°ì„ ë‹´ë‹¹)
 		AnnotationConfigWebApplicationContext servletAppContext = new AnnotationConfigWebApplicationContext();
-		// È¯°æ¼³Á¤ Å¬·¡½ºÀÇ ±¸ÇöºÎ°¡ ¼­¹ö¿¡(¼­¹ö ÀúÀå¼Ò ·¹Áö½ºÅÍ¿¡) ·ÎµåµÇ´Â °´Ã¼ (servletAppContext)
+		// í™˜ê²½ì„¤ì • í´ë˜ìŠ¤ì˜ êµ¬í˜„ë¶€ê°€ ì„œë²„ì—(ì„œë²„ ì €ì¥ì†Œ ë ˆì§€ìŠ¤í„°ì—) ë¡œë“œë˜ëŠ” ê°ì²´ (servletAppContext)
 		servletAppContext.register(ServletAppContext.class);
 
-		// ¿äÃ» ¹ß»ı½Ã (¸®Äù½ºÆ® ¹ß»ı½Ã) ¿äÃ»À» Ã³¸®ÇÏ´Â ¼­ÇÃ¸´À» DispatcherServlet À¸·Î ¼³Á¤
+		// ìš”ì²­ ë°œìƒì‹œ (ë¦¬í€˜ìŠ¤íŠ¸ ë°œìƒì‹œ) ìš”ì²­ì„ ì²˜ë¦¬í•˜ëŠ” ì„œí”Œë¦¿ì„ DispatcherServlet ìœ¼ë¡œ ì„¤ì •
 		DispatcherServlet dispatcherServlet = new DispatcherServlet(servletAppContext);
 		ServletRegistration.Dynamic servlet = servletContext.addServlet("dispatcher", dispatcherServlet);
 
-		// ºÎ°¡ ¼³Á¤
-		servlet.setLoadOnStartup(1); // °¡Àå ¸ÕÀú ÀÌ °´Ã¼¸¦ ¾÷·Îµå
-		servlet.addMapping("/"); // ·çÆ®·Î ÀÌµ¿ÇØ¼­ ½ÃÀÛ
+		// ë¶€ê°€ ì„¤ì •
+		servlet.setLoadOnStartup(1); // ê°€ì¥ ë¨¼ì € ì´ ê°ì²´ë¥¼ ì—…ë¡œë“œ
+		servlet.addMapping("/"); // ë£¨íŠ¸ë¡œ ì´ë™í•´ì„œ ì‹œì‘
 
 		/* ========== ========== */
-		// ¼­¹ö ¸Ş¸ğ¸® È®º¸
+		// ì„œë²„ ë©”ëª¨ë¦¬ í™•ë³´
 		AnnotationConfigWebApplicationContext rootAppContext = new AnnotationConfigWebApplicationContext();
 		rootAppContext.register(RootAppContext.class);
 
-		// È®º¸µÈ ¸Ş¸ğ¸®ÀÇ °´Ã¼ ·Îµå
+		// í™•ë³´ëœ ë©”ëª¨ë¦¬ì˜ ê°ì²´ ë¡œë“œ
 		ContextLoaderListener listener = new ContextLoaderListener(rootAppContext);
 		servletContext.addListener(listener);
 
-		// dispatcher : view(jsp, html µî)ÄÁÅÙÃ÷¿Í Á¤Àû ÄÁÅÙÃ÷ ÆÄÀÏ¿¡ ´ëÇØ¼­ UTF-8·Î ÀÎÄÚµù ÇÏ´Â ÇÊÅÍ °´Ã¼ »ı¼º
+		// dispatcher : view(jsp, html ë“±)ì»¨í…ì¸ ì™€ ì •ì  ì»¨í…ì¸  íŒŒì¼ì— ëŒ€í•´ì„œ UTF-8ë¡œ ì¸ì½”ë”© í•˜ëŠ” í•„í„° ê°ì²´ ìƒì„±
 		FilterRegistration.Dynamic filter = servletContext.addFilter("encodingFilter", CharacterEncodingFilter.class);
 		filter.setInitParameter("encoding", "UTF-8");
 		filter.addMappingForServletNames(null, false, "dispatcher");

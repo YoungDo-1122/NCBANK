@@ -24,19 +24,20 @@ public class TopMenuInterceptor implements HandlerInterceptor {
 
 	// preHandle 무언가 일어나기 전 시점
 //	@Autowired : Interceptor 처리된 클래스에서는 오토와이어드를 사용할 수 없음
-	private TopMenuService topMenuService;
 	private UserBean loginUserBean;
-	//DIS
-	public TopMenuInterceptor(TopMenuService topMenuService,UserBean loginUserBean ) {
+
+	// DIS
+	public TopMenuInterceptor(TopMenuService topMenuService, UserBean loginUserBean) {
 		this.topMenuService = topMenuService;
 		this.loginUserBean = loginUserBean;
 	}
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		List<BoardInfoBean> topMenuList=topMenuService.getTopMenuList();
+		List<BoardInfoBean> topMenuList = topMenuService.getTopMenuList();
 		request.setAttribute("topMenuList", topMenuList);
-		request.setAttribute("loginUserBean", loginUserBean); //idx랑 name
+		request.setAttribute("loginUserBean", loginUserBean); // idx랑 name
 		return true;
 	}
 

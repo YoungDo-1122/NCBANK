@@ -8,21 +8,20 @@ import org.springframework.stereotype.Repository;
 import ncbank.beans.BoardInfoBean;
 import ncbank.mapper.TopMenuMapper;
 
-// @Repository : SpringÀÌ ÇØ´ç Å¬·¡½º¸¦ ÄÄÆ÷³ÍÆ® ½ºÄµ °úÁ¤¿¡¼­ ÀÚµ¿À¸·Î °¨ÁöÇÏ°í, Spring ÄÁÅ×ÀÌ³Ê¿¡ ºóÀ¸·Î µî·ÏÇÑ´Ù.
+// @Repository : Springì´ í•´ë‹¹ í´ë˜ìŠ¤ë¥¼ ì»´í¬ë„ŒíŠ¸ ìŠ¤ìº” ê³¼ì •ì—ì„œ ìë™ìœ¼ë¡œ ê°ì§€í•˜ê³ , Spring ì»¨í…Œì´ë„ˆì— ë¹ˆìœ¼ë¡œ ë“±ë¡í•œë‹¤.
 @Repository
 public class TopMenuDAO {
-	
-	// Jpa ¿¡¼­´Â Mapper¸¸ »ç¶óÁø ÇüÅÂÀÓ
-	// Bean À» SQL ¼¼¼Ç¿µ¿ª¿¡ µî·ÏÀ» ÇØ³ù´Ù¸é @Autowired·Î TopMenuMapper ÀÎÅÍÆäÀÌ½ºÀÇ ±¸ÇöÃ¼¸¦ ÁÖÀÔ¹ŞÀ½
+
+	// Jpa ì—ì„œëŠ” Mapperë§Œ ì‚¬ë¼ì§„ í˜•íƒœì„
+	// Bean ì„ SQL ì„¸ì…˜ì˜ì—­ì— ë“±ë¡ì„ í•´ë†¨ë‹¤ë©´ @Autowiredë¡œ TopMenuMapper ì¸í„°í˜ì´ìŠ¤ì˜ êµ¬í˜„ì²´ë¥¼ ì£¼ì…ë°›ìŒ
 	@Autowired
 	private TopMenuMapper topMenuMapper;
-	
-	
+
 	public List<BoardInfoBean> getTopMenuList() {
-		// TopMenuMapper ¿¡¼­ @Select ·Î µî·ÏÇÑ Äõ¸®¹®ÀÇ °á°ú¸¦ ¹Ş¾Æ¿Â´Ù.
-		List<BoardInfoBean> topMenuList = topMenuMapper.getTopMenuList();	
-		
-		return topMenuList; // selelctÀÇ °á°ú°ªÀÌ ³Ñ¾î¿È
+		// TopMenuMapper ì—ì„œ @Select ë¡œ ë“±ë¡í•œ ì¿¼ë¦¬ë¬¸ì˜ ê²°ê³¼ë¥¼ ë°›ì•„ì˜¨ë‹¤.
+		List<BoardInfoBean> topMenuList = topMenuMapper.getTopMenuList();
+
+		return topMenuList; // selelctì˜ ê²°ê³¼ê°’ì´ ë„˜ì–´ì˜´
 	}
-	
+
 }

@@ -16,7 +16,7 @@ public class UserDAO {
 		return (0 == userMapper.checkUserIdExist(id));
 	}
 
-	// Mapper -> DAO -> Service·Î °¡µµµÇ°í ¾È°¡µµ µÊ
+	// Mapper -> DAO -> Serviceë¡œ ê°€ë„ë˜ê³  ì•ˆê°€ë„ ë¨
 	public void addUserInfo(UserBean mBean) {
 		int size = userMapper.userCount();
 		mBean.setUser_num(size + 1);
