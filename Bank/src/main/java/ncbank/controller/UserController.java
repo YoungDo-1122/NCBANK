@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ncbank.beans.UserBean;
-import ncbank.mapper.UserMapper;
 import ncbank.service.UserService;
 import ncbank.validator.UserValidator;
 
@@ -21,17 +20,16 @@ import ncbank.validator.UserValidator;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+
 	// 가공처리를 할땐 Service로 보냄
 	@Autowired
 	UserService userService = null;
-	
-	
+
 	@GetMapping("/login")
 	public String login() {
 		return "user/login";
 	}
-	
+
 	// @ModelAttribute("joinUserBean") : UserBean joinUserBean = new UserBean();
 	// joinUserBean : getter setter 를 보유하고 있음
 	// 최초 topMenu 에서 넘어왔을때 객체를 만들어 join으로 이동
@@ -50,9 +48,9 @@ public class UserController {
 		if (result.hasErrors()) {
 			return "user/join";
 		}
-		
+
 		userService.addUserInfo(joinUserBean);
-		
+
 		// 혹은 바로 login으로 넘어가도 무방
 		return "user/join_success";
 	}
@@ -71,7 +69,7 @@ public class UserController {
 	public String logout() {
 		return "user/logout";
 	}
-	
+
 	// @InitBinder : 최초에 이걸 읽고 나가라
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {

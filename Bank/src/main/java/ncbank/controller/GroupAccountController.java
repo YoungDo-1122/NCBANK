@@ -12,21 +12,19 @@ public class GroupAccountController {
 	public String login() {
 		return "groupAccount/groupAccountCreate";
 	}
-	
+
 	@GetMapping("/about")
 	public String join() {
 		return "groupAccount/groupAccountAbout";
 	}
-	
+
 	@GetMapping("/invite")
 	public String modify() {
 		return "groupAccount/groupAccountInvite";
 	}
-	
+
 	@GetMapping("/management")
 	public String logout() {
 		return "groupAccount/groupAccountManagement";
 	}
-	
-	
 }

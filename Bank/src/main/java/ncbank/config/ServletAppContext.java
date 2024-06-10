@@ -20,8 +20,10 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import ncbank.interceptor.TopMenuInterceptor;
+import ncbank.mapper.AccountMapper;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
+import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.UserMapper;
 import ncbank.service.TopMenuService;
@@ -102,6 +104,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 	}
 
 	// 데이터베이스 연결 풀과 쿼리문 실행을 관리하기 위한 객체 (Mapper 관리) | 쿼리 == Mapper
+
 	@Bean
 	public MapperFactoryBean<BoardMapper> getBoardMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<BoardMapper> factoryBean = new MapperFactoryBean<BoardMapper>(BoardMapper.class);
@@ -115,21 +118,34 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
-	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception{
+	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
-	public MapperFactoryBean<CodeMoneyMapper> getCodeMoneyMapper(SqlSessionFactory factory) throws Exception{
+	public MapperFactoryBean<CodeMoneyMapper> getCodeMoneyMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<CodeMoneyMapper> factoryBean = new MapperFactoryBean<CodeMoneyMapper>(CodeMoneyMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
+	@Bean
+	public MapperFactoryBean<AccountMapper> accountMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<AccountMapper> factoryBean = new MapperFactoryBean<>(AccountMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+
+	@Bean
+	public MapperFactoryBean<CodeOrganMapper> codeOrganMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<CodeOrganMapper> factoryBean = new MapperFactoryBean<>(CodeOrganMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
 	/* ==========[Interceptors]========== */
 	// WebMvcConfigurer 제공 메소드
 
