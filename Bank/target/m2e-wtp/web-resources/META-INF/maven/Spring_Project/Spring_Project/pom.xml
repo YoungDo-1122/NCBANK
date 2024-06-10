@@ -68,7 +68,6 @@
 			<version>1.18.12</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<!-- Spring JDBC : Spring 프레임워크의 JDBC 모듈, 데이터베이스 접근 단순화 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
@@ -100,7 +99,6 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>2.0.3</version>
 		</dependency>
-
 		<!-- Bean Validation -->
 		<!-- validation-api : Java Bean Validation API로, 객체의 유효성 검사에 사용 -->
 		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
@@ -117,7 +115,6 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.1.2.Final</version>
 		</dependency>
-
 		<!-- Servlet API : Servlet API는 Java EE의 표준 인터페이스로, 웹 애플리케이션에서 요청과 응답을 처리하는 데 사용됩니다. (scope이 provided로 설정되어 컴파일 시에만 사용되고 패키징 시에는 포함되지 않습니다)-->
 		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
@@ -134,6 +131,27 @@
 			<artifactId>javax.servlet.jsp-api</artifactId>
 			<version>${javax.servlet.jsp-version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<!-- 비밀번호 해시 및 솔트 처리에 대한 의존성 추가-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.2.3.RELEASE</version>
 		</dependency>
 	</dependencies>
 </project>
