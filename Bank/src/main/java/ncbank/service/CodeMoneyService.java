@@ -10,10 +10,10 @@ import ncbank.dao.CodeMoneyDAO;
 
 @Service
 public class CodeMoneyService {
-	
+
 	@Autowired
 	private CodeMoneyDAO codeMoneyDAO;
-	
+
 	public List<CodeMoneyBean> getCodeMoneyList() {
 		List<CodeMoneyBean> codeMoneyList = codeMoneyDAO.getCodeMoneyList();
 		return codeMoneyList;

@@ -1,9 +1,11 @@
 package ncbank.controller;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,49 +13,82 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ncbank.beans.UserBean;
-import ncbank.mapper.UserMapper;
 import ncbank.service.UserService;
 import ncbank.validator.UserValidator;
 
-// µ¿±â½Ä
+// ë™ê¸°ì‹
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
-	// °¡°øÃ³¸®¸¦ ÇÒ¶© Service·Î º¸³¿
+
+	// ê°€ê³µì²˜ë¦¬ë¥¼ í• ë• Serviceë¡œ ë³´ëƒ„
 	@Autowired
 	UserService userService = null;
-	
-	
+
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
+
 	@GetMapping("/login")
-	public String login() {
+	public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
+			@RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
+		model.addAttribute("fail", fail);
 		return "user/login";
 	}
-	
+
+	@PostMapping("/login_pro")
+	public String login_pro(@Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean, BindingResult result) {
+
+		if (result.hasErrors()) {
+			System.out.println("===============");
+			return "user/login";
+		}
+
+		// ì„¸ì…˜ì˜ì—­ì— ìˆëŠ” ë¡œê·¸ì¸ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
+		userService.getLoginUserInfo(tempLoginBean);
+
+		// loginUserBean : session ì˜ì—­ì— ìˆëŠ” ê±°, sessionScopreì— ìˆëŠ” UserBeanì˜ ê°ì²´
+		// @Resource(name="loginUserBean") ì—¬ê¸°ë¥¼ í†µí•´ì„œ isUserLogin() ê°€ëŠ¥
+		if (loginUserBean.isUserLogin() == true) {
+			return "user/login_success";
+		} else {
+
+			return "user/login_fail";
+		}
+	}
+
 	// @ModelAttribute("joinUserBean") : UserBean joinUserBean = new UserBean();
-	// joinUserBean : getter setter ¸¦ º¸À¯ÇÏ°í ÀÖÀ½
-	// ÃÖÃÊ topMenu ¿¡¼­ ³Ñ¾î¿ÔÀ»¶§ °´Ã¼¸¦ ¸¸µé¾î joinÀ¸·Î ÀÌµ¿
+	// joinUserBean : getter setter ë¥¼ ë³´ìœ í•˜ê³  ìˆìŒ
+	// ìµœì´ˆ topMenu ì—ì„œ ë„˜ì–´ì™”ì„ë•Œ ê°ì²´ë¥¼ ë§Œë“¤ì–´ joinìœ¼ë¡œ ì´ë™
 	@GetMapping("/join")
-	public String join(@ModelAttribute("joinUserBean") UserBean joinUserBean) {
+	public String join(@ModelAttribute("mBean") UserBean mBean) {
 		return "user/join";
 	}
 
-	// post ¹æ½Ä
-	// À¯È¿¼º °Ë»ç¸¦ ÇÏ°í ³Ñ¾î¿Â »óÅÂ
-	// @Valid : ÀÌ ¾î³ëÅ×ÀÌ¼ÇÀÌ ÀÖ¾î¾ß UserBean ¿¡¼­ À¯È¿¼º °Ë»ç¸¦ ½Ç½Ã - °Ë»ö¿£Áø?
-	// BindingResult : À¯È¿¼º °Ë»çÀÇ °Ë»ç°á°ú true/false
+	// post ë°©ì‹
+	// ìœ íš¨ì„± ê²€ì‚¬ë¥¼ í•˜ê³  ë„˜ì–´ì˜¨ ìƒíƒœ
+	// @Valid : ì´ ì–´ë…¸í…Œì´ì…˜ì´ ìˆì–´ì•¼ UserBean ì—ì„œ ìœ íš¨ì„± ê²€ì‚¬ë¥¼ ì‹¤ì‹œ - ê²€ìƒ‰ì—”ì§„?
+	// BindingResult : ìœ íš¨ì„± ê²€ì‚¬ì˜ ê²€ì‚¬ê²°ê³¼ true/false
 	@PostMapping("/join_pro")
-	public String join_pro(@Valid @ModelAttribute("joinUserBean") UserBean joinUserBean, BindingResult result) {
-		// hasErrors() : ¿¡·¯ÄÚµå°¡ ÀÖ³Ä? À¯È¿¼º °Ë»ç°Ô °É·È´Ï?
-		if (result.hasErrors()) {
+	public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult) {
+		// hasErrors() : ì—ëŸ¬ì½”ë“œê°€ ìˆëƒ? ìœ íš¨ì„± ê²€ì‚¬ê²Œ ê±¸ë ¸ë‹ˆ?
+		/*
+		 * ì˜¤ë¥˜ ê²€ì‚¬í•  Â‹Âš ì“°ê¸° System.out.println(memberResult.hasErrors() + " " +
+		 * memberResult.getFieldErrorCount()); List<ObjectError> temp =
+		 * memberResult.getAllErrors();
+		 * 
+		 * for (ObjectError e : temp) { System.out.println(e.getDefaultMessage()); }
+		 */
+
+		if (memberResult.hasErrors()) {
+
 			return "user/join";
 		}
-		
-		userService.addUserInfo(joinUserBean);
-		
-		// È¤Àº ¹Ù·Î loginÀ¸·Î ³Ñ¾î°¡µµ ¹«¹æ
+		userService.addUserInfo(mBean);
+
+		// í˜¹ì€ ë°”ë¡œ loginìœ¼ë¡œ ë„˜ì–´ê°€ë„ ë¬´ë°©
 		return "user/join_success";
 	}
 
@@ -69,14 +104,22 @@ public class UserController {
 
 	@GetMapping("/logout")
 	public String logout() {
+		loginUserBean.setUserLogin(false);
 		return "user/logout";
 	}
-	
-	// @InitBinder : ÃÖÃÊ¿¡ ÀÌ°É ÀĞ°í ³ª°¡¶ó
+
+//    @InitBinder("mBean") // "mBean"ì´ë¼ëŠ” ì´ë¦„ì˜ ëª¨ë¸ ì†ì„±ì—ë§Œ ì´ ë°”ì¸ë”ë¥¼ ì ìš©
+//    protected void initBinder(WebDataBinder binder) {
+//    	UserValidator validator1 = new UserValidator();
+//        binder.setValidator(validator1);
+//    }
+
+	// @InitBinder : ìµœì´ˆì— ì´ê±¸ ì½ê³  ë‚˜ê°€ë¼
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		UserValidator validator1 = new UserValidator();
 		binder.addValidators(validator1);
+
 	}
 
 }

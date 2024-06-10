@@ -1,31 +1,50 @@
 package ncbank.service;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
 
-// ¼­ºñ½º¸¦ ¹Ş´Â´Ù - µ¥ÀÌÅÍ¸¦ °¡Á®¿Í¼­ °¡°øÀÛ¾÷À» ÇÑ´Ù.
-
+// ì„œë¹„ìŠ¤ë¥¼ ë°›ëŠ”ë‹¤ - ë°ì´í„°ë¥¼ ê°€ì ¸ì™€ì„œ ê°€ê³µì‘ì—…ì„ í•œë‹¤.
 @Service
 public class UserService {
-	
+
 	@Autowired
-	private UserDAO userDAO = null;
-	
-	// ³Ñ°Ü¹ŞÀº ÇØ´ç ¾ÆÀÌµğÀÇ ÀÌ¸§ÀÌ »ç¿ë °¡´ÉÇÑÁö ÆÇ´Ü ¿©ºÎ
-	public boolean checkUserExist(String user_id) {
-		String user_name = userDAO.checkUserExist(user_id);
-		// user_name.isEmpty();
-		if (null != user_name) { 
-			return false;
+	private UserDAO userDaO;
+
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
+
+	/*
+	 * @Autowired private BCryptPasswordEncoder passwordEncoder;
+	 */
+
+	public boolean checkUserExist(String id) {
+		return userDaO.checkUserExist(id);
+	}
+
+	public void addUserInfo(UserBean mBean) {
+
+		/*
+		 * String hashedPassword = passwordEncoder.encode(mBean.getPwd());
+		 * mBean.setPwd(hashedPassword);
+		 */
+
+		userDaO.addUserInfo(mBean);
+	}
+
+	public void getLoginUserInfo(UserBean tempLoginUserBean) {
+
+		UserBean tempLoginUserBean2 = userDaO.getLoginUserInfo(tempLoginUserBean);
+		// ê°€ì ¸ì˜¨ ë°ì´í„°ê°€ ìˆë‹¤ë©´
+		if (tempLoginUserBean2 != null) {
+			loginUserBean.setId(tempLoginUserBean2.getId());
+			loginUserBean.setName(tempLoginUserBean2.getName());
+			loginUserBean.setUserLogin(true); // ë¡œê·¸ì¸ ìƒíƒœ
 		}
-		return true;
+
 	}
-	
-	public void addUserInfo(UserBean joinUserBean) {
-		userDAO.addUserInfo(joinUserBean);
-	}
-	
 }

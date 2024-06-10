@@ -8,18 +8,24 @@ import ncbank.mapper.UserMapper;
 
 @Repository
 public class UserDAO {
-	
+
 	@Autowired
 	private UserMapper userMapper;
-	
-	public String checkUserExist(String user_id) {
-		return userMapper.checkUserIdExist(user_id);
+
+	public boolean checkUserExist(String id) {
+		return (0 == userMapper.checkUserIdExist(id));
 	}
-	
-	// Mapper -> DAO -> Service·Î °¡µµµÇ°í ¾È°¡µµ µÊ
-	public void addUserInfo(UserBean joinUserBean) {
-		System.out.println("UserDAO addUserInfo()"); // #test
-		userMapper.addUserInfo(joinUserBean);
+
+	// Mapper -> DAO -> Serviceë¡œ ê°€ë„ë˜ê³  ì•ˆê°€ë„ ë¨
+	public void addUserInfo(UserBean mBean) {
+		int size = userMapper.userCount();
+		mBean.setUser_num(size + 1);
+		userMapper.addMember(mBean);
+		userMapper.addLogin(mBean);
 	}
-	  
+
+	public UserBean getLoginUserInfo(UserBean tempLoginUserBean) {
+		return userMapper.getLoginUserInfo(tempLoginUserBean);
+	}
+
 }

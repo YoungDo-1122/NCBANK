@@ -1,5 +1,7 @@
 package ncbank.config;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -19,33 +21,36 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import ncbank.beans.UserBean;
 import ncbank.interceptor.TopMenuInterceptor;
+import ncbank.mapper.AccountMapper;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
+import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.UserMapper;
 import ncbank.service.TopMenuService;
 
-// ÁÖ¼Ò°¡ ¿äÃ»µÊ -> ÄÁÆ®·Ñ·¯¿¡¼­ ÇØ´çÇÏ´Â ÁÖ¼Ò¸¦ Ã£À½ (¼­¹ö¿¡°Ô ÄÁÆ®·Ñ·¯°¡ ¾îµğ¿¡ ÀÖ´ÂÁö ¾Ë·ÁÁà¾ß ÇÔ)
-// ServletAppContext : Á÷Á¢ÀûÀ¸·Î ¼­¹ö(À¥)¿¡ Àü´ŞÇØÁÖ´Â µî·Ï¼Ò - À¥±îÁö »¸¾î³ª°¥ ¾ÖµéÀ» µî·Ï
+// ì£¼ì†Œê°€ ìš”ì²­ë¨ -> ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ í•´ë‹¹í•˜ëŠ” ì£¼ì†Œë¥¼ ì°¾ìŒ (ì„œë²„ì—ê²Œ ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì–´ë””ì— ìˆëŠ”ì§€ ì•Œë ¤ì¤˜ì•¼ í•¨)
+// ServletAppContext : ì§ì ‘ì ìœ¼ë¡œ ì„œë²„(ì›¹)ì— ì „ë‹¬í•´ì£¼ëŠ” ë“±ë¡ì†Œ - ì›¹ê¹Œì§€ ë»—ì–´ë‚˜ê°ˆ ì• ë“¤ì„ ë“±ë¡
 
-@Configuration // Spring MVC ÇÁ·ÎÁ§Æ® ¼³Á¤
-@EnableWebMvc // ¾î³ëÅ×ÀÌ¼Ç ¼ÂÆÃ ¼±¾ğ
-// SpringÀÌ ÁöÁ¤µÈ ÆĞÅ°ÁöÀÇ Component¸¦ °Ë»öÇÏ°í BeanÀ¸·Î µî·ÏÇÏµµ·Ï Áö½Ã (Component°¡ ¾îµğ¿¡ Á¸ÀçÇÏ´ÂÁö) 
-// Service, Repository, Controller ÀÇ »óÀ§ ¾î³ëÅ×ÀÌ¼Ç ÀÌ Component (DAO Service)
-@ComponentScan("ncbank.dao") // DAO°¡ ÀÌ°÷¿¡ Á¸ÀçÇÑ´Ù °í ¾Ë·ÁÁÜ
+@Configuration // Spring MVC í”„ë¡œì íŠ¸ ì„¤ì •
+@EnableWebMvc // ì–´ë…¸í…Œì´ì…˜ ì…‹íŒ… ì„ ì–¸
+// Springì´ ì§€ì •ëœ íŒ¨í‚¤ì§€ì˜ Componentë¥¼ ê²€ìƒ‰í•˜ê³  Beanìœ¼ë¡œ ë“±ë¡í•˜ë„ë¡ ì§€ì‹œ (Componentê°€ ì–´ë””ì— ì¡´ì¬í•˜ëŠ”ì§€) 
+// Service, Repository, Controller ì˜ ìƒìœ„ ì–´ë…¸í…Œì´ì…˜ ì´ Component (DAO Service)
+@ComponentScan("ncbank.dao") // DAOê°€ ì´ê³³ì— ì¡´ì¬í•œë‹¤ ê³  ì•Œë ¤ì¤Œ
 @ComponentScan("ncbank.service")
 @ComponentScan("ncbank.controller")
 
-// ÇÑ¹ø¿¡ µî·Ïµµ °¡´É.
+// í•œë²ˆì— ë“±ë¡ë„ ê°€ëŠ¥.
 // @ComponentScan(basePackages = {"kr.co.soldesk.controller", "kr.co.soldesk.service", "kr.co.soldesk.dao"})
 
-@PropertySource("/WEB-INF/properties/db.properties") // ·ÎµåÇÒ Property ÆÄÀÏ À§Ä¡ ÁöÁ¤ (¼­¹ö¿¡ ¿¬°á)
+@PropertySource("/WEB-INF/properties/db.properties") // ë¡œë“œí•  Property íŒŒì¼ ìœ„ì¹˜ ì§€ì • (ì„œë²„ì— ì—°ê²°)
 public class ServletAppContext implements WebMvcConfigurer {
 
-	/* ==========[DB Á¢¼Ó µ¥ÀÌÅÍ]========== */
+	/* ==========[DB ì ‘ì† ë°ì´í„°]========== */
 
-	// @Value : ÁöÁ¤µÈ Property ÆÄÀÏ¿¡¼­ °ªÀ» ÇÊµå·Î ÁÖÀÔ¹ŞÀ½ (lombok ²¨ ¸»°í springframework ²¨ ÀÓÆ÷Æ®)
+	// @Value : ì§€ì •ëœ Property íŒŒì¼ì—ì„œ ê°’ì„ í•„ë“œë¡œ ì£¼ì…ë°›ìŒ (lombok êº¼ ë§ê³  springframework êº¼ ì„í¬íŠ¸)
 	@Value("${db.classname}")
 	private String db_classname;
 
@@ -58,31 +63,32 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Value("${db.password}")
 	private String db_password;
 
-	/* ========== ========== */
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
 
-	// CSS, JavaScript, »çÁø, ¿µ»ó, ¼Ò¸®, Á¤Àû ÆäÀÌÁö µî Á¤Àû ÄÁÅÙÃ÷ ÆÄÀÏÀÇ °æ·Î ¼³Á¤
+	// CSS, JavaScript, ì‚¬ì§„, ì˜ìƒ, ì†Œë¦¬, ì •ì  í˜ì´ì§€ ë“± ì •ì  ì»¨í…ì¸  íŒŒì¼ì˜ ê²½ë¡œ ì„¤ì •
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		WebMvcConfigurer.super.addResourceHandlers(registry);
 		registry.addResourceHandler("/**").addResourceLocations("/resources/");
-		// / : À¥»ó¿¡¼­ÀÇ ·çÆ®´Â webapp - webapp/resources/ °æ·Î¿¡ Á¤Àû ÄÁÅÙÃ÷°¡ ÀÖÀ¸¸é ¾Ë¾Æ¼­ ÀĞÀ½
+		// / : ì›¹ìƒì—ì„œì˜ ë£¨íŠ¸ëŠ” webapp - webapp/resources/ ê²½ë¡œì— ì •ì  ì»¨í…ì¸ ê°€ ìˆìœ¼ë©´ ì•Œì•„ì„œ ì½ìŒ
 	}
 
-	// jsp ºä ÄÁÅÙÃ÷ ÆÄÀÏÀÇ °æ·Î ¼³Á¤
+	// jsp ë·° ì»¨í…ì¸  íŒŒì¼ì˜ ê²½ë¡œ ì„¤ì •
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		WebMvcConfigurer.super.configureViewResolvers(registry);
-		registry.jsp("/WEB-INF/views/", ".jsp"); // jsp ÆÄÀÏÀÌ ÇØ´ç °æ·Î¿¡ ÀÖÀ¸¸é ¾Ë¾Æ¼­ ÀĞÀ½
+		registry.jsp("/WEB-INF/views/", ".jsp"); // jsp íŒŒì¼ì´ í•´ë‹¹ ê²½ë¡œì— ìˆìœ¼ë©´ ì•Œì•„ì„œ ì½ìŒ
 	}
 
-	/* ==========[DB Á¢¼Ó °ü¸®]========== */
-	// @Bean : Spring¿¡°Ô ÀÌ ¸Ş¼­µå°¡ Bean Á¤ÀÇ¸¦ Á¦°øÇÑ´Ù°í ¾Ë¸²
-	// µ¥ÀÌÅÍº£ÀÌ½º Á¢¼Ó Á¤º¸¸¦ °ü¸®ÇÏ´Â Bean
+	/* ==========[DB ì ‘ì† ê´€ë¦¬]========== */
+	// @Bean : Springì—ê²Œ ì´ ë©”ì„œë“œê°€ Bean ì •ì˜ë¥¼ ì œê³µí•œë‹¤ê³  ì•Œë¦¼
+	// ë°ì´í„°ë² ì´ìŠ¤ ì ‘ì† ì •ë³´ë¥¼ ê´€ë¦¬í•˜ëŠ” Bean
 	@Bean
 	public BasicDataSource dataSource() {
-		// BasicDataSource : DB ¿¬°á Ç®
+		// BasicDataSource : DB ì—°ê²° í’€
 		BasicDataSource source = new BasicDataSource();
-		// Property ÆÄÀÏ¼­ ÁÖÀÔµÈ µ¥ÀÌÅÍº£ÀÌ½º ¿¬°áÁ¤º¸
+		// Property íŒŒì¼ì„œ ì£¼ì…ëœ ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²°ì •ë³´
 		source.setDriverClassName(db_classname);
 		source.setUrl(db_url);
 		source.setUsername(db_username);
@@ -91,8 +97,8 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return source;
 	}
 
-	// Äõ¸®¹®°ú Á¢¼Ó Á¤º¸¸¦ °ü¸®ÇÏ´Â °´Ã¼
-	// µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á Ç®À» »ç¿ëÇÏ¿© MyBatis 'SqlSessionFactory'¸¦ »ı¼ºÇÏ°í ÀÌ¸¦ BeanÀ¸·Î µî·Ï.
+	// ì¿¼ë¦¬ë¬¸ê³¼ ì ‘ì† ì •ë³´ë¥¼ ê´€ë¦¬í•˜ëŠ” ê°ì²´
+	// ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° í’€ì„ ì‚¬ìš©í•˜ì—¬ MyBatis 'SqlSessionFactory'ë¥¼ ìƒì„±í•˜ê³  ì´ë¥¼ Beanìœ¼ë¡œ ë“±ë¡.
 	@Bean
 	public SqlSessionFactory factory(BasicDataSource source) throws Exception {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
@@ -101,7 +107,8 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return factory;
 	}
 
-	// µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á Ç®°ú Äõ¸®¹® ½ÇÇàÀ» °ü¸®ÇÏ±â À§ÇÑ °´Ã¼ (Mapper °ü¸®) | Äõ¸® == Mapper
+	// ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° í’€ê³¼ ì¿¼ë¦¬ë¬¸ ì‹¤í–‰ì„ ê´€ë¦¬í•˜ê¸° ìœ„í•œ ê°ì²´ (Mapper ê´€ë¦¬) | ì¿¼ë¦¬ == Mapper
+
 	@Bean
 	public MapperFactoryBean<BoardMapper> getBoardMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<BoardMapper> factoryBean = new MapperFactoryBean<BoardMapper>(BoardMapper.class);
@@ -115,25 +122,38 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
-	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception{
+	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
-	public MapperFactoryBean<CodeMoneyMapper> getCodeMoneyMapper(SqlSessionFactory factory) throws Exception{
+	public MapperFactoryBean<CodeMoneyMapper> getCodeMoneyMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<CodeMoneyMapper> factoryBean = new MapperFactoryBean<CodeMoneyMapper>(CodeMoneyMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
-	/* ==========[Interceptors]========== */
-	// WebMvcConfigurer Á¦°ø ¸Ş¼Òµå
 
-	// DB Á¤º¸º¸´Ù À§¿¡ ÀÖÀ¸¸é ¸øÀĞ´Â ¿¡·¯°¡ ÀÖÀ»¼öµµ ÀÖÀ½ (±×·² ½Ã Value ¹ØÀ¸·Î)
+	@Bean
+	public MapperFactoryBean<AccountMapper> accountMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<AccountMapper> factoryBean = new MapperFactoryBean<>(AccountMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+
+	@Bean
+	public MapperFactoryBean<CodeOrganMapper> codeOrganMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<CodeOrganMapper> factoryBean = new MapperFactoryBean<>(CodeOrganMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+	/* ==========[Interceptors]========== */
+	// WebMvcConfigurer ì œê³µ ë©”ì†Œë“œ
+
+	// DB ì •ë³´ë³´ë‹¤ ìœ„ì— ìˆìœ¼ë©´ ëª»ì½ëŠ” ì—ëŸ¬ê°€ ìˆì„ìˆ˜ë„ ìˆìŒ (ê·¸ëŸ´ ì‹œ Value ë°‘ìœ¼ë¡œ)
 	@Autowired
 	private TopMenuService topMenuService;
 
@@ -141,22 +161,22 @@ public class ServletAppContext implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		WebMvcConfigurer.super.addInterceptors(registry);
 
-		// TopMenu ´Â »ó´Ü ¸Ş´º¿©¼­ ¾îµğ¼­µç ¿äÃ»À»ÇÏµç º¯ÇÏÁö ¾Ê¾Æ¾ß ÇÏ´Â µ¥ÀÌÅÍ
-		TopMenuInterceptor topMenuIntercepotr = new TopMenuInterceptor(topMenuService);
-		// registry ¿¡ ´ã±â´Â ¼ø°£ ¸®Äù½ºÆ® ¿µ¿ª¿¡ µ¥ÀÌÅÍ°¡ ¿Ã¶ó°¨
+		// TopMenu ëŠ” ìƒë‹¨ ë©”ë‰´ì—¬ì„œ ì–´ë””ì„œë“  ìš”ì²­ì„í•˜ë“  ë³€í•˜ì§€ ì•Šì•„ì•¼ í•˜ëŠ” ë°ì´í„°
+		TopMenuInterceptor topMenuIntercepotr = new TopMenuInterceptor(topMenuService, loginUserBean);
+		// registry ì— ë‹´ê¸°ëŠ” ìˆœê°„ ë¦¬í€˜ìŠ¤íŠ¸ ì˜ì—­ì— ë°ì´í„°ê°€ ì˜¬ë¼ê°
 		InterceptorRegistration reg1 = registry.addInterceptor(topMenuIntercepotr);
 
-		// /** : ¸ğµç °æ·Î¿¡ ´ëÇØ¼­ (¾îµğ¼­µç µ¥ÀÌÅÍ¸¦ ²ø¾î´Ù ¾²°Ô ÇÏ±â À§ÇØ)
+		// /** : ëª¨ë“  ê²½ë¡œì— ëŒ€í•´ì„œ (ì–´ë””ì„œë“  ë°ì´í„°ë¥¼ ëŒì–´ë‹¤ ì“°ê²Œ í•˜ê¸° ìœ„í•´)
 		reg1.addPathPatterns("/**");
 	}
 
-	// Properties ÆÄÀÏÀ» BeanÀ¸·Î µî·Ï (¾Æ¹«µ¥¼­³ª »ç¿ë°¡´ÉÇÏ±â À§ÇØ)
+	// Properties íŒŒì¼ì„ Beanìœ¼ë¡œ ë“±ë¡ (ì•„ë¬´ë°ì„œë‚˜ ì‚¬ìš©ê°€ëŠ¥í•˜ê¸° ìœ„í•´)
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer PropertySourcesPlaceholderConfigurer() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
 
-	// Properties Message À§Ä¡ ÁöÁ¤ÇÏ¿© À¯È¿¼º °Ë»ç ¼Ò½º´Â ¸ğµÎ ÀÌ°÷À» ÀĞ°í °¡µµ·Ï
+	// Properties Message ìœ„ì¹˜ ì§€ì •í•˜ì—¬ ìœ íš¨ì„± ê²€ì‚¬ ì†ŒìŠ¤ëŠ” ëª¨ë‘ ì´ê³³ì„ ì½ê³  ê°€ë„ë¡
 	@Bean
 	public ReloadableResourceBundleMessageSource messageSource() {
 		ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();

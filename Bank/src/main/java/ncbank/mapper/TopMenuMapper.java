@@ -6,12 +6,11 @@ import org.apache.ibatis.annotations.Select;
 
 import ncbank.beans.BoardInfoBean;
 
-// Å×ÀÌºí »ı¼º -> Bean (DTO) »ı¼º -> Mapper·Î BeanÀ» SQL ¼¼¼Ç ¿µ¿ª¿¡ µî·Ï
+// í…Œì´ë¸” ìƒì„± -> Bean (DTO) ìƒì„± -> Mapperë¡œ Beanì„ SQL ì„¸ì…˜ ì˜ì—­ì— ë“±ë¡
 public interface TopMenuMapper {
-	
-	// @Select : Äõ¸®¹® µî·Ï
-	@Select("select board_info_idx, board_info_name " +
-	         "from board_info_table " + "order by board_info_idx")
+
+	// @Select : ì¿¼ë¦¬ë¬¸ ë“±ë¡
+	@Select("select board_info_idx, board_info_name " + "from board_info_table " + "order by board_info_idx")
 	List<BoardInfoBean> getTopMenuList();
 
 }
