@@ -17,11 +17,11 @@ public class RestApiController {
 	private UserService userService = null;
 	
 	// 해당 경로로 가서 데이터를 가져와라.
-	@GetMapping("/user/checkUserIdExist/{user_id}") // "/user/checkUserIdExist/?{user_id}" 와 같음
-	public String checkUserIdExist(@PathVariable String user_id) {
+	@GetMapping("/user/checkUserIdExist/{id}") // "/user/checkUserIdExist/?{user_id}" 와 같음
+	public String checkUserIdExist(@PathVariable String id) {
 		// @PathVariable : 주소에 직접 데이터 붙이기
 		
-		boolean check = userService.checkUserExist(user_id);
+		boolean check = userService.checkUserExist(id);
 		
 		// return check + "";
 		// valueOf() : String 반환 근데 null 이면 "null" 문자열로 처리

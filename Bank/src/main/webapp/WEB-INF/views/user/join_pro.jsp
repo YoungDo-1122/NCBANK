@@ -7,7 +7,6 @@
 <title>user_join_pro.jsp</title>
 </head>
 <body>
-	<h2>join_pro</h2>
 
 </body>
 </html>
