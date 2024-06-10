@@ -7,7 +7,6 @@ import javax.servlet.ServletRegistration;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
@@ -36,11 +35,11 @@ public class SpringConfigClass implements WebApplicationInitializer {
 		// 서버 메모리 확보
 		AnnotationConfigWebApplicationContext rootAppContext = new AnnotationConfigWebApplicationContext();
 		rootAppContext.register(RootAppContext.class);
-		
+
 		// 확보된 메모리의 객체 로드
 		ContextLoaderListener listener = new ContextLoaderListener(rootAppContext);
 		servletContext.addListener(listener);
-		
+
 		// dispatcher : view(jsp, html 등)컨텐츠와 정적 컨텐츠 파일에 대해서 UTF-8로 인코딩 하는 필터 객체 생성
 		FilterRegistration.Dynamic filter = servletContext.addFilter("encodingFilter", CharacterEncodingFilter.class);
 		filter.setInitParameter("encoding", "UTF-8");

@@ -19,18 +19,18 @@ import ncbank.beans.UserBean;
 import ncbank.service.UserService;
 import ncbank.validator.UserValidator;
 
-// µ¿±â½Ä
+// ë™ê¸°ì‹
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-	// °¡°øÃ³¸®¸¦ ÇÒ¶© Service·Î º¸³¿
+	// ê°€ê³µì²˜ë¦¬ë¥¼ í• ë• Serviceë¡œ ë³´ëƒ„
 	@Autowired
 	UserService userService = null;
 
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
-
+  
 	@GetMapping("/login")
 	public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
 			@RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
@@ -46,11 +46,11 @@ public class UserController {
 			return "user/login";
 		}
 
-		// ¼¼¼Ç¿µ¿ª¿¡ ÀÖ´Â ·Î±×ÀÎ Á¤º¸ ºÒ·¯¿À±â
+		// ì„¸ì…˜ì˜ì—­ì— ìˆëŠ” ë¡œê·¸ì¸ ì •ë³´ ë¶ˆëŸ¬ì˜¤ê¸°
 		userService.getLoginUserInfo(tempLoginBean);
 
-		// loginUserBean : session ¿µ¿ª¿¡ ÀÖ´Â °Å, sessionScopre¿¡ ÀÖ´Â UserBeanÀÇ °´Ã¼
-		// @Resource(name="loginUserBean") ¿©±â¸¦ ÅëÇØ¼­ isUserLogin() °¡´É
+		// loginUserBean : session ì˜ì—­ì— ìˆëŠ” ê±°, sessionScopreì— ìˆëŠ” UserBeanì˜ ê°ì²´
+		// @Resource(name="loginUserBean") ì—¬ê¸°ë¥¼ í†µí•´ì„œ isUserLogin() ê°€ëŠ¥
 		if (loginUserBean.isUserLogin() == true) {
 			return "user/login_success";
 		} else {
@@ -60,22 +60,22 @@ public class UserController {
 	}
 
 	// @ModelAttribute("joinUserBean") : UserBean joinUserBean = new UserBean();
-	// joinUserBean : getter setter ¸¦ º¸À¯ÇÏ°í ÀÖÀ½
-	// ÃÖÃÊ topMenu ¿¡¼­ ³Ñ¾î¿ÔÀ»¶§ °´Ã¼¸¦ ¸¸µé¾î joinÀ¸·Î ÀÌµ¿
+	// joinUserBean : getter setter ë¥¼ ë³´ìœ í•˜ê³  ìˆìŒ
+	// ìµœì´ˆ topMenu ì—ì„œ ë„˜ì–´ì™”ì„ë•Œ ê°ì²´ë¥¼ ë§Œë“¤ì–´ joinìœ¼ë¡œ ì´ë™
 	@GetMapping("/join")
 	public String join(@ModelAttribute("mBean") UserBean mBean) {
 		return "user/join";
 	}
 
-	// post ¹æ½Ä
-	// À¯È¿¼º °Ë»ç¸¦ ÇÏ°í ³Ñ¾î¿Â »óÅÂ
-	// @Valid : ÀÌ ¾î³ëÅ×ÀÌ¼ÇÀÌ ÀÖ¾î¾ß UserBean ¿¡¼­ À¯È¿¼º °Ë»ç¸¦ ½Ç½Ã - °Ë»ö¿£Áø?
-	// BindingResult : À¯È¿¼º °Ë»çÀÇ °Ë»ç°á°ú true/false
+	// post ë°©ì‹
+	// ìœ íš¨ì„± ê²€ì‚¬ë¥¼ í•˜ê³  ë„˜ì–´ì˜¨ ìƒíƒœ
+	// @Valid : ì´ ì–´ë…¸í…Œì´ì…˜ì´ ìˆì–´ì•¼ UserBean ì—ì„œ ìœ íš¨ì„± ê²€ì‚¬ë¥¼ ì‹¤ì‹œ - ê²€ìƒ‰ì—”ì§„?
+	// BindingResult : ìœ íš¨ì„± ê²€ì‚¬ì˜ ê²€ì‚¬ê²°ê³¼ true/false
 	@PostMapping("/join_pro")
 	public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult) {
-		// hasErrors() : ¿¡·¯ÄÚµå°¡ ÀÖ³Ä? À¯È¿¼º °Ë»ç°Ô °É·È´Ï?
+		// hasErrors() : ì—ëŸ¬ì½”ë“œê°€ ìˆëƒ? ìœ íš¨ì„± ê²€ì‚¬ê²Œ ê±¸ë ¸ë‹ˆ?
 		/*
-		 * ¿À·ù °Ë»çÇÒ ‹š ¾²±â System.out.println(memberResult.hasErrors() + " " +
+		 * ì˜¤ë¥˜ ê²€ì‚¬í•  Â‹Âš ì“°ê¸° System.out.println(memberResult.hasErrors() + " " +
 		 * memberResult.getFieldErrorCount()); List<ObjectError> temp =
 		 * memberResult.getAllErrors();
 		 * 
@@ -87,9 +87,11 @@ public class UserController {
 			return "user/join";
 		}
 
+
+		userService.addUserInfo(joinUserBean);
 		userService.addUserInfo(mBean);
 
-		// È¤Àº ¹Ù·Î loginÀ¸·Î ³Ñ¾î°¡µµ ¹«¹æ
+		// í˜¹ì€ ë°”ë¡œ loginìœ¼ë¡œ ë„˜ì–´ê°€ë„ ë¬´ë°©
 		return "user/join_success";
 	}
 
@@ -109,13 +111,13 @@ public class UserController {
 		return "user/logout";
 	}
 
-//    @InitBinder("mBean") // "mBean"ÀÌ¶ó´Â ÀÌ¸§ÀÇ ¸ğµ¨ ¼Ó¼º¿¡¸¸ ÀÌ ¹ÙÀÎ´õ¸¦ Àû¿ë
+//    @InitBinder("mBean") // "mBean"ì´ë¼ëŠ” ì´ë¦„ì˜ ëª¨ë¸ ì†ì„±ì—ë§Œ ì´ ë°”ì¸ë”ë¥¼ ì ìš©
 //    protected void initBinder(WebDataBinder binder) {
 //    	UserValidator validator1 = new UserValidator();
 //        binder.setValidator(validator1);
 //    }
 
-	// @InitBinder : ÃÖÃÊ¿¡ ÀÌ°É ÀĞ°í ³ª°¡¶ó
+	// @InitBinder : ìµœì´ˆì— ì´ê±¸ ì½ê³  ë‚˜ê°€ë¼
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		UserValidator validator1 = new UserValidator();
