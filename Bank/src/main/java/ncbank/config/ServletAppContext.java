@@ -1,5 +1,7 @@
 package ncbank.config;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import ncbank.beans.UserBean;
 import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
@@ -57,6 +60,10 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Value("${db.password}")
 	private String db_password;
+
+	
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
 
 	/* ========== ========== */
 
@@ -115,21 +122,21 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
-	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception{
+	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
-	public MapperFactoryBean<CodeMoneyMapper> getCodeMoneyMapper(SqlSessionFactory factory) throws Exception{
+	public MapperFactoryBean<CodeMoneyMapper> getCodeMoneyMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<CodeMoneyMapper> factoryBean = new MapperFactoryBean<CodeMoneyMapper>(CodeMoneyMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	/* ==========[Interceptors]========== */
 	// WebMvcConfigurer 제공 메소드
 
@@ -142,7 +149,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		WebMvcConfigurer.super.addInterceptors(registry);
 
 		// TopMenu 는 상단 메뉴여서 어디서든 요청을하든 변하지 않아야 하는 데이터
-		TopMenuInterceptor topMenuIntercepotr = new TopMenuInterceptor(topMenuService);
+		TopMenuInterceptor topMenuIntercepotr = new TopMenuInterceptor(topMenuService, loginUserBean);
 		// registry 에 담기는 순간 리퀘스트 영역에 데이터가 올라감
 		InterceptorRegistration reg1 = registry.addInterceptor(topMenuIntercepotr);
 

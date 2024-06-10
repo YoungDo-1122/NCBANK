@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
-
-<c:set var="root" value="${pageContext.request.contextPath}"/>
+<c:set var="root" value="${pageContext.request.contextPath}/"/>
 
 <link rel="stylesheet"
    href="${pageContext.request.contextPath}/css/teststyle_top.css">
@@ -10,9 +8,9 @@
    href="${pageContext.request.contextPath}/css/teststyle_main.css">
 
 
-<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top shadow-lg">
+<nav class="navbar navbar-expand-md bg-primary  navbar-dark fixed-top shadow-lg"> <!-- bg-primary : 파란색 -->
     <a class="navbar-brand" href="${root}/main">
-    <img src="${root}/img/NCBank2.png" style="height: 100px"/>
+    <img src="${root}/img/ncbank_logo.png" style="height: 100px"/>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
         <span class="navbar-toggler-icon"></span>
@@ -65,19 +63,31 @@
                </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item"><a href="${root}/user/login" class="nav-link">로그인</a></li>
-            <li class="nav-item"><a href="${root}/user/join" class="nav-link">회원가입</a></li>
-            <li class="nav-item"><a href="${root}/user/modify" class="nav-link">정보수정</a></li>
-            <li class="nav-item"><a href="${root}/user/logout" class="nav-link">로그아웃</a></li>
+           <c:choose> 
+				<c:when test="${loginUserBean.userLogin == true }">
+					<li class="nav-item"><a href="${root}user/modify"
+						class="nav-link">마이페이지</a></li>
+					<li class="nav-item"><a href="${root}user/logout"
+						class="nav-link">로그아웃</a></li>
+					</c:when>					
+				<c:otherwise>
+				<!-- 로그아웃시 -->
+				<li class="nav-item">
+					<a href="${root}user/login"
+						class="nav-link">로그인</a></li>
+					<li class="nav-item"><a href="${root}user/join" class="nav-link">회원가입</a>
+					</li>
+				</c:otherwise>		
+			</c:choose>
         </ul>
     </div>
 </nav>
-
+<!-- 
 <style>
   .nav-item.dropdown .nav-link {
         font-size: 23px;
     }
     .nav-item.dropdown:hover .dropdown-menu {
-        display: block;
+        display: none;
     }
-</style>
+</style> -->
