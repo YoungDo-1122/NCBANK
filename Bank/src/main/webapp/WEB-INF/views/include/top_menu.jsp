@@ -2,6 +2,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
+<!-- Bootstrap CDN -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 
 <link rel="stylesheet"
@@ -42,11 +53,11 @@
                 </div>
                 </li>
                  <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop">
+                <a class="nav-link dropdown-toggle" href="${root}/exchange/rateInquiry" id="navbardrop">
                     환전
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="${root}/groupAccount/about">환전1</a>
+                    <a class="dropdown-item" href="${root}/exchange/rateInquiry">환율조회</a>
                     <a class="dropdown-item" href="${root}/groupAccount/create">환전2</a>
                     <a class="dropdown-item" href="${root}/groupAccount/invite">환전3</a>
                     <a class="dropdown-item" href="${root}/groupAccount/management">환전4</a>

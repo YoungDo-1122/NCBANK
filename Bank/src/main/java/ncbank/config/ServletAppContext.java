@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
+import ncbank.mapper.ExchangeRateMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.UserMapper;
 import ncbank.service.TopMenuService;
@@ -36,6 +37,7 @@ import ncbank.service.TopMenuService;
 @ComponentScan("ncbank.dao") // DAO가 이곳에 존재한다 고 알려줌
 @ComponentScan("ncbank.service")
 @ComponentScan("ncbank.controller")
+@ComponentScan("ncbanck.utility")
 
 // 한번에 등록도 가능.
 // @ComponentScan(basePackages = {"kr.co.soldesk.controller", "kr.co.soldesk.service", "kr.co.soldesk.dao"})
@@ -126,6 +128,13 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Bean
 	public MapperFactoryBean<CodeMoneyMapper> getCodeMoneyMapper(SqlSessionFactory factory) throws Exception{
 		MapperFactoryBean<CodeMoneyMapper> factoryBean = new MapperFactoryBean<CodeMoneyMapper>(CodeMoneyMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+	
+	@Bean
+	public MapperFactoryBean<ExchangeRateMapper> getExchangeRateMapper(SqlSessionFactory factory) throws Exception{
+		MapperFactoryBean<ExchangeRateMapper> factoryBean = new MapperFactoryBean<ExchangeRateMapper>(ExchangeRateMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}

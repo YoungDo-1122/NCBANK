@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ncbank.beans.UserBean;
-import ncbank.mapper.UserMapper;
 import ncbank.service.UserService;
 import ncbank.validator.UserValidator;
 
@@ -25,7 +24,6 @@ public class UserController {
 	// °¡°øÃ³¸®¸¦ ÇÒ¶© Service·Î º¸³¿
 	@Autowired
 	UserService userService = null;
-	
 	
 	@GetMapping("/login")
 	public String login() {
