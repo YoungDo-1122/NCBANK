@@ -65,6 +65,95 @@
 			<version>1.18.12</version>
 			<scope>provided</scope>
 		</dependency>
+<<<<<<< Updated upstream
 	</dependencies>
 
+=======
+
+		<!-- ========== ========== -->
+		
+		<!-- Spring JDBC : Spring 프레임워크의 JDBC 모듈, 데이터베이스 접근 단순화 -->
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>5.2.3.RELEASE</version>
+		</dependency>
+		
+		<!-- Commons DBCP : 데이터베이스 연결 풀링 라이브러리 -->
+		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-dbcp2</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+		
+		<!-- MyBatis : WQL 매퍼 프레임워크 | XML, 어노테이션을 통해 SQL 쿼리를 실행하고 결과를 객체로 매핑 -->
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.5.4</version>
+		</dependency>
+		
+		<!-- MyBatis-Spring : MyBatis와 Spring 프레임워크를 통합 | MyBatis SQL 세션을 Spring의 트랜잭션 관리하에 사용할 수 있게 함 -->
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>2.0.3</version>
+		</dependency>
+
+		<!-- ========== ========== -->
+		
+		 <!-- Bean Validation -->
+		 
+		<!-- validation-api : Java Bean Validation API로, 객체의 유효성 검사에 사용 -->
+		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+		
+		<!-- hibernate-validator : Hibernate Validator는 Java Bean Validation의 구현체로, 객체 유효성 검사를 수행-->
+		<!-- https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator -->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.1.2.Final</version>
+		</dependency>
+
+		<!-- ========== ========== -->
+		
+		<!-- Servlet API : Servlet API는 Java EE의 표준 인터페이스로, 웹 애플리케이션에서 요청과 응답을 처리하는 데 사용됩니다. (scope이 provided로 설정되어 컴파일 시에만 사용되고 패키징 시에는 포함되지 않습니다)-->
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		 <!-- JSP API  : JSP(JavaServer Pages) API는 동적인 웹 페이지 생성을 위한 Java EE의 표준 인터페이스입니다. (scope이 provided로 설정되어 컴파일 시에만 사용되고 패키징 시에는 포함되지 않습니다)-->
+		<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/javax.servlet.jsp-api -->
+		<dependency>
+			<groupId>javax.servlet.jsp</groupId>
+			<artifactId>javax.servlet.jsp-api</artifactId>
+			<version>${javax.servlet.jsp-version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<!-- ========== ========== -->
+		
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+
+	</dependencies>
+	
+>>>>>>> Stashed changes
 </project>

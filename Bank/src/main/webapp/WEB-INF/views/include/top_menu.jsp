@@ -38,9 +38,9 @@
                     환전
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="${root}/groupAccount/about">환전1</a>
-                    <a class="dropdown-item" href="${root}/groupAccount/create">환전2</a>
-                    <a class="dropdown-item" href="${root}/groupAccount/invite">환전3</a>
+                    <a class="dropdown-item" href="${root}/exchange/exchangeRateApi">환율 조회</a>
+                    <a class="dropdown-item" href="${root}/exchange/exchangeHistory">환전 내역 조회</a>
+                    <a class="dropdown-item" href="${root}/groupAccount/invite"></a>
                     <a class="dropdown-item" href="${root}/groupAccount/management">환전4</a>
                 </div>
                </li>
