@@ -11,8 +11,13 @@
                 display: block;
             }
 
-        .nav-item.dropdown .nav-link { font-size: 23px; }
-        .nav-item.dropdown:hover .dropdown-menu { display: none; }
+            .nav-item.dropdown .nav-link {
+                font-size: 23px;
+            }
+
+            .nav-item.dropdown:hover .dropdown-menu {
+                display: none;
+            }
         </style>
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/teststyle_main.css">
@@ -46,7 +51,8 @@
                                 초대하기</a> <a class="dropdown-item" href="${root}groupAccount/management">모임통장 관리</a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="${root}exchange/rateInquiry" id="navbardrop"> 환전 </a>
+                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="${root}exchange/rateInquiry"
+                            id="navbardrop"> 환전 </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="${root}groupAccount/about">환전1</a> <a class="dropdown-item"
                                 href="${root}groupAccount/create">환전2</a> <a class="dropdown-item"

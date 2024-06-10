@@ -142,6 +142,23 @@
 			<version>${javax.servlet.jsp-version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- ========== ========== -->
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.13.3</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20180813</version>
+		</dependency>
+
+
 		<!-- 비밀번호 해시 및 솔트 처리에 대한 의존성 추가-->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
