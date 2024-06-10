@@ -1,13 +1,16 @@
-package kr.co.soldesk.controller;
+package ncbank.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class MainController {
-	
+@RequestMapping("/board")
+public class BoardController {
+
 	@GetMapping("/main")
 	public String main() {
-		return "main"; //jsp
+		return "board/main";
 	}
+
 }

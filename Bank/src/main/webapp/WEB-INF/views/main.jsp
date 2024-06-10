@@ -1,101 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}/" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>미니 프로젝트</title>
-
-<style>
-<
-c
-
-
-
-
-
-
-
-
-
-
-:import
-
-
-
-
-
- 
-
-
-
-
-
-url
-
-
-
-
-
-
-
-
-
-
-="/
-resources
-/
-
-
-
-
-
-
-
-
-
-
-css
-/
-
-
-
-
-
-
-
-
-
-
-style
-
-
-
-
-
-
-
-
-
-
-.jsp
-
-
-
-
-
-
-
-
-
-
-"
-/
->
-</style>
-
+<title>NC은행</title>
 <!-- Bootstrap CDN -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -107,28 +19,25 @@ style
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
-
 	<div class="container">
 		<div class="carousel-wrapper">
 			<div class="carousel">
 				<button class="carousel-button prev">&#10094;</button>
 				<img src="img/Bank1.png" alt="캐러셀 이미지 1" class="active"> <img
-					src="img/NCBank2.png" alt="캐러셀 이미지 2"> <img
-					src="img/NCBank2.jpe" alt="캐러셀 이미지 3">
+					src="img/Bank2.png" alt="캐러셀 이미지 2"> <img src="img/Bank3.jpg"
+					alt="캐러셀 이미지 3">
 				<button class="carousel-button next">&#10095;</button>
 			</div>
 			<div class="quickLink">
 				<ul>
-					<li><a href="#"> <img src="resources/img/NCBank2.png"
-							alt="빠른링크1">
+					<li><a href="#"> <img src="img/NCBank.png" alt="빠른링크1">
 							<p>조회</p>
 					</a></li>
 					<li><a href="#"> <img src="img/NCBank2.png" alt="빠른링크2">
 							<p>이체</p>
 					</a></li>
-					<li><a href="#"> <img src="/img/NCBank2.png" alt="빠른링크3">
+					<li><a href="#"> <img src="img/NCBank3.png" alt="빠른링크3">
 							<p>환율</p>
 					</a></li>
 				</ul>
@@ -136,32 +45,8 @@ style
 		</div>
 	</div>
 
-	<script>
-    let currentIndex = 0;
-    const images = document.querySelectorAll('.carousel img');
-    const totalImages = images.length;
-
-    function showImage(index) {
-        images.forEach((img, i) => {
-            img.classList.toggle('active', i === index);
-        });
-    }
-
-    function showNextImage() {
-        currentIndex = (currentIndex + 1) % totalImages;
-        showImage(currentIndex);
-    }
-
-    function showPrevImage() {
-        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
-        showImage(currentIndex);
-    }
-
-    document.querySelector('.carousel-button.prev').addEventListener('click', showPrevImage);
-    document.querySelector('.carousel-button.next').addEventListener('click', showNextImage);
-
-    setInterval(showNextImage, 3000);
-</script>
+	<!-- 스크립트 코드 js파일로 이동후 임포트 시킨거 -->
+	<script type="text/javascript" src="${root}/js/style_main.js"></script>
 
 	<div class="content">
 		<div class="tabMenu">
@@ -192,7 +77,7 @@ style
 				<option value="USD">달러($)</option>
 				<option value="JPY">엔(¥)</option>
 				<option value="EUR">유로(€)</option>
-			</select> <img id="currencyImage" src="/img/NCBank2.png" alt="통화 이미지">
+			</select> <img id="currencyImage" src="img/그웬2.jpg" alt="통화 이미지">
 		</div>
 	</div>
 
