@@ -46,7 +46,7 @@
 	</div>
 
 	<!-- 스크립트 코드 js파일로 이동후 임포트 시킨거 -->
-	<script type="text/javascript" src="${root}/js/style_main.js"></script>
+	<script type="text/javascript" src="${root}js/style_main.js"></script>
 
 	<div class="content">
 		<div class="tabMenu">
