@@ -5,33 +5,39 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import ncbank.beans.BoardInfoBean;
+import ncbank.beans.UserBean;
 import ncbank.service.TopMenuService;
 
-// AOP
-
+/*Controllerê°€ ì•„ë‹Œ Interceptorì—ì„œ ë‚´ë ¤ê°€ëŠ” ê²½ìš°ë„ ìˆìŒ(ServiceëŠ” ìƒëµê°€ëŠ¥ , serivceì— ìˆëŠ”ê²ƒì„ interceptorí™”(servletì— ë“±ë¡))*/
 public class TopMenuInterceptor implements HandlerInterceptor {
-	
-	// Interceptor´Â Autowired ¸¦ ¸·¾ÆÁà¾ß ÇÑ´Ù => servlet ¿¡ µî·Ï½Ã Autowired Ãæµ¹‹š¹®¿¡?
-	// @Autowired : Interceptor Ã³¸®µÈ Å¬·¡½º´Â Autowired »ç¿ë ºÒ°¡´É
+
+	// InterceptorëŠ” Autowired ë¥¼ ë§‰ì•„ì¤˜ì•¼ í•œë‹¤ => servlet ì— ë“±ë¡ì‹œ Autowired ì¶©ëŒÂ‹Âšë¬¸ì—?
+	// @Autowired : Interceptor ì²˜ë¦¬ëœ í´ë˜ìŠ¤ëŠ” Autowired ì‚¬ìš© ë¶ˆê°€ëŠ¥
 	public TopMenuService topMenuService;
-	
+
 	public TopMenuInterceptor(TopMenuService _topMenuService) {
 		topMenuService = _topMenuService;
 	}
-	
-	// preHandle ¹«¾ğ°¡ ÀÏ¾î³ª±â Àü ½ÃÁ¡
+
+	// preHandle ë¬´ì–¸ê°€ ì¼ì–´ë‚˜ê¸° ì „ ì‹œì 
+//	@Autowired : Interceptor ì²˜ë¦¬ëœ í´ë˜ìŠ¤ì—ì„œëŠ” ì˜¤í† ì™€ì´ì–´ë“œë¥¼ ì‚¬ìš©í•  ìˆ˜ ì—†ìŒ
+	private TopMenuService topMenuService;
+	private UserBean loginUserBean;
+	//DIS
+	public TopMenuInterceptor(TopMenuService topMenuService,UserBean loginUserBean ) {
+		this.topMenuService = topMenuService;
+		this.loginUserBean = loginUserBean;
+	}
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		List<BoardInfoBean> topMenuList = topMenuService.getTopMenuList();
-		request.setAttribute("topMenuList", topMenuList); // ¾ğÁ¦ ¾îµğ¼­µç request ¿µ¿ª¿¡¼­ topMenuList¸¦ ¿äÃ»ÇÒ¼ö ÀÖ°Ô ¼¼ÆÃ
+		List<BoardInfoBean> topMenuList=topMenuService.getTopMenuList();
+		request.setAttribute("topMenuList", topMenuList);
+		request.setAttribute("loginUserBean", loginUserBean); //idxë‘ name
 		return true;
 	}
-	
-	
-	
+
 }

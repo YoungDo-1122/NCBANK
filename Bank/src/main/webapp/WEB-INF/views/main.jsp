@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>미니 프로젝트</title>
+<title>NC은행</title>
 
 
 <!-- Bootstrap CDN -->
@@ -21,7 +21,7 @@
 </head>
 <body>
 
-	<c:set var="root" value="${pageContext.request.contextPath}" />
+	<c:set var="root" value="${pageContext.request.contextPath}/" />
 
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 

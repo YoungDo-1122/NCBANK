@@ -9,22 +9,29 @@ public class UserValidator implements Validator {
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		// UserBean 이 clazz 부터 상속되었가나 동일한 클래스인지 검사 | true, false 반환
 		return UserBean.class.isAssignableFrom(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		UserBean userBean = (UserBean) target;
+		UserBean loginBean = (UserBean) target;
 
-		if (!userBean.getUser_pw().equals(userBean.getUser_pw2())) {
-			errors.rejectValue("user_pw", "NotEquals");
-			errors.rejectValue("user_pw2", "NotEquals");
+		String beanName = errors.getObjectName();
+		System.out.println(beanName); // joinUserBean
+
+		if (beanName.equals("joinUserBean")) {
+
+			if (!loginBean.getPwd().equals(loginBean.getPwd2())) {
+				errors.rejectValue("pwd", "NotEquals");
+				errors.rejectValue("pwd2", "NotEquals");
+			}
+
+			if (!loginBean.isIdExistCheck()) {
+				errors.rejectValue("id", "DontCheckUserIdExist");
+			}
+
 		}
-		if (false == userBean.isUserIdExist()) {
-			errors.rejectValue("user_id", "DontCheckUserIdExist");
-		}
-		
-	} // validate
+
+	}
 
 }

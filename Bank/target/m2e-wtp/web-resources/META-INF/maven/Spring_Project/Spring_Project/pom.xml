@@ -1,7 +1,5 @@
 <!--gradle사용하는거랑 같음-->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Spring_Project</groupId>
 	<artifactId>Spring_Project</artifactId>
@@ -22,18 +20,15 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<!-- 라이브러리 버전 관리 -->
 	<properties>
 		<org.springframework-version>5.3.18</org.springframework-version>
 		<org.slf4j-version>2.0.7</org.slf4j-version>
 		<ch.qos.logback-version>1.2.3</ch.qos.logback-version>
-
-		<!-- ========== ========== -->
 		<javax.servlet-version>4.0.1</javax.servlet-version>
 		<javax.servlet.jsp-version>2.3.3</javax.servlet.jsp-version>
-		<!-- ========== ========== -->
-
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
 	<!-- 라이브러리 세팅 -->
@@ -164,5 +159,26 @@
 		</dependency>
 
 
+		<!-- 비밀번호 해시 및 솔트 처리에 대한 의존성 추가-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>4.2.3.RELEASE</version>
+		</dependency>
 	</dependencies>
 </project>
