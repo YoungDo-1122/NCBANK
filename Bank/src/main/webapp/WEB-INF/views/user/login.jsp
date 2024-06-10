@@ -21,25 +21,25 @@
 </head>
 <body>
 	<c:import url="../include/top_menu.jsp" />
-	
 	<div class="container" style="margin-top: 100px">
 		<div class="row">
 			<div class="col-sm-3"></div>
 			<div class="col-sm-6">
 				<div class="card shadow">
 					<div class="card-body">
-					<c:if test="${fail==true}">
-						<div class="alert alert-danger">
-							<h3>로그인 실패</h3>
-							<p>아이디 비밀번호를 확인해주세요</p>
-						</div>
+						<c:if test="${fail==true}">
+							<div class="alert alert-danger">
+								<h3>로그인 실패</h3>
+								<p>아이디 비밀번호를 확인해주세요</p>
+							</div>
 						</c:if>
 						<!-- 잠깐 post -> get -->
-							<form:form action="${root}user/login_pro" method="post" modelAttribute="tempLoginBean">
+						<form:form action="${root}user/login_pro" method="post"
+							modelAttribute="tempLoginBean">
 							<div class="form-group">
-								<form:label path="id">아이디</form:label> 
+								<form:label path="id">아이디</form:label>
 								<form:input path="id" class="form-control" />
-								<form:errors path="id" style='color:red'/>
+								<form:errors path="id" style='color:red' />
 							</div>
 							<div class="form-group">
 								<form:label path="pwd">비밀번호</form:label>
@@ -57,9 +57,6 @@
 			<div class="col-sm-3"></div>
 		</div>
 	</div>
-
 	<c:import url="../include/bottom_info.jsp" />
-
 </body>
 </html>
-

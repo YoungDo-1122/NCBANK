@@ -99,7 +99,6 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>2.0.3</version>
 		</dependency>
-		<!-- Bean Validation -->
 		<!-- validation-api : Java Bean Validation API로, 객체의 유효성 검사에 사용 -->
 		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
 		<dependency>
