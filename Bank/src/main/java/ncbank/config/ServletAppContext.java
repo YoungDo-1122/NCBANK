@@ -43,7 +43,7 @@ import ncbank.service.TopMenuService;
 @ComponentScan("ncbank.dao") // DAO가 이곳에 존재한다 고 알려줌
 @ComponentScan("ncbank.service")
 @ComponentScan("ncbank.controller")
-@ComponentScan("ncbanck.utility")
+@ComponentScan("ncbank.utility")
 
 // 한번에 등록도 가능.
 // @ComponentScan(basePackages = {"kr.co.soldesk.controller",

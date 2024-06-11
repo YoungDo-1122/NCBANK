@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>exchange/rateInquiry</title>
 </head>
+<!-- jQuery 포함 => 왜빠져있지? -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <link rel="stylesheet" href="${root}/css/exchange/rateInquiry.css">

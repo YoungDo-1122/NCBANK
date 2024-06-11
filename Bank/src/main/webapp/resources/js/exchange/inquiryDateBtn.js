@@ -19,12 +19,13 @@ $('#inquiryDate').val(formattedDate);
 }
 
 function yesterday() {
-	var inquiryDate = $('#inquiryDate').val();
-	$('#inquiryDate').val(shiftDate(inquiryDate, -1))
+    var inquiryDate = $('#inquiryDate').val();
+    $('#inquiryDate').val(shiftDate(inquiryDate, -1));
 }
+
 function tomorrow() {
-	var inquiryDate = $('#inquiryDate').val();
-	$('#inquiryDate').val(shiftDate(inquiryDate, 1))
+    var inquiryDate = $('#inquiryDate').val();
+    $('#inquiryDate').val(shiftDate(inquiryDate, 1));
 }
 
 function shiftDate(strDate, val) {

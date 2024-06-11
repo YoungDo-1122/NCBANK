@@ -1,4 +1,4 @@
-package ncbanck.utility;
+package ncbank.utility;
 
 import java.util.Date;
 
