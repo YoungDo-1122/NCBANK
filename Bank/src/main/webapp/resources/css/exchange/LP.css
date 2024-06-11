@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+/* div.LP - 환율 페이지의 좌측에 떠있는 서브 판넬 */
+
+/*
+[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
+display > overflow > float > position >
+
+width > height > margin > padding >
+
+color > font-style > font-weight > font-size >
+line-height > font-family > text-indent > text-align >
+
+background-color > background-image >
+background-position > background-size >
+background-repeat
+
+border > border-radius
+*/
+
+/* LP : 좌측 공간할당용 */
+div.LP {
+	background-color: orange;
+}
+
+/* 할당된 공간중 실질 컨텐츠가 들어가는 공간 */
+div.LPWrap {
+	background-color: blue;
+}
+/* 컨텐츠 1 */
+div.LPC01 {
+	background-color: gray;
+}
+
+/* 좌측공간의 타이틀 */
+.wrapTitle {
+	font-size: 20px;
+	background-color: purple;
+}
+
+ul.ulType01 {
+	background-color: lime;
+}
+
+li.on {
+	background-color: pink;
+}

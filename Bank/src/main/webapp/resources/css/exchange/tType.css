@@ -1,0 +1,95 @@
+@charset "UTF-8";
+
+/*
+[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
+display > overflow > float > position >
+
+width > height > margin > padding >
+
+color > font-style > font-weight > font-size >
+line-height > font-family > text-indent > text-align >
+
+background-color > background-image >
+background-position > background-size >
+background-repeat
+
+border > border-radius
+*/
+
+/* tType01 */
+table.tType01 {
+	width: 100%;
+	margin: 0 auto;
+	
+	text-align: center;
+	
+	font-style: Maplestory Bold;
+	font-weight: bold;
+	font-size: 15px;
+	
+	border: 3px solid black;
+	border-collapse: collapse;
+}
+
+table.tType01>thead {
+	padding: 5px;
+	
+	color: #222222;
+	font-size: 12px;
+	
+	background-color: #F5F5F5;
+	
+	border: 3px solid black;
+}
+
+table.tType01>tbody {
+	padding: 5px;
+	
+	color: #5A5A5A;
+	font-size: 12px;
+	
+	background-color: #FFFFFF;
+}
+
+table.tType01>tbody tr:hover {
+	background-color: lightgrey;
+}
+
+table.tType01>tbody td {
+	color: red;
+	text-align: center;
+}
+
+table.tType01>tbody td>img{
+	/* vh vw : 전체화면에 대한 비율 */
+	width: 32px;
+	height: 32px;
+	
+	text-align: center;
+}
+
+table.tType01>tbody td.tLeft {
+	color: blue;
+	text-align: left;
+}
+
+table.tType01>tbody td.tRight {
+	color: pink;
+	text-align: right;
+}
+
+/* tType02 */
+table.tType02 {
+	width: 100%;
+	margin: 0 auto;
+	
+	text-align: center;
+	
+	font-style: Maplestory Bold;
+	font-weight: bold;
+	font-size: 15px;
+	
+	border: 3px solid black;
+	border-collapse: collapse;
+}
+
