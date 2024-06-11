@@ -29,7 +29,7 @@ hr {
 }
 
 .textfield {
-	border: 1px solid rgba(128, 128, 128, 0.5);
+	border: 1px solid rgba(128, 128, 128, 1);
 }
 </style>
 <!-- Bootstrap CDN -->

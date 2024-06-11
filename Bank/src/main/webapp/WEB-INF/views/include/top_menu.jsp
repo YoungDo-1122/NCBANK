@@ -12,9 +12,6 @@
 	display: block;
 }
 </style>
-.nav-item.dropdown .nav-link { font-size: 23px; }
-.nav-item.dropdown:hover .dropdown-menu { display: none; }
-</style>
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/teststyle_main.css">
