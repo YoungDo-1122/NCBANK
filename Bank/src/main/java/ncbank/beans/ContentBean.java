@@ -2,13 +2,13 @@ package ncbank.beans;
 
 public class ContentBean {
 
-	private int content_idx = 0;
-	private String content_subject = "";
-	private String content_text = "";
-	private String content_file = "";
-	private int content_writer_idx = 0;
-	private int content_board_idx = 0;
-	private String content_date = "";
+	private int content_idx;
+	private String content_subject;
+	private String content_text;
+	private String content_file;
+	private int content_writer_idx;
+	private int content_board_idx;
+	private String content_date;
 
 	public int getContent_idx() {
 		return content_idx;
