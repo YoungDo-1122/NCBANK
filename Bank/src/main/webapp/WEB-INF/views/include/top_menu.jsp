@@ -51,10 +51,11 @@
                                 초대하기</a> <a class="dropdown-item" href="${root}groupAccount/management">모임통장 관리</a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="${root}exchange/rateInquiry"
-                            id="navbardrop"> 환전 </a>
+                    <li class="nav-item dropdown">
+                    	<!-- ${root}exchange/rateInquiry -->
+                    	<a class="nav-link dropdown-toggle" href="${root}exchange/rateInquiry" id="navbardrop"> 환전 </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="${root}groupAccount/about">환전1</a> <a class="dropdown-item"
+                            <a class="dropdown-item" href="${root}exchange/test">환전1-test</a> <a class="dropdown-item"
                                 href="${root}groupAccount/create">환전2</a> <a class="dropdown-item"
                                 href="${root}groupAccount/invite">환전3</a> <a class="dropdown-item"
                                 href="${root}groupAccount/management">환전4</a>

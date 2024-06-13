@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import ncbank.beans.UserBean;
+import ncbank.interceptor.ExchangeRateInterceptor;
 import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.AccountMapper;
 import ncbank.mapper.BoardMapper;
@@ -31,6 +32,7 @@ import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.ExchangeRateMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.UserMapper;
+import ncbank.service.ExchangeRateService;
 import ncbank.service.TopMenuService;
 
 // 주소가 요청됨 -> 컨트롤러에서 해당하는 주소를 찾음 (서버에게 컨트롤러가 어디에 있는지 알려줘야 함)
@@ -169,17 +171,23 @@ public class ServletAppContext implements WebMvcConfigurer {
     @Autowired
     private TopMenuService topMenuService;
 
+    @Autowired
+    private ExchangeRateService exchangeRateService;
+    
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
 
         // TopMenu 는 상단 메뉴여서 어디서든 요청을하든 변하지 않아야 하는 데이터
-        TopMenuInterceptor topMenuIntercepotr = new TopMenuInterceptor(topMenuService, loginUserBean);
+        TopMenuInterceptor topMenuInterceptor = new TopMenuInterceptor(topMenuService, loginUserBean);
         // registry 에 담기는 순간 리퀘스트 영역에 데이터가 올라감
-        InterceptorRegistration reg1 = registry.addInterceptor(topMenuIntercepotr);
-
+        InterceptorRegistration reg1 = registry.addInterceptor(topMenuInterceptor);
         // /** : 모든 경로에 대해서 (어디서든 데이터를 끌어다 쓰게 하기 위해)
         reg1.addPathPatterns("/**");
+        
+        ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService);
+        InterceptorRegistration reg2 = registry.addInterceptor(exchangeRateInterceptor);
+        reg2.addPathPatterns("/exchange/*");
     }
 
     // Properties 파일을 Bean으로 등록 (아무데서나 사용가능하기 위해)

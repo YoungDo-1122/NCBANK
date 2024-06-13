@@ -45,6 +45,7 @@ public class UserBean {
    private boolean idExistCheck = true;
 
    private boolean userLogin;
+   
 
    // 초기값 로그인이 안되어 있는 상태
    public UserBean() {

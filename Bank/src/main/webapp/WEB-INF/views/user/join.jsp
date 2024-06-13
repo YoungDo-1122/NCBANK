@@ -74,7 +74,7 @@
 	<div class="container" style="margin-top: 100px">
 		<div class="row">
 			<div class="col-sm-3"></div>
-			<div class="col-sm-6">
+			<div class="col-sm-6">	`
 				<div class="card shadow">
 					<div class="card-body">
 						<!-- form은 넘어갈때 내부의 input 요소를 다 가져간다 -->
