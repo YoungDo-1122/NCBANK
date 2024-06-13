@@ -8,8 +8,19 @@
 <meta charset="UTF-8">
 <title>exchange/rateInquiry</title>
 </head>
-<!-- jQuery 포함 => 왜빠져있지? -->
+<!-- jQuery 포함
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+-->
+
+<!-- Bootstrap CDN -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <link rel="stylesheet" href="${root}/css/exchange/rateInquiry.css">

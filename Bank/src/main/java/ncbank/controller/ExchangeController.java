@@ -30,6 +30,11 @@ public class ExchangeController {
     @Autowired
     private DateManager dateManager = null;
 
+    @GetMapping("/test")
+    public String test() {
+        return "exchange/test";
+    }
+    
     @GetMapping("/main")
     public String main() {
         return "exchange/main";
@@ -49,7 +54,12 @@ public class ExchangeController {
 
         List<ExchangeRateDTO> rateDtoList = setupExchangeRateDtoList(
                 dateManager.parseDateToString(inquiryDate, "yyyyMMdd"));
-
+        
+        if (null == rateDtoList) { // 해당날짜의 환율정보가 없음.
+        	// 이걸 페이지 전환없이 할려면 ajax? -> 나중에 고민좀
+        	return "exchange/not_rateInquiry";
+        }
+        
         model.addAttribute("ExchangeRateList", rateDtoList);
         model.addAttribute("inquiryDate1", dateManager.parseDateToString(inquiryDate, "yyyy.MM.dd"));
         model.addAttribute("inquiryDate2", dateManager.parseDateToString(inquiryDate, "yyyy-MM-dd"));
@@ -61,12 +71,21 @@ public class ExchangeController {
     @GetMapping("/rateInquiry")
     public String rateInquiry(Model model) {
         System.out.println("rateInquiry()");
-
-        List<ExchangeRateDTO> rateDtoList = setupExchangeRateDtoList(dateManager.getCurrentDate("yyyyMMdd"));
-
+        
+        // 현재날짜의 환율정보 가져옴
+        String searchDate = dateManager.getCurrentDate("yyyyMMdd");
+        List<ExchangeRateDTO> rateDtoList = setupExchangeRateDtoList(searchDate);
+         
+        // 영업일이 아니라 가져오지 못하면 현재날짜 기준 최근의 환율정보를 탐색해 가져옴
+        while (null == rateDtoList) {
+        	searchDate = dateManager.getMoveDate(searchDate, -1, "yyyyMMdd");
+        	rateDtoList = setupExchangeRateDtoList(searchDate);
+		}
+        
+        
         model.addAttribute("ExchangeRateList", rateDtoList);
-        model.addAttribute("inquiryDate1", dateManager.getCurrentDate("yyyy.MM.dd"));
-        model.addAttribute("inquiryDate2", dateManager.getCurrentDate("yyyy-MM-dd"));
+        model.addAttribute("inquiryDate1", dateManager.changeStringDateFormat(searchDate, "yyyyMMdd", "yyyy.MM.dd"));
+        model.addAttribute("inquiryDate2", dateManager.changeStringDateFormat(searchDate, "yyyyMMdd", "yyyy-MM-dd"));
 
         return "exchange/rateInquiry";
     }
@@ -76,7 +95,7 @@ public class ExchangeController {
         System.out.println("setupExchangeRateDtoList()");
         System.out.println("strDate : " + strDate);
         List<ExchangeRateBean> rateBeanList = exchangeRateService.getExchangeRate(strDate);
-        if (null == rateBeanList || rateBeanList.isEmpty()) {
+        if (null == rateBeanList || rateBeanList.isEmpty()) { // DB와 크롤링 결과 둘다 존재하지 않음.
             return null;
         }
 
