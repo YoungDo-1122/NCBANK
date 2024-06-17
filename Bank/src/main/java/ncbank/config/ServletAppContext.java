@@ -32,6 +32,7 @@ import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.ExchangeRateMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.UserMapper;
+import ncbank.service.CodeMoneyService;
 import ncbank.service.ExchangeRateService;
 import ncbank.service.TopMenuService;
 
@@ -187,6 +188,7 @@ public class ServletAppContext implements WebMvcConfigurer {
         
         ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService);
         InterceptorRegistration reg2 = registry.addInterceptor(exchangeRateInterceptor);
+        // 환율 페이지의 전역에서 사용할수 있게
         reg2.addPathPatterns("/exchange/*");
     }
 

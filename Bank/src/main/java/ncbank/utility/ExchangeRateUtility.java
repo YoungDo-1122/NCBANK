@@ -33,14 +33,15 @@ public class ExchangeRateUtility {
     private final String dataType = "AP01";
 
     @Autowired
-    private DateManager dateManager = null;
+    private DateManager dateManager;
 
     // 검색 요청 날짜 : 20150101 (DEFAULT)현재일
     public List<ExchangeRateBean> fetchExchangeRateList(String searchDate) {
 
         HttpURLConnection con = null;
         List<ExchangeRateBean> beanList = null;
-
+        int responseCode = -1;
+        
         System.out.println("ExchangeRateUtility - fetchExchangeRateList()");
         System.out.println("searchDate : " + searchDate);
         Date date = dateManager.parseStringToDate(searchDate, "yyyyMMdd");
@@ -55,15 +56,28 @@ public class ExchangeRateUtility {
             System.out.println("strUrl : " + strUrl);
             URL url = new URL(strUrl);
             con = (HttpURLConnection) url.openConnection();
-
+            
+            if (null == con) {
+            	System.out.println("HttpURLConnection is null");
+            }
+            
+            System.out.println("con : " + con);
+            
             // 요청 초기 설정
             con.setRequestMethod("GET");
-            con.setConnectTimeout(5000); // 연길시도 시간 - 5초
-            con.setReadTimeout(5000); // 데이터 요청 시간 - 5초
-
+            
+            System.out.println("여기 1");
+            // 10 초
+            con.setConnectTimeout(10000); // 연길시도 시간
+            con.setReadTimeout(10000); // 데이터 요청 시간
+            
+            System.out.println("여기 2");
+            
             // HTTP 응답 상태코드 가져옴 (보통 300 이상의 상태코드는 실패로 간주)
-            int responseCode = con.getResponseCode();
+            responseCode = con.getResponseCode();
+            System.out.println("여기 3");
             System.out.println("responseCode : " + responseCode);
+            System.out.println("여기 4");
             BufferedReader br = null;
 
             if (responseCode > 299) { // HTTP 에러
@@ -90,7 +104,12 @@ public class ExchangeRateUtility {
             beanList = new ArrayList<ExchangeRateBean>();
             // 해당날짜에 대한 달러, 엔 등 모든 통화 정보가 들어있음 -> array
             JSONArray resultArray = new JSONArray(responseContent.toString());
-
+            if (0 >= resultArray.length()) {
+            	System.out.println("resultArray length Error");
+            	return null;
+            }
+            System.out.println("resultArray length : " + resultArray.length());
+            
             for (int i = 0; i < resultArray.length(); i++) {
                 JSONObject resultObject = resultArray.getJSONObject(i);
                 ExchangeRateBean bean = new ExchangeRateBean();
@@ -123,10 +142,16 @@ public class ExchangeRateUtility {
             } // for
 
         } catch (MalformedURLException e) {
-            System.err.println("잘못된 URL 형식: " + e.getMessage());
+            System.err.println("잘못된 URL 형식." + e.getMessage());
+            System.out.println("responseCode : " + responseCode);
+            e.printStackTrace();
         } catch (IOException e) {
-            System.err.println("입출력 오류: " + e.getMessage());
+            System.err.println("입출력 오류. : " + e.getMessage());
+            System.out.println("responseCode : " + responseCode);
+            e.printStackTrace();
         } catch (Exception e) {
+        	System.err.println("일반적 에외." + e.getMessage());
+        	 System.out.println("responseCode : " + responseCode);
             e.printStackTrace();
         } finally {
             if (con != null) {
@@ -152,7 +177,8 @@ public class ExchangeRateUtility {
 
         // 일시
         bean.setCode_date(dateManager.parseStringToDate(searchDate, "yyyyMMdd"));
-
+        
+        // 여기서 (100) 을 검사해서 달려있는애들은 따로 데이터를 추가해야될듯?
         // cur_unit - 통화 코드
         String curUnit = resultObject.getString("cur_unit").replace("(100)", "");
         bean.setCode_money(curUnit);

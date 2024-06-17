@@ -34,7 +34,7 @@ public class DateManager {
     	return parseDateToString(moveDate, pattern);
     }
     
-    // 지정한날짜를 기준으로 이동시킨 날짜 가져오기
+    // 지정한날짜를 기준으로 일을 이동시킨 날짜 가져오기
     public String getMoveDate(String strInputDate, int moveDay, String pattern) {
     	
     	System.out.println("DataManger getMoveDate()");
@@ -46,7 +46,10 @@ public class DateManager {
     	calendar.setTime(inputDate);
     	
     	// moveDay 만큼 이동한 날짜
-    	calendar.add(Calendar.DAY_OF_MONTH, moveDay);
+    	if (0 != moveDay) {
+    		calendar.add(Calendar.DAY_OF_MONTH, moveDay);
+    	}
+   
     	Date moveDate = calendar.getTime();
     	
     	// Date -> String
@@ -56,7 +59,34 @@ public class DateManager {
     	
     	return moveDateStr;
     }
-
+    
+    // 지정한 날짜를 기준으로 월, 일을 이동시킨 날짜 가져오기 (기준날짜, 월, 일, 패턴)
+    public String getMoveDate(String strInputDate, int moveMonth, int moveDay, String pattern) {
+        
+        System.out.println("DataManger getMoveDate()");
+        
+        Date inputDate = parseStringToDate(strInputDate, pattern);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(inputDate);
+        
+        // 월 이동
+        if (moveMonth != 0) {
+            calendar.add(Calendar.MONTH, moveMonth);
+        }
+        // 일 이동
+        if (moveDay != 0) {
+            calendar.add(Calendar.DAY_OF_MONTH, moveDay);
+        }
+        
+        Date moveDate = calendar.getTime();
+        
+        // Date -> String
+        String moveDateStr = parseDateToString(moveDate, pattern);
+        System.out.println("moveDateStr : " + moveDateStr);
+        
+        return moveDateStr;
+    }
+    
     /* String -> Date */
     public Date parseStringToDate(String strDate, String pattern) {
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
@@ -71,6 +101,10 @@ public class DateManager {
 
     /* Date -> String */
     public String parseDateToString(Date date, String pattern) {
+    	if (null == date) {
+    		System.out.println("parseDateToString() : date is null");
+    		return null;
+    	}
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
         return formatter.format(date);
     }
@@ -95,6 +129,24 @@ public class DateManager {
 		}
     	
     	return null;
+    }
+    
+    // Date1 과 2 가 같은지 비교
+    public boolean isDatesEqual(String strDate1, String strDate2) {
+    	SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+    	boolean isEqual = false;
+    	
+    	try {
+    		Date date1 = format.parse(strDate1);
+        	Date date2 = format.parse(strDate2);
+        	isEqual = date1.equals(date2);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	System.out.println("isEqual : " + isEqual);
+    	
+    	return isEqual;
     }
     
 }
