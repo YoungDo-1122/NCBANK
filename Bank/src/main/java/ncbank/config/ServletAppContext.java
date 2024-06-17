@@ -144,7 +144,14 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-
+	// ������ ������ ���� ��ü(Mapper ����)
+    @Bean
+    public MapperFactoryBean<TradeMapper> getTradeMapper(SqlSessionFactory factory) throws Exception {
+        MapperFactoryBean<TradeMapper> factoryBean = new MapperFactoryBean<>(TradeMapper.class);
+        factoryBean.setSqlSessionFactory(factory);
+        return factoryBean;
+    }
+	
 	@Bean
 	public MapperFactoryBean<ExchangeRateMapper> getExchangeRateMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<ExchangeRateMapper> factoryBean = new MapperFactoryBean<ExchangeRateMapper>(

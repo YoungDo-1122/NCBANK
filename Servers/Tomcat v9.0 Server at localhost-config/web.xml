@@ -68,7 +68,7 @@
   <!--                       contents. [null]                               -->
   <!--                                                                      -->
   <!--   sendfileSize        If the connector used supports sendfile, this  -->
-  <!--                       represents the minimal file size in KiB for     -->
+  <!--                       represents the minimal file size in KB for     -->
   <!--                       which sendfile will be used. Use a negative    -->
   <!--                       value to always disable sendfile.  [48]        -->
   <!--                                                                      -->
@@ -2124,6 +2124,7 @@
     <mime-mapping>
         <extension>js</extension>
         <mime-type>text/javascript</mime-type>
+        <mime-type>application/javascript</mime-type>
     </mime-mapping>
     <mime-mapping>
         <extension>jsf</extension>
@@ -4743,6 +4744,4 @@
         <welcome-file>index.htm</welcome-file>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-	
-	
 </web-app>
