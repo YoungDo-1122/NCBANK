@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
 
 <link rel="stylesheet"
@@ -37,8 +38,8 @@
 			<ul id=sub-menu>
 				<li><a href="${root}account/accountCreate">환전1</a></li>
 				<li><a href="${root}account/accountCheck">환전2</a></li>
-				<li><a href="${root}account/transferCheck">환전3/</a></li>
-				<li><a href="${root}account/transfer">환전4</a></li>
+				<li><a href="${root}exchange/exchangeAsk">환전 신청</a></li>
+				<li><a href="${root}exchange/exchangeHistory">환전 내역 조회</a></li>
 			</ul></li>
 		<li><a href="#">게시판</a>
 			<ul id=sub-menu>

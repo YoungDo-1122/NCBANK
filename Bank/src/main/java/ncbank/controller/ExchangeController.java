@@ -1,122 +1,156 @@
 package ncbank.controller;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import ncbank.beans.ExchangeRateBean;
-import ncbank.service.CodeMoneyService;
-import ncbank.service.ExchangeRateService;
-import ncbank.utility.DateManager;
-import ncbank.utility.ExchangeRateDTO;
+import ncbank.beans.AccountBean;
+import ncbank.beans.CodeBankBean;
+import ncbank.beans.CreateExchangeBean;
+import ncbank.beans.ExchangeBean;
+import ncbank.beans.UserBean;
+import ncbank.service.ExchangeService;
 
 @Controller
 @RequestMapping("/exchange")
 public class ExchangeController {
-
+    
     @Autowired
-    ExchangeRateService exchangeRateService = null;
-    @Autowired
-    CodeMoneyService codeMoneyService = null;
+    private ExchangeService exchangeService;
+    
+    @Resource(name="loginUserBean")
+    UserBean loginUserBean;
+    
+    
+	@GetMapping("/exchangeAsk")
+    public String getExchangeList(@ModelAttribute("createExchangeBean") CreateExchangeBean createExchangeBean,
+    							Model model) throws ParseException {
+        
+		// 현재 날짜를 나타내는 Date 객체 생성
+        Date d = new Date();
+        // 날짜를 특정 형식으로 포맷하기 위한 SimpleDateFormat 객체 생성
+        SimpleDateFormat cuDate1 = new SimpleDateFormat("yy/mm/dd");
+        // 현재 날짜를 나타내는 Calendar 객체 생성
+        Calendar c = Calendar.getInstance();
+        // 연, 월, 일 값 추출
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH) + 1;  // Calendar.MONTH에 1을 더함
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        // 연, 월, 일을 두 자리수 형식으로 포맷팅하여 문자열로 변환
+        String cuDate = String.format("%02d/%02d/%02d", year % 100, month, day);
+        System.out.println("Current Date(cuDate): " + cuDate);
+        // 문자열로 된 날짜를 Date 객체로 파싱
+        Date date = cuDate1.parse(cuDate);
+        System.out.println("Current Date(date): " + cuDate1.format(date));
+        
+        // api 데이터 exchange에 저장된거 가져오기.
+        List<ExchangeBean> exchangeAskList = exchangeService.getExchangeList(cuDate);
+        // code_bank - code_bank_name 엮은 전체 데이터 가져오기
+        List<CodeBankBean> codeBankNameList = exchangeService.getCodeBankName();
+        // user_name이랑 account 데이터 가져오기
+        List<AccountBean> getAccountList = exchangeService.getAccount(loginUserBean.getUser_num());
+       
+        
+        
+        //System.out.println("exchangeAskList: "+exchangeAskList);
+        System.out.println("codeBankNameList: "+codeBankNameList);
+        //System.out.println("getAccountList: "+getAccountList);
+		
+        model.addAttribute("exchangeAskList", exchangeAskList);
+        model.addAttribute("codeBankNameList", codeBankNameList);
+        model.addAttribute("getAccountList", getAccountList);
+        model.addAttribute("loginUserId", loginUserBean.getUser_num());
+        
+        System.out.println("loginUserBean.getUser_num(): "+loginUserBean.getUser_num());
+       
+       
+        return "exchange/exchangeAsk";
+    }
+	
+	@PostMapping("/exchangeAskSuccess")
+	public String getExchangeAskSuccess(@ModelAttribute("createExchangeBean") CreateExchangeBean createExchangeBean, Model model) {
+	    // createExchangeBean에 설정된 값을 출력하거나 처리할 수 있습니다.
+	    System.out.println("Selected Bank Name: " + createExchangeBean.getCode_bank_name());
+	    model.addAttribute("createExchangeBean", createExchangeBean);
+	    return "exchange/exchangeAskSuccess";
+	}
+	
+	/*
+	@GetMapping("/searchPopup")
+	public String searchPopup() {
+	    return "exchange/searchPopup";
+	}
+	*/
 
-    @Autowired
-    private DateManager dateManager = null;
-
-    @GetMapping("/test")
-    public String test() {
-        return "exchange/test";
+	@GetMapping(value = "/searchBank", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public ResponseEntity<?> searchBank(@RequestParam("keyword") String keyword) {
+        try {
+            List<CodeBankBean> results = exchangeService.searchBankByKeyword(keyword);
+            return new ResponseEntity<>(results, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("검색 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
-    @GetMapping("/main")
-    public String main() {
-        return "exchange/main";
-    }
-
-    /* 환율 조회페이지에서 날짜를 선택한 경우 */
-    @GetMapping("/rateInquiryDate")
-    // @RequestParam("inquiryDay") : name이 inquiryDay 인 값을 가져온다 (input 의 name 이
-    // inquiryDay)
-    // @DateTimeFormat(pattern = "yyyyMMdd") : inquiryDay를 Date로 변환하기 위한 포멧 설정
-    public String rateInquiryDate(@RequestParam("inquiryDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date inquiryDate,
-            Model model) {
-        System.out.println("rateInquiryDate()");
-
-        System.out.println("inquiryDate : " + inquiryDate);
-        System.out.println("inquiryDate2 : " + dateManager.parseDateToString(inquiryDate, "yyyyMMdd"));
-
-        List<ExchangeRateDTO> rateDtoList = setupExchangeRateDtoList(
-                dateManager.parseDateToString(inquiryDate, "yyyyMMdd"));
+	/*
+	// AJAX 요청을 처리하는 메소드 추가
+	@GetMapping(value = "/searchBank", produces = "application/json")
+	@ResponseBody
+	public List<CodeBankBean> searchBank(@RequestParam("keyword") String keyword) {
+	    try {
+	        return exchangeService.searchBankByKeyword(keyword);
+	    } catch (Exception e) {
+	        e.printStackTrace();  // 로그에 예외 출력
+	        return new ArrayList<>();  // 빈 리스트 반환하여 클라이언트에 에러를 전송하지 않음
+	    }
+	}
+    */
+    /*
+    @GetMapping("/searchBank")
+    public String getSearchBank(@ModelAttribute("createExchangeBean") CreateExchangeBean createExchangeBean,
+    							Model model) throws ParseException {
         
-        if (null == rateDtoList) { // 해당날짜의 환율정보가 없음.
-        	// 이걸 페이지 전환없이 할려면 ajax? -> 나중에 고민좀
-        	return "exchange/not_rateInquiry";
-        }
-        
-        model.addAttribute("ExchangeRateList", rateDtoList);
-        model.addAttribute("inquiryDate1", dateManager.parseDateToString(inquiryDate, "yyyy.MM.dd"));
-        model.addAttribute("inquiryDate2", dateManager.parseDateToString(inquiryDate, "yyyy-MM-dd"));
-
-        return "exchange/rateInquiry";
-    }
-
-    /* 환율 페이지 기본 - 현재 날짜 기준 */
-    @GetMapping("/rateInquiry")
-    public String rateInquiry(Model model) {
-        System.out.println("rateInquiry()");
-        
-        // 현재날짜의 환율정보 가져옴
-        String searchDate = dateManager.getCurrentDate("yyyyMMdd");
-        List<ExchangeRateDTO> rateDtoList = setupExchangeRateDtoList(searchDate);
-         
-        // 영업일이 아니라 가져오지 못하면 현재날짜 기준 최근의 환율정보를 탐색해 가져옴
-        while (null == rateDtoList) {
-        	searchDate = dateManager.getMoveDate(searchDate, -1, "yyyyMMdd");
-        	rateDtoList = setupExchangeRateDtoList(searchDate);
-		}
+		
         
         
-        model.addAttribute("ExchangeRateList", rateDtoList);
-        model.addAttribute("inquiryDate1", dateManager.changeStringDateFormat(searchDate, "yyyyMMdd", "yyyy.MM.dd"));
-        model.addAttribute("inquiryDate2", dateManager.changeStringDateFormat(searchDate, "yyyyMMdd", "yyyy-MM-dd"));
+        // code_bank - code_bank_name 엮은 전체 데이터 가져오기
+        List<CodeBankBean> codeBankNameList = exchangeService.getCodeBankName();
 
-        return "exchange/rateInquiry";
+        String keyword = "퇴계";
+		List<CodeBankBean> searchBankByKeywordList = exchangeService.searchBankByKeyword(keyword);
+        
+        //System.out.println("exchangeAskList: "+exchangeAskList);
+        //System.out.println("codeBankNameList: "+codeBankNameList);
+        //System.out.println("getAccountList: "+getAccountList);
+		System.out.println("searchBankByKeywordList: "+searchBankByKeywordList);
+
+        model.addAttribute("codeBankNameList", codeBankNameList);
+
+        model.addAttribute("loginUserId", loginUserBean.getUser_num());
+        
+       
+       
+        return "exchange/exchangeAsk";
     }
-
-    // 환율정보를 가져와서 출력용 DTO로 만들어 return
-    private List<ExchangeRateDTO> setupExchangeRateDtoList(String strDate) {
-        System.out.println("setupExchangeRateDtoList()");
-        System.out.println("strDate : " + strDate);
-        List<ExchangeRateBean> rateBeanList = exchangeRateService.getExchangeRate(strDate);
-        if (null == rateBeanList || rateBeanList.isEmpty()) { // DB와 크롤링 결과 둘다 존재하지 않음.
-            return null;
-        }
-
-        List<ExchangeRateDTO> rateDtoList = new ArrayList<>();
-
-        for (ExchangeRateBean bean : rateBeanList) {
-            ExchangeRateDTO dto = new ExchangeRateDTO();
-            convertBeanToDto(bean, dto);
-            dto.setCode_money_name(codeMoneyService.getCodeMoneyName(bean.getCode_money()));
-            rateDtoList.add(dto);
-        }
-        return rateDtoList;
-    }
-
-    // ExchangeRateBean을 ExchangeRateDTO로 변환
-    private void convertBeanToDto(ExchangeRateBean bean, ExchangeRateDTO dto) {
-        dto.setCode_date(bean.getCode_date());
-        dto.setCode_money(bean.getCode_money());
-        dto.setEx_buy(bean.getEx_buy());
-        dto.setEx_sell(bean.getEx_sell());
-        dto.setEx_standard(bean.getEx_standard());
-    }
-
+    */
+	
+    
 }

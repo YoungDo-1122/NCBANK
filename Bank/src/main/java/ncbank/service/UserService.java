@@ -1,7 +1,5 @@
 package ncbank.service;
 
-import java.util.Random;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
+import ncbank.mapper.UserMapper;
 import ncbank.util.Encrypt;
 import ncbank.util.SmsSender;
 
@@ -21,6 +20,9 @@ public class UserService {
 
 	@Autowired
 	private UserDAO userDaO;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Autowired
 	private Encrypt encrypt;
@@ -42,6 +44,14 @@ public class UserService {
 	}
 
 	public void addUserInfo(UserBean mBean) {
+		int size = userMapper.userCount();
+		mBean.setUser_num(size+1);
+		userMapper.addMember(mBean);
+		userMapper.addLogin(mBean);
+		/*
+		 * String hashedPassword = passwordEncoder.encode(mBean.getPwd());
+		 * mBean.setPwd(hashedPassword);
+		 */
 		String salt = encrypt.getSalt();
 		String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt);
 

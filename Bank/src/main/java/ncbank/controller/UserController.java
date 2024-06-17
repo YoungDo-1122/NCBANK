@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ncbank.beans.UserBean;
 import ncbank.service.UserService;
-import ncbank.util.SmsSender;
 import ncbank.validator.UserValidator;
 
 @Controller

@@ -6,16 +6,25 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class AccountBean {
-	private String ac_name;
 	private String account;
 	@Size(max = 4, min = 4)
 	@Pattern(regexp = "\\d+", message = "숫자만 입력해야 합니다")
 	private String ac_password;
-	private Date ac_date;
-	private int ac_type;
+	private String ac_name;
 	@Size(max = 30, min = 1)
 	@Pattern(regexp = "\\d+", message = "숫자만 입력해야 합니다")
 	private String ac_balance;
+	private int ac_type;
+	private Date ac_date;
+	private int user_num;
+
+	public int getUser_num() {
+		return user_num;
+	}
+
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
+	}
 
 	public String getAc_password() {
 		return ac_password;
