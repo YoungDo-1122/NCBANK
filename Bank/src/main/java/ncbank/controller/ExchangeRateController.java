@@ -29,7 +29,13 @@ import ncbank.service.ExchangeService;
 
 @Controller
 @RequestMapping("/exchange")
-public class ExchangeController {
+public class ExchangeRateController {
+
+    @Autowired
+    ExchangeRateService exchangeRateService;
+
+    @Autowired
+    private DateManager dateManager;
     
     @Autowired
     private ExchangeService exchangeService;
@@ -110,45 +116,107 @@ public class ExchangeController {
         }
     }
     
-	/*
-	// AJAX 요청을 처리하는 메소드 추가
-	@GetMapping(value = "/searchBank", produces = "application/json")
-	@ResponseBody
-	public List<CodeBankBean> searchBank(@RequestParam("keyword") String keyword) {
-	    try {
-	        return exchangeService.searchBankByKeyword(keyword);
-	    } catch (Exception e) {
-	        e.printStackTrace();  // 로그에 예외 출력
-	        return new ArrayList<>();  // 빈 리스트 반환하여 클라이언트에 에러를 전송하지 않음
-	    }
-	}
-    */
-    /*
-    @GetMapping("/searchBank")
-    public String getSearchBank(@ModelAttribute("createExchangeBean") CreateExchangeBean createExchangeBean,
-    							Model model) throws ParseException {
+    // 시작날짜 ~ 끝날짜 까지의 환율정보를 DB에 추가 - 백 데이터 추가용
+    // + 환율 그래프 기간 요청시 ?
+    @GetMapping("addRateInquiry_DateRange")
+    public String addRateInquiry_DateRange() {
+    	
+    	exchangeRateService.addRateInquiry_DateRange(
+    			dateManager.getMoveDate(dateManager.getCurrentDate("yyyyMMdd"), -6, 0, "yyyyMMdd"), 
+    			dateManager.getCurrentDate("yyyyMMdd"));
+    	
+    	return "exchange/rateInquiry";
+    }
+    
+    /* ==========[환율 계산기]========== */
+    
+    /* 환율 계산기 */
+    @GetMapping("/calculator")
+    public String calculator(Model model) {
+    	System.out.println("ExchangeController calculator()");
+    	
+    	// DB에 존재하는 환율 데이터중 최종 고시일의 환율 데이터를 가져온다 (크롤링x)
+    	List<ExchangeRateBean> finalExchangeRateList = exchangeRateService.getFinalExchangeRate();
+    	if (null == finalExchangeRateList) { // 이경우는 거의 없다고 보면됨.
+    		System.out.println("finalExchangeRateList is null");
+    		return "exchange/calculator";
+    	}
+    	
+    	// 출력용 DTO로 전환
+        List<ExchangeRateDTO> rateDtoList = exchangeRateService.convertExchangeDTOList(finalExchangeRateList);
         
+        String inquiryDate = dateManager.parseDateToString(rateDtoList.get(0).getCode_date(), "yyyy.MM.dd");
+        
+        model.addAttribute("ExchangeRateList", rateDtoList);
+        model.addAttribute("inquiryDate", inquiryDate);
+        
+        // 한국 원 정보는 따로 가져감
+        ExchangeRateBean beanKRW = exchangeRateService.findFinalExchangeRate("KRW");
+        ExchangeRateDTO dtoKRW = exchangeRateService.convertExchangeDTO(beanKRW);
+        
+        model.addAttribute("beanKRW", dtoKRW);
+        
+        return "exchange/calculator";
+    }
+    
+    /* ==========[환율 알림]========== */
+    @GetMapping("/notice")
+    public String notic(
+    		// 1:안내 2:등록 3:변경
+    		@RequestParam(value="noticContentIndex", defaultValue="1") int noticContentIndex,
+    		Model model) {
+    	System.out.println("ExchangeController notice()");
+    	
+    	// 알림페이지 구분을 위한 index
+    	model.addAttribute("noticContentIndex", noticContentIndex);
+    	System.out.println("noticContentIndex : " + noticContentIndex);
+    	
+    	// 여기서 로그인 검사를 해야함.
+    	// 로그인 ㄴㄴ -> 로그인 펭지ㅣ
+    	// 로그인 ㅇㅇ -> 알림페이지에서 import jsp 만 변경? or 페이지를 하나 더 연다?
+    	
+    	return "exchange/notice";
+    }
+    
+    @GetMapping("sendNoticeMail")
+    // Spring MVC에서 자동으로 HttpServletRequest와 HttpServletResponse 객체를 컨트롤러 메서드에 주입
+    public String sendNoticeMail(HttpServletRequest request, HttpServletResponse response) {
+    	
+    	/* 일반적인 메일 */
+    	String rootPath = request.getServletContext().getRealPath("/");
+    	String filePath = rootPath + "resources/img/그웬1.jpg";
+    	
+		emailManager.sendEmail("jcjhjg12@gmail.com", 
+				"테스트 메일 제목", "테스트 메일 내용", filePath);
 		
+		/* jsp 내용 메일 */
+        // jsp에 필요한 데이터 세팅
+        List<ExchangeRateBean> finalExchangeRateList = exchangeRateService.getFinalExchangeRate();   	
+        List<ExchangeRateDTO> rateDtoList = exchangeRateService.convertExchangeDTOList(finalExchangeRateList);
         
+        String inquiryDate = dateManager.parseDateToString(rateDtoList.get(0).getCode_date(), "yyyy.MM.dd");
         
-        // code_bank - code_bank_name 엮은 전체 데이터 가져오기
-        List<CodeBankBean> codeBankNameList = exchangeService.getCodeBankName();
-
-        String keyword = "퇴계";
-		List<CodeBankBean> searchBankByKeywordList = exchangeService.searchBankByKeyword(keyword);
+        request.setAttribute("ExchangeRateList", rateDtoList);
+        request.setAttribute("inquiryDate", inquiryDate);
         
-        //System.out.println("exchangeAskList: "+exchangeAskList);
-        //System.out.println("codeBankNameList: "+codeBankNameList);
-        //System.out.println("getAccountList: "+getAccountList);
-		System.out.println("searchBankByKeywordList: "+searchBankByKeywordList);
-
-        model.addAttribute("codeBankNameList", codeBankNameList);
-
-        model.addAttribute("loginUserId", loginUserBean.getUser_num());
+        // 한국 원 정보는 따로 가져감
+        ExchangeRateBean beanKRW = exchangeRateService.findFinalExchangeRate("KRW");
+        ExchangeRateDTO dtoKRW = exchangeRateService.convertExchangeDTO(beanKRW);
         
-       
-       
-        return "exchange/exchangeAsk";
+        request.setAttribute("beanKRW", dtoKRW);
+        
+		emailManager.sendJspEmail("jcjhjg12@gmail.com",
+				"메일 테스트 제목", "/WEB-INF/views/exchange/sendNoticeMail.jsp", request, response);
+		
+    	return "exchange/rateInquiry";
+    }
+    
+    /* ==========[환율 차트]========== */
+    @GetMapping("/rateChart")
+    public String rateChart() {
+    	System.out.println("ExchangeController rateChart()");
+    	
+    	return "exchange/rateChart";
     }
     */
 	
