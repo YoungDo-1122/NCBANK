@@ -1,0 +1,123 @@
+@charset "UTF-8";
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-wrapper {
+    text-align: center; /* Center align the carousel */
+    margin-bottom: 20px;
+}
+
+.carousel {
+    position: relative;
+    overflow: hidden;
+    margin: 0 auto; /* Center the carousel horizontally */
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel img {
+    max-width: 100%;
+    height: auto;
+    display: none;
+}
+
+.carousel img.active {
+    display: block;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.carousel-button.prev {
+    left: 10px;
+}
+
+.carousel-button.next {
+    right: 10px;
+}
+
+.quickLink {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.quickLink ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.quickLink ul li {
+    margin-right: 10px;
+}
+
+.quickLink ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.tabMenu {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tabMenu input[type="radio"] {
+    display: none;
+}
+
+.tabMenu label {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.tabMenu label:hover {
+    background-color: #ddd;
+}
+
+.tabContent {
+    display: none;
+}
+
+.tabMenu input[type="radio"]:checked ~ #tab1Content,
+.tabMenu input[type="radio"]:checked ~ #tab2Content {
+    display: block;
+}
+
+.exchange_rate {
+    text-align: center;
+}
+
+#currencySelect {
+    margin-top: 10px;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#currencyImage {
+    margin-top: 10px;
+    max-width: 100px; /* Adjust as per your design */
+}

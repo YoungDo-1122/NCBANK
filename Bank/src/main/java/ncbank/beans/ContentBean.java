@@ -1,14 +1,18 @@
 package ncbank.beans;
 
+import javax.validation.constraints.NotBlank;
+
+import org.springframework.web.multipart.MultipartFile;
+
 public class ContentBean {
 
-	private int content_idx = 0;
-	private String content_subject = "";
-	private String content_text = "";
-	private String content_file = "";
-	private int content_writer_idx = 0;
-	private int content_board_idx = 0;
-	private String content_date = "";
+	private int content_idx;
+	private String content_subject;
+	private String content_text;
+	private String content_file;
+	private int content_writer_idx;
+	private int content_board_idx;
+	private String content_date;
 
 	public int getContent_idx() {
 		return content_idx;
@@ -42,14 +46,6 @@ public class ContentBean {
 		this.content_file = content_file;
 	}
 
-	public int getContent_writer_idx() {
-		return content_writer_idx;
-	}
-
-	public void setContent_writer_idx(int content_writer_idx) {
-		this.content_writer_idx = content_writer_idx;
-	}
-
 	public int getContent_board_idx() {
 		return content_board_idx;
 	}
@@ -64,6 +60,14 @@ public class ContentBean {
 
 	public void setContent_date(String content_date) {
 		this.content_date = content_date;
+	}
+
+	public int getContent_writer_idx() {
+		return content_writer_idx;
+	}
+
+	public void setContent_writer_idx(int content_writer_idx) {
+		this.content_writer_idx = content_writer_idx;
 	}
 
 }

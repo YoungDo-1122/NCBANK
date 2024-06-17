@@ -1,0 +1,51 @@
+@charset "UTF-8";
+
+/* bType : 버튼에 대한 스타일 정의 모음 */
+
+/*
+[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
+display > overflow > float > position >
+
+width > height > margin > padding >
+
+color > font-style > font-weight > font-size >
+line-height > font-family > text-indent > text-align >
+
+background-color > background-image >
+background-position > background-size >
+background-repeat
+
+border > border-radius
+*/
+
+/* bType01 */
+.bType01 {
+	color: white;
+	font-size: 20px;
+	font-weight: bord;
+	
+	background-color: blue;
+	
+	border: 3px soild gray;
+	border-radius: 5px;
+}
+
+.bType01:hover {
+	background-color: pink;
+}
+
+/* bType02 */
+.bType02 {
+	color: white;
+	font-size: 20px;
+	font-weight: bord;
+	
+	background-color: blue;
+	
+	border: 3px soild gray;
+	border-radius: 5px;
+}
+
+.bType02:hover {
+	background-color: pink;
+}
