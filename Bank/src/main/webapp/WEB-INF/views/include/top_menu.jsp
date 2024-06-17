@@ -8,7 +8,7 @@
 	href="${pageContext.request.contextPath}/css/top_menu.css">
 
 <nav>
-	<a class="navbar-brand" href="${root}/main"> <img
+	<a class="navbar-brand" href="${root}main"> <img
 		src="${root}/img/ncbank_logo.png" style="height: 100px" /></a>
 	<!-- 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
 			<span class="navbar-toggler-icon"></span> 
@@ -17,15 +17,15 @@
 	<ul id="main-menu">
 		<li><a href="#">조회</a>
 			<ul id=sub-menu>
-				<li><a href="${root}account/accountCheck">계좌조회</a></li>
-				<li><a href="${root}trans/transferCheck">이체내역 조회/</a></li>
+				<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+				<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
 			</ul></li>
 		<li><a href="#">이체</a>
 			<ul id=sub-menu>
-				<li><a href="${root}account/accountCreate">계좌생성</a></li>
-				<li><a href="${root}trans/transfer">이체</a></li>
+				<li><a href="${root}account/accountCreate">계좌 생성</a></li>
+				<li><a href="${root}trans/transfer">계좌 이체</a></li>
 				<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-				<li><a href="${root}account/transferAutoFix">자동 이체 수정</a></li>
+				<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
 			</ul></li>
 		<li><a href="#">모임</a>
 			<ul id=sub-menu>
