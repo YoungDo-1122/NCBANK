@@ -3,7 +3,6 @@ package ncbank.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import ncbank.beans.UserBean;
 import ncbank.service.UserService;
-import ncbank.util.SmsSender;
 import ncbank.validator.UserValidator;
 
 @Controller

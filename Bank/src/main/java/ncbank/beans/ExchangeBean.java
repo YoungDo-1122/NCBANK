@@ -1,7 +1,5 @@
 package ncbank.beans;
 
-import java.util.Date;
-
 public class ExchangeBean {
 	
 	private String code_date;  

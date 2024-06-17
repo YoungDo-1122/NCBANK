@@ -1,9 +1,5 @@
 package ncbank.beans;
 
-import javax.validation.constraints.NotBlank;
-
-import org.springframework.web.multipart.MultipartFile;
-
 public class ContentBean {
 
 	private int content_idx;
