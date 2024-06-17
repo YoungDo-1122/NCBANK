@@ -36,7 +36,6 @@ import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.TradeMapper;
 import ncbank.mapper.TransferMapper;
 import ncbank.mapper.UserMapper;
-import ncbank.service.CodeMoneyService;
 import ncbank.service.ExchangeRateService;
 import ncbank.service.TopMenuService;
 
@@ -185,18 +184,6 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return factoryBean;
 	}
 
-        // TopMenu 는 상단 메뉴여서 어디서든 요청을하든 변하지 않아야 하는 데이터
-        TopMenuInterceptor topMenuInterceptor = new TopMenuInterceptor(topMenuService, loginUserBean);
-        // registry 에 담기는 순간 리퀘스트 영역에 데이터가 올라감
-        InterceptorRegistration reg1 = registry.addInterceptor(topMenuInterceptor);
-        // /** : 모든 경로에 대해서 (어디서든 데이터를 끌어다 쓰게 하기 위해)
-        reg1.addPathPatterns("/**");
-        
-        ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService);
-        InterceptorRegistration reg2 = registry.addInterceptor(exchangeRateInterceptor);
-        // 환율 페이지의 전역에서 사용할수 있게
-        reg2.addPathPatterns("/exchange/*");
-    }
 	@Bean
 	public MapperFactoryBean<CreateExchangeBean> getCreateExchangeBean(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<CreateExchangeBean> factoryBean = new MapperFactoryBean<>(CreateExchangeBean.class);
