@@ -53,17 +53,29 @@
 			<div class="col-md-2">
 				<table>
 					<tr>
-						<td><h3>조회 / 이체</h3></td>
+						<th><h3>조회</h3></th>
+					</tr>
+					<tr>
+						<td>
+							<ul>
+								<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+								<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<h3>이체</h3>
+						</th>
 					</tr>
 					<tr>
 						<td>
 							<ul>
 								<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-								<li><a href="${root}account/accountCheck">계좌 조회</a></li>
 								<li><a href="${root}trans/transfer">계좌 이체</a></li>
-								<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
 								<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-								<li><a href="${root}/account/transferAutoFix">자동이체 수정</a></li>
+								<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
 							</ul>
 						</td>
 					</tr>

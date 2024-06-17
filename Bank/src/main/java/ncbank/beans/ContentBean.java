@@ -46,14 +46,6 @@ public class ContentBean {
 		this.content_file = content_file;
 	}
 
-	public MultipartFile getUpload_file() {
-		return upload_file;
-	}
-
-	public void setUpload_file(MultipartFile upload_file) {
-		this.upload_file = upload_file;
-	}
-
 	public int getContent_board_idx() {
 		return content_board_idx;
 	}
@@ -61,7 +53,6 @@ public class ContentBean {
 	public void setContent_board_idx(int content_board_idx) {
 		this.content_board_idx = content_board_idx;
 	}
-
 
 	public String getContent_date() {
 		return content_date;
