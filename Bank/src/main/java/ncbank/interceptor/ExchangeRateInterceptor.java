@@ -15,13 +15,13 @@ import ncbank.service.ExchangeRateService;
 import ncbank.utility.ExchangeRateDTO;
 
 public class ExchangeRateInterceptor implements HandlerInterceptor {
-	
+
 	private ExchangeRateService exchangeRateService;
-    
+
 	public ExchangeRateInterceptor(ExchangeRateService exchangeRateService) {
 		this.exchangeRateService = exchangeRateService;
 	}
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -52,5 +52,4 @@ public class ExchangeRateInterceptor implements HandlerInterceptor {
 		return true;
 	}
 
-	
 }

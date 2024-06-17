@@ -1,9 +1,8 @@
 package ncbank.beans;
 
+
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserBean {
    /*
@@ -18,29 +17,40 @@ public class UserBean {
     * NULL, pwd varchar2(100) NOT NULL );
     */
 
-   private int user_num = 0;
+	private int user_num;
 
-   @Size(min = 2, max = 4)
-   @Pattern(regexp = "[가-힣]*") // ㄱ에서 부터 끝까지 읽음
-   private String name;
-   private String address;
-   @Pattern(regexp = "^0\\d{1,2}(-|\\))\\d{3,4}-\\d{4}$") // 전화번호 형식
-   private String phone;
-   @Pattern(regexp = "\\d{6}\\-[1-4]\\d{6}") // 주민등록번호 형식
-   private String resident; // 주민번호
-   private String email; // 이메일
-   /* /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i */
-   private String join_date;
-   @Size(min = 4, max = 20)
-   @Pattern(regexp = "[a-zA-Z0-9]*") // 영어 또는 숫자만 입력 자주 쓰이는 정규식(Regular Expression)
-   private String id;
-   @Size(min = 4, max = 20)
-   @Pattern(regexp = "[a-zA-Z0-9]*")
-   /* /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$ 영문 숫자 특수기호 조합 8자리 이상 */
-   private String pwd;
-   @Size(min = 4, max = 20)
-   @Pattern(regexp = "[a-zA-Z0-9]*")
-   private String pwd2;
+	@Size(min = 2, max = 4)
+	@Pattern(regexp = "[가-힣]*") // ㄱ에서 부터 끝까지 읽음
+	private String name;
+	private String address; // 최종 주소
+	@Pattern(regexp = "^0\\d{1,2}(-|\\))\\d{3,4}-\\d{4}$") // 전화번호 형식
+	private String phone;
+	@Pattern(regexp = "\\d{6}\\-[1-4]\\d{6}") // 주민등록번호 형식
+	private String resident; // 주민번호
+	private String email; // 이메일
+	/* /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i */
+	private String join_date;
+	@Size(min = 4, max = 20)
+	@Pattern(regexp = "[a-zA-Z0-9]*") // 영어 또는 숫자만 입력 자주 쓰이는 정규식(Regular Expression)
+	private String id;
+	@Size(min = 4, max = 20)
+	@Pattern(regexp = "[a-zA-Z0-9]*")
+	/* /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$ 영문 숫자 특수기호 조합 8자리 이상 */
+	private String pwd;
+	@Size(min = 4, max = 20)
+	@Pattern(regexp = "[a-zA-Z0-9]*")
+	private String pwd2;
+	
+	
+	// 주소 api를 위한 필드 선언
+	private String add1; // 우편번호
+	private String add2; // 도로명주소
+	private String add3; // 상세주소
+	
+	private String salt;
+
+	// sms 인증 코드
+	private String verificationCode;
 
    private boolean idExistCheck = true;
 
@@ -52,14 +62,9 @@ public class UserBean {
       this.userLogin = false;
    }
 
-   /*
-    * public void hashAndSetPwd(String rawPassword) { BCryptPasswordEncoder encoder
-    * = new BCryptPasswordEncoder(); this.pwd = encoder.encode(rawPassword); }
-    */
-
-   public boolean isUserLogin() {
-      return userLogin;
-   }
+	public boolean isUserLogin() {
+		return userLogin;
+	}
 
    public void setUserLogin(boolean userLogin) {
       this.userLogin = userLogin;
@@ -133,17 +138,18 @@ public class UserBean {
       return pwd;
    }
 
-   public void setPwd(String pwd) {
-      this.pwd = pwd;
-   }
+	public String getPwd2() {
+		return pwd2;
+	}
 
-   public String getPwd2() {
-      return pwd2;
-   }
 
-   public void setPwd2(String pwd2) {
-      this.pwd2 = pwd2;
-   }
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	public void setPwd2(String pwd2) {
+		this.pwd2 = pwd2;
+	}
 
    public boolean isIdExistCheck() {
       return idExistCheck;
@@ -153,4 +159,51 @@ public class UserBean {
       this.idExistCheck = idExistCheck;
    }
 
+	public String getAdd1() {
+		return add1;
+	}
+
+	public void setAdd1(String add1) {
+		this.add1 = add1;
+	}
+
+	public String getAdd2() {
+		return add2;
+	}
+
+	public void setAdd2(String add2) {
+		this.add2 = add2;
+	}
+
+	public String getAdd3() {
+		return add3;
+	}
+
+	public void setAdd3(String add3) {
+		this.add3 = add3;
+	}
+
+	public String getVerificationCode() {
+		return verificationCode;
+	}
+
+	public void setVerificationCode(String verificationCode) {
+		this.verificationCode = verificationCode;
+	}
+		
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		String tmp = this.name + "/" + this.id + "/" + this.resident + "/" + this.pwd + "/" + this.pwd2; 
+		
+		return tmp;
+	}
 }
