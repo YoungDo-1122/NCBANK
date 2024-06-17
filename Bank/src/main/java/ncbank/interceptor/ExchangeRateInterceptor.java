@@ -29,11 +29,11 @@ public class ExchangeRateInterceptor implements HandlerInterceptor {
 		
 		// DB에 존재하는 환율 데이터중 최종 고시일의 환율 데이터를 가져온다 (크롤링x)
     	List<ExchangeRateBean> finalExchangeRateList = exchangeRateService.getFinalExchangeRate();
-    	if (null == finalExchangeRateList) { // 이경우는 거의 없다고 보면됨. -> 없으면 크롤링
+    	if (null == finalExchangeRateList || finalExchangeRateList.isEmpty()) { // 이경우는 거의 없다고 보면됨. -> 없으면 크롤링
     		System.out.println("finalExchangeRateList is null");
     		finalExchangeRateList = exchangeRateService.findFinalExchangeRate();
     	}
-    	
+
     	// 출력용 DTO로 전환
         List<ExchangeRateDTO> rateDtoList = exchangeRateService.convertExchangeDTOList(finalExchangeRateList);
         

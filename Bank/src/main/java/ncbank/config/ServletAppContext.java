@@ -147,7 +147,6 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return factoryBean;
 	}
 
-	// ������ ������ ���� ��ü(Mapper ����)
 	@Bean
 	public MapperFactoryBean<TradeMapper> getTradeMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<TradeMapper> factoryBean = new MapperFactoryBean<>(TradeMapper.class);

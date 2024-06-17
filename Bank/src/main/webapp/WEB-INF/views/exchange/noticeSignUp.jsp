@@ -26,7 +26,66 @@
 			</ul>
 		</div>
 		
-		<!-- 여기를 form:form으로 ? -->
+		
+		<form:form action="${root}exchange/noticeSignUp_success" method="post"
+			modelAttribute="ExchangeNoticeBean">
+			
+			<table>
+			<caption>환율알림서비스 신청/변경/해지에 관한 표</caption>
+			<colgroup> <!-- 열 그룹화 : 열단위 스타일링이나 속성 적용을 위해 -->
+				<col width="20%">
+				<col>
+			</colgroup>
+			<tbody>
+				<tr>
+					<!-- scope="row" : th 요소가 해당 행의 데이터 셀들에 대한 헤더 -->
+					<!-- b: 굵은 텍스트 | blind : css 로 숨기는 부분 (메모용) -->
+					<th scope="row">
+						<b class="txt-c4">* <span class="blind">필수입력</span></b>통화종류
+					</th>
+					<td>
+						<form:select path="code_money">
+							<c:forEach var="code" items="${codeMoneyList}">
+								<form:option value="${code.code_money}">${code.code_money}&nbsp;(${code.code_money_name})</form:option>
+							</c:forEach>
+						</form:select>
+						<
+						<input type="hidden" name="신청통화코드" id="신청통화코드" value="JPY">
+						JPY(일본 100 엔)
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<b class="txt-c4">* <span class="blind">필수입력</span></b>환율종류
+					</th>
+					<td>매매기준율 
+						<input type="hidden" name="고시환율기준구분코드" id="no2"	value="1">
+					</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">
+						<b class="txt-c4">* <span class="blind">필수입력</span></b>알림희망환율범위
+					</th>
+					<td>875.00 ~ 879.00</td>
+				</tr>
+				
+				<tr>
+					<th scope="row" rowspan="2">
+						<b class="txt-c4">* <span class="blind">필수입력</span></b>알림방법
+					</th>
+					<td>이메일 : jcjhj***@gmail.com</td>
+				</tr>
+				
+				<tr>
+					<td><label>문자메시지(SMS) : </label> 010 - 5736 - ****</td>
+				</tr>
+			</tbody>
+		</table>
+			
+		</form:form>
+		
 		<table>
 			<caption>환율알림서비스 신청/변경/해지에 관한 표</caption>
 			<colgroup> <!-- 열 그룹화 : 열단위 스타일링이나 속성 적용을 위해 -->

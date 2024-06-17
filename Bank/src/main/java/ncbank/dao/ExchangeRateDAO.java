@@ -12,7 +12,7 @@ import ncbank.mapper.ExchangeRateMapper;
 public class ExchangeRateDAO {
 
     @Autowired
-    private ExchangeRateMapper exchangeRateMapper = null;
+    private ExchangeRateMapper exchangeRateMapper;
 
     /* Select */
 

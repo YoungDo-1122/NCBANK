@@ -117,9 +117,9 @@
 		</select> <img id="currencyImage" src="img/그웬2.jpg" alt="통화 이미지">
 	</div>
 
-
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 
+	 
 </body>
 <script>
 	$(document).ready(function() {
