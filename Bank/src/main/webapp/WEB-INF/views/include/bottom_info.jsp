@@ -3,8 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/teststyle_bottom.css">
-<script>
+	href="${pageContext.request.contextPath}/css/bottom_info.css">  
+<!-- <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		const currencySelect = document.getElementById('currencySelect');
 		const currencyImage = document.getElementById('currencyImage');
@@ -15,46 +15,93 @@
 			currencyImage.alt = `${selectedValue} 이미지`;
 		});
 	});
-</script>
+</script> -->
 <footer>
-	<!-- <div class="bottom_bar" style="width: 100% !important;"></div> -->
-
-	<div class="bottom_bar">
-		<a href="#" class="tit">대표전화 1588-9999</a>
-		<div class="info">
-			<dl>
-				<dt>대표전화</dt>
-				<dd>
-					<ul>
-						<li>1588-9999, 1599-9999, 1644-9999</li>
-						<li><span>해외에서 국내로 걸 때</span>+82-2-6300-9999</li>
-						<li class="groupLine">대출 단기연체 및 만기안내<br> <em class="s1">1588-9008</em></li>
-						<li><span>해외에서 국내로 걸 때</span>+82-2-3702-1240</li>
-					</ul>
-				</dd>
-				<dt>상담전용</dt>
-				<dd>
-					<ul>
-						<li>1800-9999<span>(분실 및 사고신고 제외)</span></li>
-						<li class="groupLine">투자상품 승낙확인<br> <em class="s1">1833-3938</em></li>
-						<li><span>해외에서 국내로 걸 때</span>+82-1833-3938</li>
-					</ul>
-				</dd>
-				<dt>기업전용</dt>
-				<dd>1599-9499</dd>
-				<dt>기업(B2B)</dt>
-				<dd>1566-9944</dd>
-				<dt>외국인전용</dt>
-				<dd>1599-4477</dd>
-				<dt>어르신전용</dt>
-				<dd>1644-3308</dd>
-			</dl>
-			<div class="sns">
-				<a href="www.youtube.com"><img src="img/youtube5050.png"
-					alt="youtube"></a> <a href="www.instagram.com"><img
-					src="img/instagram5050.png" alt="instagram"></a> <a
-					href="www.facebook.com"><img src="img/facebook5050.png"
-					alt="facebook"></a>
+	<div class="footWrap">
+		<div class="foot_area_2015">
+			<!-- 기본정보 -->
+			<ul class="nav-fnb mb0">
+				<li><a href="https://obank.kbstar.com/quics?page=C019763&amp;QSL=F">이용상담</a></li>
+				<li><a href="https://obank.kbstar.com/quics?page=C040531&amp;QSL=F">보안프로그램</a></li>
+				<li><a href="https://obank.kbstar.com/quics?page=C019933&amp;QSL=F">사고신고</a></li>
+				<li><a href="https://obank.kbstar.com/quics?page=C023000&amp;QSL=F">보호금융상품등록부</a></li>
+				<li><a href="https://obank.kbstar.com/quics?page=C036346&amp;QSL=F"><strong>전자민원접수</strong></a></li>
+				<li><a href="https://obank.kbstar.com/quics?page=C108662&amp;QSL=F" class="fot_p_txt"><strong>개인정보처리방침</strong></a></li>
+				<li><a href="https://obank.kbstar.com/quics?page=C019924&amp;QSL=F"><strong>신용정보활용체제</strong></a></li>
+				<li><a href="https://obank.kbstar.com/quics?page=C108732&amp;QSL=F"><strong>위치기반서비스 이용약관</strong></a></li>
+				<li><a href="https://omoney.kbstar.com/quics?page=C017681&amp;QSL=F"><strong>경영공시</strong></a></li>
+			</ul>
+			<ul class="nav-fnb">
+				<li><a href="https://obank.kbstar.com/quics?page=C040593&amp;QSL=F">그룹 내 고객정보 제공안내</a></li>
+				<li><a href="https://obank.kbstar.com/quics?page=C057315&amp;QSL=F">스튜어드십 코드</a></li>
+			</ul>
+			<!-- 바로가기 및 고객센터 -->
+			<div class="info-group" id="navFooterGroup">
+				<ul class="list">
+					<!-- KB금융그룹네트워크 -->
+					<li>
+						<label for="networkSelect" class="tit"></label>
+						<select id="networkSelect" class="info">
+							<option value="https://www.kbfg.com">KB금융그룹</option>
+							<option value="http://www.kbsec.co.kr">KB증권</option>
+							<option value="http://www.kbinsure.co.kr">KB손해보험</option>
+							<option value="https://www.kbcard.com">KB국민카드</option>
+							<option value="http://www.kbam.co.kr">KB자산운용</option>
+							<option value="http://www.kbcapital.co.kr">KB캐피탈</option>
+							<option value="https://www.kblife.co.kr">KB라이프생명</option>
+							<option value="http://www.kbret.co.kr">KB부동산신탁</option>
+							<option value="https://www.kbsavings.com">KB저축은행</option>
+							<option value="http://www.kbic.co.kr">KB인베스트먼트</option>
+							<option value="http://www.kds.co.kr">KB데이타시스템</option>
+							<option value="http://www.kbci.co.kr">KB신용정보</option>
+							<option value="https://www.kbfg.com/kbresearch/main.do">KB경영연구소</option>
+						</select>
+					</li>
+					<!-- 대표전화 -->
+					<li class="ic1">
+						<label for="phoneSelect" class="tit"></label>
+						<select id="phoneSelect" class="info">
+							<option value="tel:1588-9999">대표전화 1588-9999</option>
+							<option value="tel:1599-9999">대표전화 1599-9999</option>
+							<option value="tel:1644-9999">대표전화 1644-9999</option>
+							<option value="tel:+82-2-6300-9999">해외에서 국내로 걸 때 +82-2-6300-9999</option>
+							<option value="tel:1588-9008">대출 단기연체 및 만기안내 1588-9008</option>
+							<option value="tel:+82-2-3702-1240">해외에서 국내로 걸 때 +82-2-3702-1240</option>
+							<option value="tel:1800-9999">상담전용 1800-9999 (분실 및 사고신고 제외)</option>
+							<option value="tel:1833-3938">투자상품 승낙확인 1833-3938</option>
+							<option value="tel:+82-1833-3938">해외에서 국내로 걸 때 +82-1833-3938</option>
+							<option value="tel:1599-9499">기업전용 1599-9499</option>
+							<option value="tel:1566-9944">기업(B2B) 1566-9944</option>
+							<option value="tel:1599-4477">외국인전용 1599-4477</option>
+							<option value="tel:1644-3308">어르신전용 1644-3308</option>
+						</select>
+					</li>
+					<!-- 비교조회서비스 -->
+					<li>
+						<label for="compareSelect" class="tit"></label>
+						<select id="compareSelect" class="info" onchange="window.open(this.value, '_blank')">
+							<option value="#">비교교회서비스</option>
+							<option value="https://portal.kfb.or.kr/compare/receiving_deposit_3.php">은행금리비교</option>
+							<option value="http://finlife.fss.or.kr">금융상품 한눈에</option>
+							<option value="https://fine.fss.or.kr/fine/main/main.do?menuNo=900000">금융소비자정보포털 '파인'</option>
+						</select>
+					</li>
+				</ul>
+			</div>
+			<!-- SNS -->
+			<div class="info-sns">
+				<ul>
+					<li class="ic1"><a href="https://www.facebook.com/kbkookminbank" target="_blank" title="KB국민은행 페이스북 새창 열기" class="facebook"></a></li>
+					<li class="ic2"><a href="https://instagram.com/kbkookminbank" target="_blank" title="KB국민은행 인스타그램 새창 열기" class="instagram"></a></li>
+					<li class="ic3"><a href="https://www.youtube.com/user/openkbstar" target="_blank" title="KB국민은행 YouTube 새창 열기" class="youtube"></a></li>
+					<li class="ic4"><a href="https://blog.naver.com/youngkbblog" target="_blank" title="KB국민은행 blog 새창 열기" class="blog"></a></li>
+				</ul>
+			</div>
+				<!-- ################################## -->
+				<!-- ### COPYRIGHT 및 마크 ### -->
+				<!-- ################################## -->
+				<p class="copy">Copyright KB Kookmin Bank. All Rights Reserved.</p>
+				<!-- ################################## -->
 			</div>
 		</div>
 	</div>

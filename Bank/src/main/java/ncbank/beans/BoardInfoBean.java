@@ -2,8 +2,8 @@ package ncbank.beans;
 
 public class BoardInfoBean {
 
-	private int board_info_idx = 0;
-	private String board_info_name = "";
+	private int board_info_idx;
+	private String board_info_name;
 
 	public int getBoard_info_idx() {
 		return board_info_idx;
