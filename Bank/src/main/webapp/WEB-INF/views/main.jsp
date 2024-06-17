@@ -32,13 +32,13 @@
 			<div class="quickLink">
 				<ul>
 					<li><a href="#"> <img src="img/NCBank.png" alt="빠른링크1">
-							<p>조회</p>
+							<br />조회
 					</a></li>
 					<li><a href="#"> <img src="img/NCBank2.png" alt="빠른링크2">
-							<p>이체</p>
+							<br />이체
 					</a></li>
 					<li><a href="#"> <img src="img/NCBank3.png" alt="빠른링크3">
-							<p>환율</p>
+							<br />환율
 					</a></li>
 				</ul>
 			</div>

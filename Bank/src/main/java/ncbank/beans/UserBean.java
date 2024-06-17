@@ -16,7 +16,7 @@ public class UserBean {
 	 * NULL, pwd varchar2(100) NOT NULL );
 	 */
 
-	private int user_num = 0;
+	private int user_num;
 
 	@Size(min = 2, max = 4)
 	@Pattern(regexp = "[가-힣]*") // ㄱ에서 부터 끝까지 읽음

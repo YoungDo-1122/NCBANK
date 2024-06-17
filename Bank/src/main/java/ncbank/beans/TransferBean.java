@@ -5,13 +5,32 @@ import java.util.Date;
 public class TransferBean {
 	private int trans_num;
 	private int trans_type;
-	private int trans_amount;
-	private int trans_balance;
+	private String trans_balance;
 	private String trans_text;
 	private Date trans_date;
 	private String to_account;
 	private String from_account;
 	private String code_organ;
+
+	private String code_organ_name;
+
+	private AccountBean fromAccountDetails;
+
+	public String getCode_organ_name() {
+		return code_organ_name;
+	}
+
+	public void setCode_organ_name(String code_organ_name) {
+		this.code_organ_name = code_organ_name;
+	}
+
+	public AccountBean getFromAccountDetails() {
+		return fromAccountDetails;
+	}
+
+	public void setFromAccountDetails(AccountBean fromAccountDetails) {
+		this.fromAccountDetails = fromAccountDetails;
+	}
 
 	public int getTrans_num() {
 		return trans_num;
@@ -29,19 +48,11 @@ public class TransferBean {
 		this.trans_type = trans_type;
 	}
 
-	public int getTrans_amount() {
-		return trans_amount;
-	}
-
-	public void setTrans_amount(int trans_amount) {
-		this.trans_amount = trans_amount;
-	}
-
-	public int getTrans_balance() {
+	public String getTrans_balance() {
 		return trans_balance;
 	}
 
-	public void setTrans_balance(int trans_balance) {
+	public void setTrans_balance(String trans_balance) {
 		this.trans_balance = trans_balance;
 	}
 

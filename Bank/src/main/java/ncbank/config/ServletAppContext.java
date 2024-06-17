@@ -28,6 +28,7 @@ import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
 import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.TopMenuMapper;
+import ncbank.mapper.TransferMapper;
 import ncbank.mapper.UserMapper;
 import ncbank.service.TopMenuService;
 
@@ -147,6 +148,13 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Bean
 	public MapperFactoryBean<CodeOrganMapper> codeOrganMapper(SqlSessionFactory sqlSessionFactory) {
 		MapperFactoryBean<CodeOrganMapper> factoryBean = new MapperFactoryBean<>(CodeOrganMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+
+	@Bean
+	public MapperFactoryBean<TransferMapper> transferMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<TransferMapper> factoryBean = new MapperFactoryBean<>(TransferMapper.class);
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}

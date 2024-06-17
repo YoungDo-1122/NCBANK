@@ -29,16 +29,16 @@
 	<div class="collapse navbar-collapse" id="navMenu">
 		<ul class="navbar-nav">
 			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" href="#" id="navbardrop">조회 및
+				class="nav-link dropdown-toggle" href="#" id="navbardrop">조회 /
 					이체</a>
 				<div class="dropdown-menu">
 					<a class="dropdown-item" href="${root}account/accountCreate">계좌
 						생성</a> <a class="dropdown-item" href="${root}account/accountCheck">계좌
-						조회</a> <a class="dropdown-item" href="${root}account/transferCheck">이체
-						내역 조회</a> <a class="dropdown-item" href="${root}account/transfer">이체</a>
-					<a class="dropdown-item" href="${root}account/transferAuto">자동
-						이체 등록</a> <a class="dropdown-item"
-						href="${root}/account/transferAutoFix">자동 이체 수정</a>
+						조회</a> <a class="dropdown-item" href="${root}trans/transferCheck">이체
+						내역 조회</a> <a class="dropdown-item" href="${root}trans/transfer">계좌 이체</a>
+					<a class="dropdown-item" href="${root}account/transferAuto">자동이체
+						등록</a> <a class="dropdown-item" href="${root}/account/transferAutoFix">자동이체
+						수정</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbardrop"> 모임통장
