@@ -1,6 +1,7 @@
 package ncbank.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,11 @@ public class UserController {
 
 	// 가공처리를 할땐 Service로 보냄
 	@Autowired
-	UserService userService = null;
+	UserService userService;
 
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
-
+	
 	@GetMapping("/login")
 	public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
 			@RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
@@ -39,19 +40,63 @@ public class UserController {
 	}
 
 	@PostMapping("/login_pro")
-	public String login_pro(@Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean, BindingResult result) {
+	public String login_pro(@Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean, BindingResult result, HttpSession session) {
 
+		
+		
 		if (result.hasErrors()) {
 			System.out.println("===============");
 			return "user/login";
 		}
+		
+		UserBean loginUser = userService.getLoginUserInfo(tempLoginBean);
+		
+		 if (loginUser != null) {
+	            // 세션에 로그인된 사용자 정보 저장
+	            session.setAttribute("loginUser", loginUser);
+
+	            // loginUserBean을 업데이트
+	            loginUserBean.setUser_num(loginUser.getUser_num());
+	            loginUserBean.setName(loginUser.getName());
+	            loginUserBean.setAddress(loginUser.getAddress());
+	            loginUserBean.setPhone(loginUser.getPhone());
+	            loginUserBean.setResident(loginUser.getResident());
+	            loginUserBean.setEmail(loginUser.getEmail());
+	            loginUserBean.setId(loginUser.getId());
+	            loginUserBean.setPwd(loginUser.getPwd());
+	            loginUserBean.setUserLogin(true);
+	            
+	            System.out.println(loginUserBean.getAddress());
+				System.out.println(loginUserBean.getEmail());
+				System.out.println(loginUserBean.getId());
+				System.out.println(loginUserBean.getJoin_date());
+				System.out.println(loginUserBean.getName());
+				System.out.println(loginUserBean.getPwd());
+				System.out.println(loginUserBean.getPwd2());
+				System.out.println(loginUserBean.getResident());
+				System.out.println(loginUserBean.getUser_num());
 
 		// 세션영역에 있는 로그인 정보 불러오기
+	            /*
 		userService.getLoginUserInfo(tempLoginBean);
 
 		// loginUserBean : session 영역에 있는 거, sessionScopre에 있는 UserBean의 객체
 		// @Resource(name="loginUserBean") 여기를 통해서 isUserLogin() 가능
 		if (loginUserBean.isUserLogin() == true) {
+			System.out.println(loginUserBean.getAddress());
+			System.out.println(loginUserBean.getEmail());
+			System.out.println(loginUserBean.getId());
+			System.out.println(loginUserBean.getJoin_date());
+			System.out.println(loginUserBean.getName());
+			System.out.println(loginUserBean.getPwd());
+			System.out.println(loginUserBean.getPwd2());
+			System.out.println(loginUserBean.getResident());
+			System.out.println(loginUserBean.getUser_num());
+			
+			tempLoginBean.setUser_num(loginUserBean.getUser_num());
+			System.out.println(tempLoginBean);
+			*/
+			
 			return "user/login_success";
 		} else {
 

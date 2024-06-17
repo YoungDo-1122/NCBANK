@@ -9,6 +9,15 @@ public class AccountBean {
 	private Date ac_date;
 	private int ac_type;
 	private int ac_balance;
+	private int user_num;
+
+	public int getUser_num() {
+		return user_num;
+	}
+
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
+	}
 
 	public String getAc_password() {
 		return ac_password;

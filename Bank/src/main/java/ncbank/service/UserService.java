@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
+import ncbank.mapper.UserMapper;
 
 // 서비스를 받는다 - 데이터를 가져와서 가공작업을 한다.
 @Service
@@ -14,6 +15,9 @@ public class UserService {
 
 	@Autowired
 	private UserDAO userDaO;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
@@ -27,7 +31,10 @@ public class UserService {
 	}
 
 	public void addUserInfo(UserBean mBean) {
-
+		int size = userMapper.userCount();
+		mBean.setUser_num(size+1);
+		userMapper.addMember(mBean);
+		userMapper.addLogin(mBean);
 		/*
 		 * String hashedPassword = passwordEncoder.encode(mBean.getPwd());
 		 * mBean.setPwd(hashedPassword);
@@ -36,15 +43,9 @@ public class UserService {
 		userDaO.addUserInfo(mBean);
 	}
 
-	public void getLoginUserInfo(UserBean tempLoginUserBean) {
-
-		UserBean tempLoginUserBean2 = userDaO.getLoginUserInfo(tempLoginUserBean);
-		// 가져온 데이터가 있다면
-		if (tempLoginUserBean2 != null) {
-			loginUserBean.setId(tempLoginUserBean2.getId());
-			loginUserBean.setName(tempLoginUserBean2.getName());
-			loginUserBean.setUserLogin(true); // 로그인 상태
-		}
+	public UserBean getLoginUserInfo(UserBean tempLoginUserBean) {
+		
+		return userMapper.getLoginUserInfo(tempLoginUserBean);
 
 	}
 }
