@@ -7,8 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import ncbank.beans.AccountBean;
 import ncbank.beans.AutoBean;
-import ncbank.beans.GroupAccountBean;
-import ncbank.beans.UserBean;
 import ncbank.mapper.GroupAccountMapper;
 
 @Repository

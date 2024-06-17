@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,21 +21,16 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import ncbank.beans.CreateExchangeBean;
 import ncbank.beans.UserBean;
-import ncbank.interceptor.ExchangeRateInterceptor;
 import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.AccountMapper;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
 import ncbank.mapper.CodeOrganMapper;
-import ncbank.mapper.ExchangeMapper;
-import ncbank.mapper.ExchangeRateMapper;
+import ncbank.mapper.GroupAccountMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.TradeMapper;
-import ncbank.mapper.TransferMapper;
 import ncbank.mapper.UserMapper;
-import ncbank.service.ExchangeRateService;
 import ncbank.service.TopMenuService;
 
 // 주소가 요청됨 -> 컨트롤러에서 해당하는 주소를 찾음 (서버에게 컨트롤러가 어디에 있는지 알려줘야 함)
@@ -44,17 +38,15 @@ import ncbank.service.TopMenuService;
 
 @Configuration // Spring MVC 프로젝트 설정
 @EnableWebMvc // 어노테이션 셋팅 선언
-//@EnableWebSecurity 
 // Spring이 지정된 패키지의 Component를 검색하고 Bean으로 등록하도록 지시 (Component가 어디에 존재하는지) 
 // Service, Repository, Controller 의 상위 어노테이션 이 Component (DAO Service)
 @ComponentScan("ncbank.dao") // DAO가 이곳에 존재한다 고 알려줌
 @ComponentScan("ncbank.service")
 @ComponentScan("ncbank.controller")
-@ComponentScan("ncbank.util")
-@ComponentScan("ncbank.utility")
 
 // 한번에 등록도 가능.
 // @ComponentScan(basePackages = {"kr.co.soldesk.controller", "kr.co.soldesk.service", "kr.co.soldesk.dao"})
+
 @PropertySource("/WEB-INF/properties/db.properties") // 로드할 Property 파일 위치 지정 (서버에 연결)
 public class ServletAppContext implements WebMvcConfigurer {
 
@@ -156,14 +148,6 @@ public class ServletAppContext implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public MapperFactoryBean<ExchangeRateMapper> getExchangeRateMapper(SqlSessionFactory factory) throws Exception {
-		MapperFactoryBean<ExchangeRateMapper> factoryBean = new MapperFactoryBean<ExchangeRateMapper>(
-				ExchangeRateMapper.class);
-		factoryBean.setSqlSessionFactory(factory);
-		return factoryBean;
-	}
-
-	@Bean
 	public MapperFactoryBean<AccountMapper> accountMapper(SqlSessionFactory sqlSessionFactory) {
 		MapperFactoryBean<AccountMapper> factoryBean = new MapperFactoryBean<>(AccountMapper.class);
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
@@ -176,27 +160,15 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
-
+	
 	@Bean
-	public MapperFactoryBean<ExchangeMapper> getExchangeMapper(SqlSessionFactory factory) throws Exception {
-		MapperFactoryBean<ExchangeMapper> factoryBean = new MapperFactoryBean<>(ExchangeMapper.class);
+	public MapperFactoryBean<GroupAccountMapper> getGroupAccountMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<GroupAccountMapper> factoryBean = new MapperFactoryBean<GroupAccountMapper>(
+				GroupAccountMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
 
-	@Bean
-	public MapperFactoryBean<CreateExchangeBean> getCreateExchangeBean(SqlSessionFactory factory) throws Exception {
-		MapperFactoryBean<CreateExchangeBean> factoryBean = new MapperFactoryBean<>(CreateExchangeBean.class);
-		factoryBean.setSqlSessionFactory(factory);
-		return factoryBean;
-	}
-
-	@Bean
-	public MapperFactoryBean<TransferMapper> transferMapper(SqlSessionFactory sqlSessionFactory) {
-		MapperFactoryBean<TransferMapper> factoryBean = new MapperFactoryBean<>(TransferMapper.class);
-		factoryBean.setSqlSessionFactory(sqlSessionFactory);
-		return factoryBean;
-	}
 	/* ==========[Interceptors]========== */
 	// WebMvcConfigurer 제공 메소드
 
@@ -204,23 +176,17 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Autowired
 	private TopMenuService topMenuService;
 
-	@Autowired
-	private ExchangeRateService exchangeRateService;
-
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		WebMvcConfigurer.super.addInterceptors(registry);
 
 		// TopMenu 는 상단 메뉴여서 어디서든 요청을하든 변하지 않아야 하는 데이터
-		TopMenuInterceptor topMenuInterceptor = new TopMenuInterceptor(topMenuService, loginUserBean);
+		TopMenuInterceptor topMenuIntercepotr = new TopMenuInterceptor(topMenuService, loginUserBean);
 		// registry 에 담기는 순간 리퀘스트 영역에 데이터가 올라감
-		InterceptorRegistration reg1 = registry.addInterceptor(topMenuInterceptor);
+		InterceptorRegistration reg1 = registry.addInterceptor(topMenuIntercepotr);
+
 		// /** : 모든 경로에 대해서 (어디서든 데이터를 끌어다 쓰게 하기 위해)
 		reg1.addPathPatterns("/**");
-
-		ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService);
-		InterceptorRegistration reg2 = registry.addInterceptor(exchangeRateInterceptor);
-		reg2.addPathPatterns("/exchange/*");
 	}
 
 	// Properties 파일을 Bean으로 등록 (아무데서나 사용가능하기 위해)
@@ -235,11 +201,6 @@ public class ServletAppContext implements WebMvcConfigurer {
 		ReloadableResourceBundleMessageSource res = new ReloadableResourceBundleMessageSource();
 		res.setBasenames("/WEB-INF/properties/error_message");
 		return res;
-	}
-
-	@Bean
-	public StandardServletMultipartResolver multipartResolver() {
-		return new StandardServletMultipartResolver(); // 객체 생성하여 반환
 	}
 
 }

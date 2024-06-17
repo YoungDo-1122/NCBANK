@@ -4,6 +4,7 @@ package ncbank.beans;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+<<<<<<< Updated upstream
 public class UserBean {
    /*
     * CREATE TABLE member ( user_num varchar2(20) NOT NULL, name varchar2(10) NOT
@@ -16,13 +17,29 @@ public class UserBean {
     * CREATE TABLE login ( user_num varchar2(20) NOT NULL, id varchar2(20) NOT
     * NULL, pwd varchar2(100) NOT NULL );
     */
+=======
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+public class UserBean {
+	/*
+	 * CREATE TABLE member ( user_num varchar2(20) NOT NULL, name varchar2(10) NOT
+	 * NULL, address varchar2(50) NULL, phone varchar2(20) NOT NULL, resident
+	 * varchar2(14) NOT NULL, email varchar2(50) NULL, join_date varchar2(10) NOT
+	 * NULL );
+	 */
+
+	/*
+	 * CREATE TABLE login ( user_num varchar2(20) NOT NULL, id varchar2(20) NOT
+	 * NULL, pwd varchar2(100) NOT NULL );
+	 */
+>>>>>>> Stashed changes
 
 	private int user_num;
 
 	@Size(min = 2, max = 4)
 	@Pattern(regexp = "[가-힣]*") // ㄱ에서 부터 끝까지 읽음
 	private String name;
-	private String address; // 최종 주소
+	private String address;
 	@Pattern(regexp = "^0\\d{1,2}(-|\\))\\d{3,4}-\\d{4}$") // 전화번호 형식
 	private String phone;
 	@Pattern(regexp = "\\d{6}\\-[1-4]\\d{6}") // 주민등록번호 형식
@@ -40,6 +57,7 @@ public class UserBean {
 	@Size(min = 4, max = 20)
 	@Pattern(regexp = "[a-zA-Z0-9]*")
 	private String pwd2;
+<<<<<<< Updated upstream
 	
 	
 	// 주소 api를 위한 필드 선언
@@ -53,6 +71,10 @@ public class UserBean {
 	private String verificationCode;
 
    private boolean idExistCheck = true;
+=======
+
+	private boolean idExistCheck = true;
+>>>>>>> Stashed changes
 
    private boolean userLogin;
    
@@ -61,6 +83,11 @@ public class UserBean {
    public UserBean() {
       this.userLogin = false;
    }
+
+	/*
+	 * public void hashAndSetPwd(String rawPassword) { BCryptPasswordEncoder encoder
+	 * = new BCryptPasswordEncoder(); this.pwd = encoder.encode(rawPassword); }
+	 */
 
 	public boolean isUserLogin() {
 		return userLogin;
@@ -138,13 +165,20 @@ public class UserBean {
       return pwd;
    }
 
+<<<<<<< Updated upstream
 	public String getPwd2() {
 		return pwd2;
 	}
 
 
+=======
+>>>>>>> Stashed changes
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	public String getPwd2() {
+		return pwd2;
 	}
 
 	public void setPwd2(String pwd2) {
@@ -159,6 +193,7 @@ public class UserBean {
       this.idExistCheck = idExistCheck;
    }
 
+<<<<<<< Updated upstream
 	public String getAdd1() {
 		return add1;
 	}
@@ -206,4 +241,6 @@ public class UserBean {
 		
 		return tmp;
 	}
+=======
+>>>>>>> Stashed changes
 }

@@ -7,7 +7,7 @@ import ncbank.beans.UserBean;
 
 public class UserValidator implements Validator {
 
-	@Override	
+	@Override
 	public boolean supports(Class<?> clazz) {
 		return UserBean.class.isAssignableFrom(clazz);
 	}
@@ -19,7 +19,7 @@ public class UserValidator implements Validator {
 		String beanName = errors.getObjectName();
 		System.out.println(beanName); // joinUserBean
 
-		if (beanName.equals("mBean")) {
+		if (beanName.equals("joinUserBean")) {
 
 			if (!loginBean.getPwd().equals(loginBean.getPwd2())) {
 				errors.rejectValue("pwd", "NotEquals");

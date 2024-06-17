@@ -3,8 +3,6 @@ package ncbank.beans;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 public class UserBean {
 	/*
 	 * CREATE TABLE member ( user_num varchar2(20) NOT NULL, name varchar2(10) NOT

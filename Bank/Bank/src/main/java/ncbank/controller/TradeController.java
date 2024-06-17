@@ -19,12 +19,6 @@ public class TradeController {
     @GetMapping("/exchange/exchangeHistory")
     public String getTradeList(TradeBean tradeBean ,Model model) {
     	
-    	/* Controller 에서 처리하면서 테스트 하는게 편함.
-		 * try {
-		 * 
-		 * } catch (Exception e) { // TODO: handle exception }
-		*/
-    	
     	List<TradeBean> tradeList = tradeService.getTradeList3(tradeBean);
         System.out.println("TradeController");
     	System.out.println(tradeList);

@@ -2,8 +2,6 @@ package ncbank.mapper;
 
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.ibatis.annotations.Select;
 
 import ncbank.beans.TradeBean;

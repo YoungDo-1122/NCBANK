@@ -20,8 +20,6 @@ public class UserDAO {
 	public void addUserInfo(UserBean mBean) {
 		int size = userMapper.userCount();
 		mBean.setUser_num(size + 1);
-		mBean.setAddress(mBean.getAdd2()+"  "+mBean.getAdd3()); 
-		
 		userMapper.addMember(mBean);
 		userMapper.addLogin(mBean);
 	}

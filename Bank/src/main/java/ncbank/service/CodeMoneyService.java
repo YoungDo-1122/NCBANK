@@ -18,9 +18,5 @@ public class CodeMoneyService {
 		List<CodeMoneyBean> codeMoneyList = codeMoneyDAO.getCodeMoneyList();
 		return codeMoneyList;
 	}
-	
-	public String getCodeMoneyName(String code_money) {
-		return codeMoneyDAO.getCodeMoneyName(code_money);
-	}
 
 }

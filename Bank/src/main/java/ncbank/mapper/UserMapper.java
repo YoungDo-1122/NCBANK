@@ -18,11 +18,15 @@ public interface UserMapper {
 	@Select("SELECT COUNT(*) FROM login")
 	public int userCount();
 
+<<<<<<< Updated upstream
 	//회원가입
+=======
+>>>>>>> Stashed changes
 	@Insert("insert into member " + "(user_num  , name , address , phone , resident , email, join_date) "
 			+ "values (#{user_num},#{name},#{address},#{phone},#{resident},#{email},#{join_date})")
 	public void addMember(UserBean bean);
 
+<<<<<<< Updated upstream
 	@Insert("insert into login (user_num, id, pwd,salt) values (#{user_num},#{id},#{pwd},#{salt})")
 	public void addLogin(UserBean bean);
 
@@ -44,5 +48,14 @@ public interface UserMapper {
 	
 	
 	
+=======
+	@Insert("insert into login (user_num, id, pwd) values (#{user_num},#{id},#{pwd})")
+	public void addLogin(UserBean bean);
+
+	// 로그인 시 회원가입 정보 확인
+	@Select("SELECT m.user_num, m.name " + "FROM member m " + "JOIN login l ON m.user_num = l.user_num "
+			+ "WHERE l.id = #{id} AND l.pwd = #{pwd}")
+	UserBean getLoginUserInfo(UserBean tempLoginUserBean);
+>>>>>>> Stashed changes
 
 }
