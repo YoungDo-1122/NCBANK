@@ -100,7 +100,7 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>2.0.3</version>
 		</dependency>
-		 <!-- Bean Validation -->
+		<!-- Bean Validation -->
 		<!-- validation-api : Java Bean Validation API로, 객체의 유효성 검사에 사용 -->
 		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
 		<dependency>
@@ -133,9 +133,9 @@
 			<version>${javax.servlet.jsp-version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<!-- ========== ========== -->
-		
+
 		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
@@ -143,8 +143,7 @@
 			<version>1.1.1</version>
 		</dependency>
 
-	</dependencies>
-	
+
 		<!-- 비밀번호 해시 및 솔트 처리에 대한 의존성 추가-->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
@@ -165,6 +164,5 @@
 			<artifactId>sdk</artifactId>
 			<version>4.2.7</version>
 		</dependency>
-
 	</dependencies>
 </project>

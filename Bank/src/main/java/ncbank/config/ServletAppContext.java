@@ -28,10 +28,10 @@ import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.AccountMapper;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
-import ncbank.mapper.ExchangeRateMapper;
 import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.ExchangeRateMapper;
 import ncbank.mapper.TopMenuMapper;
+import ncbank.mapper.TradeMapper;
 import ncbank.mapper.TransferMapper;
 import ncbank.mapper.UserMapper;
 import ncbank.service.ExchangeRateService;
@@ -144,14 +144,15 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
+
 	// ������ ������ ���� ��ü(Mapper ����)
-    @Bean
-    public MapperFactoryBean<TradeMapper> getTradeMapper(SqlSessionFactory factory) throws Exception {
-        MapperFactoryBean<TradeMapper> factoryBean = new MapperFactoryBean<>(TradeMapper.class);
-        factoryBean.setSqlSessionFactory(factory);
-        return factoryBean;
-    }
-	
+	@Bean
+	public MapperFactoryBean<TradeMapper> getTradeMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<TradeMapper> factoryBean = new MapperFactoryBean<>(TradeMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+
 	@Bean
 	public MapperFactoryBean<ExchangeRateMapper> getExchangeRateMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<ExchangeRateMapper> factoryBean = new MapperFactoryBean<ExchangeRateMapper>(

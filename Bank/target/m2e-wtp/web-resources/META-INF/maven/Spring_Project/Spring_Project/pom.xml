@@ -69,7 +69,8 @@
 			<scope>provided</scope>
 		</dependency>
 
-	</dependencies>
+		<!-- ========== ========== -->
+
 		<!-- Spring JDBC : Spring 프레임워크의 JDBC 모듈, 데이터베이스 접근 단순화 -->
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
 		<dependency>
@@ -77,6 +78,7 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>5.2.3.RELEASE</version>
 		</dependency>
+
 		<!-- Commons DBCP : 데이터베이스 연결 풀링 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-dbcp2 -->
 		<dependency>
@@ -98,7 +100,7 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>2.0.3</version>
 		</dependency>
-		 <!-- Bean Validation -->
+		<!-- Bean Validation -->
 		<!-- validation-api : Java Bean Validation API로, 객체의 유효성 검사에 사용 -->
 		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
 		<dependency>
@@ -131,13 +133,17 @@
 			<version>${javax.servlet.jsp-version}</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- ========== ========== -->
+
 		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-	</dependencies>
+
+
 		<!-- 비밀번호 해시 및 솔트 처리에 대한 의존성 추가-->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
 		<dependency>
@@ -158,6 +164,5 @@
 			<artifactId>sdk</artifactId>
 			<version>4.2.7</version>
 		</dependency>
-
 	</dependencies>
 </project>

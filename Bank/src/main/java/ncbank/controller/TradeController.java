@@ -1,4 +1,4 @@
-package kr.co.soldesk.controller;
+package ncbank.controller;
 
 import java.util.List;
 
@@ -13,23 +13,23 @@ import ncbank.service.TradeService;
 @Controller
 public class TradeController {
 
-    @Autowired
-    private TradeService tradeService;
-    
-    @GetMapping("/exchange/exchangeHistory")
-    public String getTradeList(TradeBean tradeBean ,Model model) {
-    	
-		/* Controller ¿¡¼­ Ã³¸®ÇÏ¸é¼­ Å×½ºÆ® ÇÏ´Â°Ô ÆíÇÔ.
-		 * try {
+	@Autowired
+	private TradeService tradeService;
+
+	@GetMapping("/exchange/exchangeHistory")
+	public String getTradeList(TradeBean tradeBean, Model model) {
+
+		/*
+		 * Controller ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï¸é¼­ ï¿½×½ï¿½Æ® ï¿½Ï´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½. try {
 		 * 
 		 * } catch (Exception e) { // TODO: handle exception }
 		 */
-    	
-    	List<TradeBean> tradeList = tradeService.getTradeList3(tradeBean);
-        System.out.println("TradeController");
-    	System.out.println(tradeList);
-    	System.out.println("--------------------");
-        model.addAttribute("tradeList", tradeList);
-        return "exchange/exchangeHistory";
-    }
+
+		List<TradeBean> tradeList = tradeService.getTradeList3(tradeBean);
+		System.out.println("TradeController");
+		System.out.println(tradeList);
+		System.out.println("--------------------");
+		model.addAttribute("tradeList", tradeList);
+		return "exchange/exchangeHistory";
+	}
 }

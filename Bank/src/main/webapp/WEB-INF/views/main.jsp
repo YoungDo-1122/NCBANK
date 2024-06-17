@@ -17,7 +17,7 @@
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> -->
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/main.css"> 	
+	href="${pageContext.request.contextPath}/css/main.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -38,7 +38,7 @@
 			</div>
 			<div class="quickLink">
 				<ul>
-				<!--알아서 링크 거시고요 -->
+					<!--알아서 링크 거시고요 -->
 					<li><a href="#"> <img src="img/조회.png" alt="빠른링크1">
 							<p>조회</p>
 					</a></li>

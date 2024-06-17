@@ -1,4 +1,4 @@
-package kr.co.soldesk.controller;
+package ncbank.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,16 +15,17 @@ import ncbank.service.ExchangeApiRateService;
 @WebServlet("/exchange/exchangeRateApi")
 public class ExchangeApiRateController extends HttpServlet {
 
-    private ExchangeApiRateService exchangeApiRateService;
+	private ExchangeApiRateService exchangeApiRateService;
 
-    public ExchangeApiRateController() {
-        this.exchangeApiRateService = new ExchangeApiRateService();
-    }
+	public ExchangeApiRateController() {
+		this.exchangeApiRateService = new ExchangeApiRateService();
+	}
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	response.setContentType("text/html;charset=UTF-8");
-        List<ExchangeApiRateBean> exchangeRateApi = exchangeApiRateService.getAllExchangeRates();
-        request.setAttribute("exchangeRateApi", exchangeRateApi);
-        request.getRequestDispatcher("/WEB-INF/views/exchange/exchangeRateApi.jsp").forward(request, response);
-    }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/html;charset=UTF-8");
+		List<ExchangeApiRateBean> exchangeRateApi = exchangeApiRateService.getAllExchangeRates();
+		request.setAttribute("exchangeRateApi", exchangeRateApi);
+		request.getRequestDispatcher("/WEB-INF/views/exchange/exchangeRateApi.jsp").forward(request, response);
+	}
 }
