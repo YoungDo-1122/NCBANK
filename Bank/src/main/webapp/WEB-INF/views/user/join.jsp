@@ -147,7 +147,7 @@ function sendSMSVerification() {
 							<div class="form-group">
 								<form:label path="resident">주민번호</form:label>
 								<form:input path="resident" placeholder="주민번호 입력('-'까지 입력해주세요)"
-									class='form-control' />
+									class='form-control' maxlength="14"/>
 								<%-- 	<form:input path="resident" placeholder="앞자리 (######)" class='form-control' maxlength="6"/>
 								<form:password path="resident" placeholder="뒤자리 (#######)" class='form-control' maxlength="7"/> --%>
 								<form:errors path="resident" style='color:red' />

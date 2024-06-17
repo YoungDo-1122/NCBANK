@@ -4,9 +4,6 @@ package ncbank.beans;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-
 public class UserBean {
    /*
     * CREATE TABLE member ( user_num varchar2(20) NOT NULL, name varchar2(10) NOT
