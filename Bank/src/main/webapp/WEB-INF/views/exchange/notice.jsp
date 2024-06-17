@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
+<c:set var="root" value="${pageContext.request.contextPath}/" />
     
 <!DOCTYPE html>
 <html>
@@ -23,9 +23,9 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 
-<link rel="stylesheet" href="${root}/css/exchange/notice.css">
-<link rel="stylesheet" href="${root}/css/exchange/tType.css">
-<link rel="stylesheet" href="${root}/css/exchange/bType.css">
+<link rel="stylesheet" href="${root}css/exchange/notice.css">
+<link rel="stylesheet" href="${root}css/exchange/tType.css">
+<link rel="stylesheet" href="${root}css/exchange/bType.css">
 
 <link rel="stylesheet" href="${root}/css/exchange/LP.css">
 
@@ -89,7 +89,32 @@
 			
 			<!-- 환율 안내 jsp 임포트 -->
 			<!-- 상단 tab메뉴 선택에따라 임포트 변경 -->
-			<c:import url="./noticeGuide.jsp" />
+			
+			<!-- 1:안내 2:등록 3:변경 -->
+			<c:choose>
+				
+				<c:when test="${1 == noticContentIndex}">
+					<c:import url="./noticeGuide.jsp" />
+				</c:when>
+
+				<c:when test="${2 == noticContentIndex}">
+					<c:import url="./noticeSignUp.jsp" />
+				</c:when>
+
+				<c:when test="${3 == noticContentIndex}">
+					<c:import url="./noticeEdit.jsp" />
+				</c:when>
+				
+				<c:otherwise>
+					<c:import url="./noticeGuide.jsp" />
+				</c:otherwise>
+			</c:choose>
+			
+			<a href="${root}exchange/notice?noticContentIndex=1">안내</a>
+			<br />
+			<a href="${root}exchange/notice?noticContentIndex=2">등록</a>
+			<br />
+			<a href="${root}exchange/notice?noticContentIndex=3">변경</a>
 			
 			<!-- 등록을 누른다 -> 로그인이 안되어있다면 -> 로그인으로. -->
 

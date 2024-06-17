@@ -25,7 +25,7 @@ import ncbank.utility.ExchangeRateDTO;
 
 @Controller
 @RequestMapping("/exchange")
-public class ExchangeController {
+public class ExchangeRateController {
 
     @Autowired
     ExchangeRateService exchangeRateService;
@@ -102,42 +102,6 @@ public class ExchangeController {
     	return "exchange/rateInquiry";
     }
     
-    @Autowired
-    private ResourceLoader resourceLoader;
-    
-    @GetMapping("sendMail")
-    // Spring MVC에서 자동으로 HttpServletRequest와 HttpServletResponse 객체를 컨트롤러 메서드에 주입
-    public String sendMail(HttpServletRequest request, HttpServletResponse response) {
-    	
-    	/* 일반적인 메일 */
-    	String rootPath = request.getServletContext().getRealPath("/");
-    	String filePath = rootPath + "resources/img/그웬1.jpg";
-    	
-		emailManager.sendEmail("jcjhjg12@gmail.com", 
-				"테스트 메일 제목", "테스트 메일 내용", filePath);
-		
-		/* jsp 내용 메일 */
-        // jsp에 필요한 데이터 세팅
-        List<ExchangeRateBean> finalExchangeRateList = exchangeRateService.getFinalExchangeRate();   	
-        List<ExchangeRateDTO> rateDtoList = exchangeRateService.convertExchangeDTOList(finalExchangeRateList);
-        
-        String inquiryDate = dateManager.parseDateToString(rateDtoList.get(0).getCode_date(), "yyyy.MM.dd");
-        
-        request.setAttribute("ExchangeRateList", rateDtoList);
-        request.setAttribute("inquiryDate", inquiryDate);
-        
-        // 한국 원 정보는 따로 가져감
-        ExchangeRateBean beanKRW = exchangeRateService.findFinalExchangeRate("KRW");
-        ExchangeRateDTO dtoKRW = exchangeRateService.convertExchangeDTO(beanKRW);
-        
-        request.setAttribute("beanKRW", dtoKRW);
-        
-		emailManager.sendJspEmail("jcjhjg12@gmail.com",
-				"메일 테스트 제목", "/WEB-INF/views/exchange/calculator.jsp", request, response);
-		
-    	return "exchange/rateInquiry";
-    }
-    
     /* ==========[환율 계산기]========== */
     
     /* 환율 계산기 */
@@ -171,22 +135,55 @@ public class ExchangeController {
     
     /* ==========[환율 알림]========== */
     @GetMapping("/notice")
-    public String notic() {
+    public String notic(
+    		// 1:안내 2:등록 3:변경
+    		@RequestParam(value="noticContentIndex", defaultValue="1") int noticContentIndex,
+    		Model model) {
     	System.out.println("ExchangeController notice()");
-    	return "exchange/notice";
-    }
-    
-    @GetMapping("/noticeSetting")
-    public String noticeSetting() {
-    	System.out.println("ExchangeController noticeSetting()");
+    	
+    	// 알림페이지 구분을 위한 index
+    	model.addAttribute("noticContentIndex", noticContentIndex);
+    	System.out.println("noticContentIndex : " + noticContentIndex);
     	
     	// 여기서 로그인 검사를 해야함.
     	// 로그인 ㄴㄴ -> 로그인 펭지ㅣ
     	// 로그인 ㅇㅇ -> 알림페이지에서 import jsp 만 변경? or 페이지를 하나 더 연다?
     	
-    	return "exchange/noticeSetting";
+    	return "exchange/notice";
     }
     
+    @GetMapping("sendNoticeMail")
+    // Spring MVC에서 자동으로 HttpServletRequest와 HttpServletResponse 객체를 컨트롤러 메서드에 주입
+    public String sendNoticeMail(HttpServletRequest request, HttpServletResponse response) {
+    	
+    	/* 일반적인 메일 */
+    	String rootPath = request.getServletContext().getRealPath("/");
+    	String filePath = rootPath + "resources/img/그웬1.jpg";
+    	
+		emailManager.sendEmail("jcjhjg12@gmail.com", 
+				"테스트 메일 제목", "테스트 메일 내용", filePath);
+		
+		/* jsp 내용 메일 */
+        // jsp에 필요한 데이터 세팅
+        List<ExchangeRateBean> finalExchangeRateList = exchangeRateService.getFinalExchangeRate();   	
+        List<ExchangeRateDTO> rateDtoList = exchangeRateService.convertExchangeDTOList(finalExchangeRateList);
+        
+        String inquiryDate = dateManager.parseDateToString(rateDtoList.get(0).getCode_date(), "yyyy.MM.dd");
+        
+        request.setAttribute("ExchangeRateList", rateDtoList);
+        request.setAttribute("inquiryDate", inquiryDate);
+        
+        // 한국 원 정보는 따로 가져감
+        ExchangeRateBean beanKRW = exchangeRateService.findFinalExchangeRate("KRW");
+        ExchangeRateDTO dtoKRW = exchangeRateService.convertExchangeDTO(beanKRW);
+        
+        request.setAttribute("beanKRW", dtoKRW);
+        
+		emailManager.sendJspEmail("jcjhjg12@gmail.com",
+				"메일 테스트 제목", "/WEB-INF/views/exchange/sendNoticeMail.jsp", request, response);
+		
+    	return "exchange/rateInquiry";
+    }
     
     /* ==========[환율 차트]========== */
     @GetMapping("/rateChart")
