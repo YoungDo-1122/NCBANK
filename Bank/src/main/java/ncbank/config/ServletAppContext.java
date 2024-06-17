@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -40,17 +41,16 @@ import ncbank.service.TopMenuService;
 
 @Configuration // Spring MVC 프로젝트 설정
 @EnableWebMvc // 어노테이션 셋팅 선언
-// Spring이 지정된 패키지의 Component를 검색하고 Bean으로 등록하도록 지시 (Component가 어디에 존재하는지)
+//@EnableWebSecurity 
+// Spring이 지정된 패키지의 Component를 검색하고 Bean으로 등록하도록 지시 (Component가 어디에 존재하는지) 
 // Service, Repository, Controller 의 상위 어노테이션 이 Component (DAO Service)
 @ComponentScan("ncbank.dao") // DAO가 이곳에 존재한다 고 알려줌
 @ComponentScan("ncbank.service")
 @ComponentScan("ncbank.controller")
-@ComponentScan("ncbank.utility")
+@ComponentScan("ncbank.util")
 
 // 한번에 등록도 가능.
-// @ComponentScan(basePackages = {"kr.co.soldesk.controller",
-// "kr.co.soldesk.service", "kr.co.soldesk.dao"})
-
+// @ComponentScan(basePackages = {"kr.co.soldesk.controller", "kr.co.soldesk.service", "kr.co.soldesk.dao"})
 @PropertySource("/WEB-INF/properties/db.properties") // 로드할 Property 파일 위치 지정 (서버에 연결)
 public class ServletAppContext implements WebMvcConfigurer {
 
@@ -204,4 +204,9 @@ public class ServletAppContext implements WebMvcConfigurer {
         return res;
     }
 
+	@Bean
+	public StandardServletMultipartResolver multipartResolver() {
+		return new StandardServletMultipartResolver(); // 객체 생성하여 반환
+	}
+	
 }

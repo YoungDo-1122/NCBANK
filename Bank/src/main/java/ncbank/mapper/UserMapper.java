@@ -18,16 +18,31 @@ public interface UserMapper {
 	@Select("SELECT COUNT(*) FROM login")
 	public int userCount();
 
+	//회원가입
 	@Insert("insert into member " + "(user_num  , name , address , phone , resident , email, join_date) "
 			+ "values (#{user_num},#{name},#{address},#{phone},#{resident},#{email},#{join_date})")
 	public void addMember(UserBean bean);
 
-	@Insert("insert into login (user_num, id, pwd) values (#{user_num},#{id},#{pwd})")
+	@Insert("insert into login (user_num, id, pwd,salt) values (#{user_num},#{id},#{pwd},#{salt})")
 	public void addLogin(UserBean bean);
 
 	// 로그인 시 회원가입 정보 확인
-	@Select("SELECT m.user_num, m.name " + "FROM member m " + "JOIN login l ON m.user_num = l.user_num "
-			+ "WHERE l.id = #{id} AND l.pwd = #{pwd}")
+	@Select("SELECT m.user_num,m.name,m.phone,m.resident,m.join_date, l.id,l.pwd,l.salt"
+			+ "	from member m "
+			+ "	left join login l "
+			+ "	on m.user_num = l.user_num where l.id=#{id}") 
 	UserBean getLoginUserInfo(UserBean tempLoginUserBean);
+	/*
+	SELECT m.user_num,m.name,m.address,m.phone,m.resident,m.email,m.join_date, l.id,l.pwd
+	from member m 
+	left join login l
+	on m.user_num = l.user_num;
+	
+	SELECT id,pwd,salt FROM login where id=#{id}
+	*/
+
+	
+	
+	
 
 }

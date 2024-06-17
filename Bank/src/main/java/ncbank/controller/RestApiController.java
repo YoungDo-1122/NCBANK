@@ -14,7 +14,7 @@ import ncbank.service.UserService;
 public class RestApiController {
 
 	@Autowired
-	private UserService userService = null;
+	private UserService userService;
 
 	// 해당 경로로 가서 데이터를 가져와라.
 	@GetMapping("/user/checkUserIdExist/{id}") // "/user/checkUserIdExist/?{user_id}" 와 같음

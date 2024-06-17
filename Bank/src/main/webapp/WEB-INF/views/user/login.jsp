@@ -46,6 +46,12 @@
 								<form:password path="pwd" class='form-control' />
 								<form:errors path='pwd' style='color:red' />
 							</div>
+							<div>
+								<div class="form-group text-bottom">
+								<a href="#" class="btn-danger">아이디 찾기</a>
+								<a href="#" class="btn-danger">비밀번호 찾기</a>
+								</div>
+							</div>
 							<div class="form-group text-right">
 								<form:button class='btn btn-primary'>로그인</form:button>
 								<a href="${root}user/join" class="btn btn-danger">회원가입</a>
