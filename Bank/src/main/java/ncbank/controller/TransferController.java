@@ -39,9 +39,6 @@ public class TransferController {
 	@Autowired
 	private AccountService accountService;
 
-	@Autowired
-	private UserService userService;
-
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
 
@@ -66,7 +63,6 @@ public class TransferController {
 	@GetMapping("/transferCheck")
 	public String TransferCheck(@RequestParam(name = "account", required = false) String account, Model model) {
 		int userNum = loginUserBean.getUser_num();
-
 		System.out.println("선택된 계좌 : " + account);
 		System.out.println("회원 번호 : " + userNum);
 

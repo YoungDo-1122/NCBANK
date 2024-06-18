@@ -2,6 +2,8 @@ package ncbank.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import ncbank.beans.AccountBean;
+import ncbank.beans.UserBean;
 import ncbank.service.AccountService;
 
 @Controller
@@ -17,6 +20,9 @@ public class AccountController {
 
 	@Autowired
 	private AccountService accountService;
+
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
 
 //	@GetMapping("/accountCheck")
 //	public String AccountCheck(@RequestParam("userNum") int userNum, Model model) {
@@ -29,7 +35,9 @@ public class AccountController {
 
 	@GetMapping("/accountCheck")
 	public String AccountCheck(Model model) {
-		int userNum = 1;
+		int userNum = loginUserBean.getUser_num();
+		System.out.println("회원 번호 : " + userNum);
+		
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 		model.addAttribute("accounts", accounts);
 

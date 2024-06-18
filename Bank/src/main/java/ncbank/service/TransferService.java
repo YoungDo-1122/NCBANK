@@ -20,9 +20,6 @@ public class TransferService {
 	@Autowired
 	private CodeOrganService codeOrganService;
 
-	@Autowired
-	private UserService userService;
-
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
 
