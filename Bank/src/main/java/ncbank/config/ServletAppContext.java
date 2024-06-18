@@ -23,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import ncbank.beans.CreateExchangeBean;
+import ncbank.beans.CrerateTradeBean;
 import ncbank.beans.UserBean;
 import ncbank.interceptor.ExchangeRateInterceptor;
 import ncbank.interceptor.TopMenuInterceptor;
@@ -197,6 +198,14 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
+	
+	@Bean
+	public MapperFactoryBean<CrerateTradeBean> getCrerateTradeBean(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<CrerateTradeBean> factoryBean = new MapperFactoryBean<>(CrerateTradeBean.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+	
 	/* ==========[Interceptors]========== */
 	// WebMvcConfigurer 제공 메소드
 

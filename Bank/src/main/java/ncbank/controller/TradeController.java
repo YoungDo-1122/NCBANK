@@ -1,18 +1,17 @@
 package ncbank.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import ncbank.beans.TradeBean;
+import ncbank.beans.CrerateTradeBean;
+import ncbank.beans.UserBean;
 import ncbank.service.TradeService;
 
 @Controller
@@ -22,12 +21,16 @@ public class TradeController {
     @Autowired
     private TradeService tradeService;
     
+    @Resource(name="loginUserBean")
+    UserBean loginUserBean;
+    
     @GetMapping("/exchangeHistory")
     public String getTradeList(
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate,
-            Model model) throws ParseException {
-        
+//            @RequestParam(required = false) String startDate,
+//            @RequestParam(required = false) String endDate,
+            Model model)  {
+    	
+    	/*
         List<TradeBean> tradeList;
         
         if (startDate != null && endDate != null) {
@@ -38,10 +41,16 @@ public class TradeController {
         } else {
             tradeList = tradeService.getAllTradeList();
         }
-        
-        model.addAttribute("tradeList", tradeList);
-        model.addAttribute("startDate", startDate);
-        model.addAttribute("endDate", endDate);
+        */
+    	
+        //model.addAttribute("tradeList", tradeList);
+        //model.addAttribute("startDate", startDate);
+        //model.addAttribute("endDate", endDate);
+    	
+    	List<CrerateTradeBean> tradePlusList = tradeService.getTradePlusList(loginUserBean.getUser_num());
+    	System.out.println("tradePlusList: "+tradePlusList);
+        model.addAttribute("tradePlusList", tradePlusList);
+        model.addAttribute("loginUserBean.getUser_num()", loginUserBean.getUser_num());
         
         return "exchange/exchangeHistory";
     }

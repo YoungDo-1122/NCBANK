@@ -15,7 +15,25 @@ public class CreateExchangeBean {
     private String code_bank_name; // 지점이름
     private String account; // 계좌
     
+    private int code_bank; // 지점번호
+    private int user_num; // 회원번호
     
+	
+	
+    
+	public int getUser_num() {
+		return user_num;
+	}
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
+	}
+	public int getCode_bank() {
+		return code_bank;
+	}
+	public void setCode_bank(int code_bank) {
+		this.code_bank = code_bank;
+	}
+
 	public String getCode_money() {
 		return code_money;
 	}

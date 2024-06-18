@@ -12,7 +12,7 @@
 </head>
 <body>
     <h1>환전조회/관리</h1>
-    
+    <!--
     <div class="search-form">
         <form action="${root}exchange/exchangeHistory" method="get">
             <label for="startDate">조회기간:</label>
@@ -22,7 +22,7 @@
             <button type="submit">조회</button>
         </form>
     </div>
-    
+    -->
     <table border="1">
         <thead>
             <tr>
@@ -32,27 +32,33 @@
                 <th>통화</th>
                 <th>금액</th>
                 <th>적용환율</th>
+                <th>지점 번호</th>
+                <th>지점 전화번호</th>
+                <th>지점 팩스번호</th>
             </tr>
         </thead>
         <tbody>
-            <c:forEach var="trade" items="${tradeList}">
-                <tr>
-                    <td><input type="radio" name="selectedTrade" value="${trade.trade_num}"></td>
-                    <td><fmt:formatDate value="${trade.trade_date}" pattern="yyyy-MM-dd"/></td>
-                    <td>${trade.trade_type}</td>
-                    <td>${trade.code_money}</td>
-                    <td>${trade.trade_money}</td>
-                    <td>${trade.trade_rate}</td>
-                </tr>
-            </c:forEach>
+            <c:forEach var="trade" items="${tradePlusList}">
+	            <tr>
+	                <td><input type="radio" name="selectedTrade" value="${trade.trade_num}"></td>
+	                <td>${trade.trade_date}</td>
+	                <td>${trade.trade_type}</td>
+	                <td>${trade.code_money}</td>
+	                <td>${trade.trade_money}</td>
+	                <td>${trade.trade_rate}</td>
+	                <td>${trade.code_bank}</td>
+	                <td>${trade.code_bank_tel}</td>
+	                <td>${trade.code_bank_fax}</td>
+	            </tr>
+        	</c:forEach>
         </tbody>
     </table>
     
     <div class="actions">
         <button type="button">되팔기</button>
-        <button type="button">외화예금입금</button>
+        <button type="button">외화예금입금(이게 환전지갑?)</button>
         <button type="button">수령정보변경</button>
-        <button type="button">SMS재전송</button>
+        
     </div>
     
 </body>

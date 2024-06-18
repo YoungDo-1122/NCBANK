@@ -9,6 +9,7 @@ public class CodeBankBean {
 		private String code_bank_fax ;
 		private String code_bank_post ;
 		private String code_bank_address ;
+		
 		public int getCode_bank() {
 			return code_bank;
 		}

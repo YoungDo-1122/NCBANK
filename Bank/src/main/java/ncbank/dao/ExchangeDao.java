@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import ncbank.beans.AccountBean;
 import ncbank.beans.CodeBankBean;
+import ncbank.beans.CreateExchangeBean;
 import ncbank.beans.ExchangeBean;
 import ncbank.mapper.ExchangeMapper;
 
@@ -39,9 +40,12 @@ public class ExchangeDao {
     	return getAccountList;
     }
     
-    //ajax
+    public void setTradeByExchangeAsk(CreateExchangeBean createExchangeBean){
+    	exchangeMapper.setTradeByExchangeAsk(createExchangeBean);
+    	
+    }
 
-    
+    /*
     public List<CodeBankBean> searchBankByKeyword(String keyword) {
         try {
             return exchangeMapper.searchBankByKeyword(keyword);
@@ -50,6 +54,7 @@ public class ExchangeDao {
             return new ArrayList<>();  // 빈 리스트 반환하여 클라이언트에 에러를 전송하지 않음
         }
     }
+    */
     
    
     

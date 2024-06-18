@@ -54,10 +54,11 @@ public class ExchangeController {
         int day = c.get(Calendar.DAY_OF_MONTH);
         // 연, 월, 일을 두 자리수 형식으로 포맷팅하여 문자열로 변환
         String cuDate = String.format("%02d/%02d/%02d", year % 100, month, day);
-        System.out.println("Current Date(cuDate): " + cuDate);
+        //System.out.println("Current Date(cuDate): " + cuDate);
+        
         // 문자열로 된 날짜를 Date 객체로 파싱
         Date date = cuDate1.parse(cuDate);
-        System.out.println("Current Date(date): " + cuDate1.format(date));
+        //System.out.println("Current Date(date): " + cuDate1.format(date));
         
         // api 데이터 exchange에 저장된거 가져오기.
         List<ExchangeBean> exchangeAskList = exchangeService.getExchangeList(cuDate);
@@ -69,13 +70,13 @@ public class ExchangeController {
         
         
         //System.out.println("exchangeAskList: "+exchangeAskList);
-        System.out.println("codeBankNameList: "+codeBankNameList);
+        //System.out.println("codeBankNameList: "+codeBankNameList);
         //System.out.println("getAccountList: "+getAccountList);
 		
         model.addAttribute("exchangeAskList", exchangeAskList);
         model.addAttribute("codeBankNameList", codeBankNameList);
         model.addAttribute("getAccountList", getAccountList);
-        model.addAttribute("loginUserId", loginUserBean.getUser_num());
+        model.addAttribute("loginUserBean.getUser_num()", loginUserBean.getUser_num());
         
         System.out.println("loginUserBean.getUser_num(): "+loginUserBean.getUser_num());
        
@@ -85,8 +86,13 @@ public class ExchangeController {
 	
 	@PostMapping("/exchangeAskSuccess")
 	public String getExchangeAskSuccess(@ModelAttribute("createExchangeBean") CreateExchangeBean createExchangeBean, Model model) {
-	    // createExchangeBean에 설정된 값을 출력하거나 처리할 수 있습니다.
-	    System.out.println("Selected Bank Name: " + createExchangeBean.getCode_bank_name());
+	    // 가져온 createExchangeBean Test
+	    // System.out.println("createExchangeBeancode_bank_name: " + createExchangeBean.getCode_bank_name());
+	    // System.out.println("createExchangeBean.code_bank: " + createExchangeBean.getCode_bank());
+	    // System.out.println("createExchangeBean.user_num: " + createExchangeBean.getUser_num());
+	    
+	    exchangeService.setTradeByExchangeAsk(createExchangeBean);
+	    
 	    model.addAttribute("createExchangeBean", createExchangeBean);
 	    return "exchange/exchangeAskSuccess";
 	}
@@ -97,7 +103,8 @@ public class ExchangeController {
 	    return "exchange/searchPopup";
 	}
 	*/
-
+	
+	/*
 	@GetMapping(value = "/searchBank", produces = "application/json; charset=UTF-8")
     @ResponseBody
     public ResponseEntity<?> searchBank(@RequestParam("keyword") String keyword) {
@@ -109,6 +116,7 @@ public class ExchangeController {
             return new ResponseEntity<>("검색 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    */
     
 	/*
 	// AJAX 요청을 처리하는 메소드 추가

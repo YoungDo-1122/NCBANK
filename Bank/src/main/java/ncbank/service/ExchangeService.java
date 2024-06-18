@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ncbank.beans.AccountBean;
 import ncbank.beans.CodeBankBean;
+import ncbank.beans.CreateExchangeBean;
 import ncbank.beans.ExchangeBean;
 import ncbank.dao.ExchangeDao;
 
@@ -38,9 +39,13 @@ public class ExchangeService {
     	return getAccountList;
     }
     
-    //ajax
+    public void setTradeByExchangeAsk(CreateExchangeBean createExchangeBean) {
+    	exchangeDao.setTradeByExchangeAsk(createExchangeBean);
+    	
+    	
+    }
     
-
+    /*
     public List<CodeBankBean> searchBankByKeyword(String keyword) {
         System.out.println("검색어 서비스: " + keyword);
         try {
@@ -52,6 +57,7 @@ public class ExchangeService {
             throw e;  // 예외를 다시 던져서 상위 레이어에서 처리
         }
     }
+    */
     
  
 }

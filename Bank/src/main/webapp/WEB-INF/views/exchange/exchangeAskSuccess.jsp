@@ -36,11 +36,19 @@
             <th>수령희망날짜</th>
             <td>${createExchangeBean.trade_reservation_date}</td>
         </tr>
+         <tr>
+            <th>수령희망 지점번호</th>
+            <td>${createExchangeBean.code_bank}</td>
+        </tr>
         <tr>
-            <th>수령희망지점</th>
-            <td>${createExchangeBean.code_bank_name} ${createExchangeBean.code_bank_name}</td>
+            <th>수령희망 지점이름</th>
+            <td>${createExchangeBean.code_bank_name}</td>
         </tr>
         
     </table>
+    
+    <button>
+    	<a href="${root}exchange/exchangeHistory">환전 조회하기</a>
+   	</button>
 </body>
 </html>

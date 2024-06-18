@@ -1,6 +1,6 @@
 package ncbank.beans;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class TradeBean {
     private int trade_num;
@@ -39,7 +39,6 @@ public class TradeBean {
 		this.trade_type = trade_type;
 	}
 	
-    
 	public int getTrade_num() {
 		return trade_num;
 	}
