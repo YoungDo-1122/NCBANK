@@ -2,6 +2,7 @@ package ncbank.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ncbank.beans.AccountBean;
 import ncbank.beans.CodeOrganBean;
 import ncbank.beans.TransferBean;
+import ncbank.beans.UserBean;
 import ncbank.service.AccountService;
 import ncbank.service.CodeOrganService;
 import ncbank.service.TransferService;
+import ncbank.service.UserService;
 
 @Controller
 @RequestMapping("/trans")
@@ -35,6 +38,12 @@ public class TransferController {
 
 	@Autowired
 	private AccountService accountService;
+
+	@Autowired
+	private UserService userService;
+
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
 
 //	@GetMapping("/transferCheck")
 //	public String TransferCheck(@RequestParam("userNum") int userNum, Model model) {
@@ -56,7 +65,7 @@ public class TransferController {
 //	}
 	@GetMapping("/transferCheck")
 	public String TransferCheck(@RequestParam(name = "account", required = false) String account, Model model) {
-		int userNum = 1;
+		int userNum = loginUserBean.getUser_num();
 
 		System.out.println("선택된 계좌 : " + account);
 		System.out.println("회원 번호 : " + userNum);
@@ -81,9 +90,9 @@ public class TransferController {
 
 	@GetMapping("/transfer")
 	public String Transfer(Model model) {
+		int userNum = transferService.getUserNum();
 
-//		List<AccountBean> accounts = accountService.getAccount(userNum);
-		List<AccountBean> accounts = accountService.getAccount(1);
+		List<AccountBean> accounts = accountService.getAccount(userNum);
 		model.addAttribute("accounts", accounts);
 
 		List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();

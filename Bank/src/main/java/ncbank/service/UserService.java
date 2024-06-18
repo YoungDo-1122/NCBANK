@@ -57,12 +57,9 @@ public class UserService {
 
 		UserBean dbUserBean = userDaO.getLoginUserInfo(tempLoginUserBean);
 		if (dbUserBean != null) {
-
 			String checkSalt = dbUserBean.getSalt(); // ㅅㅌ
 			String checkpasswd = dbUserBean.getPwd(); // DB PWD
-
 			String newPasswd = tempLoginUserBean.getPwd(); // newPasswd == 암호화전
-
 			String pwd = encrypt.getEncrypt(newPasswd, checkSalt); // pwd -> newPwd 암호화한거
 			System.out.println(checkpasswd);
 			System.out.println(pwd);
@@ -70,12 +67,14 @@ public class UserService {
 			if (pwd.equals(checkpasswd)) {
 				loginUserBean.setId(dbUserBean.getId());
 				loginUserBean.setName(dbUserBean.getName());
+				loginUserBean.setUser_num(dbUserBean.getUser_num());
 				loginUserBean.setUserLogin(true);
 
 				HttpSession session = request.getSession();
 				session.setAttribute("loginUserBean", loginUserBean);
 
-				System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName());
+				System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName() + " - "
+						+ loginUserBean.getUser_num());
 
 			} else {
 				loginUserBean.setUserLogin(false); // 로그인 실패

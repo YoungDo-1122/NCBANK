@@ -2,11 +2,14 @@ package ncbank.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ncbank.beans.CodeOrganBean;
 import ncbank.beans.TransferBean;
+import ncbank.beans.UserBean;
 import ncbank.dao.TransferDAO;
 
 @Service
@@ -16,6 +19,17 @@ public class TransferService {
 
 	@Autowired
 	private CodeOrganService codeOrganService;
+
+	@Autowired
+	private UserService userService;
+
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
+
+	public int getUserNum() {
+		System.out.println(loginUserBean.getUser_num());
+		return loginUserBean.getUser_num();
+	}
 
 	public void addTransfer(TransferBean transferBean) {
 		transferDAO.addTransfer(transferBean);
