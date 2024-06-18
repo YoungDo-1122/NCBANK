@@ -70,12 +70,13 @@ public class UserService {
 			if (pwd.equals(checkpasswd)) {
 				loginUserBean.setId(dbUserBean.getId());
 				loginUserBean.setName(dbUserBean.getName());
+				loginUserBean.setUser_num(dbUserBean.getUser_num());
 				loginUserBean.setUserLogin(true);
 
 				HttpSession session = request.getSession();
 				session.setAttribute("loginUserBean", loginUserBean);
 
-				System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName());
+				System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName() + " - " + loginUserBean.getUser_num());
 
 			} else {
 				loginUserBean.setUserLogin(false); // 로그인 실패
