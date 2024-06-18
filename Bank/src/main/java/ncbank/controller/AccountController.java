@@ -36,7 +36,7 @@ public class AccountController {
 	@GetMapping("/accountCheck")
 	public String AccountCheck(Model model) {
 		int userNum = loginUserBean.getUser_num();
-		System.out.println("회원 번호 : " + userNum);
+		System.out.println("계좌 조회 회원 번호 : " + userNum);
 		
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 		model.addAttribute("accounts", accounts);
