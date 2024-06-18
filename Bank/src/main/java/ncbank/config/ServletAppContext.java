@@ -31,6 +31,7 @@ import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
 import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.ExchangeMapper;
+import ncbank.mapper.ExchangeNoticeMapper;
 import ncbank.mapper.ExchangeRateMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.TradeMapper;
@@ -158,6 +159,14 @@ public class ServletAppContext implements WebMvcConfigurer {
 	public MapperFactoryBean<ExchangeRateMapper> getExchangeRateMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<ExchangeRateMapper> factoryBean = new MapperFactoryBean<ExchangeRateMapper>(
 				ExchangeRateMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+	
+	@Bean
+	public MapperFactoryBean<ExchangeNoticeMapper> getExchangeNoticeMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<ExchangeNoticeMapper> factoryBean = new MapperFactoryBean<ExchangeNoticeMapper>(
+				ExchangeNoticeMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}

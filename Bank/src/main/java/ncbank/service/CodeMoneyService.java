@@ -16,6 +16,9 @@ public class CodeMoneyService {
 
 	public List<CodeMoneyBean> getCodeMoneyList() {
 		List<CodeMoneyBean> codeMoneyList = codeMoneyDAO.getCodeMoneyList();
+		if (null == codeMoneyList || codeMoneyList.isEmpty()) {
+			return null;
+		}
 		return codeMoneyList;
 	}
 	

@@ -1,24 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
-    
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>noticeEdit.jsp</title>
+<title>noticeRegister.jsp - 환율알림등록</title>
 </head>
 <body>
-	<h2>noticeEdit</h2>
+	<h2>noticeRegister</h2>
 	
 	<div id="b101901">
 
 		<!-- if 환율 알림 등록시. 보여지는 안내문 -->
 		<div class="box_type1">
 			<ul class="list_type1">
-				<li><b>아래와 같이 환율알림서비스를 신청하신 정보가 있습니다. 변경 또는 해지 가능합니다.</b></li>
 				<li>선택하신 통화의 환율이 지정하신 알림희망 환율범위에 도달하는 경우 문자메시지(SMS) 또는 이메일을 통해
 					안내 드립니다.</li>
 				<li>3개월 내 지정하신 알림희망 환율범위에 도달하지 않았거나 도달하여 알림 안내를 받은 경우<br>
@@ -27,7 +26,7 @@
 			</ul>
 		</div>
 		
-		<form:form action="${root}exchange/noticeEditPro" method="post"
+		<form:form action="${root}exchange/noticeRegisterPro" method="post"
 			modelAttribute="ExchangeNoticeBean">
 			<form:hidden path="user_num"/>
 			
@@ -80,7 +79,7 @@
 					</tr>
 				
 					<tr>
-						<th scope="row" > <!-- 이메일 외 알림수단 추가시 rowspan = 2 하고 추가 -->
+						<th scope="row" rowspan="2"> <!-- 이메일 외 알림수단 추가시 rowspan = 2 하고 추가 -->
 							<b class="txt-c4">* <span class="blind">필수입력</span></b>알림방법
 						</th>
 						
@@ -88,13 +87,12 @@
 							Email&nbsp;:&nbsp;<form:input path="notice_email"/>
 						</td>
 					</tr>
-									
+				
 				</tbody>
 			</table>
 			
 			<div>
-				<form:button type="submit" class="btn">변경</form:button>
-				<button class="deleteBtn">해지</button>
+				<form:button type="submit" class="btn">등록</form:button>
 			</div>
 			
 		</form:form>
@@ -112,15 +110,6 @@
 				var name = "환율 차트"
 				var option = "width = 650px, height = 650px, top = 200px"
 				window.open(url, name, option);
-			});
-			// 해지 버튼을 누를경우 한번 더 물어봄
-			$('.deleteBtn').on("click", function(e) {
-				e.preventDefault(); // 페이지의 기본 동작을 막음 (form:form의 action 막는용)
-				if (confirm('신청된 알림 서비스를 해지하시겠습니까?')) {  // 사용자가 '확인'을 클릭했을 때
-				    location.href='${root}exchange/noticeDeletPro'
-				} else {  // 사용자가 '취소'를 클릭했을 때
-				    console.log('취소되었습니다.');
-				}
 			});
 			
 		}); // $(document).ready
