@@ -19,87 +19,84 @@ import ncbank.util.SmsSender;
 @Service
 public class UserService {
 
-   @Autowired
-   private UserDAO userDaO;
+    @Autowired
+    private UserDAO userDaO;
 
-   @Autowired
-   private Encrypt encrypt;
-   
-   @Autowired
-   private SmsSender smsSender;
+    @Autowired
+    private UserMapper userMapper;
 
-   @Resource(name = "loginUserBean")
-   private UserBean loginUserBean;
+    @Autowired
+    private Encrypt encrypt;
 
-   @Value("${coolsms.apiKey")
-   private String apiKey;
+    @Autowired
+    private SmsSender smsSender;
 
-   @Value("${coolsms.apiSecret")
-   private String apiSecret;
+    @Resource(name = "loginUserBean")
+    private UserBean loginUserBean;
 
-   public boolean checkUserExist(String id) {
-      return userDaO.checkUserExist(id);
-   }
+    @Value("${coolsms.apiKey")
+    private String apiKey;
 
-   public void addUserInfo(UserBean mBean) {
-      String salt = encrypt.getSalt();
-      String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt);
+    @Value("${coolsms.apiSecret")
+    private String apiSecret;
 
-      mBean.setPwd(encryptPasswd);
-      mBean.setSalt(salt);
+    public boolean checkUserExist(String id) {
+        return userDaO.checkUserExist(id);
+    }
 
-      userDaO.addUserInfo(mBean);
-   }
+    public void addUserInfo(UserBean mBean) {
+        String salt = encrypt.getSalt();
+        String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt);
 
-   public void getLoginUserInfo(HttpServletRequest request, UserBean tempLoginUserBean) {
+        mBean.setPwd(encryptPasswd);
+        mBean.setSalt(salt);
 
-      UserBean dbUserBean = userDaO.getLoginUserInfo(tempLoginUserBean);
-      if (dbUserBean != null) {
-         
-         String checkSalt = dbUserBean.getSalt(); //ㅅㅌ
-         String checkpasswd = dbUserBean.getPwd(); //DB PWD
+        userDaO.addUserInfo(mBean);
+    }
 
-         String newPasswd = tempLoginUserBean.getPwd(); //newPasswd == 암호화전
+    public void getLoginUserInfo(HttpServletRequest request, UserBean tempLoginUserBean) {
 
-         String pwd = encrypt.getEncrypt(newPasswd, checkSalt); //pwd -> newPwd 암호화한거
-         System.out.println(checkpasswd);
-         System.out.println(pwd);
-         
-         
-         if (pwd.equals(checkpasswd)) {
-            loginUserBean.setId(dbUserBean.getId());
-            loginUserBean.setName(dbUserBean.getName());
-            loginUserBean.setUserLogin(true);
-            
-            // 이거 추가 함
-            loginUserBean.setUser_num(dbUserBean.getUser_num());
+        UserBean dbUserBean = userDaO.getLoginUserInfo(tempLoginUserBean);
+        if (dbUserBean != null) {
+            String checkSalt = dbUserBean.getSalt(); // ㅅㅌ
+            String checkpasswd = dbUserBean.getPwd(); // DB PWD
+            String newPasswd = tempLoginUserBean.getPwd(); // newPasswd == 암호화전
+            String pwd = encrypt.getEncrypt(newPasswd, checkSalt); // pwd -> newPwd 암호화한거
+            System.out.println(checkpasswd);
+            System.out.println(pwd);
 
-            HttpSession session = request.getSession();
-            session.setAttribute("loginUserBean", loginUserBean);
+            if (pwd.equals(checkpasswd)) {
+                loginUserBean.setId(dbUserBean.getId());
+                loginUserBean.setName(dbUserBean.getName());
+                loginUserBean.setUser_num(dbUserBean.getUser_num());
+                loginUserBean.setUserLogin(true);
 
-            System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName());
-            
-         } else {
-            loginUserBean.setUserLogin(false); // 로그인 실패
-            System.out.println("Login failed. User not found.");
-         }
+                HttpSession session = request.getSession();
+                session.setAttribute("loginUserBean", loginUserBean);
 
-      }
-   }
-   
-   public String verificationCode(String phone) {
-      
-      String code = String.format("%06d", (int)(Math.random() * 900000));
-       String text = ("[NC BANK] " + code);
-      String result = smsSender.Smsvr(phone, text);
-      
-      if(result.equals("success")) {
-         return code;
-      }else {
-         return "fail";
-      }
-      
-      
-   }
+                System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName() + " - "
+                        + loginUserBean.getUser_num());
+
+            } else {
+                loginUserBean.setUserLogin(false); // 로그인 실패
+                System.out.println("Login failed. User not found.");
+            }
+
+        }
+    }
+
+    public String verificationCode(String phone) {
+
+        String code = String.format("%06d", (int) (Math.random() * 900000));
+        String text = ("[NC BANK] " + code);
+        String result = smsSender.Smsvr(phone, text);
+
+        if (result.equals("success")) {
+            return code;
+        } else {
+            return "fail";
+        }
+
+    }
 
 }

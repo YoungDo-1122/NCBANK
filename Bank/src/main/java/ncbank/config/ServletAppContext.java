@@ -33,6 +33,7 @@ import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.ExchangeMapper;
 import ncbank.mapper.ExchangeNoticeMapper;
 import ncbank.mapper.ExchangeRateMapper;
+import ncbank.mapper.GroupAccountMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.TradeMapper;
 import ncbank.mapper.TransferMapper;
@@ -205,6 +206,15 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(sqlSessionFactory);
 		return factoryBean;
 	}
+	
+	@Bean
+	public MapperFactoryBean<GroupAccountMapper> getGroupAccountMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<GroupAccountMapper> factoryBean = new MapperFactoryBean<GroupAccountMapper>(
+				GroupAccountMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+	
 	/* ==========[Interceptors]========== */
 	// WebMvcConfigurer 제공 메소드
 

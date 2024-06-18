@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
@@ -13,14 +13,14 @@
 <!-- Bootstrap CDN -->
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> -->
- <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/join.css"> 
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/join.css">
 <script
-   src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
-   src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
-   src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <script>
 
@@ -147,94 +147,88 @@ function sendSMSVerification() {
 							<div class="form-group">
 								<form:label path="resident">주민번호</form:label>
 								<form:input path="resident" placeholder="주민번호 입력('-'까지 입력해주세요)"
-									class='form-control' maxlength="14"/>
+									class='form-control' maxlength="14" />
 								<%-- 	<form:input path="resident" placeholder="앞자리 (######)" class='form-control' maxlength="6"/>
 								<form:password path="resident" placeholder="뒤자리 (#######)" class='form-control' maxlength="7"/> --%>
 								<form:errors path="resident" style='color:red' />
 							</div>
 
-                     <div class="form-group">
-                        <form:label path="id">아이디</form:label>
-                        <div class="input-group">
-                           <form:input path="id" class='form-control' placeholder="아이디"
-                              onkeypress="resetUserIdExist()" />
-                           <div class="input-group-append">
-                              <button type="button" class="btn btn-primary"
-                                 onclick="checkUserIdExist()">중복확인</button>
-                           </div>
-                        </div>
-                        <form:errors path="id" style='color:red' />
-                     </div>
+							<div class="form-group">
+								<form:label path="id">아이디</form:label>
+								<div class="input-group">
+									<form:input path="id" class='form-control' placeholder="아이디"
+										onkeypress="resetUserIdExist()" />
+									<div class="input-group-append">
+										<br />
+										<button type="button" class="btn btn-primary"
+											onclick="checkUserIdExist()">중복확인</button>
+									</div>
+								</div>
+								<form:errors path="id" style='color:red' />
+							</div>
 
-                     <div class="form-group">
-                        <form:label path="pwd">비밀번호</form:label>
-                        <form:password path="pwd" placeholder="비밀번호"
-                           class='form-control' />
-                        <form:errors path='pwd' style='color:red' />
-                     </div>
+							<div class="form-group">
+								<form:label path="pwd">비밀번호</form:label>
+								<form:password path="pwd" placeholder="비밀번호"
+									class='form-control' />
+								<form:errors path='pwd' style='color:red' />
+							</div>
 
-                     <div class="form-group">
-                        <form:label path="pwd2">비밀번호 확인</form:label>
-                        <form:password path="pwd2" placeholder="비밀번호 확인"
-                           class='form-control' />
-                        <form:errors path='pwd2' style='color:red' />
-                     </div>
+							<div class="form-group">
+								<form:label path="pwd2">비밀번호 확인</form:label>
+								<form:password path="pwd2" placeholder="비밀번호 확인"
+									class='form-control' />
+								<form:errors path='pwd2' style='color:red' />
+							</div>
 
 							<div class="form-group">
 								<form:label path="address">주소</form:label>
 								<div class="input-group mb-2">
 									<form:input path="add1" placeholder="우편번호" class="form-control" />
-									<div class="input-group-append">
-										<button type="button" class="btn btn-primary" onclick="execDaumPostCode()">우편번호 찾기</button>
-									</div>
+									<br />
+									<form:input path="add2" placeholder="도로명 주소"
+										class='form-control space-between-inputs' />
 								</div>
-								<form:input path="add2" placeholder="도로명 주소"
-									class='form-control space-between-inputs' />
+								<div class="input-group-append">
+									<br />
+									<button type="button" class="btn btn-primary"
+										onclick="execDaumPostCode()">우편번호 찾기</button>
+								</div>
 								<br />
+								<form:label path="add3">상세 주소</form:label>
 								<form:input path="add3" placeholder="상세 주소" class='form-control' />
 								<form:errors path='add1' style='color:red' />
 								<%-- <form:errors path='add3' style='color:red' />
 								 --%>
 								<form:hidden path="address" id="address" />
 							</div>
-<!--  
-							<div class="form-group phoneCertifyDiv">
-								<label class="inputTitle">휴대폰 번호</label><br>
-								<div class="phoneNum-formgroup">
-									<input th:if="${memberPhone != null}" type="text"
-										name="memberPhone" class="phoneNum" readonly
-										th:value="${memberPhone}"> <input
-										th:unless="${memberPhone != null}" type="text"
-										name="memberPhone" class="phoneNum"> <input
-										type="button" id="memberPhoneCheck"
-										class="btn memberPhoneBtn active" value="인증번호 전송">
-								</div>
-								<div class="phoneNum-formgroup" id="phoneCertifyDiv">
-									<input type="text" name="memberPhoneCertify" class="phoneNum">
-									<input type="button" id="certifyCheck"
-										class="btn memberPhoneBtn" value="인증하기">
-								</div>
-							</div>
-							-->
 							<div class="form-group row">
 								<div class="col">
 									<label for="phone" class="col-form-label">전화번호</label>
 									<div class="input-group">
 										<input id="phone" type="text" name="phone"
-											placeholder="전화번호 ('-'까지 입력해주세요)" class="form-control" maxlength="13" />
+											placeholder="전화번호 ('-'까지 입력해주세요)" class="form-control"
+											maxlength="13" />
 										<div class="input-group-append">
-											<button type="button" class="btn btn-primary" onclick="sendSMSVerification()">인증번호 받기</button>
+											<br />
+											<button type="button" class="btn btn-primary"
+												onclick="sendSMSVerification()">인증번호 받기</button>
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="form-group row">
 								<div class="col">
+									<label for="verificationCode">인증번호</label>
 									<div class="input-group">
 										<input id="verificationCode" type="text"
-											name="verificationCode" placeholder="인증번호" class="form-control" />
+											name="verificationCode" placeholder="인증번호"
+											class="form-control" />
 										<div class="input-group-append">
-											<button id="certifyCheck" type="button" class="btn btn-primary" onclick="certifyCheck()">인증번호 확인</button>
+											<br />
+											<button id="certifyCheck" type="button"
+												class="btn btn-primary" onclick="certifyCheck()">인증번호
+												확인</button>
 										</div>
 									</div>
 									<small id="verificationCodeError" class="form-text text-danger"></small>
@@ -260,6 +254,6 @@ function sendSMSVerification() {
 			<div class="col-sm-3"></div>
 		</div>
 	</div>
-	<c:import url="../include/bottom_info.jsp" />
+	<%-- <c:import url="../include/bottom_info.jsp" /> --%>
 </body>
 </html>
