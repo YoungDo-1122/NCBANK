@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
+import ncbank.mapper.UserMapper;
 import ncbank.util.Encrypt;
 import ncbank.util.SmsSender;
 
 // 서비스를 받는다 - 데이터를 가져와서 가공작업을 한다.
 @Service
 public class UserService {
+
+	@Autowired
+	private UserMapper userMapper;
 
 	@Autowired
 	private UserDAO userDaO;
@@ -37,6 +41,13 @@ public class UserService {
 
 	public boolean checkUserExist(String id) {
 		return userDaO.checkUserExist(id);
+	}
+
+	public boolean canRegister(String phone, String resident) {
+		int phoneCount = userMapper.checkUserPhoneExist(phone);
+		int residentCount = userMapper.checkUserResidentExist(resident);
+
+		return phoneCount == 0 && residentCount == 0;
 	}
 
 	public void addUserInfo(UserBean mBean) {

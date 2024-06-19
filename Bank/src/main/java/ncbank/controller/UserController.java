@@ -67,7 +67,7 @@ public class UserController {
 	}
 
 	@PostMapping("/join_pro")
-	public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult) {
+	public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult,Model model) {
 
 		if (memberResult.hasErrors()) {
 			memberResult.getFieldErrorCount();
@@ -75,6 +75,10 @@ public class UserController {
 			for (ObjectError e : temp) {
 				System.out.println(e.getDefaultMessage());
 			}
+			return "user/join";
+		}
+		if (!userService.canRegister(mBean.getPhone(), mBean.getResident())) {
+			model.addAttribute("errorMessage", "이미 가입되어 있는 전화번호나 주민번호가 존재합니다");
 			return "user/join";
 		}
 

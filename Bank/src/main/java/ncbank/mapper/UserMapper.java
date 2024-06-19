@@ -11,6 +11,12 @@ public interface UserMapper {
 	@Select("SELECT COUNT(*) FROM login where id = #{id}")
 	public int checkUserIdExist(String id);
 
+	@Select("SELECT COUNT(*) FROM member WHERE phone=#{phone}")
+	public int checkUserPhoneExist(String phone);
+
+	@Select("SELECT COUNT(*) FROM member WHERE resident=#{resident}")
+	public int checkUserResidentExist(String resident);
+
 	@Select("SELECT COUNT(*) FROM login")
 	public int userCount();
 

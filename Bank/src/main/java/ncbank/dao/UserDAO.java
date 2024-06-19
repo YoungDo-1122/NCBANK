@@ -16,6 +16,10 @@ public class UserDAO {
 		return (0 == userMapper.checkUserIdExist(id));
 	}
 
+	public boolean checkUserResidentExist(String resident) {
+		return (0 == userMapper.checkUserResidentExist(resident));
+	}
+
 	// Mapper -> DAO -> Service로 가도되고 안가도 됨
 	public void addUserInfo(UserBean mBean) {
 		int size = userMapper.userCount();
