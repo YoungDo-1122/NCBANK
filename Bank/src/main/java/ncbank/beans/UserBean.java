@@ -1,7 +1,5 @@
 package ncbank.beans;
 
-
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -15,7 +13,6 @@ public class UserBean {
 	
 	private String address; // 최종 주소
 	
-	@NotBlank(message = "전화번호를 입력해주세요")
 	@Pattern(regexp = "^0\\d{1,2}(-|\\))\\d{3,4}-\\d{4}$",message="전화번호 형식을 확인해주세요") // 전화번호 형식
 	private String phone;
 	@Pattern(regexp = "\\d{6}\\-[1-4]\\d{6}") // 주민등록번호 형식
@@ -35,21 +32,16 @@ public class UserBean {
 	private String pwd2;
 	
 	// 주소 api를 위한 필드 선언
-	@NotBlank(message = "우편번호를 입력해주세요")
 	private String add1; // 우편번호
 	private String add2; // 도로명주소
-	@NotBlank(message = "상세주소를 입력해주세요")
 	private String add3; // 상세주소
 	
-	@NotBlank(message = "주민번호 앞자리를 입력해주세요")
 	private String resident1;
-	@NotBlank(message = "주민번호 뒷자리를 입력해주세요")
 	private String resident2;
 	
 	private String salt;
 
 	// sms 인증 코드
-	@NotBlank(message="인증번호를 입력해주세요")
 	private String verificationCode;
 
    private boolean idExistCheck = true;

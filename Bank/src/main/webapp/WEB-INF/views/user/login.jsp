@@ -24,9 +24,13 @@
 	<div class="container">
 		<h2 class="text-primary">로그인</h2>
 		<c:if test="${fail}">
-		로그인 실패
+			<div class="alert alert-danger">
+				<h3>로그인 실패</h3>
+				<p>아이디 비밀번호를 확인해주세요</p>
+			</div>
 		</c:if>
-		<form:form action="${root}user/login_pro" method="post" modelAttribute="tempLoginBean">
+		<form:form action="${root}user/login_pro" method="post"
+			modelAttribute="tempLoginBean">
 			<div class="form-group">
 				<form:label path="id">아이디</form:label>
 				<form:input path="id" class="form-control" />
@@ -37,12 +41,12 @@
 				<form:password path="pwd" class='form-control' />
 				<form:errors path='pwd' style='color:red' />
 			</div>
-			<%-- <div>
+			<div>
 				<div class="form-group text-bottom">
 					<a href="${root}user/findID" class="btn-findid">아이디 찾기</a> <a
 						href="${root}user/findpwd" class="btn-findpwd">비밀번호 찾기</a>
 				</div>
-			</div> --%>
+			</div>
 			<div class="form-group text-right">
 				<form:button class='btn btn-primary'>로그인</form:button>
 				<a href="${root}user/join" class="btn btn-danger">회원가입</a>

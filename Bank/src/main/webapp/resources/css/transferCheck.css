@@ -9,6 +9,7 @@
 }
 
 .col-md-2 {
+	text-align : center;
     background-color: #f8f9fa; /* 메뉴바 배경색 */
     padding: 20px;
     height: 100%; /* 화면 높이에 맞춤 */
@@ -16,7 +17,7 @@
     overflow-y: auto; /* 세로 스크롤 추가 */
     position: sticky; /* 스크롤 시 고정 위치 */
     top: 0; /* 상단에 고정 */
-    width: 16.66666667%; /* col-md-2 크기와 일치 */
+    width: 12%; /* col-md-2 크기와 일치 */
 }
 
 .col-md-10 {

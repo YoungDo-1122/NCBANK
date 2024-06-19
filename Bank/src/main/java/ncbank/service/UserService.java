@@ -53,7 +53,7 @@ public class UserService {
 		
 		return phoneCount == 0 && residentCount == 0;
 	}
-
+	
 	public void addUserInfo(UserBean mBean) {
 		String salt = encrypt.getSalt(); //솔토
 		String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt); //암호화된 비번 => 솔트 + 내가 입력한 비밀번호

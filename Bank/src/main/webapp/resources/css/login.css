@@ -16,6 +16,29 @@ h2.text-primary {
 	font-size: 28px;
 }
 
+.alert {
+	padding: 15px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+	border-radius: 4px;
+}
+
+.alert-danger {
+	color: #a94442;
+	background-color: #f2dede;
+	border-color: #ebccd1;
+}
+
+.alert-danger h3 {
+	margin-top: 0;
+	color: #a94442;
+}
+
+.alert-danger p {
+	margin: 0;
+	color: #a94442;
+}
+
 .form-group {
 	margin-bottom: 20px;
 }
