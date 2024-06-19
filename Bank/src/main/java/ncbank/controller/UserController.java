@@ -28,95 +28,96 @@ import ncbank.validator.UserValidator;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Resource(name = "loginUserBean")
-    private UserBean loginUserBean;
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
 
-    @GetMapping("/login")
-    public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
-            @RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
-        model.addAttribute("fail", fail);
-        return "user/login";
-    }
+	@GetMapping("/login")
+	public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
+			@RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
+		model.addAttribute("fail", fail);
+		return "user/login";
+	}
 
-    @PostMapping("/login_pro")
-    public String login_pro(HttpServletRequest request,@Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean, 
-                            Model model, BindingResult result) {
+	@PostMapping("/login_pro")
+	public String login_pro(HttpServletRequest request, @Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean,
+			Model model, BindingResult result) {
+		System.out.println(tempLoginBean);
+		System.out.println(request);
+		if (result.hasErrors()) {
+			return "user/login";
+		}
 
-        if (result.hasErrors()) {
-            return "user/login";
-        }
+		userService.getLoginUserInfo(request, tempLoginBean);
 
-        userService.getLoginUserInfo(request, tempLoginBean);
-        
+		if (loginUserBean.isUserLogin()) {
+			model.addAttribute("tempLoginBean", tempLoginBean);
+			return "user/login_success";
+		} else {
+			model.addAttribute("fail", true);
+			return "user/login_fail";
+		}
+	}
 
-        if (loginUserBean.isUserLogin()) {
-            model.addAttribute("tempLoginBean", tempLoginBean);
-            return "user/login_success";
-        } else {
-            return "user/login_fail";
-        }
-    }
+	@GetMapping("/join")
+	public String join(@ModelAttribute("mBean") UserBean mBean) {
+		return "user/join";
+	}
 
-    @GetMapping("/join")
-    public String join(@ModelAttribute("mBean") UserBean mBean) {
-        return "user/join";
-    }
+	@PostMapping("/join_pro")
+	public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult) {
 
-    @PostMapping("/join_pro")
-    public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult) {
+		if (memberResult.hasErrors()) {
+			memberResult.getFieldErrorCount();
+			List<ObjectError> temp = memberResult.getAllErrors();
+			for (ObjectError e : temp) {
+				System.out.println(e.getDefaultMessage());
+			}
+			return "user/join";
+		}
 
-        if (memberResult.hasErrors()) {
-        	memberResult.getFieldErrorCount();
-        	List<ObjectError> temp = memberResult.getAllErrors();
-        	for(ObjectError e : temp ) {
-        		System.out.println(e.getDefaultMessage());
-        	}
-            return "user/join";
-        }
+		String address = (mBean.getAdd2() != null && !mBean.getAdd2().isEmpty()) ? mBean.getAdd2() : mBean.getAdd3();
+		mBean.setAddress(address);
 
-        String address = (mBean.getAdd2() != null && !mBean.getAdd2().isEmpty()) ? mBean.getAdd2() : mBean.getAdd3();
-        mBean.setAddress(address);
+		userService.addUserInfo(mBean);
 
-        userService.addUserInfo(mBean);
+		return "user/join_success";
+	}
 
-        return "user/join_success";
-    }
+	@GetMapping("/index")
+	public String index() {
+		return "user/index";
+	}
 
-    @GetMapping("/index")
-    public String index() {
-        return "user/index";
-    }
+	@GetMapping("/modify")
+	public String modify() {
+		return "user/modify";
+	}
 
-    @GetMapping("/modify")
-    public String modify() {
-        return "user/modify";
-    }
+	@GetMapping("/logout")
+	public String logout() {
+		loginUserBean.setUserLogin(false);
+		return "user/logout";
+	}
 
-    @GetMapping("/logout")
-    public String logout() {
-        loginUserBean.setUserLogin(false);
-        return "user/logout";
-    }
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		UserValidator validator1 = new UserValidator();
+		binder.addValidators(validator1);
+	}
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        UserValidator validator1 = new UserValidator();
-        binder.addValidators(validator1);
-    }
-    
-    //문자인증
-    @PostMapping("/memberPhoneCheck")
-    public @ResponseBody String memberPhoneCheck(@RequestParam(value="to") String to) {
-    	System.out.println("------------------------------");
-    	String code = String.format("%06d", (int)(Math.random() * 900000));
-    	String text = ("[NC BANK] " + code);
-    	System.out.println(text);
-    	return code;
+	// 문자인증
+	@PostMapping("/memberPhoneCheck")
+	public @ResponseBody String memberPhoneCheck(@RequestParam(value = "to") String to) {
+		System.out.println("------------------------------");
+		String code = String.format("%06d", (int) (Math.random() * 900000));
+		String text = ("[NC BANK] " + code);
+		System.out.println(text);
+		return code;
 //      실제로 쓸때는 위에꺼 주석 처리하고 밑에꺼 써야댐
 //    	String vr = userService.verificationCode(to);
 //    	return vr;
-    }
+	}
 }

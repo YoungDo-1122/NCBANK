@@ -3,7 +3,6 @@ package ncbank.beans;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-
 public class UserBean {
 	private int user_num;
 	@Size(min = 2, max = 4)
@@ -20,11 +19,11 @@ public class UserBean {
 	@Size(min = 4, max = 20)
 	@Pattern(regexp = "[a-zA-Z0-9]*") // 영어 또는 숫자만 입력 자주 쓰이는 정규식(Regular Expression)
 	private String id;
-	@Size(min = 4, max = 20)
+	@Size(min = 1, max = 20)
 	@Pattern(regexp = "[a-zA-Z0-9]*")
-	/* /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$ 영문 숫자 특수기호 조합 8자리 이상 */
 	private String pwd;
-	@Size(min = 4, max = 20)
+	/* /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$ 영문 숫자 특수기호 조합 8자리 이상 */
+	@Size(min = 1, max = 20)
 	@Pattern(regexp = "[a-zA-Z0-9]*")
 	private String pwd2;
 

@@ -22,7 +22,7 @@
 			</ul></li>
 		<li><a href="#">이체</a>
 			<ul id=sub-menu>
-				<li><a href="${root}account/accountCreate">계좌 생성</a></li>
+				<li><a href="${root}account/accountCreate">계좌 개설</a></li>
 				<li><a href="${root}trans/transfer">계좌 이체</a></li>
 				<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
 				<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
