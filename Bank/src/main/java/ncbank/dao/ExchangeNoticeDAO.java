@@ -26,7 +26,7 @@ public class ExchangeNoticeDAO {
 	public void updateExchangeRateNotice(ExchangeNoticeBean noticeBean) {
 		exchangeNoticeMapper.updateExchangeRateNotice(noticeBean);
 	}
-	
+
 	/* delete */
 	public void deleteExchangeRateNotice(int user_num) {
 		exchangeNoticeMapper.deleteExchangeRateNotice(user_num);

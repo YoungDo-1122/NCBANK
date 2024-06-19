@@ -31,16 +31,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EmailManager {
 	// 구글 이메일
-	static final String user_email = "jcjhjg12@gmail.com";
+	private final String user_email = "jcjhjg12@gmail.com";
 	// 애플리케이션 비번
-	static final String user_pw = "bpyt jizy nxmn pqro";
+	private final String user_pw = "bpyt jizy nxmn pqro";
 	// 호스트 주소 - 호스트를 통해 Gmail SMTP 
-	static final String smtp_host = "smtp.gmail.com";
+	private final String smtp_host = "smtp.gmail.com";
 	// 포트번호
-	static final int smtp_port = 465; // TLS : 587, SSL : 465
+	private final int smtp_port = 465; // TLS : 587, SSL : 465
 	
 	// 받을 이메일, 제목, 내용
-	public static void sendEmail(String email, String subject, String text, String filePath) {
+	public void sendEmail(String email, String subject, String text, String filePath) {
 		System.out.println("EmailManager sendEmail()");
 
 		Properties props = System.getProperties();
@@ -108,7 +108,7 @@ public class EmailManager {
 	
 	
 	 // 받을 이메일, 제목, JSP 경로
-    public static void sendJspEmail(String email, String subject, String jspPath, 
+    public void sendJspEmail(String email, String subject, String jspPath, 
     		HttpServletRequest request, HttpServletResponse response) {
         System.out.println("EmailManager sendJspEmail()");
 
@@ -163,7 +163,7 @@ public class EmailManager {
     } // Send()
     
     // 받을 이메일, 제목, JSP 경로, 인라인 이미지 map 
-    public static void sendJspEmailWithInlineImage(String email, String subject, String jspPath, Map<String, String> inlinePathImgs,
+    public void sendJspEmailWithInlineImage(String email, String subject, String jspPath, Map<String, String> inlinePathImgs,
             HttpServletRequest request, HttpServletResponse response) {
         System.out.println("EmailManager sendJspEmailWithInlineImage()");
 

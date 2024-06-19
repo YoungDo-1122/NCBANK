@@ -12,17 +12,15 @@ import ncbank.beans.ExchangeNoticeBean;
 public interface ExchangeNoticeMapper {
 	
 	/* select */
-	@Select("select notice_num, rateType, notice_rate, notice_email, notice_date, user_num, code_money " 
-			+"from notice")
+	@Select("select * from notice ")
 	public List<ExchangeNoticeBean> getAllExchangeRateNotice();
 	
-	@Select("select notice_num, rateType, notice_rate, notice_email, notice_date, user_num, code_money " 
-			+"from notice " + "where user_num = (select user_num from member where user_num = #{user_num})")
+	@Select("select * from notice " 
+			+ "where user_num = (select user_num from member where user_num = #{user_num})")
 	public ExchangeNoticeBean getExchangeRateNotice(int user_num);
 	
 	//  만약 한 유저가 여러 통화의 알림을 설정할수 있다고 하면 사용될 mapper
-	@Select("select notice_num, rateType, notice_rate, notice_email, notice_date, user_num, code_money "
-			+ "from notice "
+	@Select("select * from notice "
 			+ "where user_num = (select user_num from member where user_num = #{user_num}) "
 			+ "and code_money = (select code_money from code_money where code_money = #{code_money})")
 	public ExchangeNoticeBean getExchangeRateNotice2(int user_num, String code_money);
@@ -33,6 +31,7 @@ public interface ExchangeNoticeMapper {
 			+ "code_money = (select code_money from code_money where code_money = #{code_money}) "
 			+ "where user_num = (select user_num from member where user_num = #{user_num})")
 	public void updateExchangeRateNotice(ExchangeNoticeBean noticeBean);
+	
 	
 	/* delete */
 	@Delete("delete notice "

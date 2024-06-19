@@ -139,15 +139,17 @@
 					<!-- API 데이터를 가져와서 For Each -->
 					<tbody>
 						<c:forEach var="bean" items="${ExchangeRateList}">
-							<tr>
-								<td class="tLeft">${bean.code_money_name}</td>
-								<td><img src="${root}img/Flags/${bean.code_money}.png"
-									onerror="this.style.display='none'"></td>
-								<td>${bean.code_money}</td>
-								<td>${bean.ex_standard}</td>
-								<td class="tRight">${bean.ex_buy}</td>
-								<td class="tRight">${bean.ex_sell}</td>
-							</tr>
+							<c:if test="${'KRW' != bean.code_money.toUpperCase().trim()}">
+								<tr>
+									<td class="tLeft">${bean.code_money_name}</td>
+									<td><img src="${root}img/Flags/${bean.code_money}.png"
+										onerror="this.style.display='none'"></td>
+									<td>${bean.code_money}</td>
+									<td>${bean.ex_standard}</td>
+									<td class="tRight">${bean.ex_buy}</td>
+									<td class="tRight">${bean.ex_sell}</td>
+								</tr>
+							</c:if>
 						</c:forEach>
 					</tbody>
 				</table>

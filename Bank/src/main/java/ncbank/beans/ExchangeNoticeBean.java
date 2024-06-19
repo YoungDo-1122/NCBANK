@@ -1,7 +1,6 @@
 package ncbank.beans;
 
 import java.util.Date;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class ExchangeNoticeBean {
@@ -65,5 +64,6 @@ public class ExchangeNoticeBean {
 	public void setCode_money(String code_money) {
 		this.code_money = code_money;
 	}
-
+	
+	
 }

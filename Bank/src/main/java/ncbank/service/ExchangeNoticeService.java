@@ -30,7 +30,7 @@ public class ExchangeNoticeService {
 		}
 		exchangeNoticeDAO.updateExchangeRateNotice(noticeBean);
 	}
-	
+
 	
 	public void deleteExchangeRateNotice(int user_num) {
 		exchangeNoticeDAO.deleteExchangeRateNotice(user_num);
@@ -38,6 +38,9 @@ public class ExchangeNoticeService {
 	
 	
 	public void addExchangeRateNotice(ExchangeNoticeBean noticeBean) {
+		System.out.println("ExchangeNoticeService addExchangeRateNotice()");
 		exchangeNoticeDAO.addExchangeRateNotice(noticeBean);
 	}
+	
+	
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
+import ncbank.mapper.UserMapper;
 import ncbank.util.Encrypt;
 import ncbank.util.SmsSender;
 

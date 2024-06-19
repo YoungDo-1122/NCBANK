@@ -1,5 +1,6 @@
 package ncbank.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -23,6 +24,7 @@ import ncbank.beans.ExchangeNoticeBean;
 import ncbank.beans.ExchangeRateBean;
 import ncbank.beans.UserBean;
 import ncbank.service.CodeMoneyService;
+import ncbank.service.ExchangeAutoNoticeService;
 import ncbank.service.ExchangeNoticeService;
 import ncbank.service.ExchangeRateService;
 import ncbank.utility.DateManager;
@@ -39,6 +41,8 @@ public class ExchangeNoticController {
     private ExchangeRateService exchangeRateService;
     @Autowired
     private CodeMoneyService codeMoneyService;
+    @Autowired
+    private ExchangeAutoNoticeService autoNoticeService;
     
     @Autowired
     private DateManager dateManager;
@@ -113,6 +117,8 @@ public class ExchangeNoticController {
     	exchangeNoticeBean.setNotice_date(dateManager.parseStringToDate(dateManager.getCurrentDate("yyyyMMdd"), "yyyyMMdd"));
     	exchangeNoticeService.addExchangeRateNotice(exchangeNoticeBean);
     	
+    	autoNoticeService.addExchangeAutoNotice(loginUserBean.getUser_num());
+    	
     	model.addAttribute("noticContentIndex", 4);
     	return notice(model);
     }
@@ -146,24 +152,13 @@ public class ExchangeNoticController {
 		}
 
     	exchangeNoticeService.updateExchangeRateNotice(exchangeNoticeBean);
+    	// 환율 알림 변경 시 자동알림의 state 를 변경해 다시 알림을 받을 준비를 한다
+    	autoNoticeService.updateExchangeAutoNotice(0, loginUserBean.getUser_num());
     	
     	return noiticeRegisterEditSuccess(model);
     }
     
     // 알림 삭제
-    @GetMapping("noticeDelet")
-    public String noticeDelet(Model model) {
-    	System.out.println("ExchangeRateController noticeDeletPro()");
-    	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
-			return "exchange/not_login";
-		}
-    	ExchangeNoticeBean noticeBean = exchangeNoticeService.getExchangeRateNotice(loginUserBean.getUser_num());
-    	model.addAttribute("ExchangeNoticeBean", noticeBean);
-    	
-    	exchangeNoticeService.deleteExchangeRateNotice(loginUserBean.getUser_num());
-    	
-    	return noticeDeletSuccess(model);
-    }
     @GetMapping("noticeDeletPro")
     public String noticeDeletPro(Model model) {
     	System.out.println("ExchangeRateController noticeDeletPro()");
@@ -174,6 +169,8 @@ public class ExchangeNoticController {
     	model.addAttribute("ExchangeNoticeBean", noticeBean);
     	
     	exchangeNoticeService.deleteExchangeRateNotice(loginUserBean.getUser_num());
+    	// 환율 알림 삭제 시 해당 자동알림 정보도 삭제
+    	autoNoticeService.deleteExchangeAutoNotice(loginUserBean.getUser_num());
     	
     	return noticeDeletSuccess(model);
     }
@@ -203,26 +200,36 @@ public class ExchangeNoticController {
     }
     
    
-    // 메일전송
+    // 메일전송    
     @GetMapping("sendNoticeMail")
     // Spring MVC에서 자동으로 HttpServletRequest와 HttpServletResponse 객체를 컨트롤러 메서드에 주입
     public String sendNoticeMail(HttpServletRequest request, HttpServletResponse response) {
     	System.out.println("ExchangeController sendNoticeMail()");
-    	
+    	 if (null == loginUserBean && !loginUserBean.isUserLogin()) {
+    		System.out.println("not login");
+         	return "exchange/rateInquiry";
+         }
 		/* jsp 내용 메일 */
-        // 최근고지환율정보
-        List<ExchangeRateBean> finalExchangeRateList = exchangeRateService.getFinalExchangeRate();   	
-        List<ExchangeRateDTO> rateDtoList = exchangeRateService.convertExchangeDTOList(finalExchangeRateList);  
-        String inquiryDate = dateManager.parseDateToString(rateDtoList.get(0).getCode_date(), "yyyy.MM.dd");
+    	ExchangeNoticeBean exchangeNoticeBean = exchangeNoticeService.getExchangeRateNotice(loginUserBean.getUser_num());          
+     	System.out.println("exchangeNoticeBean : " + exchangeNoticeBean);
+    	// 신청한 알림정보
+    	
+
+    	// Bean으로 빼보기
+    	String noticeDate = dateManager.parseDateToString(exchangeNoticeBean.getNotice_date(), "yyyy.MM.dd");
+
+    	request.setAttribute("ExchangeNoticeBean", exchangeNoticeBean);
+    	request.setAttribute("noticeDate", noticeDate);
+    	System.out.println("noticeDate : " + noticeDate);
+     	
+        // 신청한 통화의 최근고지환율정보
+     	ExchangeRateBean rateBean = exchangeRateService.findFinalExchangeRate(exchangeNoticeBean.getCode_money());   	
+     	ExchangeRateDTO rateDTO = exchangeRateService.convertExchangeDTO(rateBean);  
+        String inquiryDate = dateManager.parseDateToString(rateDTO.getCode_date(), "yyyy.MM.dd");
         
-        request.setAttribute("ExchangeRateList", rateDtoList);
+        request.setAttribute("ExchangeRateBean", rateDTO);
         request.setAttribute("inquiryDate", inquiryDate);
-        
-        // 회원이 신청한 알림 정보
-        if (null != loginUserBean && loginUserBean.isUserLogin()) {
-        	ExchangeNoticeBean exchangeNoticeBean = exchangeNoticeService.getExchangeRateNotice(loginUserBean.getUser_num());          
-        	request.setAttribute("ExchangeNoticeBean", exchangeNoticeBean);
-        }
+        System.out.println("inquiryDate : " + inquiryDate);
         
         // 한국 원 정보는 따로 가져감
         ExchangeRateBean beanKRW = exchangeRateService.findFinalExchangeRate("KRW");
@@ -243,7 +250,8 @@ public class ExchangeNoticController {
 		emailManager.sendJspEmailWithInlineImage("jcjhjg12@gmail.com", "인라인 이미지 메일 테스트",
 				"/WEB-INF/views/exchange/sendNoticeMail.jsp", inlinePathImgs, request, response);
 		
-    	return "exchange/rateInquiry";
+		return "exchange/rateInquiry";
     }
+    
     
 } // class
