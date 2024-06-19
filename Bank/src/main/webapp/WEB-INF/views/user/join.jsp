@@ -9,7 +9,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원가입</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/joinform.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/joinform.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -120,12 +121,13 @@ function sendSMSVerification() {
 	<c:import url="../include/top_menu.jsp" />
 	<div class="container">
 		<h2 class="text-primary">회원가입</h2>
-		
+
 		<!-- 에러 발생시 -->
 		<c:if test="${not empty errorMessage}">
-			<div class="alert alert-danger" style='color:red'>${errorMessage}</div><br>
+			<div class="alert alert-danger" style='color: red'>${errorMessage}</div>
+			<br>
 		</c:if>
-		
+
 		<form:form action="${root}/user/join_pro" method="post"
 			modelAttribute="mBean">
 			<form:hidden path="idExistCheck" />
@@ -137,12 +139,16 @@ function sendSMSVerification() {
 			<div class="form-group">
 				<form:label path="resident">주민번호</form:label>
 				<div class="resident">
-				<form:input path="resident1" placeholder="앞자리 6자리" class='form-front' maxlength="6" style="width: 100px; display: inline-block;"/>
-				<label style="margin : 10px; ">-</label>
-				<form:password path="resident2" placeholder="뒷자리 7자리" class='form-back' maxlength="7" style="width: 100px; display: inline-block;"/>
+					<form:input path="resident1" placeholder="앞자리 6자리"
+						class='form-front' maxlength="6"
+						style="width: 100px; display: inline-block;" />
+					<label style="margin: 10px;">-</label>
+					<form:password path="resident2" placeholder="뒷자리 7자리"
+						class='form-back' maxlength="7"
+						style="width: 100px; display: inline-block;" />
 				</div>
-				<form:errors path="resident1" style='color:red'/>
-				<form:errors path="resident2" style='color:red'/>
+				<form:errors path="resident1" style='color:red' />
+				<form:errors path="resident2" style='color:red' />
 			</div>
 			<div class="form-group">
 				<form:label path="id">아이디</form:label>
@@ -185,7 +191,7 @@ function sendSMSVerification() {
 				<form:input path="add3" placeholder="상세 주소" class='form-control' />
 				<form:errors path='add1' style='color:red' />
 				<form:errors path='add3' style='color:red' />
-								
+
 				<form:hidden path="address" id="address" />
 			</div>
 			<div class="form-group row">
@@ -200,7 +206,7 @@ function sendSMSVerification() {
 								onclick="sendSMSVerification()">인증번호 받기</button>
 						</div>
 					</div>
-					<form:errors path="phone" style='color:red'/>
+					<form:errors path="phone" style='color:red' />
 				</div>
 			</div>
 			<div class="form-group row">
@@ -213,7 +219,7 @@ function sendSMSVerification() {
 								onclick="certifyCheck()">인증번호 확인</button>
 						</div>
 					</div>
-					<form:errors path="verificationCode" style='color:red'/>
+					<form:errors path="verificationCode" style='color:red' />
 				</div>
 			</div>
 			<div class="form-group">
@@ -231,6 +237,6 @@ function sendSMSVerification() {
 			</div>
 		</form:form>
 	</div>
-	<%-- <c:import url="../include/bottom_info.jsp" /> --%>
+	<c:import url="../include/bottom_info.jsp" />
 </body>
 </html>

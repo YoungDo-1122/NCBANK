@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 .container {
 	font-family: Arial, Helvetica, sans-serif;
 	padding-top: 50px;
@@ -8,6 +10,7 @@
 	display: flex;
 	align-items: center;
 }
+
 .carousel-wrapper {
 	width: 100%;
 	display: flex;
@@ -49,6 +52,7 @@
 .carousel .prev {
 	left: 0;
 }
+
 .carousel .next {
 	right: 0;
 }
@@ -62,7 +66,8 @@
 	background-color: rgb(83, 169, 255);
 	padding: 20px 0;
 }
-.quickLink-title{
+
+.quickLink-title {
 	color: black;
 	font-size: 24px;
 	margin-bottom: 155px;
@@ -75,12 +80,14 @@
 	width: 70%;
 	overflow: hidden;
 }
+
 .quickLink ul li {
 	width: 20%;
 	text-align: center;
 	margin: 10px 0;
 	list-style: none;
 }
+
 .quickLink ul li a img {
 	display: block;
 	margin: 0 auto;
@@ -102,6 +109,7 @@
 	justify-content: space-between;
 	margin-top: 20px;
 }
+
 .bottom_menu {
 	display: flex;
 }
@@ -109,12 +117,14 @@
 .tabMenu {
 	width: 48%;
 	height: 100%;
-	margin-bottom: 30px ;
+	margin-bottom: 30px;
 	text-decoration: none;
 }
+
 .tabMenu input[type="radio"] {
 	display: none;
 }
+
 .tabMenu label {
 	display: inline-block;
 	margin: 0;
@@ -124,50 +134,58 @@
 	color: #aaa;
 	border: 1px solid transparent;
 }
+
 .tabMenu label:hover {
 	color: #222;
 	cursor: pointer;
 }
-.tabMenu input:checked + label {
+
+.tabMenu input:checked+label {
 	text-decoration: none;
 	color: #b00;
 	border: 1px solid #ddd;
 	background-color: #eee;
 }
+
 .tabContent {
 	padding: 20px 0 0;
 	border-top: 1px solid #ddd;
 }
+
 .tabContent ul {
 	list-style: disc;
 	margin-left: 10px;
 	text-decoration: none;
 }
+
 .tabContent ul li a {
-	font-size : 16px;
+	font-size: 16px;
 	line-height: 2;
 	text-decoration: none;
 }
+
 .tabContent2 {
 	padding: 20px 0 0;
 	border-top: 1px solid #ddd;
-	display : none;
+	display: none;
 }
+
 .tabContent2 ul {
 	list-style: disc;
 	margin-left: 10px;
 	text-decoration: none;
 }
+
 .tabContent2 ul li a {
 	font-size: 16px;
 	line-height: 2;
 }
-/* °øÁö»çÇ× ¹× »õ¼Ò½Ä ÅÇ È°¼ºÈ­ */
+/* ê³µì§€ì‚¬í•­ ë° ìƒˆì†Œì‹ íƒ­ í™œì„±í™” */
 #tab1:checked ~ #tab1Content, #tab2:checked ~ #tab2Content {
 	display: block;
 }
 
-/* ½Ç½Ã°£ È¯À² Á¤º¸ */
+/* ì‹¤ì‹œê°„ í™˜ìœ¨ ì •ë³´ */
 .exchange_rate {
 	width: 48%;
 	height: 100%;
@@ -175,13 +193,13 @@
 	border: 1px solid black;
 	padding: 100px;
 	box-sizing: border-box;
-	margin-bottom: 30px ;
-
+	margin-bottom: 30px;
 }
+
 .exchange_rate select {
 	width: 100px;
 }
-/* ³ªÁß¿¡ ±×·¡ÇÁ Ãß°¡ÇÏ°Ô µÇ¸é img ºÎºĞÀÌ ÇÊ¿äÇÑÁö´Â Àß ¸ğ¸£°ÚÀ½ */
+/* ë‚˜ì¤‘ì— ê·¸ë˜í”„ ì¶”ê°€í•˜ê²Œ ë˜ë©´ img ë¶€ë¶„ì´ í•„ìš”í•œì§€ëŠ” ì˜ ëª¨ë¥´ê² ìŒ */
 .exchange_rate img {
 	display: block;
 	margin: 0 auto;
