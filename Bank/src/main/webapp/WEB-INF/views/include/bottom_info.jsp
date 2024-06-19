@@ -41,19 +41,19 @@
 					<li>
 						<label for="networkSelect" class="tit"></label>
 						<select id="networkSelect" class="info">
-							<option value="https://www.kbfg.com">KB금융그룹</option>
-							<option value="http://www.kbsec.co.kr">KB증권</option>
-							<option value="http://www.kbinsure.co.kr">KB손해보험</option>
-							<option value="https://www.kbcard.com">KB국민카드</option>
-							<option value="http://www.kbam.co.kr">KB자산운용</option>
-							<option value="http://www.kbcapital.co.kr">KB캐피탈</option>
-							<option value="https://www.kblife.co.kr">KB라이프생명</option>
-							<option value="http://www.kbret.co.kr">KB부동산신탁</option>
-							<option value="https://www.kbsavings.com">KB저축은행</option>
-							<option value="http://www.kbic.co.kr">KB인베스트먼트</option>
-							<option value="http://www.kds.co.kr">KB데이타시스템</option>
-							<option value="http://www.kbci.co.kr">KB신용정보</option>
-							<option value="https://www.kbfg.com/kbresearch/main.do">KB경영연구소</option>
+							<option value="https://www.kbfg.com">NC금융그룹</option>
+							<option value="http://www.kbsec.co.kr">NC증권</option>
+							<option value="http://www.kbinsure.co.kr">NC손해보험</option>
+							<option value="https://www.kbcard.com">NC국민카드</option>
+							<option value="http://www.kbam.co.kr">NC자산운용</option>
+							<option value="http://www.kbcapital.co.kr">NC캐피탈</option>
+							<option value="https://www.kblife.co.kr">NC라이프생명</option>
+							<option value="http://www.kbret.co.kr">NC부동산신탁</option>
+							<option value="https://www.kbsavings.com">NC저축은행</option>
+							<option value="http://www.kbic.co.kr">NC인베스트먼트</option>
+							<option value="http://www.kds.co.kr">NC데이타시스템</option>
+							<option value="http://www.kbci.co.kr">NC신용정보</option>
+							<option value="https://www.kbfg.com/kbresearch/main.do">NC경영연구소</option>
 						</select>
 					</li>
 					<!-- 대표전화 -->
@@ -99,9 +99,8 @@
 				<!-- ################################## -->
 				<!-- ### COPYRIGHT 및 마크 ### -->
 				<!-- ################################## -->
-				<p class="copy">Copyright KB Kookmin Bank. All Rights Reserved.</p>
+				<p class="copy">Copyright NC NullCrush Bank. All Rights Reserved.</p>
 				<!-- ################################## -->
 			</div>
 		</div>
-	</div>
 </footer>

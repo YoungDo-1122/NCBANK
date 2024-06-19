@@ -28,7 +28,6 @@ import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.AccountMapper;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
-import ncbank.mapper.ExchangeRateMapper;
 import ncbank.mapper.CodeOrganMapper;
 import ncbank.mapper.ExchangeRateMapper;
 import ncbank.mapper.TopMenuMapper;

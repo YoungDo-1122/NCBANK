@@ -8,16 +8,11 @@
 <head>
 <meta charset="UTF-8">
 <title>NC은행</title>
-<style>
-.tabContent li {
-	margin-bottom: 5px; /* 원하는 간격 값 */
-}
-</style>
 <!-- Bootstrap CDN -->
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> -->
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/main.css"> 	
+	href="${pageContext.request.contextPath}/css/main.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -37,18 +32,19 @@
 				<button class="carousel-button next">&#10095;</button>
 			</div>
 			<div class="quickLink">
+				<div class="quickLink-title">바로가기</div>
 				<ul>
-				<!--알아서 링크 거시고요 -->
+					<!--알아서 링크 거시고요 -->
 					<li><a href="#"> <img src="img/조회.png" alt="빠른링크1">
 							<p>조회</p>
 					</a></li>
-					<li><a href="#"> <img src="img/이체.jpg" alt="빠른링크2">
+					<li><a href="#"> <img src="img/이체.png" alt="빠른링크2">
 							<p>이체</p>
 					</a></li>
 					<li><a href="#"> <img src="img/모임.png" alt="빠른링크3">
 							<p>모임</p>
 					</a></li>
-					<li><a href="#"> <img src="환율.png" alt="빠른링크3">
+					<li><a href="#"> <img src="img/환율.png" alt="빠른링크4">
 							<p>환율</p>
 					</a></li>
 				</ul>
@@ -59,62 +55,39 @@
 	<!-- 스크립트 코드 js파일로 이동후 임포트 시킨거 -->
 	<script type="text/javascript" src="${root}js/style_main.js"></script>
 
-	<!-- 
+	<div class="bottom_menu">
 		<div class="tabMenu">
-			<input type="radio" id="tab1" name="tabs" checked> 
-			<label for="tab1">공지사항</label> 
-			<input type="radio" id="tab2" name="tabs"> 
+			<input type="radio" id="tab1" name="tabs" checked> <label
+				for="tab1">공지사항</label> <input type="radio" id="tab2" name="tabs">
 			<label for="tab2">새소식</label>
-			<div id="notice" class="tabContent">
+
+			<div id="tab1Content" class="tabContent">
+				<!-- 공지사항 탭 내용 -->
 				<ul>
-					<li><a href="#">공지사항 제목1</a></li>
-					<li><a href="#">공지사항 제목2</a></li>
-					<li><a href="#">공지사항 제목3</a></li>
-					<li><a href="#">공지사항 제목4</a></li>
-					<li><a href="#">공지사항 제목5</a></li>
+					<c:forEach var='obj' items="${list[0]}">
+						<li><a
+							href="${root}board/read?board_info_idx=${board_list[0].board_info_idx}&content_idx=${obj.content_idx}&page=1">${obj.content_subject}</a></li>
+					</c:forEach>
 				</ul>
 			</div>
-			<div id="notice2" class="tabContent2">
-				<ul> 
-					<li><a href="#">새소식 제목1</a></li>
-					<li><a href="#">새소식 제목2</a></li>
-					<li><a href="#">새소식 제목3</a></li>
-					<li><a href="#">새소식 제목4</a></li>
-					<li><a href="#">새소식 제목5</a></li>
+			<div id="tab2Content" class="tabContent">
+				<ul>
+					<c:forEach var='obj' items="${list[1]}">
+						<li><a
+							href="${root}board/read?board_info_idx=${board_list[1].board_info_idx}&content_idx=${obj.content_idx}&page=1">${obj.content_subject}</a></li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
- -->
-	<div class="tabMenu">
-		<input type="radio" id="tab1" name="tabs" checked> <label
-			for="tab1">공지사항</label> <input type="radio" id="tab2" name="tabs">
-		<label for="tab2">새소식</label>
 
-		<div id="tab1Content" class="tabContent">
-			<!-- 공지사항 탭 내용 -->
-			<ul>
-				<c:forEach var='obj' items="${list[0]}">
-					<li><a
-						href="${root}board/read?board_info_idx=${board_list[0].board_info_idx}&content_idx=${obj.content_idx}&page=1">${obj.content_subject}</a></li>
-				</c:forEach>
-			</ul>
+		<div class="exchange_rate">
+			<select id="currencySelect" name="currency">
+				<option value="USD">달러($)</option>
+				<option value="JPY">엔(¥)</option>
+				<option value="EUR">유로(€)</option>
+			</select> <img id="currencyImage" src="img/그웬2.jpg" alt="통화 이미지">
 		</div>
-		<div id="tab2Content" class="tabContent">
-			<ul>
-				<c:forEach var='obj' items="${list[1]}">
-					<li><a
-						href="${root}board/read?board_info_idx=${board_list[1].board_info_idx}&content_idx=${obj.content_idx}&page=1">${obj.content_subject}</a></li>
-				</c:forEach>
-			</ul>
-		</div>
-	</div>
 
-	<div class="exchange_rate">
-		<select id="currencySelect" name="currency">
-			<option value="USD">달러($)</option>
-			<option value="JPY">엔(¥)</option>
-			<option value="EUR">유로(€)</option>
-		</select> <img id="currencyImage" src="img/그웬2.jpg" alt="통화 이미지">
 	</div>
 
 
@@ -133,6 +106,33 @@
 		// 초기 설정: 첫 번째 탭 내용 보이기
 		$('#tab1Content').show();
 		$('#tab2Content').hide();
-	});
+	});	
+</script>
+<script>
+let currentIndex = 0;
+const images = document.querySelectorAll('.carousel img');
+const totalImages = images.length;
+
+function showImage(index) {
+    images.forEach((img, i) => {
+        img.classList.toggle('active', i === index);
+    });
+}
+
+function showNextImage() {
+    currentIndex = (currentIndex + 1) % totalImages;
+    showImage(currentIndex);
+}
+
+function showPrevImage() {
+    currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+    showImage(currentIndex);
+}
+
+document.querySelector('.carousel .prev').addEventListener('click', showPrevImage);
+document.querySelector('.carousel .next').addEventListener('click', showNextImage);
+
+setInterval(showNextImage, 3000);
+
 </script>
 </html>
