@@ -4,12 +4,15 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 public class UserBean {
+	
 	private int user_num;
 	@Size(min = 2, max = 4)
 	@Pattern(regexp = "[가-힣]*") // ㄱ에서 부터 끝까지 읽음
 	private String name;
+	
 	private String address; // 최종 주소
-	@Pattern(regexp = "^0\\d{1,2}(-|\\))\\d{3,4}-\\d{4}$") // 전화번호 형식
+	
+	@Pattern(regexp = "^0\\d{1,2}(-|\\))\\d{3,4}-\\d{4}$",message="전화번호 형식을 확인해주세요") // 전화번호 형식
 	private String phone;
 	@Pattern(regexp = "\\d{6}\\-[1-4]\\d{6}") // 주민등록번호 형식
 	private String resident; // 주민번호
@@ -26,12 +29,15 @@ public class UserBean {
 	@Size(min = 1, max = 20)
 	@Pattern(regexp = "[a-zA-Z0-9]*")
 	private String pwd2;
-
+	
 	// 주소 api를 위한 필드 선언
 	private String add1; // 우편번호
 	private String add2; // 도로명주소
 	private String add3; // 상세주소
-
+	
+	private String resident1;
+	private String resident2;
+	
 	private String salt;
 
 	// sms 인증 코드
@@ -180,6 +186,23 @@ public class UserBean {
 
 	public void setSalt(String salt) {
 		this.salt = salt;
+	}
+	
+
+	public String getResident1() {
+		return resident1;
+	}
+
+	public void setResident1(String resident1) {
+		this.resident1 = resident1;
+	}
+
+	public String getResident2() {
+		return resident2;
+	}
+
+	public void setResident2(String resident2) {
+		this.resident2 = resident2;
 	}
 
 	@Override

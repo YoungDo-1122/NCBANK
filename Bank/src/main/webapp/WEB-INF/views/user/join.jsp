@@ -8,13 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>user_join.jsp</title>
-
-<!-- Bootstrap CDN -->
-<!-- <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> -->
+<title>회원가입</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/join.css">
+	href="${pageContext.request.contextPath}/css/joinform.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -56,18 +52,15 @@
 	} // checkUserIdExist
 	
 	// 사용자가 아이디란에 입력한 상태
-	function resetUserIdExist(){
-		$("#idExistCheck").val('false')
-	}
+//	function resetUserIdExist(){
+//		$("#idExistCheck").val('false')
+//	}
 
 	$(document).ready(function() {
 		const joinDate = new Date();
 		const formattedDate = joinDate.toISOString().split('T')[0]; // yyyy-mm-dd 형식으로 변환
 		$('#join_date').val(formattedDate);   
     });
-	
-	
-	
 	
 </script>
 
@@ -126,134 +119,124 @@ function sendSMSVerification() {
 
 <body>
 	<c:import url="../include/top_menu.jsp" />
-	<div class="container" style="margin-top: 100px">
-		<div class="row">
-			<div class="col-sm-3"></div>
-			<div class="col-sm-6">
-				<div class="card shadow">
-					<div class="card-body">
-						<!-- form은 넘어갈때 내부의 input 요소를 다 가져간다 -->
-						<!-- modelAttribute="joinUserBean" : 객체를 가지고 UserBean에서 get set을 붙이고 감 -->
-						<form:form action="${root}/user/join_pro" method="post"
-							modelAttribute="mBean">
-							<form:hidden path="idExistCheck" />
-							<div class="form-group">
-								<!-- form: 의 path는 id,class,name 통합 -->
-								<form:label path="name">이름</form:label>
-								<form:input path="name" placeholder="이름" class='form-control' />
-								<form:errors path="name" style='color:red' />
-							</div>
+	<div class="container">
+		<h2 class="text-primary">회원가입</h2>
 
-							<div class="form-group">
-								<form:label path="resident">주민번호</form:label>
-								<form:input path="resident" placeholder="주민번호 입력('-'까지 입력해주세요)"
-									class='form-control' maxlength="14" />
-								<%-- 	<form:input path="resident" placeholder="앞자리 (######)" class='form-control' maxlength="6"/>
-								<form:password path="resident" placeholder="뒤자리 (#######)" class='form-control' maxlength="7"/> --%>
-								<form:errors path="resident" style='color:red' />
-							</div>
+		<!-- 에러 발생시 -->
+		<c:if test="${not empty errorMessage}">
+			<div class="alert alert-danger" style='color: red'>${errorMessage}</div>
+			<br>
+		</c:if>
 
-							<div class="form-group">
-								<form:label path="id">아이디</form:label>
-								<div class="input-group">
-									<form:input path="id" class='form-control' placeholder="아이디"
-										onkeypress="resetUserIdExist()" />
-									<div class="input-group-append">
-										<br />
-										<button type="button" class="btn btn-primary"
-											onclick="checkUserIdExist()">중복확인</button>
-									</div>
-								</div>
-								<form:errors path="id" style='color:red' />
-							</div>
-
-							<div class="form-group">
-								<form:label path="pwd">비밀번호</form:label>
-								<form:password path="pwd" placeholder="비밀번호"
-									class='form-control' />
-								<form:errors path='pwd' style='color:red' />
-							</div>
-
-							<div class="form-group">
-								<form:label path="pwd2">비밀번호 확인</form:label>
-								<form:password path="pwd2" placeholder="비밀번호 확인"
-									class='form-control' />
-								<form:errors path='pwd2' style='color:red' />
-							</div>
-
-							<div class="form-group">
-								<form:label path="address">주소</form:label>
-								<div class="input-group mb-2">
-									<form:input path="add1" placeholder="우편번호" class="form-control" />
-									<br />
-									<form:input path="add2" placeholder="도로명 주소"
-										class='form-control space-between-inputs' />
-								</div>
-								<div class="input-group-append">
-									<br />
-									<button type="button" class="btn btn-primary"
-										onclick="execDaumPostCode()">우편번호 찾기</button>
-								</div>
-								<br />
-								<form:label path="add3">상세 주소</form:label>
-								<form:input path="add3" placeholder="상세 주소" class='form-control' />
-								<form:errors path='add1' style='color:red' />
-								<%-- <form:errors path='add3' style='color:red' />
-								 --%>
-								<form:hidden path="address" id="address" />
-							</div>
-							<div class="form-group row">
-								<div class="col">
-									<label for="phone" class="col-form-label">전화번호</label>
-									<div class="input-group">
-										<input id="phone" type="text" name="phone"
-											placeholder="전화번호 ('-'까지 입력해주세요)" class="form-control"
-											maxlength="13" />
-										<div class="input-group-append">
-											<br />
-											<button type="button" class="btn btn-primary"
-												onclick="sendSMSVerification()">인증번호 받기</button>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="form-group row">
-								<div class="col">
-									<label for="verificationCode">인증번호</label>
-									<div class="input-group">
-										<input id="verificationCode" type="text"
-											name="verificationCode" placeholder="인증번호"
-											class="form-control" />
-										<div class="input-group-append">
-											<br />
-											<button id="certifyCheck" type="button"
-												class="btn btn-primary" onclick="certifyCheck()">인증번호
-												확인</button>
-										</div>
-									</div>
-									<small id="verificationCodeError" class="form-text text-danger"></small>
-								</div>
-							</div>
-							<div class="form-group">
-								<form:label path="email" type="email">이메일</form:label>
-								<form:input path="email" type="email" placeholder="(선택)이메일"
-									class='form-control' />
-							</div>
-							<div class="form-group">
-								<form:hidden path="join_date" />
-							</div>
-							<div class="form-group">
-								<div class="text-right">
-									<form:button type="submit" class='btn btn-primary'>회원가입</form:button>
-								</div>
-							</div>
-						</form:form>
+		<form:form action="${root}/user/join_pro" method="post"
+			modelAttribute="mBean">
+			<form:hidden path="idExistCheck" />
+			<div class="form-group">
+				<form:label path="name">이름</form:label>
+				<form:input path="name" placeholder="이름" class='form-control' />
+				<form:errors path="name" style='color:red' />
+			</div>
+			<div class="form-group">
+				<form:label path="resident">주민번호</form:label>
+				<div class="resident">
+					<form:input path="resident1" placeholder="앞자리 6자리"
+						class='form-front' maxlength="6"
+						style="width: 100px; display: inline-block;" />
+					<label style="margin: 10px;">-</label>
+					<form:password path="resident2" placeholder="뒷자리 7자리"
+						class='form-back' maxlength="7"
+						style="width: 100px; display: inline-block;" />
+				</div>
+				<form:errors path="resident1" style='color:red' />
+				<form:errors path="resident2" style='color:red' />
+			</div>
+			<div class="form-group">
+				<form:label path="id">아이디</form:label>
+				<div class="input-group">
+					<form:input path="id" class='form-control' placeholder="아이디"
+						onkeypress="resetUserIdExist()" />
+					<div class="input-group-append">
+						<button type="button" class="btn btn-primary"
+							onclick="checkUserIdExist()">중복확인</button>
 					</div>
 				</div>
+				<form:errors path="id" style='color:red' />
 			</div>
-			<div class="col-sm-3"></div>
-		</div>
+
+			<div class="form-group">
+				<form:label path="pwd">비밀번호</form:label>
+				<form:password path="pwd" placeholder="비밀번호" class='form-control' />
+				<form:errors path='pwd' style='color:red' />
+			</div>
+
+			<div class="form-group">
+				<form:label path="pwd2">비밀번호 확인</form:label>
+				<form:password path="pwd2" placeholder="비밀번호 확인"
+					class='form-control' />
+				<form:errors path='pwd2' style='color:red' />
+			</div>
+
+			<div class="form-group">
+				<form:label path="address">주소</form:label>
+				<div class="input-group mb-2">
+					<form:input path="add1" placeholder="우편번호" class="form-control" />
+					<div class="input-group-append">
+						<button type="button" class="btn btn-primary"
+							onclick="execDaumPostCode()">우편번호 찾기</button>
+					</div>
+				</div>
+				<form:input path="add2" placeholder="도로명 주소"
+					class='form-control space-between-inputs' />
+				<br />
+				<form:input path="add3" placeholder="상세 주소" class='form-control' />
+				<form:errors path='add1' style='color:red' />
+				<form:errors path='add3' style='color:red' />
+
+				<form:hidden path="address" id="address" />
+			</div>
+			<div class="form-group row">
+				<div class="col">
+					<label for="phone" class="col-form-label">전화번호</label>
+					<div class="input-group">
+						<input id="phone" type="text" name="phone"
+							placeholder="전화번호 ('-'까지 입력해주세요)" class="form-control"
+							maxlength="13" />
+						<div class="input-group-append">
+							<button type="button" class="btn btn-primary"
+								onclick="sendSMSVerification()">인증번호 받기</button>
+						</div>
+					</div>
+					<form:errors path="phone" style='color:red' />
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col">
+					<div class="input-group">
+						<input id="verificationCode" type="text" name="verificationCode"
+							placeholder="인증번호" class="form-control" />
+						<div class="input-group-append">
+							<button id="certifyCheck" type="button" class="btn btn-primary"
+								onclick="certifyCheck()">인증번호 확인</button>
+						</div>
+					</div>
+					<form:errors path="verificationCode" style='color:red' />
+				</div>
+			</div>
+			<div class="form-group">
+				<form:label path="email" type="email">이메일</form:label>
+				<form:input path="email" type="email" placeholder="(선택)이메일"
+					class='form-control' />
+			</div>
+			<div class="form-group">
+				<form:hidden path="join_date" />
+			</div>
+			<div class="form-group">
+				<div class="text-right">
+					<form:button type="submit" class='btn btn-primary'>회원가입</form:button>
+				</div>
+			</div>
+		</form:form>
 	</div>
-	<%-- <c:import url="../include/bottom_info.jsp" /> --%>
+	<c:import url="../include/bottom_info.jsp" />
 </body>
 </html>

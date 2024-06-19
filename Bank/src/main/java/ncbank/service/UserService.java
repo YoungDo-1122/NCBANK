@@ -1,5 +1,7 @@
 package ncbank.service;
 
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.Random;
 
 import javax.annotation.Resource;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
+import ncbank.mapper.UserMapper;
 import ncbank.util.Encrypt;
 import ncbank.util.SmsSender;
 
@@ -19,8 +22,11 @@ import ncbank.util.SmsSender;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserDAO userDaO;
+	@Autowired
+	private UserMapper userMapper;
+	
+	@Autowired
+	private UserDAO userDaO;
 
 	@Autowired
 	private Encrypt encrypt;
@@ -37,13 +43,20 @@ public class UserService {
     @Value("${coolsms.apiSecret")
     private String apiSecret;
 
-    public boolean checkUserExist(String id) {
-        return userDaO.checkUserExist(id);
-    }
-
-    public void addUserInfo(UserBean mBean) {
-        String salt = encrypt.getSalt();
-        String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt);
+	public boolean checkUserExist(String id) {
+		return userDaO.checkUserExist(id);
+	}
+	
+	public boolean canRegister(String phone,String resident) {
+		int phoneCount = userMapper.checkUserPhoneExist(phone);
+		int residentCount = userMapper.checkUserResidentExist(resident);
+		
+		return phoneCount == 0 && residentCount == 0;
+	}
+	
+	public void addUserInfo(UserBean mBean) {
+		String salt = encrypt.getSalt(); //솔토
+		String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt); //암호화된 비번 => 솔트 + 내가 입력한 비밀번호
 
         mBean.setPwd(encryptPasswd);
         mBean.setSalt(salt);
@@ -88,12 +101,25 @@ public class UserService {
         String text = ("[NC BANK] " + code);
         String result = smsSender.Smsvr(phone, text);
 
-        if (result.equals("success")) {
-            return code;
-        } else {
-            return "fail";
-        }
-
-    }
-
+		if (result.equals("success")) {
+			return code;
+		}else { 
+			return "fail";
+		}
+	}
+	/* 비밀번호찾기 버튼 눌렀을떄 나오는 함수
+	public void findMemberPwd(UserBean findMemberPwdBean) {
+		
+		String newsalt = encrypt.getSalt(); //새 솔트값 받았어 
+		
+		String newPwd = findMemberPwdBean.getPwd(); //암호화전 
+		String newpass = encrypt.getEncrypt(findMemberPwdBean.getPwd(), newsalt);
+		
+		findMemberPwdBean.setPwd(newpass);
+		findMemberPwdBean.setSalt(newsalt);
+		
+		userDaO.findMemberPwd(findMemberPwdBean);
+	}
+	
+	*/
 }
