@@ -15,5 +15,4 @@ public class RootAppContext {
 	public UserBean loginUserBean() {
 		return new UserBean();
 	}
-
 }

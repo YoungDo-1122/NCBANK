@@ -1,0 +1,31 @@
+@charset "UTF-8";
+
+/*
+[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
+display > overflow > float > position >
+
+width > height > margin > padding >
+
+color > font-style > font-weight > font-size >
+line-height > font-family > text-indent > text-align >
+
+background-color > background-image >
+background-position > background-size >
+background-repeat
+
+border > border-radius
+*/
+
+body *{
+	text-align: center;
+}
+
+/* 상단바를 제외시킨 컨텐츠 영역 */
+div.contentWarp {
+	overflow: auto;
+	
+	height: 90%;
+	margin: 120px auto;
+	
+	background-color: aliceblue;
+}

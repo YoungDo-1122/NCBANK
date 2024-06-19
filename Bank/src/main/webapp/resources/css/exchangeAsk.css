@@ -1,93 +1,184 @@
 @charset "UTF-8";
 
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.top-menu {
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-}
-
-.main-content-container {
-    display: flex;
-    margin-top: 100px; /* Adjust this value according to the height of your top menu */
-}
-
-.sidebar {
-    width: 200px;
-    background-color: #1E3A5F; /* 신한은행 색상 */
-    color: white;
-    padding: 10px;
-    height: calc(100vh - 100px); /* Adjust this value according to the height of your top menu */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 100px; /* Adjust this value according to the height of your top menu */
-}
-
-.sidebar-item {
-    padding: 10px;
-    cursor: pointer;
-    border-bottom: 1px solid #3A5673; /* 신한은행 색상 */
-    background-color: #1E3A5F; /* 신한은행 색상 */
-    color: white;
-    transition: background-color 0.3s;
-}
-
-.sidebar-item:hover {
-    background-color: #3A5673; /* 신한은행 색상 */
-}
-
-.main-content {
-    margin-left: 220px;
-    padding: 20px;
-    width: calc(100% - 220px);
+	font-family: Arial, sans-serif;
+	display: flex;
+	margin: 0;
 }
 
 h1 {
-    color: #0072BC; /* 신한은행 색상 */
-    font-size: 24px;
-    margin-bottom: 20px;
+	color: #ffcc00;
+	font-size: 24px;
+	margin-bottom: 20px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.container {
+	display: flex;
+	width: 100%;
 }
 
-table, th, td {
-    border: 1px solid #dddddd;
-    padding: 12px;
-    text-align: left;
+.sidebar {
+	width: 200px;
+	background-color: #f8f9fa;
+	padding: 10px;
+	height: 100vh;
+	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+	position: fixed;
 }
 
-th {
-    background-color: #f2f2f2;
+.sidebar-item {
+	padding: 10px;
+	cursor: pointer;
+	border-bottom: 1px solid #dee2e6;
+	background-color: #ffffff;
+	transition: background-color 0.3s;
+}
+
+.sidebar-item:hover {
+	background-color: #e9ecef;
+}
+
+.submenu {
+	padding-left: 20px;
+	display: none;
+}
+
+.submenu ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.submenu li {
+	padding: 5px 0;
+}
+
+.submenu li a {
+	text-decoration: none;
+	color: #007bff;
+}
+
+.submenu li a:hover {
+	text-decoration: underline;
+}
+
+.main-content {
+	margin-left: 220px;
+	padding: 20px;
+	width: calc(100% - 220px);
+}
+
+.form-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	margin-bottom: 15px;
+}
+
+.form-group select, .form-group input, .form-group button {
+	margin-bottom: 10px;
+	padding: 10px;
+	font-size: 14px;
+}
+
+.form-group label {
+	flex: 1 0 150px;
+	font-weight: bold;
+}
+
+.input-group {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.input-group input {
+	flex: 1;
+}
+
+input[type="text"], input[type="date"] {
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
 }
 
 button {
-    background-color: #0072BC; /* 신한은행 색상 */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-    margin-right: 10px;
-    text-decoration: none;
+	background-color: #ffcc00;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #005C99; /* 신한은행 색상 */
+	background-color: #e6b800;
 }
 
-button a {
-    color: white;
-    text-decoration: none;
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+table, th, td {
+	border: 1px solid #dddddd;
+}
+
+th, td {
+	padding: 12px;
+	text-align: left;
+}
+
+th {
+	background-color: #f2f2f2;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.btn-primary {
+	background-color: #ffcc00;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
+.btn-primary:hover {
+	background-color: #e6b800;
+}
+
+label, th {
+	color: #333;
+}
+
+input.form-control, select.form-control, textarea.form-control {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+input.form-control:focus, select.form-control:focus, textarea.form-control:focus
+	{
+	border-color: #ffcc00;
+	outline: none;
+	box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+#exchangeTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#exchangeTable th, #exchangeTable td {
+	padding: 10px;
+	border: 1px solid #ddd;
+}
+
+#exchangeTable th {
+	background-color: #f8f8f8;
+	font-weight: bold;
 }

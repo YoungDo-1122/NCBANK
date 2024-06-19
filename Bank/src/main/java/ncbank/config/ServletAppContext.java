@@ -26,20 +26,28 @@ import ncbank.beans.CreateExchangeBean;
 import ncbank.beans.CrerateTradeBean;
 import ncbank.beans.UserBean;
 import ncbank.beans.WalletBean;
+import ncbank.interceptor.ExchangeAutoNoticeInterceptor;
 import ncbank.interceptor.ExchangeRateInterceptor;
 import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.AccountMapper;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
 import ncbank.mapper.CodeOrganMapper;
+import ncbank.mapper.ExchangeAutoNoticeMapper;
 import ncbank.mapper.ExchangeMapper;
+import ncbank.mapper.ExchangeNoticeMapper;
 import ncbank.mapper.ExchangeRateMapper;
+import ncbank.mapper.GroupAccountMapper;
 import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.TradeMapper;
 import ncbank.mapper.TransferMapper;
 import ncbank.mapper.UserMapper;
+import ncbank.service.ExchangeAutoNoticeService;
+import ncbank.service.ExchangeNoticeService;
 import ncbank.service.ExchangeRateService;
 import ncbank.service.TopMenuService;
+import ncbank.utility.DateManager;
+import ncbank.utility.EmailManager;
 
 // 주소가 요청됨 -> 컨트롤러에서 해당하는 주소를 찾음 (서버에게 컨트롤러가 어디에 있는지 알려줘야 함)
 // ServletAppContext : 직접적으로 서버(웹)에 전달해주는 등록소 - 웹까지 뻗어나갈 애들을 등록
@@ -149,7 +157,6 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return factoryBean;
 	}
 
-	// ������ ������ ���� ��ü(Mapper ����)
 	@Bean
 	public MapperFactoryBean<TradeMapper> getTradeMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<TradeMapper> factoryBean = new MapperFactoryBean<>(TradeMapper.class);
@@ -161,6 +168,22 @@ public class ServletAppContext implements WebMvcConfigurer {
 	public MapperFactoryBean<ExchangeRateMapper> getExchangeRateMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<ExchangeRateMapper> factoryBean = new MapperFactoryBean<ExchangeRateMapper>(
 				ExchangeRateMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+	
+	@Bean
+	public MapperFactoryBean<ExchangeNoticeMapper> getExchangeNoticeMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<ExchangeNoticeMapper> factoryBean = new MapperFactoryBean<ExchangeNoticeMapper>(
+				ExchangeNoticeMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+	
+	@Bean
+	public MapperFactoryBean<ExchangeAutoNoticeMapper> getExchangeAutoNoticeMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<ExchangeAutoNoticeMapper> factoryBean = new MapperFactoryBean<ExchangeAutoNoticeMapper>(
+				ExchangeAutoNoticeMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
@@ -210,6 +233,9 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Bean
 	public MapperFactoryBean<WalletBean> getWalletBean(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<WalletBean> factoryBean = new MapperFactoryBean<>(WalletBean.class);
+	public MapperFactoryBean<GroupAccountMapper> getGroupAccountMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<GroupAccountMapper> factoryBean = new MapperFactoryBean<GroupAccountMapper>(
+				GroupAccountMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
@@ -223,7 +249,17 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Autowired
 	private ExchangeRateService exchangeRateService;
-
+	
+	
+	@Autowired
+	private ExchangeAutoNoticeService autoNoticeService;
+	@Autowired
+	private ExchangeNoticeService noticeService;
+    @Autowired
+    private DateManager dateManager;
+    @Autowired
+    private EmailManager emailManager;
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		WebMvcConfigurer.super.addInterceptors(registry);
@@ -237,7 +273,12 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 		ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService);
 		InterceptorRegistration reg2 = registry.addInterceptor(exchangeRateInterceptor);
-		reg2.addPathPatterns("/exchange/*");
+		reg2.addPathPatterns("/**");
+		
+		ExchangeAutoNoticeInterceptor autoNoticeInterceptor = new ExchangeAutoNoticeInterceptor(
+				autoNoticeService, noticeService, loginUserBean, dateManager, emailManager);
+		InterceptorRegistration reg3 = registry.addInterceptor(autoNoticeInterceptor);
+		reg3.addPathPatterns("/**");
 	}
 
 	// Properties 파일을 Bean으로 등록 (아무데서나 사용가능하기 위해)

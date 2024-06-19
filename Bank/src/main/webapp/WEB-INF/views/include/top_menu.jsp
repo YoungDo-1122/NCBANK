@@ -8,7 +8,7 @@
 	href="${pageContext.request.contextPath}/css/top_menu.css">
 
 <nav>
-	<a class="navbar-brand" href="${root}/main"> <img
+	<a class="navbar-brand" href="${root}main"> <img
 		src="${root}/img/ncbank_logo.png" style="height: 100px" /></a>
 	<!-- 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
 			<span class="navbar-toggler-icon"></span> 
@@ -18,14 +18,14 @@
 		<li><a href="#">조회</a>
 			<ul id=sub-menu>
 				<li><a href="${root}account/accountCheck">계좌조회</a></li>
-				<li><a href="${root}trans/transferCheck">이체내역 조회/</a></li>
+				<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
 			</ul></li>
 		<li><a href="#">이체</a>
 			<ul id=sub-menu>
-				<li><a href="${root}account/accountCreate">계좌생성</a></li>
-				<li><a href="${root}trans/transfer">이체</a></li>
+				<li><a href="${root}account/accountCreate">계좌 개설</a></li>
+				<li><a href="${root}trans/transfer">계좌 이체</a></li>
 				<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-				<li><a href="${root}account/transferAutoFix">자동 이체 수정</a></li>
+				<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
 			</ul></li>
 		<li><a href="#">모임</a>
 			<ul id=sub-menu>
@@ -36,8 +36,8 @@
 			</ul></li>
 		<li><a href="#">환전</a>
 			<ul id=sub-menu>
-				<li><a href="${root}account/accountCreate">환전1</a></li>
-				<li><a href="${root}account/accountCheck">환전2</a></li>
+				<li><a href="${root}exchange/rateInquiry">환율 조회</a></li>
+				<li><a href="${root}exchange/notice">환율 알림 서비스</a></li>
 				<li><a href="${root}exchange/exchangeAsk">환전 신청</a></li>
 				<li><a href="${root}exchange/exchangeHistory">환전 내역 조회</a></li>
 			</ul></li>
