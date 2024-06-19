@@ -15,7 +15,8 @@ public class UserDAO {
 	public boolean checkUserExist(String id) {
 		return (0 == userMapper.checkUserIdExist(id));
 	}
-
+	
+	
 	// Mapper -> DAO -> Service로 가도되고 안가도 됨
 	public void addUserInfo(UserBean mBean) {
 		int size = userMapper.userCount();
@@ -25,6 +26,7 @@ public class UserDAO {
 		userMapper.addMember(mBean);
 		userMapper.addLogin(mBean);
 	}
+	
 
 	public UserBean getLoginUserInfo(UserBean tempLoginUserBean) {
 		return userMapper.getLoginUserInfo(tempLoginUserBean);

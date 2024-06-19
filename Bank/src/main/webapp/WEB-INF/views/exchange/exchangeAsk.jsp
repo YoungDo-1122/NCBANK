@@ -14,113 +14,211 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/exchangeAsk.css">
+<style>
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-menu {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-content-container {
+    display: flex;
+    margin-top: 100px; /* Adjust this value according to the height of your top menu */
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #1E3A5F; /* 신한은행 색상 */
+    color: white;
+    padding: 10px;
+    height: calc(100vh - 100px); /* Adjust this value according to the height of your top menu */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 100px; /* Adjust this value according to the height of your top menu */
+}
+
+.sidebar-item {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #3A5673; /* 신한은행 색상 */
+    background-color: #1E3A5F; /* 신한은행 색상 */
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.sidebar-item:hover {
+    background-color: #3A5673; /* 신한은행 색상 */
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+}
+
+h1 {
+    color: #0072BC; /* 신한은행 색상 */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #dddddd;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+button {
+    background-color: #0072BC; /* 신한은행 색상 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #005C99; /* 신한은행 색상 */
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+</style>
 </head>
 <body>
-
-<div class="sidebar">
-    <div class="sidebar-item" onclick="toggleMenu('exchange-rate-menu')">
-        환율
-        <div id="exchange-rate-menu" class="submenu" style="display: none;">
-            <ul>
-                <li><a href="#">환율정보</a></li>
-                <li><a href="#">환율계산기</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="sidebar-item" onclick="toggleMenu('exchange-menu')">
-        환전
-        <div id="exchange-menu" class="submenu" style="display: none;">
-            <ul>
-                <li><a href="#">환전신청</a></li>
-                <li><a href="#">환전조회</a></li>
-            </ul>
-        </div>
-    </div>
+<div class="top-menu">
+    <c:import url="/WEB-INF/views/include/top_menu.jsp" />
 </div>
 
-<div class="main-content">
-    <h1>환전 신청</h1>
-    <form:form action="${root}exchange/exchangeAskSuccess" method="post" modelAttribute="createExchangeBean">
-
-        <div class="form-group">
-            <form:label path="code_money">환전신청금액</form:label>
-            <div class="input-group">
-                <form:select path="code_money" id="code_money" style="width: 100px;">
-                    <form:option value="AED">AED</form:option>
-                    <form:option value="AUD">AUD</form:option>
-                    <form:option value="BHD">BHD</form:option>
-                    <form:option value="BND">BND</form:option>
-                    <form:option value="CAD">CAD</form:option>
-                    <form:option value="CHF">CHF</form:option>
-                    <form:option value="CNH">CNH</form:option>
-                    <form:option value="DKK">DKK</form:option>
-                    <form:option value="EUR">EUR</form:option>
-                    <form:option value="GBP">GBP</form:option>
-                    <form:option value="HKD">HKD</form:option>
-                    <form:option value="IDR">IDR</form:option>
-                    <form:option value="JPY">JPY</form:option>
-                    <form:option value="KRW">KRW</form:option>
-                    <form:option value="KWD">KWD</form:option>
-                    <form:option value="MYR">MYR</form:option>
-                    <form:option value="NOK">NOK</form:option>
-                    <form:option value="NZD">NZD</form:option>
-                    <form:option value="SAR">SAR</form:option>
-                    <form:option value="SEK">SEK</form:option>
-                    <form:option value="SGD">SGD</form:option>
-                    <form:option value="THB">THB</form:option>
-                    <form:option value="USD">USD</form:option>
-                </form:select>
-                <form:input type="number" path="trade_money" class="form-control" id="trade_money_input" onkeyup="getExchangeMoney(); hideExchangeTable();" style="flex: 2;"/>
-                <button type="button" id="trade_money_btn">환전예상금액 확인</button>
+<div class="main-content-container">
+    <div class="sidebar">
+        <div class="sidebar-item" onclick="toggleMenu('exchange-rate-menu')">
+            환율
+            <div id="exchange-rate-menu" class="submenu" style="display: none;">
+                <ul>
+                    <li><a href="#">환율정보</a></li>
+                    <li><a href="#">환율계산기</a></li>
+                </ul>
             </div>
         </div>
-
-        <table border="1" id="exchangeTable" style="display: none;">
-            <tr>
-                <th>원화금액</th>
-                <td id="exchange_payMoney" style="width: 200px;"></td>
-            </tr>
-            <tr>
-                <th>현재고시환율</th>
-                <td id="exchange_cash_buying_rate"></td>
-            </tr>
-            <tr>
-                <th>적용환율</th>
-                <td id="trade_rate"></td>
-            </tr>
-            <tr>
-                <th>우대금액</th>
-                <td id="preferential_money"></td>
-            </tr>
-        </table>
-        
-        <!-- 히든으로 숨겨가기(원화금액, 현재고시환율, 적용환율, 우대금액) -->
-        <form:hidden path="exchange_payMoney" id="hidden_exchange_payMoney"/>
-        <form:hidden path="exchange_cash_buying_rate" id="hidden_exchange_cash_buying_rate"/>
-        <form:hidden path="trade_rate" id="hidden_trade_rate"/>
-        <form:hidden path="preferential_money" id="hidden_preferential_money"/>
-        
-        
-        
-        <h1>고객정보 입력</h1>
-        <div class="form-group">
-            <form:label path="account">출금계좌선택</form:label>
-            <form:select path="account" id="account">
-                <c:forEach var="accountItem" items="${getAccountList}">
-                    <form:option value="${accountItem.account}">${accountItem.account}</form:option>
-                </c:forEach>
-            </form:select>
+        <div class="sidebar-item" onclick="toggleMenu('exchange-menu')">
+            환전
+            <div id="exchange-menu" class="submenu" style="display: none;">
+                <ul>
+                    <li><a href="#">환전신청</a></li>
+                    <li><a href="#">환전조회</a></li>
+                </ul>
+            </div>
         </div>
+    </div>
 
-        <h1>수령정보 입력</h1>
-        <div class="form-group">
+    <div class="main-content">
+        <h1>환전 신청</h1>
+        <form:form action="${root}exchange/exchangeAskSuccess" method="post" modelAttribute="createExchangeBean">
+
+            <div class="form-group">
+                <form:label path="code_money">환전신청금액</form:label>
+                <div class="input-group">
+                    <form:select path="code_money" id="code_money" style="width: 100px;">
+                        <form:option value="AED">AED</form:option>
+                        <form:option value="AUD">AUD</form:option>
+                        <form:option value="BHD">BHD</form:option>
+                        <form:option value="BND">BND</form:option>
+                        <form:option value="CAD">CAD</form:option>
+                        <form:option value="CHF">CHF</form:option>
+                        <form:option value="CNH">CNH</form:option>
+                        <form:option value="DKK">DKK</form:option>
+                        <form:option value="EUR">EUR</form:option>
+                        <form:option value="GBP">GBP</form:option>
+                        <form:option value="HKD">HKD</form:option>
+                        <form:option value="IDR">IDR</form:option>
+                        <form:option value="JPY">JPY</form:option>
+                        <form:option value="KRW">KRW</form:option>
+                        <form:option value="KWD">KWD</form:option>
+                        <form:option value="MYR">MYR</form:option>
+                        <form:option value="NOK">NOK</form:option>
+                        <form:option value="NZD">NZD</form:option>
+                        <form:option value="SAR">SAR</form:option>
+                        <form:option value="SEK">SEK</form:option>
+                        <form:option value="SGD">SGD</form:option>
+                        <form:option value="THB">THB</form:option>
+                        <form:option value="USD">USD</form:option>
+                    </form:select>
+                    <form:input type="number" path="trade_money" class="form-control" id="trade_money_input" onkeyup="getExchangeMoney(); hideExchangeTable();" style="flex: 2;"/>
+                    <button type="button" id="trade_money_btn">환전예상금액 확인</button>
+                </div>
+            </div>
+
+            <table border="1" id="exchangeTable" style="display: none;">
+                <tr>
+                    <th>원화금액</th>
+                    <td id="exchange_payMoney" style="width: 200px;"></td>
+                </tr>
+                <tr>
+                    <th>현재고시환율</th>
+                    <td id="exchange_cash_buying_rate"></td>
+                </tr>
+                <tr>
+                    <th>적용환율</th>
+                    <td id="trade_rate"></td>
+                </tr>
+                <tr>
+                    <th>우대금액</th>
+                    <td id="preferential_money"></td>
+                </tr>
+            </table>
             
-            <input type="text" id="searchAddr" name="searchAddr"></input>
-            <button type="button" id="searchAddrBtn" class="btn btn-secondary" onclick="searchBank()">조회</button>
+            <!-- 히든으로 숨겨가기(원화금액, 현재고시환율, 적용환율, 우대금액) -->
+            <form:hidden path="exchange_payMoney" id="hidden_exchange_payMoney"/>
+            <form:hidden path="exchange_cash_buying_rate" id="hidden_exchange_cash_buying_rate"/>
+            <form:hidden path="trade_rate" id="hidden_trade_rate"/>
+            <form:hidden path="preferential_money" id="hidden_preferential_money"/>
             
-        </div>
+            <h1>고객정보 입력</h1>
+            <div class="userInfo">
+                <form:label path="account">출금계좌선택</form:label>
+                <form:select path="account" id="account">
+                    <c:forEach var="accountItem" items="${getAccountList}">
+                        <form:option value="${accountItem.account}">${accountItem.account}</form:option>
+                    </c:forEach>
+                </form:select>
+            </div>
+
+            <h1>수령정보 입력</h1>
+            <div class="search">
+                
+                <input type="text" id="searchAddr" name="searchAddr"></input>
+                <button type="button" id="searchAddrBtn" class="btn btn-secondary" onclick="searchBank()">조회</button>
+                
+            </div>
         <!-- option이 많아지면 css에서 설정을 줘서 드래그를 설정해야한다. -->
-        <div class="form-group">
+        <div class="codeBankAddress">
 		    <form:label path="code_bank_name">수령희망지점</form:label>
 		    <form:select path="code_bank_name" id="code_bank_name">
 		        <c:forEach var="codeBankitem" items="${codeBankNameList}">
@@ -130,7 +228,7 @@
 		    
 		</div>
         
-        <div class="form-group">
+        <div class="reservationDate">
             <form:label path="trade_reservation_date">수령희망일</form:label>
             <form:input path="trade_reservation_date" type="date" class="form-control" id="trade_reservation_date"/>
         </div>
@@ -143,7 +241,7 @@
         
         
 
-        <div class="form-group">
+        <div class="next">
             <div class="text-right">
                 <button type="submit" class="btn btn-primary">다음</button>
             </div>
@@ -275,20 +373,7 @@
 			    table.style.display = "none";
 			});
 			
-			// 사이드바
-			function toggleMenu(menuId) {
-			    var menus = document.getElementsByClassName('submenu');
-			    for (var i = 0; i < menus.length; i++) {
-			        menus[i].style.display = 'none';
-			    }
-			    var menu = document.getElementById(menuId);
-			    if (menu.style.display === 'none') {
-			        menu.style.display = 'block';
-			    } else {
-			        menu.style.display = 'none';
-			    }
-			}
-
+			
 
 	/*-- 수령정보 위치 설정 --*/
 	// #1. code_bank_address 와 맞는 code_bank_name 가져오기
@@ -358,7 +443,20 @@
         setCodeBank();
     }; 
 	
-	
+ 	// 왼쪽 사이드바
+	function toggleMenu(menuId) {
+	    var menus = document.getElementsByClassName('submenu');
+	    for (var i = 0; i < menus.length; i++) {
+	        menus[i].style.display = 'none';
+	    }
+	    var menu = document.getElementById(menuId);
+	    if (menu.style.display === 'none') {
+	        menu.style.display = 'block';
+	    } else {
+	        menu.style.display = 'none';
+	    }
+	}
+
  	
 </script>
 </body>

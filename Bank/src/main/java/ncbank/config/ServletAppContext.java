@@ -25,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import ncbank.beans.CreateExchangeBean;
 import ncbank.beans.CrerateTradeBean;
 import ncbank.beans.UserBean;
+import ncbank.beans.WalletBean;
 import ncbank.interceptor.ExchangeRateInterceptor;
 import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.AccountMapper;
@@ -202,6 +203,13 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Bean
 	public MapperFactoryBean<CrerateTradeBean> getCrerateTradeBean(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<CrerateTradeBean> factoryBean = new MapperFactoryBean<>(CrerateTradeBean.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+	
+	@Bean
+	public MapperFactoryBean<WalletBean> getWalletBean(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<WalletBean> factoryBean = new MapperFactoryBean<>(WalletBean.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}

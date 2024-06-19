@@ -44,14 +44,6 @@ public class UserService {
 	}
 
 	public void addUserInfo(UserBean mBean) {
-		int size = userMapper.userCount();
-		mBean.setUser_num(size+1);
-		userMapper.addMember(mBean);
-		userMapper.addLogin(mBean);
-		/*
-		 * String hashedPassword = passwordEncoder.encode(mBean.getPwd());
-		 * mBean.setPwd(hashedPassword);
-		 */
 		String salt = encrypt.getSalt();
 		String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt);
 
@@ -79,12 +71,14 @@ public class UserService {
 			if (pwd.equals(checkpasswd)) {
 				loginUserBean.setId(dbUserBean.getId());
 				loginUserBean.setName(dbUserBean.getName());
+				loginUserBean.setUser_num(dbUserBean.getUser_num()); // 이거 추가함(By 석준)
 				loginUserBean.setUserLogin(true);
 
 				HttpSession session = request.getSession();
 				session.setAttribute("loginUserBean", loginUserBean);
 
 				System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName());
+				System.out.println("Logged in user_num: " + loginUserBean.getUser_num() + " - " + loginUserBean.getId()); // 이거 추가함(By 석준)
 				
 			} else {
 				loginUserBean.setUserLogin(false); // 로그인 실패

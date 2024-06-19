@@ -54,6 +54,7 @@ public class UserController {
 
         if (loginUserBean.isUserLogin()) {
             model.addAttribute("tempLoginBean", tempLoginBean);
+            System.out.println("User logged in with user_num: " + loginUserBean.getUser_num()); // 로그인 성공 시 user_num 출력
             return "user/login_success";
         } else {
             return "user/login_fail";
