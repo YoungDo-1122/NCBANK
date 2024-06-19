@@ -20,8 +20,8 @@ public class UserDAO {
 	public void addUserInfo(UserBean mBean) {
 		int size = userMapper.userCount();
 		mBean.setUser_num(size + 1);
-		mBean.setAddress(mBean.getAdd2()+"  "+mBean.getAdd3()); 
-		
+		mBean.setAddress(mBean.getAdd2() + "  " + mBean.getAdd3());
+
 		userMapper.addMember(mBean);
 		userMapper.addLogin(mBean);
 	}
@@ -29,5 +29,4 @@ public class UserDAO {
 	public UserBean getLoginUserInfo(UserBean tempLoginUserBean) {
 		return userMapper.getLoginUserInfo(tempLoginUserBean);
 	}
-
 }

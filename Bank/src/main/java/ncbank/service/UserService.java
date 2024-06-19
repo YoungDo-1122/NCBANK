@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
-import ncbank.mapper.UserMapper;
 import ncbank.util.Encrypt;
 import ncbank.util.SmsSender;
 
@@ -23,11 +22,8 @@ public class UserService {
     @Autowired
     private UserDAO userDaO;
 
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private Encrypt encrypt;
+	@Autowired
+	private Encrypt encrypt;
 
     @Autowired
     private SmsSender smsSender;
@@ -75,8 +71,8 @@ public class UserService {
                 HttpSession session = request.getSession();
                 session.setAttribute("loginUserBean", loginUserBean);
 
-                System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName() + " - "
-                        + loginUserBean.getUser_num());
+				System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName() + " - "
+						+ loginUserBean.getUser_num());
 
             } else {
                 loginUserBean.setUserLogin(false); // 로그인 실패

@@ -93,8 +93,8 @@
 									<tr>
 										<th>계좌분류</th>
 										<th>계좌번호</th>
-										<th>계좌개설일</th>
 										<th>잔액(원)</th>
+										<th>계좌개설일</th>
 										<th>업무</th>
 									</tr>
 								</thead>
@@ -102,7 +102,14 @@
 									<c:set var="totalBalance" value="0" />
 									<c:forEach var="account" items="${accounts}">
 										<tr>
-											<td>${account.ac_name}</td>
+											<td><c:choose>
+													<c:when test="${account.ac_type == 0}">
+											저축예금
+											</c:when>
+													<c:when test="${account.ac_type == 1}">
+											모임통장
+											</c:when>
+												</c:choose></td>
 											<td>${account.account}</td>
 											<td>${account.ac_balance}</td>
 											<td><fmt:formatDate value="${account.ac_date}"

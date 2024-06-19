@@ -24,7 +24,6 @@ import ncbank.beans.UserBean;
 import ncbank.service.AccountService;
 import ncbank.service.CodeOrganService;
 import ncbank.service.TransferService;
-import ncbank.service.UserService;
 
 @Controller
 @RequestMapping("/trans")
@@ -39,36 +38,14 @@ public class TransferController {
 	@Autowired
 	private AccountService accountService;
 
-	@Autowired
-	private UserService userService;
-
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
 
-//	@GetMapping("/transferCheck")
-//	public String TransferCheck(@RequestParam("userNum") int userNum, Model model) {
-//		List<TransferBean> transfers = transferService.getTransfer(userNum);
-//		model.addAttribute("transfers", transfers);
-//		return "trans/transferCheck";
-//	}
-
-//	@GetMapping("/transferCheck")
-//	public String TransferCheck(Model model) {
-//		int userNum = 1;
-//		List<TransferBean> transfers = transferService.getTransfer(userNum);
-//		model.addAttribute("transfers", transfers);
-//
-//		List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
-//		model.addAttribute("codeOrganNames", codeOrganNames);
-//
-//		return "trans/transferCheck";
-//	}
 	@GetMapping("/transferCheck")
 	public String TransferCheck(@RequestParam(name = "account", required = false) String account, Model model) {
 		int userNum = loginUserBean.getUser_num();
-
-		System.out.println("선택된 계좌 : " + account);
-		System.out.println("회원 번호 : " + userNum);
+		System.out.println("이체내역 계좌 : " + account);
+		System.out.println("이체내역 회원 번호 : " + userNum);
 
 		List<TransferBean> transfers;
 		if (account != null && !account.isEmpty()) {
