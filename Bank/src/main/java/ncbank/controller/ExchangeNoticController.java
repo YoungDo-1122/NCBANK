@@ -67,7 +67,7 @@ public class ExchangeNoticController {
     // 기본 알림 페이지 - 알림 안내
     @GetMapping("/notice")
     public String notice(Model model) {
-    	System.out.println("ExchangeRateController notice()");
+    	System.out.println("ExchangeNoticController notice()");
     	
     	// 로그인 정보 test
     	System.out.println("loginUserBean : " + loginUserBean);
@@ -84,7 +84,7 @@ public class ExchangeNoticController {
     public String noticeRegister(
     		@ModelAttribute("ExchangeNoticeBean") ExchangeNoticeBean exchangeNoticeBean,
     		Model model) {
-    	System.out.println("ExchangeRateController noticeRegister()");
+    	System.out.println("ExchangeNoticController noticeRegister()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -107,7 +107,7 @@ public class ExchangeNoticController {
     public String noticeRegisterPro(
     		@ModelAttribute("ExchangeNoticeBean") ExchangeNoticeBean exchangeNoticeBean,
     		Model model) {
-    	System.out.println("ExchangeRateController noticeRegisterPro()");
+    	System.out.println("ExchangeNoticController noticeRegisterPro()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -128,7 +128,7 @@ public class ExchangeNoticController {
     public String noiticeEdit(
     		@ModelAttribute("ExchangeNoticeBean") ExchangeNoticeBean exchangeNoticeBean,
     		Model model) {
-    	System.out.println("ExchangeRateController noiticeEdit()");
+    	System.out.println("ExchangeNoticController noiticeEdit()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -146,7 +146,7 @@ public class ExchangeNoticController {
     public String noticeEditPro(
     		@ModelAttribute("ExchangeNoticeBean") ExchangeNoticeBean exchangeNoticeBean,
     		Model model) {
-    	System.out.println("ExchangeRateController noticeEditPro()");
+    	System.out.println("ExchangeNoticController noticeEditPro()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -161,7 +161,7 @@ public class ExchangeNoticController {
     // 알림 삭제
     @GetMapping("noticeDeletPro")
     public String noticeDeletPro(Model model) {
-    	System.out.println("ExchangeRateController noticeDeletPro()");
+    	System.out.println("ExchangeNoticController noticeDeletPro()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -178,7 +178,7 @@ public class ExchangeNoticController {
     // success
     @GetMapping("noiticeRegisterEditSuccess")
     public String noiticeRegisterEditSuccess(Model model) {
-    	System.out.println("ExchangeRateController noiticeRegisterEditSuccess()");
+    	System.out.println("ExchangeNoticController noiticeRegisterEditSuccess()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -189,7 +189,7 @@ public class ExchangeNoticController {
     }
     @GetMapping("noticeDeletSuccess")
     public String noticeDeletSuccess(Model model) {
-    	System.out.println("ExchangeRateController noticeDeletSuccess()");
+    	System.out.println("ExchangeNoticController noticeDeletSuccess()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -204,7 +204,7 @@ public class ExchangeNoticController {
     @GetMapping("sendNoticeMail")
     // Spring MVC에서 자동으로 HttpServletRequest와 HttpServletResponse 객체를 컨트롤러 메서드에 주입
     public String sendNoticeMail(HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("ExchangeController sendNoticeMail()");
+    	System.out.println("ExchangeNoticController sendNoticeMail()");
     	 if (null == loginUserBean && !loginUserBean.isUserLogin()) {
     		System.out.println("not login");
          	return "exchange/rateInquiry";

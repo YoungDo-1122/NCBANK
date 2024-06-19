@@ -47,11 +47,12 @@ public interface ExchangeNoticeMapper {
 	
 	/* insert */
 	// 테이블안에 같은 code_money 없으면 추가
+	// 여기 조건 손봐야됨 회원 한명당 하나의 알림만 가질수 있게 (중복 불가)
 	@Insert("insert into notice(notice_num, rateType, notice_rate, notice_email, notice_date, user_num, code_money) "
 			+ "select notice_seq.nextval, #{rateType}, #{notice_rate}, #{notice_email}, #{notice_date}, m.user_num, cm.code_money "
 			+ "from member m, code_money cm "
-			+ "where m.user_num = #{user_num} and code_money = #{code_money} "
-			+ "and not exists (select 1 from notice n where n.code_money = #{code_money}) ")
+			+ "where m.user_num = #{user_num} and cm.code_money = #{code_money} "
+			+ "and not exists (select 1 from notice n where n.code_money = #{code_money} and n.user_num = #{user_num})")
 	public void addExchangeRateNotice(ExchangeNoticeBean noticeBean);
 	
 	@Insert("insert into notice(notice_num, rateType, notice_rate, notice_email, notice_date, user_num, code_money) "
