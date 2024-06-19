@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ncbank.beans.UserBean;
+import ncbank.dao.UserDAO;
 import ncbank.service.UserService;
 import ncbank.validator.UserValidator;
 
@@ -34,6 +35,9 @@ public class UserController {
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
 
+	@Autowired
+	private UserDAO userDAO;
+
 	@GetMapping("/login")
 	public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
 			@RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
@@ -42,11 +46,18 @@ public class UserController {
 	}
 
 	@PostMapping("/login_pro")
-	public String login_pro(HttpServletRequest request, @Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean,
+	public String login_pro(@Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean, HttpServletRequest request,
 			Model model, BindingResult result) {
+		System.out.println("What't wrong?");
 		System.out.println(tempLoginBean);
 		System.out.println(request);
+
 		if (result.hasErrors()) {
+			/*
+			 * result.getFieldErrorCount(); List<ObjectError> temp = result.getAllErrors();
+			 * for (ObjectError e : temp) { System.out.println(e.getDefaultMessage()); }
+			 */
+
 			return "user/login";
 		}
 
@@ -67,7 +78,9 @@ public class UserController {
 	}
 
 	@PostMapping("/join_pro")
-	public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult,Model model) {
+	public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult, Model model) {
+
+		mBean.setResident(mBean.getResident1() + "-" + mBean.getResident2());
 
 		if (memberResult.hasErrors()) {
 			memberResult.getFieldErrorCount();
@@ -77,6 +90,7 @@ public class UserController {
 			}
 			return "user/join";
 		}
+
 		if (!userService.canRegister(mBean.getPhone(), mBean.getResident())) {
 			model.addAttribute("errorMessage", "이미 가입되어 있는 전화번호나 주민번호가 존재합니다");
 			return "user/join";
@@ -90,6 +104,39 @@ public class UserController {
 		return "user/join_success";
 	}
 
+	@GetMapping("/findID")
+	public String findID(@ModelAttribute("findMemberIDBean") UserBean findMemberIDBean) {
+
+		return "user/findID";
+	}
+
+	@PostMapping("findID_pro")
+	public String findID_pro(@ModelAttribute("findMemberIDBean") UserBean findMemberIDBean, BindingResult result,
+			Model model) {
+		String checkedID = userDAO.findMemberId(findMemberIDBean);
+		System.out.println("checkedID : " + checkedID);
+
+		if (checkedID == null) {
+			model.addAttribute("message", "아이디를 찾을 수 없습니다.");
+			return "user/findID";
+		}
+
+		findMemberIDBean.setId(checkedID); // 저장
+		model.addAttribute("id", checkedID);
+		return "user/findID_success";
+	}
+
+	/*
+	 * @GetMapping("findpwd") public String
+	 * findpwd(@ModelAttribute("findMemberPwdBean") UserBean findMemberPwdBean) {
+	 * return "user/findpwd"; }
+	 * 
+	 * @PostMapping("/findpwd_pro") public String
+	 * findpwd_pro(@ModelAttribute("findMemberPwdBean") UserBean findMemberPwdBean,
+	 * BindingResult result, Model model) { if (result.hasErrors()) { return
+	 * "user/findPWD"; } userService.findMemberPwd(findMemberPwdBean); return
+	 * "user/findpwd_success"; }
+	 */
 	@GetMapping("/index")
 	public String index() {
 		return "user/index";

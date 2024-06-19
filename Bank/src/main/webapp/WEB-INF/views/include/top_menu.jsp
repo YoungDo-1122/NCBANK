@@ -17,7 +17,7 @@
 	<ul id="main-menu">
 		<li><a href="#">조회</a>
 			<ul id=sub-menu>
-				<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+				<li><a href="${root}account/accountCheck">계좌조회</a></li>
 				<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
 			</ul></li>
 		<li><a href="#">이체</a>

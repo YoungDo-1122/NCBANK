@@ -17,7 +17,7 @@ public class UserValidator implements Validator {
 		UserBean loginBean = (UserBean) target;
 
 		String beanName = errors.getObjectName();
-		System.out.println(beanName + "1");
+		System.out.println(beanName); 
 		if (beanName.equals("mBean")) {
 			System.out.println(beanName + "2");
 			if (!loginBean.getPwd().equals(loginBean.getPwd2())) {
@@ -33,6 +33,8 @@ public class UserValidator implements Validator {
 			}
 
 		}
+		
+		
 
 	}
 
