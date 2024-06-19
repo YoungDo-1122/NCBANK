@@ -171,7 +171,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
 	public MapperFactoryBean<ExchangeNoticeMapper> getExchangeNoticeMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<ExchangeNoticeMapper> factoryBean = new MapperFactoryBean<ExchangeNoticeMapper>(
@@ -179,9 +179,10 @@ public class ServletAppContext implements WebMvcConfigurer {
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
-	public MapperFactoryBean<ExchangeAutoNoticeMapper> getExchangeAutoNoticeMapper(SqlSessionFactory factory) throws Exception {
+	public MapperFactoryBean<ExchangeAutoNoticeMapper> getExchangeAutoNoticeMapper(SqlSessionFactory factory)
+			throws Exception {
 		MapperFactoryBean<ExchangeAutoNoticeMapper> factoryBean = new MapperFactoryBean<ExchangeAutoNoticeMapper>(
 				ExchangeAutoNoticeMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
@@ -217,29 +218,34 @@ public class ServletAppContext implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public MapperFactoryBean<TransferMapper> transferMapper(SqlSessionFactory sqlSessionFactory) {
+	public MapperFactoryBean<TransferMapper> transferMapper(SqlSessionFactory factory) {
 		MapperFactoryBean<TransferMapper> factoryBean = new MapperFactoryBean<>(TransferMapper.class);
-		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
 	public MapperFactoryBean<CrerateTradeBean> getCrerateTradeBean(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<CrerateTradeBean> factoryBean = new MapperFactoryBean<>(CrerateTradeBean.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	@Bean
 	public MapperFactoryBean<WalletBean> getWalletBean(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<WalletBean> factoryBean = new MapperFactoryBean<>(WalletBean.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+
+	@Bean
 	public MapperFactoryBean<GroupAccountMapper> getGroupAccountMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<GroupAccountMapper> factoryBean = new MapperFactoryBean<GroupAccountMapper>(
 				GroupAccountMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
-	
+
 	/* ==========[Interceptors]========== */
 	// WebMvcConfigurer 제공 메소드
 
@@ -249,17 +255,16 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Autowired
 	private ExchangeRateService exchangeRateService;
-	
-	
+
 	@Autowired
 	private ExchangeAutoNoticeService autoNoticeService;
 	@Autowired
 	private ExchangeNoticeService noticeService;
-    @Autowired
-    private DateManager dateManager;
-    @Autowired
-    private EmailManager emailManager;
-	
+	@Autowired
+	private DateManager dateManager;
+	@Autowired
+	private EmailManager emailManager;
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		WebMvcConfigurer.super.addInterceptors(registry);
@@ -274,9 +279,9 @@ public class ServletAppContext implements WebMvcConfigurer {
 		ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService);
 		InterceptorRegistration reg2 = registry.addInterceptor(exchangeRateInterceptor);
 		reg2.addPathPatterns("/**");
-		
-		ExchangeAutoNoticeInterceptor autoNoticeInterceptor = new ExchangeAutoNoticeInterceptor(
-				autoNoticeService, noticeService, loginUserBean, dateManager, emailManager);
+
+		ExchangeAutoNoticeInterceptor autoNoticeInterceptor = new ExchangeAutoNoticeInterceptor(autoNoticeService,
+				noticeService, loginUserBean, dateManager, emailManager);
 		InterceptorRegistration reg3 = registry.addInterceptor(autoNoticeInterceptor);
 		reg3.addPathPatterns("/**");
 	}

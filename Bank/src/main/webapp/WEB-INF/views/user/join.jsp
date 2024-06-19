@@ -237,6 +237,6 @@ function sendSMSVerification() {
 			</div>
 		</form:form>
 	</div>
-	
+	<c:import url="../include/bottom_info.jsp" />
 </body>
 </html>
