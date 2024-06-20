@@ -1,77 +1,157 @@
 @charset "UTF-8";
 
-
-/*
-[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
-display > overflow > float > position >
-
-width > height > margin > padding >
-
-color > font-style > font-weight > font-size >
-line-height > font-family > text-indent > text-align >
-
-background-color > background-image >
-background-position > background-size >
-background-repeat
-
-border > border-radius
-*/
-
-body *{
-	font-family: Bazzi OTF;
-	text-align: center;
-}
-/* 상단바를 제외시킨 컨텐츠 영역 */
-div.contentWarp {
-	overflow: auto;
-	
-	height: 90%;
-	margin: 120px auto;
-	
-	background-color: aliceblue;
-}
-/* 컨텐츠를 담아두는 툴 - 왼 오 나눌꺼면 LP 추가 */
-div.CP { 
-	width: 70%;
-	margin: 120px auto;
-	background-color: floralwhite;
+.contentWarp {
+    display: flex;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
 }
 
-/* 조회일의 요소들 */
-div.btnArea {
-	background-color: black;
-}
-div.submitArea {
-	margin: 10px;
-	background-color: pink;
+.LP {
+    margin: 0;
+    display: flex;
 }
 
-
-/* 환율 표 테이블 */
-div.inquiryTable {
-	width: 100%;
-	margin: 0 auto;
-	
-	background-color: honeydew;
-	
-	border: 2px solid blue;
+.LPWrap {
+    text-align: center;
+	background-color: #f8f9fa; /* 메뉴바 배경색 */
+    padding: 20px;
+    height: 100%;
+    border-right: 1px solid #dee2e6;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+    width: 200px;
 }
 
-p.txtRateBox {
-	margin: 5px 0px ;	
-	padding: 10px 0px 20px;	
-	
-	font-size: 12px;
-	text-align: center;
-}
-p.txtRateBox>span.fl {
-	float: left;
-}
-p.txtRateBox>span.fr {
-	/* !important : 우선순위 (상속값 무시) */	
-	float: right;
+.LPWrap h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color : #343a40;
 }
 
-p.exRateNotFound>span {
-	text-align: center;
+.LPWrap ul {
+    list-style-type: none;
+    padding: 0;
 }
+
+.LPWrap ul li {
+    margin-bottom: 10px;
+}
+
+.LPWrap ul li a {
+    text-decoration: none;
+    color : rgb(83, 169, 255);
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.LPWrap ul li a:hover {
+    background-color: #e9ecef;
+}
+
+.LPWrap .LPC01 {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.CP {
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.tType02 {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tType02 th, .tType02 td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.btnArea {
+    display: flex;
+    position: relative;
+    left: 300px;
+    justify-content: left;
+    gap: 3px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    border-radius: 2px;
+}
+
+.dateinput {
+   display: flex;
+   position: relative;
+   left:350px;
+}
+
+.bType02, .bType01, .btn {
+    padding: 10px 20px;
+    border: none;
+    background-color:rgb(83, 169, 255);
+    color: white;
+    cursor: pointer;
+}
+
+.bType02 {
+    background-color: #6c757d;
+}
+
+.submitArea {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.inquiryTable {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.tType01 {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.tType01 th, .tType01 td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.txtRateBox {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #f4f4f4;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.tLeft {
+    text-align: left;
+}
+
+.tRight {
+    text-align: right;
+}
+
+.exRateNotFound {
+    text-align: center;
+    margin-top: 20px;
+}
+

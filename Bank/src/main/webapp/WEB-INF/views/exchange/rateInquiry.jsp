@@ -10,14 +10,7 @@
 <meta charset="UTF-8">
 <title>exchange/rateInquiry</title>
 </head>
-
-<!-- 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
- -->
-
 <!-- Bootstrap CDN -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -27,22 +20,9 @@
 
 
 <link rel="stylesheet" href="${root}css/exchange/rateInquiry.css">
-<link rel="stylesheet" href="${root}css/exchange/tType.css">
-<link rel="stylesheet" href="${root}css/exchange/bType.css">
-<link rel="stylesheet" href="${root}css/exchange/LP.css">
 
-<style>
-.carbtn {
-	background-color: green;
-}
-
-.carbtn:hover {
-	background-color: lime;
-}
-</style>
 
 <body>
-
 	<c:import url="../include/top_menu.jsp" />
 
 	<div class="contentWarp">
@@ -50,36 +30,24 @@
 		<div class="LP">
 			<div class="LPWrap">
 				<div class="LPC01">
-					<h2 class="wrapTitle">외환</h2>
-					<ul class="ulType01">
+					<h2>외환</h2>
+					<ul>
 						<li><a href="#">테스트링크1</a></li>
 						<li><a href="#">테스트링크2</a></li>
 						<li><a href="#">테스트링크3</a></li>
+						<li><a href="#">테스트링크4</a></li>
 					</ul>
-
-					<ul>
-						<li>test1</li>
-						<li>test2</li>
-						<li>test3</li>
-					</ul>
-
 				</div>
-				<!-- div.LPC01 -->
-
 			</div>
-			<!-- div.LPWrap -->
 		</div>
-		<!-- div.LP -->
 
 		<div class="CP">
 			<form action="${root}exchange/rateInquiryDate" method="get">
 				<table class="tType02">
 					<colgroup>
-						<!-- 테이블의 열 그룹 정의 -->
-						<col style="width: 130px">
-						<col style="background-color: yellow;">
+						<col width="20%">
+						<col width="80%">
 					</colgroup>
-
 					<tbody>
 						<tr>
 							<th>조회일</th>
@@ -88,37 +56,32 @@
 									<button type="button" class="bType02" onclick="today()">오늘</button>
 									<button type="button" class="bType02" onclick="yesterday()">전일</button>
 									<button type="button" class="btn" onclick="tomorrow()">다음일</button>
-								</div> 
-								<!-- required="required" : 반드시 폼 값을 채워야 한다. --> 
-								<input	type="date" id="inquiryDate" name="inquiryDate"	required="required"> 
-								<script type="text/javascript">
+								</div> <!-- required="required" : 반드시 폼 값을 채워야 한다. --> <input
+								class="dateinput" type="date" id="inquiryDate"
+								name="inquiryDate" required="required"> <script
+									type="text/javascript">
 									// 서버에서 전달된 날짜 값 -> js 변수
 									var inquiryDate = "${inquiryDate2}";
 									// input에 기본값으로 설정
 									document.getElementById("inquiryDate").value = inquiryDate;
 								</script>
 							</td>
-
 						</tr>
 					</tbody>
 				</table>
-
 				<div class="submitArea">
 					<input type="submit" class="bType01" value="조회" />
 				</div>
-				
 			</form>
-			
 			<!-- Starg~End 날짜 기간의 환율 데이터 추가 test -->
 			<a href="${root}exchange/addRateInquiry_DateRange">범위기간DB추가</a>
-
 			<!-- 메일 전송 test -->
 			<a href="${root}exchange/sendNoticeMail">메일전송</a>
-			
+
 			<div class="inquiryTable">
 				<p class="txtRateBox">
 					<span class="fl"> 기준일시 | <strong>${inquiryDate1}</strong>&nbsp;
-					</span> <span class="fr"> (테스트용)기준일시 | <strong>${inquiryDate2}</strong>&nbsp;
+					</span> <span class="fr"> 기준일시 | <strong>${inquiryDate2}</strong>&nbsp;
 					</span>
 				</p>
 
@@ -159,19 +122,15 @@
 						<span>해당 날짜의 환율 정보가 없습니다.</span>
 					</p>
 				</c:if>
-
 			</div>
 			<!-- div.inquiryTable -->
 		</div>
 		<!-- div.CP -->
-
 	</div>
-	<!-- div.contentWarp -->
-
-
 	<c:import url="../include/bottom_info.jsp" />
-	
-	<script type="text/javascript" src="${root}js/exchange/inquiryDateBtn.js"></script>
-	
+
+	<script type="text/javascript"
+		src="${root}js/exchange/inquiryDateBtn.js"></script>
+
 </body>
 </html>
