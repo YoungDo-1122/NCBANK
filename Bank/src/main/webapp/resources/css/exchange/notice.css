@@ -1,31 +1,115 @@
 @charset "UTF-8";
 
-/*
-[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
-display > overflow > float > position >
+.contentWarp {
+	margin: 0 auto;
+	padding: 20px;
+	max-width: 1200px;
+	border: 1px solid #dee2e6;
+	background-color: #f8f9fa;
+}
 
-width > height > margin > padding >
+#menu {
+	flex: 1;
+	padding: 20px;
+	border-right: 2px solid #dee2e6;
+}
 
-color > font-style > font-weight > font-size >
-line-height > font-family > text-indent > text-align >
+#content {
+	flex: 2;
+	padding : 20px;
+}
 
-background-color > background-image >
-background-position > background-size >
-background-repeat
-
-border > border-radius
-*/
-
-body *{
+.toparea .h1_title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	border: 1px solid #dee2e6;
 	text-align: center;
 }
 
-/* 상단바를 제외시킨 컨텐츠 영역 */
-div.contentWarp {
-	overflow: auto;
-	
-	height: 90%;
-	margin: 120px auto;
-	
-	background-color: aliceblue;
+.linemap {
+	margin-bottom: 20px;
+}
+
+.linemap a {
+	color: #007bff;
+	text-decoration: none;
+	margin-right: 10px;
+}
+
+.linemap em {
+	font-style: normal;
+	color: #6c757d;
+}
+
+.tabMenu {
+	list-style: none;
+	padding: 0;
+	margin-bottom: 20px;
+	display: flex;
+	border-bottom: 2px solid #dee2e6; 
+}
+
+.tabMenu li {
+	margin-right: 10px;
+}
+
+.tabMenu li a {
+	text-decoration: none;
+	padding: 10px 20px;
+	display: block;
+	background-color: #f8f9fa;
+	border: 1px solid #dee2e6;
+	border-radius: 4px 4px 0 0;
+	color: #495057;
+}
+
+.tabMenu li.on a {
+	background-color: #007bff;
+	color: #fff;
+	border-bottom: 2px solid #007bff; 
+}
+
+/* Main content styles */
+#CP {
+	padding: 20px;
+	background-color: #ffffff;
+	border: 1px solid #dee2e6; 
+	border-radius: 0 0 4px 4px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.btnArea {
+	margin-top: 20px;
+	text-align: center;
+}
+
+.btn-action {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.btn-action:hover {
+	background-color: #0056b3;
+}
+/*이건 나중에 바꿔야됨 왼쪽 메뉴바로 빼야함*/
+.rateCalculator {
+	background-color: #17a2b8;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 20px;
+}
+
+.rateCalculator:hover {
+	background-color: #117a8b;
 }

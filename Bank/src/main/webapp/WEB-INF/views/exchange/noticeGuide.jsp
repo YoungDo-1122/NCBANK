@@ -12,7 +12,8 @@
 <body>
 	<h2>=====환율알림안내=====</h2>
 	
-	<div id="b101985">
+	<div id="b101985" style="list-style-type: none;">
+	
 		<h2 class="tit_dep2 tit_dep2_cont">환율알림서비스란?</h2>
 		<ul class="list_type1">
 			<li>일정 기간 내에 고객님께서 등록하신 환율범위 내로 환율이 도달하는 경우, 문자메시지 또는 이메일로 고객님께
