@@ -28,12 +28,14 @@ public class AccountController {
 
 	@GetMapping("/accountCheck")
 	public String AccountCheck(Model model) {
+		// 로그인 확인
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "user/not_login";
 		}
+		// 로그인한 회원의 회원번호 저장
 		int userNum = loginUserBean.getUser_num();
 		System.out.println("계좌 조회 회원 번호 : " + userNum);
-
+		
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 		model.addAttribute("accounts", accounts);
 
@@ -42,9 +44,11 @@ public class AccountController {
 
 	@GetMapping("/accountCreate")
 	public String AccountCreate(Model model) {
+		// 로그인 확인
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "user/not_login";
 		}
+		// 로그인한 회원의 회원번호 저장
 		int userNum = loginUserBean.getUser_num();
 		System.out.println("계좌 생성 회원번호 : " + userNum);
 
@@ -65,6 +69,7 @@ public class AccountController {
 	@PostMapping("/accountCreate")
 	public String createAccount(@ModelAttribute AccountBean accountBean, @RequestParam("acPassword") String acPassword,
 			@RequestParam("acPasswordConfirm") String acPasswordConfirm, Model model) {
+		// 로그인한 회원의 회원번호를 계좌 정보에 저장
 		accountBean.setUser_num(loginUserBean.getUser_num());
 
 		// 비밀번호와 비밀번호 확인 비교

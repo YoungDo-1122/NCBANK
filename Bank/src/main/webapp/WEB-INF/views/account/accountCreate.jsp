@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
 <!DOCTYPE html>
@@ -94,6 +95,19 @@
 									<tr>
 										<td>성명</td>
 										<td>${users.name}</td>
+									</tr>
+									<tr>
+										<td>주소</td>
+										<td>${users.address}</td>
+									</tr>
+									<tr>
+										<td>전화번호</td>
+										<td>${users.phone}</td>
+									</tr>
+
+									<tr>
+										<td>이메일</td>
+										<td>${users.email}</td>
 									</tr>
 									<tr>
 										<td>계좌 비밀번호</td>

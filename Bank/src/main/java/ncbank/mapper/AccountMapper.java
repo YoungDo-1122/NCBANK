@@ -14,7 +14,7 @@ public interface AccountMapper {
 	@Select("select * from account where user_num = #{userNum}")
 	List<AccountBean> getAccount(@Param("userNum") int userNum);
 
-	@Select("select name from member where user_num = #{userNum}")
+	@Select("select * from member where user_num = #{userNum}")
 	UserBean getUserInfo(@Param("userNum") int userNum);
 
 	@Insert("INSERT INTO account (account, ac_password, ac_balance, ac_type, ac_date, user_num) VALUES (#{account}, #{ac_password}, DEFAULT, #{ac_type}, SYSDATE, #{user_num})")
