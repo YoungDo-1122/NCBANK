@@ -97,7 +97,7 @@
 						<table>
 							<tr>
 								<td><select id="accountSelect">
-										<option value="">계좌를 선택하세요</option>
+										<option value="">선택</option>
 										<c:forEach var="account" items="${accounts}">
 											<option value="${account.account}">${account.account}</option>
 										</c:forEach>
@@ -106,7 +106,7 @@
 							</tr>
 							<tr>
 								<td>
-									<p>계좌를 선택해 주세요.</p>
+									<p>계좌를 선택해 주세요</p>
 								</td>
 							</tr>
 						</table>
@@ -120,7 +120,7 @@
 		function filterTransfers() {
 			var selectedAccount = document.getElementById("accountSelect").value;
 			if (!selectedAccount) {
-				alert('계좌를 선택해 주세요.');
+				alert('계좌를 선택해 주세요');
 				return;
 			}
 			window.location.href = "${root}trans/transferCheck?account="

@@ -29,7 +29,26 @@ public class TransferService {
 	}
 
 	public void addTransfer(TransferBean transferBean) {
-		transferDAO.addTransfer(transferBean);
+		// 출금
+		if ("005".equals(transferBean.getCode_organ())) {
+			transferDAO.addTransfer(transferBean);
+		}
+
+		// 입금
+		TransferBean depositBean = new TransferBean();
+		depositBean.setTrans_type(1);
+		depositBean.setTrans_balance(transferBean.getTrans_balance());
+		depositBean.setTrans_text(transferBean.getTrans_text());
+		depositBean.setFrom_account(transferBean.getTo_account());
+		depositBean.setTo_account(transferBean.getFrom_account());
+		depositBean.setCode_organ(transferBean.getCode_organ());
+
+		if ("005".equals(transferBean.getCode_organ())) {
+			transferDAO.addTransfer(depositBean);
+		} else {
+			depositBean.setFrom_account("외부 은행");
+			transferDAO.addTransfer(depositBean);
+		}
 	}
 
 	public List<TransferBean> getTransfer(int userNum, String account) {

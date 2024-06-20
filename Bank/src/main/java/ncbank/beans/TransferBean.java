@@ -11,9 +11,7 @@ public class TransferBean {
 	private String to_account;
 	private String from_account;
 	private String code_organ;
-
 	private String code_organ_name;
-
 	private AccountBean fromAccountDetails;
 
 	public String getCode_organ_name() {

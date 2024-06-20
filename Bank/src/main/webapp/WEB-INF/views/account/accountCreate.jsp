@@ -10,76 +10,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>계좌 조회</title>
-<!-- 부트스트랩 CDN -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	href="${pageContext.request.contextPath}/css/accountCreate.css" />
+
+<!-- 부트스트랩 CDN -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<style>
-.col-md-10, .col-md-2 {
-	border: 1px solid #ddd;
-	padding: 10px;
-	height: 100%;
-}
-
-.container-fluid {
-	margin-top: 150px;
-}
-
-.col-md-2 table, .col-md-10 table {
-	border: 1px solid #ddd;
-	width: 100%;
-}
-
-.col-md-2 td, .col-md-10 td {
-	border: 1px solid #ddd;
-	padding: 8px;
-}
-
-.col-md-10 th {
-	text-align: left;
-	border: 1px solid #ddd;
-}
-</style>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-				<table>
-					<tr>
-						<th><h3>조회</h3></th>
-					</tr>
-					<tr>
-						<td>
-							<ul>
-								<li><a href="${root}account/accountCheck">계좌 조회</a></li>
-								<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-
-							</ul>
-						</td>
-					</tr>
-					<tr>
-						<th>
-							<h3>이체</h3>
-						</th>
-					</tr>
-					<tr>
-						<td>
-							<ul>
-								<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-								<li><a href="${root}trans/transfer">계좌 이체</a></li>
-								<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-								<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
-							</ul>
-						</td>
-					</tr>
-				</table>
+				<div class="enquiry">
+					<h3>조회</h3>
+					<ul>
+						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+					</ul>
+				</div>
+				<div class="transfer">
+					<h3>이체</h3>
+					<ul>
+						<li><a href="${root}account/accountCreate">계좌 개설</a></li>
+						<li><a href="${root}trans/transfer">계좌 이체</a></li>
+						<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
+						<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="col-md-10">
 				<table>
@@ -112,12 +74,12 @@
 									<tr>
 										<td>계좌 비밀번호</td>
 										<td><input type="password" name="acPassword"
-											required="true" placeholder="계좌 비밀번호" /></td>
+											required="required" placeholder="계좌 비밀번호" maxlength="4" /></td>
 									</tr>
 									<tr>
 										<td>계좌 비밀번호 확인</td>
 										<td><input type="password" name="acPasswordConfirm"
-											required="true" placeholder="계좌 비밀번호 확인" /></td>
+											required="required" placeholder="계좌 비밀번호 확인" maxlength="4" /></td>
 									</tr>
 									<tr>
 										<td>계좌 분류</td>
@@ -137,5 +99,6 @@
 			</div>
 		</div>
 	</div>
+	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>
 </html>

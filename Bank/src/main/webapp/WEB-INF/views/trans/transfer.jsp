@@ -89,6 +89,9 @@
 								<th><h2>출금 정보</h2></th>
 							</tr>
 							<tr>
+								<th>출금 계좌</th>
+							</tr>
+							<tr>
 								<td><form:select path="account" id="account">
 										<form:option value="">선택</form:option>
 										<c:forEach var="account" items="${accounts}">
@@ -100,10 +103,10 @@
 								<th>계좌 비밀번호 확인</th>
 							</tr>
 							<tr>
-								<td><form:password path="ac_password" placeholder="숫자 4자리"
-										maxlength="4" id="ac_password" /> <form:errors
-										path="ac_password" cssClass="error" />
-									<button type="submit">비밀번호 확인</button></td>
+								<td><input type="password" name="ac_password"
+									placeholder="숫자 4자리" maxlength="4" id="ac_password"
+									required="required" /> <form:errors path="ac_password"
+										cssClass="error" />
 							</tr>
 						</table>
 					</form:form>
@@ -129,23 +132,23 @@
 							</tr>
 							<tr>
 								<td><form:input path="to_account"
-										placeholder="입금계좌 ('-'빼고)" /> <form:errors
+										placeholder="입금계좌 ('-'빼고)" required="required" /> <form:errors
 										path="to_account" cssClass="error" /></td>
 							</tr>
 							<tr>
 								<th>이체금액</th>
 							</tr>
 							<tr>
-								<td><form:input path="trans_balance" placeholder="이체금액" />
-									<form:errors path="trans_balance" cssClass="error" /></td>
+								<td><form:input path="trans_balance" placeholder="이체금액"
+										required="required" /> <form:errors path="trans_balance"
+										cssClass="error" /></td>
 							</tr>
 							<tr>
 								<th>이체메모</th>
 							</tr>
 							<tr>
-								<td><form:input path="trans_text"
-										placeholder="(선택) 이체메모" /> <form:errors path="trans_text"
-										cssClass="error" /></td>
+								<td><form:input path="trans_text" placeholder="(선택) 이체메모" />
+									<form:errors path="trans_text" cssClass="error" /></td>
 							</tr>
 							<tr>
 								<td>
