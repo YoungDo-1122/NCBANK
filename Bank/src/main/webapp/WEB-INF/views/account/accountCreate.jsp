@@ -89,7 +89,7 @@
 						<td><c:if test="${not empty errorMessage}">
 								<div style="color: red;">${errorMessage}</div>
 							</c:if> <form:form modelAttribute="accountBean"
-								action="${root }account/accountCreate" method="post">
+								action="${root}account/accountCreate" method="post">
 								<table>
 									<tr>
 										<td>성명</td>
@@ -98,12 +98,12 @@
 									<tr>
 										<td>계좌 비밀번호</td>
 										<td><input type="password" name="acPassword"
-											required="true" /></td>
+											required="true" placeholder="계좌 비밀번호" /></td>
 									</tr>
 									<tr>
 										<td>계좌 비밀번호 확인</td>
 										<td><input type="password" name="acPasswordConfirm"
-											required="true" /></td>
+											required="true" placeholder="계좌 비밀번호 확인" /></td>
 									</tr>
 									<tr>
 										<td>계좌 분류</td>
@@ -113,7 +113,8 @@
 											</form:select></td>
 									</tr>
 									<tr>
-										<td><button type="submit">계좌 개설</button></td>
+										<td colspan="2" align="center"><button type="submit">계좌
+												개설</button></td>
 									</tr>
 								</table>
 							</form:form></td>

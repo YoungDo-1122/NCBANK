@@ -199,7 +199,7 @@ function sendSMSVerification() {
 					<label for="phone" class="col-form-label">전화번호</label>
 					<div class="input-group">
 						<input id="phone" type="text" name="phone"
-							placeholder="전화번호 ('-'까지 입력해주세요)" class="form-control"
+							placeholder="전화번호 ('-'까지 입력)" class="form-control"
 							maxlength="13" />
 						<div class="input-group-append">
 							<button type="button" class="btn btn-primary"
@@ -224,7 +224,7 @@ function sendSMSVerification() {
 			</div>
 			<div class="form-group">
 				<form:label path="email" type="email">이메일</form:label>
-				<form:input path="email" type="email" placeholder="(선택)이메일"
+				<form:input path="email" type="email" placeholder="(선택) 이메일"
 					class='form-control' />
 			</div>
 			<div class="form-group">

@@ -81,7 +81,7 @@
 												<button
 													onclick="window.location.href='${root}trans/transferCheck'">이체내역
 													조회</button>
-												<button value="이체">계좌 이체</button>
+												<button onclick="window.location.href='${root}trans/transfer'">계좌 이체</button>
 											</td>
 										</tr>
 										<c:set var="totalBalance"
