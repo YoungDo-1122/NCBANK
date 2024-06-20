@@ -86,7 +86,9 @@
 						<th><h2>계좌 개설</h2></th>
 					</tr>
 					<tr>
-						<td><form:form modelAttribute="accountBean"
+						<td><c:if test="${not empty errorMessage}">
+								<div style="color: red;">${errorMessage}</div>
+							</c:if> <form:form modelAttribute="accountBean"
 								action="${root }account/accountCreate" method="post">
 								<table>
 									<tr>

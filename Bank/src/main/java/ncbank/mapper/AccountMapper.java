@@ -17,6 +17,6 @@ public interface AccountMapper {
 	@Select("select name from member where user_num = #{userNum}")
 	UserBean getUserInfo(@Param("userNum") int userNum);
 
-	@Insert("INSERT INTO account (account, ac_password, ac_balance, ac_type, ac_date, user_num) VALUES (#{account}, #{acPassword}, DEFAULT, #{acType}, SYSDATE, #{userNum})")
+	@Insert("INSERT INTO account (account, ac_password, ac_balance, ac_type, ac_date, user_num) VALUES (#{account}, #{ac_password}, DEFAULT, #{ac_type}, SYSDATE, #{user_num})")
 	void createAccount(AccountBean accountBean);
 }

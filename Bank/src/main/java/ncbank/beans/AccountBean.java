@@ -14,7 +14,7 @@ public class AccountBean {
 	@Size(max = 30, min = 1)
 	@Pattern(regexp = "\\d+", message = "숫자만 입력해야 합니다")
 	private String ac_balance;
-	private int ac_type;
+	private Integer ac_type;
 	private Date ac_date;
 	private int user_num;
 
@@ -58,11 +58,11 @@ public class AccountBean {
 		this.ac_date = ac_date;
 	}
 
-	public int getAc_type() {
+	public Integer getAc_type() {
 		return ac_type;
 	}
 
-	public void setAc_type(int ac_type) {
+	public void setAc_type(Integer ac_type) {
 		this.ac_type = ac_type;
 	}
 
