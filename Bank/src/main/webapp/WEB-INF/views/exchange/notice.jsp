@@ -19,13 +19,10 @@
 
 <link rel="stylesheet" href="${root}css/exchange/notice.css">
 <body>
-   
    <c:import url="../include/top_menu.jsp" />
    
    <div class="contentWarp">
-
       <div id="CP">
-
          <div id="title">
             <div class="toparea">
                <h1 class="h1_title">환율알림서비스</h1>
@@ -38,9 +35,7 @@
                   <a href="${root}exchange/noticeRegister">신청/변경/해지</a> 
                </li>         
             </ul> 
-         </div> <!-- div.title -->
-
-         
+         </div> <!-- div.title -->   
          <!-- 환율 안내 관련 jsp 임포트 - 상황에 따라 임포트 변경 -->         
          <!-- 1:안내 2:등록 3:변경 4:등록/변경 성공 5:삭제 성공 -->
          <c:choose>
@@ -111,8 +106,9 @@
       }); // $(document).ready
       
    </script>
-   
-   <c:import url="../include/bottom_info.jsp" />
+
+	<c:import url="../include/bottom_info.jsp" />
+
 
 </body>
 </html>

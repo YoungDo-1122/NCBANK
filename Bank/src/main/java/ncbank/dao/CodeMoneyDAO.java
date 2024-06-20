@@ -15,8 +15,7 @@ public class CodeMoneyDAO {
 	private CodeMoneyMapper codeMoneyMapper;
 
 	public List<CodeMoneyBean> getCodeMoneyList() {
-		List<CodeMoneyBean> codeMoneyList = codeMoneyMapper.getCodeMoneyList();
-		return codeMoneyList;
+		return codeMoneyMapper.getCodeMoneyList();
 	}
 	public String getCodeMoneyName(String code_money) {
 		return codeMoneyMapper.getCodeMoneyName(code_money);

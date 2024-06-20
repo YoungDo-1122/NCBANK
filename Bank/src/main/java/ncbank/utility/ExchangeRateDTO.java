@@ -7,8 +7,8 @@ public class ExchangeRateDTO {
     // ExchangeRate 에서 채울 값
     private Date code_date = null; // 일시
     private String code_money = ""; // 통화 코드
-    private float ex_buy = 0.0f; // 구매 시 환율
-    private float ex_sell = 0.0f; // 판매 시 환율
+    private float ex_buy = 0.0f; // 구매 시 환율 - ttb 송금 받을때
+    private float ex_sell = 0.0f; // 판매 시 환율 - tts 송금 보낼때
     private float ex_standard = 0.0f; // 매매 기준율
     // CodeMoney 에서 채울 값
     private String code_money_name = ""; // 통화코드 명

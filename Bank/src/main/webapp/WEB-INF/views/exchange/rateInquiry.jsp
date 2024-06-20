@@ -31,30 +31,6 @@
 <link rel="stylesheet" href="${root}css/exchange/bType.css">
 <link rel="stylesheet" href="${root}css/exchange/LP.css">
 
-<script type="text/javascript">
-	/*
-	var ret = window.open(url, name, specs, replace) -> 새로만들어진 창객체 반환 | 실패 null | 닫기 ret.close()
-	[name]
-	_blank : 새창 (기본값)
-	_parent : 부모 프레임에 열림
-	_self : 현재 페이지 대체
-	_top : 로드된 프레임셋 대체
-	 */
-	/* .calculatorBtn 을 눌렀을때 판업창 열기 */
-	$(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 핸들러 설정
-
-		$('.calculatorBtn').on("click", function(e) {
-			e.preventDefault();
-
-			var url = "${root}exchange/calculator"
-			var name = "환율 계산기"
-			var option = "width = 650px, height = 650px, top = 200px"
-			window.open(url, name, option);
-		});
-	}); // $(document).ready
-	
-</script>
-
 <style>
 .carbtn {
 	background-color: green;
@@ -132,8 +108,6 @@
 				</div>
 				
 			</form>
-
-			<button class="calculatorBtn bType02">환율계산기</button>
 			
 			<!-- Starg~End 날짜 기간의 환율 데이터 추가 test -->
 			<a href="${root}exchange/addRateInquiry_DateRange">범위기간DB추가</a>
@@ -165,15 +139,17 @@
 					<!-- API 데이터를 가져와서 For Each -->
 					<tbody>
 						<c:forEach var="bean" items="${ExchangeRateList}">
-							<tr>
-								<td class="tLeft">${bean.code_money_name}</td>
-								<td><img src="${root}img/Flags/${bean.code_money}.png"
-									onerror="this.style.display='none'"></td>
-								<td>${bean.code_money}</td>
-								<td>${bean.ex_standard}</td>
-								<td class="tRight">${bean.ex_buy}</td>
-								<td class="tRight">${bean.ex_sell}</td>
-							</tr>
+							<c:if test="${'KRW' != bean.code_money.toUpperCase().trim()}">
+								<tr>
+									<td class="tLeft">${bean.code_money_name}</td>
+									<td><img src="${root}img/Flags/${bean.code_money}.png"
+										onerror="this.style.display='none'"></td>
+									<td>${bean.code_money}</td>
+									<td>${bean.ex_standard}</td>
+									<td class="tRight">${bean.ex_buy}</td>
+									<td class="tRight">${bean.ex_sell}</td>
+								</tr>
+							</c:if>
 						</c:forEach>
 					</tbody>
 				</table>

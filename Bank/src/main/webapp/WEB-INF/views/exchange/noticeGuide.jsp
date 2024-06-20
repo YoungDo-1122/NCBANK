@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
+<c:set var="root" value="${pageContext.request.contextPath}/" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +41,10 @@
 		<p class="s5 tar">준법감시인 심의필 제 2021-1364-4호 (2021.06.01) 유효기간 :
 			2023.05.31</p>
 		
+	</div>
+	
+	<div class="btnArea">
+		<a href="${root}exchange/noticeRegister">등록</a>
 	</div>
 	
 </body>

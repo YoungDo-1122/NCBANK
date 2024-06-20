@@ -130,6 +130,27 @@ public class DateManager {
     	
     	return null;
     }
+    /* DATE의 pattern만 변경 | ex) 20240604 -> 2024-06-04 */
+    public Date changeDateFormat(Date date, String inputPattern, String outputPattern) {
+    	
+    	// 입력 날짜 형식
+    	SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+    	
+    	// 출력 날짜 형식
+    	SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+    	
+    	try {
+			// Date -> String
+    		String strDate = inputFormat.format(date);
+			// Date -> String
+    		Date outDate = outputFormat.parse(strDate);
+    		return outDate;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	return null;
+    }
     
     // Date1 과 2 가 같은지 비교
     public boolean isDatesEqual(String strDate1, String strDate2) {

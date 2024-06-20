@@ -18,6 +18,7 @@ border > border-radius
 */
 
 body *{
+	font-family: Bazzi OTF;
 	text-align: center;
 }
 /* 상단바를 제외시킨 컨텐츠 영역 */
