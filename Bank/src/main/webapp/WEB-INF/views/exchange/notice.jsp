@@ -11,8 +11,6 @@
 <title>exchange/notice.jsp - 환율알림</title>
 </head>
 
-
-
 <!-- Bootstrap CDN -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -89,6 +87,44 @@
 		</div> <!-- div.CP -->
 	
 	</div> <!-- div.contentWarp -->
+	
+	<!-- 환율 차트 판업 -->
+	<button class="rateCalculator bType02">환율계산기</button>
+	<script type="text/javascript">
+
+		$(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 핸들러 설정
+			// rateChartBtn를 눌렀을 때 그래프 판업창 열기
+			$('.rateCalculator').on("click", function(e) {
+				e.preventDefault();
+
+				var url = "${root}/exchange/calculator"
+				var name = "환율 계산기"
+				var option = "width = 650px, height = 650px, top = 200px"
+				window.open(url, name, option);
+			});
+			
+		}); // $(document).ready
+		
+	</script>
+	
+	<!-- 환율 차트 판업 -->
+	<button class="rateChartBtn bType02">환율차트보기</button>
+	<script type="text/javascript">
+
+		$(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 핸들러 설정
+			// rateChartBtn를 눌렀을 때 그래프 판업창 열기
+			$('.rateChartBtn').on("click", function(e) {
+				e.preventDefault();
+
+				var url = "${root}/exchange/rateChart"
+				var name = "환율 차트"
+				var option = "width = 650px, height = 650px, top = 200px"
+				window.open(url, name, option);
+			});
+			
+		}); // $(document).ready
+		
+	</script>
 	
 	<c:import url="../include/bottom_info.jsp" />
 

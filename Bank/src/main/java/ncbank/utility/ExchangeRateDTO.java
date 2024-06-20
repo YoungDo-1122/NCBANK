@@ -13,7 +13,11 @@ public class ExchangeRateDTO {
     // CodeMoney 에서 채울 값
     private String code_money_name = ""; // 통화코드 명
 
-    public Date getCode_date() {
+    // 스트링 타입 날짜
+    private String code_date_str;
+    
+
+	public Date getCode_date() {
         return code_date;
     }
 
@@ -60,4 +64,14 @@ public class ExchangeRateDTO {
     public void setCode_money_name(String code_money_name) {
         this.code_money_name = code_money_name;
     }
+
+	public String getCode_date_str() {
+		return code_date_str;
+	}
+
+	public void setCode_date_str(String code_date_str) {
+		this.code_date_str = code_date_str;
+	}
+    
+  	
 }

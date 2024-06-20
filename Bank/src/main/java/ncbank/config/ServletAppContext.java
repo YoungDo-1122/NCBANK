@@ -40,6 +40,7 @@ import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.TradeMapper;
 import ncbank.mapper.TransferMapper;
 import ncbank.mapper.UserMapper;
+import ncbank.service.CodeMoneyService;
 import ncbank.service.ExchangeAutoNoticeService;
 import ncbank.service.ExchangeNoticeService;
 import ncbank.service.ExchangeRateService;
@@ -238,7 +239,8 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Autowired
 	private ExchangeRateService exchangeRateService;
-	
+	@Autowired
+	private CodeMoneyService codeMoneyService;
 	
 	@Autowired
 	private ExchangeAutoNoticeService autoNoticeService;
@@ -260,7 +262,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		// /** : 모든 경로에 대해서 (어디서든 데이터를 끌어다 쓰게 하기 위해)
 		reg1.addPathPatterns("/**");
 
-		ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService);
+		ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService, codeMoneyService);
 		InterceptorRegistration reg2 = registry.addInterceptor(exchangeRateInterceptor);
 		reg2.addPathPatterns("/**");
 		

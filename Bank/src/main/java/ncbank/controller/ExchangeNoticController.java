@@ -67,14 +67,7 @@ public class ExchangeNoticController {
     // 기본 알림 페이지 - 알림 안내
     @GetMapping("/notice")
     public String notice(Model model) {
-    	System.out.println("ExchangeNoticController notice()");
     	
-    	// 로그인 정보 test
-    	System.out.println("loginUserBean : " + loginUserBean);
-    	if (null != loginUserBean) {
-    		System.out.println("userNum : " + loginUserBean.getUser_num());
-    		System.out.println("isLogin : " + loginUserBean.isUserLogin());
-    	}
 
     	return "exchange/notice";
     }
@@ -84,7 +77,7 @@ public class ExchangeNoticController {
     public String noticeRegister(
     		@ModelAttribute("ExchangeNoticeBean") ExchangeNoticeBean exchangeNoticeBean,
     		Model model) {
-    	System.out.println("ExchangeNoticController noticeRegister()");
+    	
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -92,12 +85,11 @@ public class ExchangeNoticController {
     	
     	// 기존 등록된 알림이 있다면 변경 페이지로 
     	ExchangeNoticeBean noticeBean = exchangeNoticeService.getExchangeRateNotice(loginUserBean.getUser_num());
-    	System.out.println("noticeBean : " + noticeBean);
+
     	if (null != noticeBean) { // 이 유저가 신청한 알림 데이터가 있다면 변경창으로
     		return noiticeEdit(noticeBean, model);
     	}
-    	
-    	System.out.println("noticContentIndex : 2");
+
 		model.addAttribute("noticContentIndex", 2);
     	
     	return notice(model);
@@ -107,7 +99,6 @@ public class ExchangeNoticController {
     public String noticeRegisterPro(
     		@ModelAttribute("ExchangeNoticeBean") ExchangeNoticeBean exchangeNoticeBean,
     		Model model) {
-    	System.out.println("ExchangeNoticController noticeRegisterPro()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -128,16 +119,15 @@ public class ExchangeNoticController {
     public String noiticeEdit(
     		@ModelAttribute("ExchangeNoticeBean") ExchangeNoticeBean exchangeNoticeBean,
     		Model model) {
-    	System.out.println("ExchangeNoticController noiticeEdit()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
+    	
     	addCommonAttributes(model);
     	
     	ExchangeNoticeBean noticeBean = exchangeNoticeService.getExchangeRateNotice(loginUserBean.getUser_num());
     	model.addAttribute("ExchangeNoticeBean", noticeBean);
     	
-    	System.out.println("noticContentIndex : 3");
     	model.addAttribute("noticContentIndex", 3);
     	
     	return notice(model);
@@ -146,7 +136,6 @@ public class ExchangeNoticController {
     public String noticeEditPro(
     		@ModelAttribute("ExchangeNoticeBean") ExchangeNoticeBean exchangeNoticeBean,
     		Model model) {
-    	System.out.println("ExchangeNoticController noticeEditPro()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -161,7 +150,6 @@ public class ExchangeNoticController {
     // 알림 삭제
     @GetMapping("noticeDeletPro")
     public String noticeDeletPro(Model model) {
-    	System.out.println("ExchangeNoticController noticeDeletPro()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -178,7 +166,6 @@ public class ExchangeNoticController {
     // success
     @GetMapping("noiticeRegisterEditSuccess")
     public String noiticeRegisterEditSuccess(Model model) {
-    	System.out.println("ExchangeNoticController noiticeRegisterEditSuccess()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
@@ -189,11 +176,10 @@ public class ExchangeNoticController {
     }
     @GetMapping("noticeDeletSuccess")
     public String noticeDeletSuccess(Model model) {
-    	System.out.println("ExchangeNoticController noticeDeletSuccess()");
     	if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "exchange/not_login";
 		}
-    	System.out.println("noticContentIndex : 5");
+    	
     	model.addAttribute("noticContentIndex", 5);
     	
     	return notice(model);
@@ -204,9 +190,8 @@ public class ExchangeNoticController {
     @GetMapping("sendNoticeMail")
     // Spring MVC에서 자동으로 HttpServletRequest와 HttpServletResponse 객체를 컨트롤러 메서드에 주입
     public String sendNoticeMail(HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println("ExchangeNoticController sendNoticeMail()");
+    	
     	 if (null == loginUserBean && !loginUserBean.isUserLogin()) {
-    		System.out.println("not login");
          	return "exchange/rateInquiry";
          }
 		/* jsp 내용 메일 */
@@ -220,7 +205,6 @@ public class ExchangeNoticController {
 
     	request.setAttribute("ExchangeNoticeBean", exchangeNoticeBean);
     	request.setAttribute("noticeDate", noticeDate);
-    	System.out.println("noticeDate : " + noticeDate);
      	
         // 신청한 통화의 최근고지환율정보
      	ExchangeRateBean rateBean = exchangeRateService.findFinalExchangeRate(exchangeNoticeBean.getCode_money());   	
@@ -229,14 +213,8 @@ public class ExchangeNoticController {
         
         request.setAttribute("ExchangeRateBean", rateDTO);
         request.setAttribute("inquiryDate", inquiryDate);
-        System.out.println("inquiryDate : " + inquiryDate);
         
-        // 한국 원 정보는 따로 가져감
-        ExchangeRateBean beanKRW = exchangeRateService.findFinalExchangeRate("KRW");
-        ExchangeRateDTO dtoKRW = exchangeRateService.convertExchangeDTO(beanKRW);
-        
-        request.setAttribute("beanKRW", dtoKRW);
-        
+
 		/* 메일전송 */
         // 메일 보내는 기준 잡아야됨 -> Intercepter 에서?
 		String rootPath = request.getServletContext().getRealPath("/");
