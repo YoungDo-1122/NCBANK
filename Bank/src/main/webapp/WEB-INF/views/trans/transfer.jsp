@@ -129,8 +129,8 @@
 							</tr>
 							<tr>
 								<td><form:input path="to_account"
-										placeholder="입금계좌 ('-'빼고)" /> <form:errors
-										path="to_account" cssClass="error" /></td>
+										placeholder="입금계좌 ('-'빼고)" /> <form:errors path="to_account"
+										cssClass="error" /></td>
 							</tr>
 							<tr>
 								<th>이체금액</th>
@@ -143,9 +143,8 @@
 								<th>이체메모</th>
 							</tr>
 							<tr>
-								<td><form:input path="trans_text"
-										placeholder="(선택) 이체메모" /> <form:errors path="trans_text"
-										cssClass="error" /></td>
+								<td><form:input path="trans_text" placeholder="(선택) 이체메모" />
+									<form:errors path="trans_text" cssClass="error" /></td>
 							</tr>
 							<tr>
 								<td>
