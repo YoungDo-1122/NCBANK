@@ -1,14 +1,20 @@
 @charset "UTF-8";
 
+* {
+	height: 100%;
+	margin: 0;
+}
+
 footer {
 	width: 100%;
 	bottom: 0;
-	position: static;
+	position: relative;
 	background-color: #cecece;
 	padding: 20px 0;
 	color: #333;
 	font-size: 14px;
 	clear: both;
+	transform : translateU(-100%);
 }
 
 .footWrap {
