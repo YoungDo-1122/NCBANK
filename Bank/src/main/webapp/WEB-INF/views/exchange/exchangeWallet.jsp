@@ -1,15 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
-
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/teststyle_top.css">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>환전 신청 완료</title>
+<title>환전지갑</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/exchangeAskSuccess.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}resource/css/exchangeWallet.css">
 <style>
 @charset "UTF-8";
 
@@ -41,7 +43,6 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 100px; /* Adjust this value according to the height of your top menu */
-    left: 0;
 }
 
 .sidebar-item {
@@ -118,8 +119,8 @@ button a {
             환율
             <div id="exchange-rate-menu" class="submenu" style="display: none;">
                 <ul>
-                    <li><a href="#">환율정보</a></li>
-                    <li><a href="#">환율계산기</a></li>
+                    <li><a href="#" style="color: white;">환율정보</a></li>
+                    <li><a href="#" style="color: white;">환율계산기</a></li>
                 </ul>
             </div>
         </div>
@@ -127,75 +128,56 @@ button a {
             환전
             <div id="exchange-menu" class="submenu" style="display: none;">
                 <ul>
-                    <li><a href="#">환전신청</a></li>
-                    <li><a href="#">환전조회</a></li>
+                    <li><a href="#" style="color: white;">환전신청</a></li>
+                    <li><a href="#" style="color: white;">환전조회</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
     <div class="main-content">
-        <h1>환전 신청 완료</h1>
+        <h1>환전지갑</h1>
         <table border="1">
-            <tr>
-                <th>환전신청금액</th>
-                <td>${createExchangeBean.code_money} ${createExchangeBean.trade_money}</td>
-            </tr>
-            <tr>
-                <th>현재고시환율</th>
-                <td>${createExchangeBean.exchange_cash_buying_rate}</td>
-            </tr>
-            <tr>
-                <th>적용환율</th>
-                <td>${createExchangeBean.trade_rate}</td>
-            </tr>
-            <tr>
-                <th>우대금액</th>
-                <td>${createExchangeBean.preferential_money}</td>
-            </tr>
-            <tr>
-                <th>출금계좌번호</th>
-                <td>${createExchangeBean.account}</td>
-            </tr>
-            <tr>
-                <th>수령희망날짜</th>
-                <td>${createExchangeBean.trade_reservation_date}</td>
-            </tr>
-            <tr>
-                <th>수령희망 지점번호</th>
-                <td>${createExchangeBean.code_bank}</td>
-            </tr>
-            <tr>
-                <th>수령희망 지점이름</th>
-                <td>${createExchangeBean.code_bank_name}</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>통화코드</th>
+                    <th>잔액</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="wallet" items="${walletAllList}">
+                    <tr>
+                        <td>${wallet.code_money}</td>
+                        <td>${wallet.w_balance}</td>
+                    </tr>
+                </c:forEach>
+            </tbody>
         </table>
         
-        <div class="text-right" style="margin-top: 20px;">
+        <div class="actions">
             <button>
-                <a href="${root}main">메인페이지 가기</a>
+                <a href="${root}exchange/exchangeHistory">환전 조회 페이지</a>
             </button>
             <button>
-                <a href="${root}exchange/exchangeHistory">환전 조회하기</a>
+                <a href="${root}main">메인페이지 가기</a>
             </button>
         </div>
     </div>
 </div>
-
 <script>
-	//왼쪽 사이드바 실행
-    function toggleMenu(menuId) {
-        var menus = document.getElementsByClassName('submenu');
-        for (var i = 0; i < menus.length; i++) {
-            menus[i].style.display = 'none';
+    	// 왼쪽 사이드바
+        function toggleMenu(menuId) {
+            var menus = document.getElementsByClassName('submenu');
+            for (var i = 0; i < menus.length; i++) {
+                menus[i].style.display = 'none';
+            }
+            var menu = document.getElementById(menuId);
+            if (menu.style.display === 'none') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
         }
-        var menu = document.getElementById(menuId);
-        if (menu.style.display === 'none') {
-            menu.style.display = 'block';
-        } else {
-            menu.style.display = 'none';
-        }
-    }
 </script>
 </body>
 </html>

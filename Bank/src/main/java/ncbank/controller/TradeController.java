@@ -1,9 +1,9 @@
 package ncbank.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ncbank.beans.TradeBean;
+import ncbank.beans.CrerateTradeBean;
+import ncbank.beans.PageBean;
+import ncbank.beans.UserBean;
+import ncbank.beans.WalletBean;
 import ncbank.service.TradeService;
 
 @Controller
@@ -22,27 +25,48 @@ public class TradeController {
     @Autowired
     private TradeService tradeService;
     
+    @Resource(name="loginUserBean")
+    UserBean loginUserBean;
+    
     @GetMapping("/exchangeHistory")
     public String getTradeList(
-            @RequestParam(required = false) String startDate,
-            @RequestParam(required = false) String endDate,
-            Model model) throws ParseException {
-        
-        List<TradeBean> tradeList;
-        
-        if (startDate != null && endDate != null) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yy/mm/dd");
-            Date start = formatter.parse(startDate);
-            Date end = formatter.parse(endDate);
-            tradeList = tradeService.getTradeListByDateRange(start, end);
+            @RequestParam(value="page", defaultValue="1") int page,
+            Model model, HttpSession session) {
+
+        UserBean loginUserBean = (UserBean) session.getAttribute("loginUserBean");
+        if (loginUserBean != null && loginUserBean.isUserLogin()) {
+            int contentPageCnt = 10;  // 페이지당 항목 수
+            int paginationCnt = 5;    // 페이지 버튼 수
+
+            List<CrerateTradeBean> tradePlusList = tradeService.getTradePlusList(loginUserBean.getUser_num(), page, contentPageCnt);
+            int totalCnt = tradeService.getTradeCount(loginUserBean.getUser_num());
+            
+            // 페이지
+            PageBean pageBean = new PageBean(totalCnt, page, contentPageCnt, paginationCnt);
+
+            model.addAttribute("tradePlusList", tradePlusList);
+            model.addAttribute("pageBean", pageBean);
+            model.addAttribute("page", page);
         } else {
-            tradeList = tradeService.getAllTradeList();
+            return "exchange/exchangeAllNotLogin";
         }
-        
-        model.addAttribute("tradeList", tradeList);
-        model.addAttribute("startDate", startDate);
-        model.addAttribute("endDate", endDate);
-        
+
         return "exchange/exchangeHistory";
     }
+    
+    @GetMapping("/exchangeWallet")
+    public String getWalletList(Model model, HttpSession session) {
+        UserBean loginUserBean = (UserBean) session.getAttribute("loginUserBean");
+        if (loginUserBean != null && loginUserBean.isUserLogin()) {
+            int user_num = loginUserBean.getUser_num();
+            List<WalletBean> walletAllList = tradeService.getWalletAllList(user_num);
+            model.addAttribute("walletAllList", walletAllList);
+        } else {
+            return "exchange/exchangeAllNotLogin";
+        }
+
+        return "exchange/exchangeWallet";
+    }
+    
+    
 }

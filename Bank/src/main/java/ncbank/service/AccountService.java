@@ -1,6 +1,8 @@
 package ncbank.service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
@@ -42,20 +44,68 @@ public class AccountService {
 	}
 
 	// 계좌번호 생성
-	public void createAccount(AccountBean accountBean) {
-		String accountNumber = generateAccountNumber(accountBean.getUser_num(), 1);
+	public void createAccount(AccountBean accountBean) throws Exception {
+		int userNum = accountBean.getUser_num();
+		// 동일한 회원의 모든 계좌 조회
+		List<AccountBean> accounts = accountDAO.getAccount(userNum);
+
+		// 최근 계좌 개설일 찾기
+		Date lastCreateDate = getLastAccountCreateDate(accounts);
+
+		if (lastCreateDate != null) {
+			// 30일이 지났는지 확인
+			long diffInMillis = new Date().getTime() - lastCreateDate.getTime();
+			long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+
+			if (diffInDays < 30) {
+				throw new Exception("계좌 개설 후 30일이 지나지 않았습니다.");
+			}
+		}
+
+		// 가장 높은 일련번호 찾기
+		int maxSequenceNumber = findMaxSequenceNumber(accounts);
+		// 새로운 계좌번호 생성
+		String accountNumber = generateAccountNumber(accountBean.getUser_num(), maxSequenceNumber + 1);
 		accountBean.setAccount(accountNumber);
+		// 계좌 생성
 		accountDAO.createAccount(accountBean);
+	}
+
+	private Date getLastAccountCreateDate(List<AccountBean> accounts) {
+		Date lastCreateDate = null;
+		for (AccountBean account : accounts) {
+			Date createDate = account.getAc_date();
+			if (lastCreateDate == null || createDate.after(lastCreateDate)) {
+				lastCreateDate = createDate;
+			}
+		}
+		return lastCreateDate;
+	}
+
+	private int findMaxSequenceNumber(List<AccountBean> accounts) {
+		int maxSequenceNumber = 0;
+		for (AccountBean account : accounts) {
+			String accountNumber = account.getAccount();
+			int sequenceNumber = extractSequenceNumber(accountNumber);
+			if (sequenceNumber > maxSequenceNumber) {
+				maxSequenceNumber = sequenceNumber;
+			}
+		}
+		return maxSequenceNumber;
+	}
+
+	private int extractSequenceNumber(String accountNumber) {
+		// 계좌번호에서 일련번호 추출하는 로직
+		String sequenceStr = accountNumber.substring(11, 13); // 계좌 번호에서 일련번호를 나타내는 12, 13번째 숫자만 추출
+		return Integer.parseInt(sequenceStr);
 	}
 
 	// Luhn 알고리즘을 사용하여 계좌번호에 검증 숫자를 추가하는 함수
 	private String generateAccountNumber(int userNum, int sequenceNumber) {
-		// 은행코드 + 회원번호 + 일련번호
-		String baseAccountNumber = codeOrgan + formatMemberNumber(userNum) + sequenceNumber;
-
+		// 은행코드(3자리) + 회원번호(8자리) + 일련번호(2자리)
+		String baseAccountNumber = codeOrgan + formatMemberNumber(userNum) + String.format("%02d", sequenceNumber);
 		// Luhn 알고리즘으로 검증 숫자 계산
 		int checkDigit = calculateLuhnCheckDigit(baseAccountNumber);
-
 		// 계좌번호에 검증 숫자 추가하여 반환
 		return baseAccountNumber + checkDigit;
 	}

@@ -1,20 +1,90 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
-
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>noticeRegister.jsp - 환율알림등록</title>
+<style>
+.box_type1 {
+	border: 1px solid #ddd;
+	padding: 20px;
+	margin-bottom: 20px;
+	background-color: #f9f9f9;
+}
+
+.list_type1 {
+	list-style-type: none;
+	padding: 0;
+}
+
+.list_type1 li {
+	margin-bottom: 10px;
+}
+
+.form-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0 10px; /*여백*/
+	margin-bottom: 20px;
+}
+
+.form-table th, .form-table td {
+	padding: 10px;
+	border: 1px solid #ddd;
+}
+
+.form-table th {
+	background-color: #f2f2f2;
+	text-align: left;
+}
+
+.form-table tr {
+	border-bottom: 1px solid #ddd;
+}
+
+.form-table tr:last-child {
+	border-bottom: none; /* 마지막 행 아래에는 선을 추가하지 않음 */
+}
+
+.rateChartBtn {
+	display: inline-block;
+	padding: 5px 10px;
+	background-color: #ddd;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	text-decoration: none;
+	color: #000;
+}
+
+b {
+	color: red;
+}
+
+.button {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.btn {
+	background-color: rgb(83, 169, 255);
+	color : white;
+	padding : 10px 20px;
+	border : none; 
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background-color :  rgb(13, 71, 161);
+}
+</style>
 </head>
 <body>
-	<h2>noticeRegister</h2>
-	
 	<div id="b101901">
-
 		<!-- if 환율 알림 등록시. 보여지는 안내문 -->
 		<div class="box_type1">
 			<ul class="list_type1">
@@ -25,14 +95,14 @@
 				</li>
 			</ul>
 		</div>
-		
+
 		<form:form action="${root}exchange/noticeRegisterPro" method="post"
 			modelAttribute="ExchangeNoticeBean">
-			<form:hidden path="user_num"/>
-			
-			<table>
-				<caption>환율알림서비스 신청/변경/해지에 관한 표</caption>
-				<colgroup> <!-- 열 그룹화 : 열단위 스타일링이나 속성 적용을 위해 -->
+			<form:hidden path="user_num" />
+
+			<table class="form-table">
+				<colgroup>
+					<!-- 열 그룹화 : 열단위 스타일링이나 속성 적용을 위해 -->
 					<col width="20%">
 					<col>
 				</colgroup>
@@ -40,67 +110,54 @@
 					<tr>
 						<!-- scope="row" : th 요소가 해당 행의 데이터 셀들에 대한 헤더 -->
 						<!-- b: 굵은 텍스트 | blind : css 로 숨기는 부분 (메모용) -->
-						<th scope="row">
-							<b class="txt-c4">* <span class="blind">필수입력</span></b>통화종류
-						</th>
-						<td>
-							<form:select path="code_money">
+						<th scope="row"><b class="txt-c4">* </b>통화종류</th>
+						<td><form:select path="code_money">
 								<c:forEach var="obj" items="${codeMoneyList}">
 									<c:if test="${'KRW' != obj.code_money.toUpperCase().trim()}">
 										<form:option value="${obj.code_money}">${obj.code_money}&nbsp;(${obj.code_money_name})</form:option>
 									</c:if>
 								</c:forEach>
-							</form:select>
-						</td>
+							</form:select></td>
 					</tr>
-				
+
 					<tr>
-						<th scope="row">
-							<b class="txt-c4">* <span class="blind">필수입력</span></b>환율종류
-						</th>
-						<td>
-							<form:select path="rateType">
+						<th scope="row"><b class="txt-c4">* </b>환율종류</th>
+						<td><form:select path="rateType">
 								<form:option value="1">매매기준율</form:option>
 								<form:option value="2">송금보내실때</form:option>
 								<form:option value="3">송금받으실때</form:option>
-							</form:select>
-						</td>
+							</form:select></td>
 					</tr>
-				
+
 					<tr>
-						<th scope="row">
-							<b class="txt-c4">* <span class="blind">필수입력</span></b>알림희망환율범위
-						</th>
-						<td>
-							<form:input path="notice_rate"/>&nbsp;이하&nbsp;
-							<!-- 환율 차트 판업 -->
-							<button class="rateChartBtn bType02">환율차트보기</button>
-						</td>
+						<th scope="row"><b class="txt-c4">* </b>알림희망환율범위</th>
+						<td><form:input path="notice_rate" />&nbsp;이하&nbsp; <!-- 환율 차트 판업 -->
+							<button class="rateChartBtn bType02">환율차트보기</button></td>
 					</tr>
-				
+
 					<tr>
-						<th scope="row" rowspan="2"> <!-- 이메일 외 알림수단 추가시 rowspan = 2 하고 추가 -->
-							<b class="txt-c4">* <span class="blind">필수입력</span></b>알림방법
+						<th scope="row" rowspan="2">
+							<!-- 이메일 외 알림수단 추가시 rowspan = 2 하고 추가 --> <b class="txt-c4">*
+						</b>알림방법
 						</th>
-						
-						<td>
-							Email&nbsp;:&nbsp;<form:input path="notice_email"/>
+
+						<td>Email&nbsp;:&nbsp;<form:input path="notice_email" />
 						</td>
 					</tr>
-				
+
 				</tbody>
 			</table>
-			
-			<div>
+			<!-- 표 -->
+
+			<div class="button">
 				<form:button type="submit" class="btn">등록</form:button>
 			</div>
-			
-		</form:form>
-		
-	</div>
-	
-	<script type="text/javascript">
 
+		</form:form>
+
+	</div>
+
+	<script type="text/javascript">
 		$(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 핸들러 설정
 			// rateChartBtn를 눌렀을 때 그래프 판업창 열기
 			$('.rateChartBtn').on("click", function(e) {
@@ -111,10 +168,9 @@
 				var option = "width = 650px, height = 650px, top = 200px"
 				window.open(url, name, option);
 			});
-			
+
 		}); // $(document).ready
-		
 	</script>
-	
+
 </body>
 </html>

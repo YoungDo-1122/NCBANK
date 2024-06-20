@@ -28,31 +28,27 @@ public class AccountController {
 
 	@GetMapping("/accountCheck")
 	public String AccountCheck(Model model) {
+		// 로그인 확인
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
+		// 로그인한 회원의 회원번호 저장
 		int userNum = loginUserBean.getUser_num();
 		System.out.println("계좌 조회 회원 번호 : " + userNum);
-
+		
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 		model.addAttribute("accounts", accounts);
 
 		return "account/accountCheck";
 	}
 
-	/*
-	 * @GetMapping("/accountCreate") public String AccountCreate(Model model) { int
-	 * userNum = loginUserBean.getUser_num(); System.out.println("계좌 생성 회원번호 : " +
-	 * userNum);
-	 * 
-	 * UserBean users = accountService.getUserInfo(userNum);
-	 * model.addAttribute("users", users); System.out.println("계좌 생성 회원명 : " +
-	 * users.getName());
-	 * 
-	 * model.addAttribute("accountBean", new AccountBean());
-	 * 
-	 * return "account/accountCreate"; }
-	 */
-
 	@GetMapping("/accountCreate")
 	public String AccountCreate(Model model) {
+		// 로그인 확인
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
+		// 로그인한 회원의 회원번호 저장
 		int userNum = loginUserBean.getUser_num();
 		System.out.println("계좌 생성 회원번호 : " + userNum);
 
@@ -61,7 +57,7 @@ public class AccountController {
 			users = accountService.getUserInfo(userNum);
 		} catch (IllegalArgumentException e) {
 			System.out.println("Error: " + e.getMessage());
-			return "redirect:/errorPage";
+			return "account/accountCreate";
 		}
 
 		model.addAttribute("users", users);
@@ -73,11 +69,12 @@ public class AccountController {
 	@PostMapping("/accountCreate")
 	public String createAccount(@ModelAttribute AccountBean accountBean, @RequestParam("acPassword") String acPassword,
 			@RequestParam("acPasswordConfirm") String acPasswordConfirm, Model model) {
+		// 로그인한 회원의 회원번호를 계좌 정보에 저장
 		accountBean.setUser_num(loginUserBean.getUser_num());
 
 		// 비밀번호와 비밀번호 확인 비교
 		if (!acPassword.equals(acPasswordConfirm)) {
-			model.addAttribute("errorMessage", "Passwords do not match.");
+			model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다");
 			return "account/accountCreate";
 		}
 
@@ -86,7 +83,7 @@ public class AccountController {
 
 		try {
 			accountService.createAccount(accountBean);
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "account/accountCreate";
 		}
@@ -94,21 +91,19 @@ public class AccountController {
 		return "redirect:/account/accountCheck";
 	}
 
-	/*
-	 * @PostMapping("/accountCreate") public String createAccount(@ModelAttribute
-	 * AccountBean accountBean, Model model) {
-	 * accountBean.setUser_num(loginUserBean.getUser_num());
-	 * accountService.createAccount(accountBean); return
-	 * "redirect:/account/accountCheck"; }
-	 */
-
 	@GetMapping("/transferAuto")
 	public String TransferAuto() {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 		return "account/transferAuto";
 	}
 
 	@GetMapping("/transferAutoFix")
 	public String TransferAutoFix() {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 		return "account/transferAutoFix";
 	}
 }

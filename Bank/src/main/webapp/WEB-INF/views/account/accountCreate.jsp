@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
 <!DOCTYPE html>
@@ -86,22 +87,37 @@
 						<th><h2>계좌 개설</h2></th>
 					</tr>
 					<tr>
-						<td><form:form modelAttribute="accountBean"
-								action="${root }account/accountCreate" method="post">
+						<td><c:if test="${not empty errorMessage}">
+								<div style="color: red;">${errorMessage}</div>
+							</c:if> <form:form modelAttribute="accountBean"
+								action="${root}account/accountCreate" method="post">
 								<table>
 									<tr>
 										<td>성명</td>
 										<td>${users.name}</td>
 									</tr>
 									<tr>
+										<td>주소</td>
+										<td>${users.address}</td>
+									</tr>
+									<tr>
+										<td>전화번호</td>
+										<td>${users.phone}</td>
+									</tr>
+
+									<tr>
+										<td>이메일</td>
+										<td>${users.email}</td>
+									</tr>
+									<tr>
 										<td>계좌 비밀번호</td>
 										<td><input type="password" name="acPassword"
-											required="true" /></td>
+											required="true" placeholder="계좌 비밀번호" /></td>
 									</tr>
 									<tr>
 										<td>계좌 비밀번호 확인</td>
 										<td><input type="password" name="acPasswordConfirm"
-											required="true" /></td>
+											required="true" placeholder="계좌 비밀번호 확인" /></td>
 									</tr>
 									<tr>
 										<td>계좌 분류</td>
@@ -111,7 +127,8 @@
 											</form:select></td>
 									</tr>
 									<tr>
-										<td><button type="submit">계좌 개설</button></td>
+										<td colspan="2" align="center"><button type="submit">계좌
+												개설</button></td>
 									</tr>
 								</table>
 							</form:form></td>

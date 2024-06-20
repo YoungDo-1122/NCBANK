@@ -18,26 +18,26 @@ public class CheckUserInterceptor implements HandlerInterceptor {
 		this.loginUserBean = loginUserBean;
 		this.boardService = boardService;
 	}
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		
-		String str1= request.getParameter("content_idx"); //content_idx = String 
-		int content_idx = Integer.parseInt(str1); 
-		
+
+		String str1 = request.getParameter("content_idx"); // content_idx = String
+		int content_idx = Integer.parseInt(str1);
+
 		ContentBean currentContentBean = boardService.getContentInfo(content_idx);
-		
-		if(currentContentBean.getContent_writer_idx() != loginUserBean.getUser_num()) {
-			//경로를 읽어서
-			String contextPath=request.getContextPath();
-			//not_writer 호출
-			response.sendRedirect(contextPath+"/board/not_writer");
-			
+
+		if (currentContentBean.getContent_writer_idx() != loginUserBean.getUser_num()) {
+			// 경로를 읽어서
+			String contextPath = request.getContextPath();
+			// not_writer 호출
+			response.sendRedirect(contextPath + "/board/not_writer");
+
 			return false;
 		}
 		return true;
-	
+
 	}
 
 }

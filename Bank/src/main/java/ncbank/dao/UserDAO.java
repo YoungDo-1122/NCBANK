@@ -35,6 +35,7 @@ public class UserDAO {
 		userMapper.addMember(mBean);
 		userMapper.addLogin(mBean);
 	}
+	
 
 	public UserBean getLoginUserInfo(UserBean tempLoginUserBean) {
 		return userMapper.getLoginUserInfo(tempLoginUserBean);

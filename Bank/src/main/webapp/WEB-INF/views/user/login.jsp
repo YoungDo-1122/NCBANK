@@ -33,12 +33,12 @@
 			modelAttribute="tempLoginBean">
 			<div class="form-group">
 				<form:label path="id">아이디</form:label>
-				<form:input path="id" class="form-control" />
+				<form:input path="id" class="form-control" placeholder="아이디" />
 				<form:errors path="id" style='color:red' />
 			</div>
 			<div class="form-group">
 				<form:label path="pwd">비밀번호</form:label>
-				<form:password path="pwd" class='form-control' />
+				<form:password path="pwd" class='form-control' placeholder="비밀번호"/>
 				<form:errors path='pwd' style='color:red' />
 			</div>
 			<div>

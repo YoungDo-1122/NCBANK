@@ -1,6 +1,5 @@
 package ncbank.interceptor;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,8 +32,8 @@ public class TopMenuInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		//List<BoardInfoBean> topMenuList = topMenuService.getTopMenuList();
-		//request.setAttribute("topMenuList", topMenuList);
+		// List<BoardInfoBean> topMenuList = topMenuService.getTopMenuList();
+		// request.setAttribute("topMenuList", topMenuList);
 		request.setAttribute("loginUserBean", loginUserBean); // idx랑 name
 		return true;
 	}
