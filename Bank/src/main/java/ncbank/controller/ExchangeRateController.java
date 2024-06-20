@@ -1,8 +1,10 @@
 package ncbank.controller;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ncbank.beans.CodeMoneyBean;
 import ncbank.beans.ExchangeRateBean;
 import ncbank.service.ExchangeRateService;
 import ncbank.utility.DateManager;
@@ -102,11 +105,11 @@ public class ExchangeRateController {
     /* 환율 계산기 */
     @GetMapping("/calculator")
     public String calculator(Model model) {
-    	System.out.println("ExchangeController calculator()");
-    	
+    	    	
     	// DB에 존재하는 환율 데이터중 최종 고시일의 환율 데이터를 가져온다 (크롤링x)
     	List<ExchangeRateBean> finalExchangeRateList = exchangeRateService.getFinalExchangeRate();
     	if (null == finalExchangeRateList) { // 이경우는 거의 없다고 보면됨.
+    		System.out.println("ExchangeController calculator()");
     		System.out.println("finalExchangeRateList is null");
     		return "exchange/calculator";
     	}
@@ -116,6 +119,7 @@ public class ExchangeRateController {
         
         String inquiryDate = dateManager.parseDateToString(rateDtoList.get(0).getCode_date(), "yyyy.MM.dd");
         
+        // if 3개월 까지의 차트정보를 보여줄꺼면 현재날짜 기준 3개월전까지 데이터를 들고가야 됨.
         model.addAttribute("ExchangeRateList", rateDtoList);
         model.addAttribute("inquiryDate", inquiryDate);
         
@@ -131,8 +135,42 @@ public class ExchangeRateController {
     
     /* ==========[환율 차트]========== */
     @GetMapping("/rateChart")
-    public String rateChart() {
-    	System.out.println("ExchangeController rateChart()");
+    public String rateChart(HttpServletRequest request, Model model) {
+    	
+    	// 아마 이거 여기서 모델에 안줘도 리퀘스트 영역이라 jsp 에서 바로 땡겨올수 있을거임 ㅇㅇ
+    	List<CodeMoneyBean> codeMoneyList = (List<CodeMoneyBean>)request.getAttribute("codeMoneyList");
+    	if (null == codeMoneyList || codeMoneyList.isEmpty()) {
+    		System.out.println("ExchangeController calculator()");
+    		System.out.println("codeMoneyList is null");
+    		return "exchange/rateChart"; 
+    	}
+    	
+    	// DB에 존재하는 환율 데이터중 지정한 날짜범위의 데이터를 자ㅕ옴
+    	List<ExchangeRateBean> ExchangeRateList = exchangeRateService.getDateRangeExchangeRate( 
+    			dateManager.getMoveDate(dateManager.getCurrentDate("yyyyMMdd"), -6, 0, "yyyyMMdd"),
+    			dateManager.getCurrentDate("yyyyMMdd"));
+    	if (null == ExchangeRateList) {
+    		System.out.println("ExchangeController calculator()");
+    		System.out.println("ExchangeRateList is null");
+    		return "exchange/rateChart";
+    	}
+    	// 출력용 DTO로 전환
+        List<ExchangeRateDTO> rateDtoList = exchangeRateService.convertExchangeDTOList(ExchangeRateList);
+        
+        // if 3개월 까지의 차트정보를 보여줄꺼면 현재날짜 기준 3개월전까지 데이터를 들고가야 됨.
+        model.addAttribute("ExchangeRateList", rateDtoList);
+        
+        //System.out.println("ExchangeController rateChart()");
+        String startDate = dateManager.getMoveDate(dateManager.getCurrentDate("yyyyMMdd"), -6, 0, "yyyyMMdd");
+        
+        for (var val : rateDtoList) {
+        	if (!dateManager.isDatesEqual(startDate, dateManager.parseDateToString(val.getCode_date(), "yyyyMMdd"))) {
+        		startDate = dateManager.parseDateToString(val.getCode_date(), "yyyyMMdd");
+        		//System.out.println("[date : " + dateManager.parseDateToString(val.getCode_date(), "yyyyMMdd") + "]");
+        		//System.out.println("strdate : " + val.getCode_date_str());
+        	}
+		}
+
     	
     	return "exchange/rateChart";
     }

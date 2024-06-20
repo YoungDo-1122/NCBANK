@@ -37,8 +37,6 @@ public class DateManager {
     // 지정한날짜를 기준으로 일을 이동시킨 날짜 가져오기
     public String getMoveDate(String strInputDate, int moveDay, String pattern) {
     	
-    	System.out.println("DataManger getMoveDate()");
-    	
     	// 지정한 날짜
     	Date inputDate = parseStringToDate(strInputDate, pattern);
     	// Calendar 인스턴스에 지정한 날짜 설정
@@ -55,15 +53,12 @@ public class DateManager {
     	// Date -> String
     	String moveDateStr = parseDateToString(moveDate, pattern);
     	
-    	System.out.println("moveDateStr : " + moveDateStr);
     	
     	return moveDateStr;
     }
     
     // 지정한 날짜를 기준으로 월, 일을 이동시킨 날짜 가져오기 (기준날짜, 월, 일, 패턴)
     public String getMoveDate(String strInputDate, int moveMonth, int moveDay, String pattern) {
-        
-        System.out.println("DataManger getMoveDate()");
         
         Date inputDate = parseStringToDate(strInputDate, pattern);
         Calendar calendar = Calendar.getInstance();
@@ -82,7 +77,6 @@ public class DateManager {
         
         // Date -> String
         String moveDateStr = parseDateToString(moveDate, pattern);
-        System.out.println("moveDateStr : " + moveDateStr);
         
         return moveDateStr;
     }
@@ -93,6 +87,7 @@ public class DateManager {
         try {
             return formatter.parse(strDate);
         } catch (Exception e) {
+        	System.out.println("ExchangeNoticController parseStringToDate() - catch");
             System.out.println("parseDate Error : " + strDate);
             e.printStackTrace();
         }
@@ -102,7 +97,8 @@ public class DateManager {
     /* Date -> String */
     public String parseDateToString(Date date, String pattern) {
     	if (null == date) {
-    		System.out.println("parseDateToString() : date is null");
+    		System.out.println("ExchangeNoticController parseDateToString()");
+    		System.out.println("date is null");
     		return null;
     	}
         SimpleDateFormat formatter = new SimpleDateFormat(pattern);
@@ -125,6 +121,7 @@ public class DateManager {
     		String outStrDate = outputFormat.format(date);
     		return outStrDate;
 		} catch (Exception e) {
+			System.out.println("ExchangeNoticController changeStringDateFormat() - catch");
 			e.printStackTrace();
 		}
     	
@@ -146,6 +143,7 @@ public class DateManager {
     		Date outDate = outputFormat.parse(strDate);
     		return outDate;
 		} catch (Exception e) {
+			System.out.println("ExchangeNoticController changeDateFormat() - catch");
 			e.printStackTrace();
 		}
     	
@@ -162,10 +160,9 @@ public class DateManager {
         	Date date2 = format.parse(strDate2);
         	isEqual = date1.equals(date2);
 		} catch (Exception e) {
+			System.out.println("ExchangeNoticController isDatesEqual() - catch");
 			e.printStackTrace();
 		}
-    	
-    	System.out.println("isEqual : " + isEqual);
     	
     	return isEqual;
     }
