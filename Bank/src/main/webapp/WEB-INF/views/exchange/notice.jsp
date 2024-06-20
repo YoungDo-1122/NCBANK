@@ -22,6 +22,21 @@
    <c:import url="../include/top_menu.jsp" />
    
    <div class="contentWarp">
+   
+   	<div class="LP">
+			<div class="LPWrap">
+				<div class="LPC01">
+					<h2>외환</h2>
+					<ul>
+						<li><a href="#">테스트링크1</a></li>
+						<li><a href="#">테스트링크2</a></li>
+						<li><a href="#">테스트링크3</a></li>
+						<li><a href="#">테스트링크4</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+   
       <div id="CP">
          <div id="title">
             <div class="toparea">

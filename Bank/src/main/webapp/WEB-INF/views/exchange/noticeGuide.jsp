@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
@@ -8,12 +8,37 @@
 <head>
 <meta charset="UTF-8">
 <title>noticeGuide.jsp - 환율알림 안내</title>
+<style>
+#b101985 {
+	width: 100%;
+}
+
+.btnArea {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.btnArea a {
+	background-color: rgb(83, 169, 255);
+	border-radius: 5px;
+	text-decoration: none;
+	color: #fff;
+	align-items: center;
+	padding: 10px 20px;
+	font-size: 16px;
+}
+
+.btnArea a:hover {
+	background-color: rgb(13, 71, 161);
+}
+
+.s5 {
+	text-align: right;
+}
+</style>
 </head>
 <body>
-	<h2>=====환율알림안내=====</h2>
-	
-	<div id="b101985" style="list-style-type: none;">
-	
+	<div id="b101985">
 		<h2 class="tit_dep2 tit_dep2_cont">환율알림서비스란?</h2>
 		<ul class="list_type1">
 			<li>일정 기간 내에 고객님께서 등록하신 환율범위 내로 환율이 도달하는 경우, 문자메시지 또는 이메일로 고객님께
@@ -40,12 +65,9 @@
 		</ul>
 		<p class="s5 tar">준법감시인 심의필 제 2021-1364-4호 (2021.06.01) 유효기간 :
 			2023.05.31</p>
-		
 	</div>
-	
 	<div class="btnArea">
 		<a href="${root}exchange/noticeRegister">등록</a>
 	</div>
-	
 </body>
 </html>
