@@ -28,6 +28,9 @@ public class AccountController {
 
 	@GetMapping("/accountCheck")
 	public String AccountCheck(Model model) {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 		int userNum = loginUserBean.getUser_num();
 		System.out.println("계좌 조회 회원 번호 : " + userNum);
 
@@ -39,6 +42,9 @@ public class AccountController {
 
 	@GetMapping("/accountCreate")
 	public String AccountCreate(Model model) {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 		int userNum = loginUserBean.getUser_num();
 		System.out.println("계좌 생성 회원번호 : " + userNum);
 
@@ -82,11 +88,17 @@ public class AccountController {
 
 	@GetMapping("/transferAuto")
 	public String TransferAuto() {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 		return "account/transferAuto";
 	}
 
 	@GetMapping("/transferAutoFix")
 	public String TransferAutoFix() {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 		return "account/transferAutoFix";
 	}
 }

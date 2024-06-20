@@ -10,8 +10,8 @@
 </head>
 <body>
 	<script type="text/javascript">
-		alert('로그인 해주세요!')
-		location.href='${root}/user/login'
+		alert('로그인 후 이용해주세요')
+		location.href='${root}user/login'
 	</script>
 </body>
 </html>

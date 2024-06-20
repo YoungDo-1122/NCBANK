@@ -43,6 +43,9 @@ public class TransferController {
 
 	@GetMapping("/transferCheck")
 	public String TransferCheck(@RequestParam(name = "account", required = false) String account, Model model) {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 		int userNum = loginUserBean.getUser_num();
 		System.out.println("이체내역 계좌 : " + account);
 		System.out.println("이체내역 회원 번호 : " + userNum);
@@ -67,6 +70,9 @@ public class TransferController {
 
 	@GetMapping("/transfer")
 	public String Transfer(Model model) {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 		int userNum = transferService.getUserNum();
 
 		List<AccountBean> accounts = accountService.getAccount(userNum);
