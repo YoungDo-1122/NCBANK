@@ -57,7 +57,7 @@
   <div class="main">
     <h2>모임통장 초대 수락 완료</h2>
     <p>모임통장에 성공적으로 가입되었습니다.</p>
-    <a href="${root}main" class="btn btn-primary">홈</a>
+    <a href="${root}main" class="btn btn-primary">메인화면으로 되돌아가기</a>
   </div>
   <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>

@@ -31,7 +31,6 @@
 			<ul id=sub-menu>
 				<li><a href="${root}groupAccount/about">모임통장이란</a></li>
 				<li><a href="${root}groupAccount/create">모임통장개설</a></li>
-				<li><a href="${root}groupAccount/invite">모임원 초대하기</a></li>
 				<li><a href="${root}groupAccount/management">모임통장 관리</a>
 			</ul></li>
 		<li><a href="${root}exchange/sendNoticeMailView">환전</a>

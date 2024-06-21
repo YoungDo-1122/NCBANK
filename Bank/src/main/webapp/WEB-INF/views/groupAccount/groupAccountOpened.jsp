@@ -2,19 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var='root' value="${pageContext.request.contextPath }/" />
+<c:set var='root' value="${pageContext.request.contextPath}/" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>opened</title>
-<link rel="stylesheet"
-	href="${root}css/createnext.css">
+<link rel="stylesheet" href="${root}css/createnext.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-
 </head>
 <body>
 <div class="main">
@@ -60,7 +58,7 @@
                     <br/>
                     <div class="flexClass">
                         <span class="idbox">연결 계좌번호</span>
-                        <input class="rec6" id="group_account" name="group_account" value="${ac_name}${accounts}" readonly>
+                        <input class="rec6" id="group_account" name="group_account" value="[NC뱅크]${accounts}" readonly>
                     </div>
                     <br/>
             
@@ -68,13 +66,12 @@
                         <input type="hidden" name="groupname" value="${groupname}" />
                         <input type="hidden" name="grouptype" value="${grouptype}" />
                         <input type="hidden" name="accounts" value="${accounts}" />
-                        <input type="hidden" name="ac_name" value="${ac_name}" />
                         <input type="hidden" name="auto_next_date" value="${accountInfo.auto_next_date}" />
                         <input type="hidden" name="auto_type" value="${accountInfo.auto_type}" />
                         <input type="hidden" name="auto_balance" value="${accountInfo.auto_balance}" />
                         <div class="flexClass">
                             <span class="idbox">비밀번호</span>
-                            <input type="password" name="inputPassword" class="rec6" placeholder="비밀번호를 입력해주세요"/>
+                            <input type="password" name="inputPassword" class="rec6" placeholder="계좌 비밀번호를 입력해주세요"/>
                         </div>
                         <br/>
                         <button type="submit">개설하기</button>

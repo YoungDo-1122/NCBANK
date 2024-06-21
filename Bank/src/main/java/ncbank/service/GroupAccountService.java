@@ -5,8 +5,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import ncbank.beans.AccountBean;
 import ncbank.beans.AutoBean;
@@ -35,9 +39,9 @@ public class GroupAccountService {
     }
 
     public List<AutoBean> infoList(String account, int user_num) {
-    	List<AutoBean> accountInfoList = groupAccountDAO.getAccountInfo(account, user_num);
-    	 System.out.println("GroupAccountService - infoList for account: " + account + ", user_num: " + user_num);
-         System.out.println("GroupAccountService - accountInfoList: " + accountInfoList);
+        List<AutoBean> accountInfoList = groupAccountDAO.getAccountInfo(account, user_num);
+        System.out.println("GroupAccountService - infoList for account: " + account + ", user_num: " + user_num);
+        System.out.println("GroupAccountService - accountInfoList: " + accountInfoList);
         return accountInfoList;
     }
 
@@ -45,24 +49,95 @@ public class GroupAccountService {
         return groupAccountDAO.getAccountByAccountNumber(account);
     }
 
-    public void createGroupAccount(GroupAccountBean groupAccount) throws SQLException {
-        groupAccountMapper.createGroupAccount(groupAccount);
-        System.out.println("Created Group Account with group_num: " + groupAccount.getGroup_num());
-    }
     
-    public void addMemberToGroup(GroupAccountBean groupAccount) throws SQLException {
-        groupAccountMapper.addMemberToGroup(groupAccount);
+    
+    @Transactional
+    public void createGroupAccount(GroupAccountBean groupAccount) throws SQLException {
+        System.out.println("Creating Service group account: " + groupAccount);
+        groupAccountDAO.createGroupAccount(groupAccount);
+        System.out.println("Group account created: " + groupAccount);
+    }
+
+    @Transactional
+    public void updateAccountType(String account) throws SQLException {
+        System.out.println("Updating Service account type for account: " + account);
+        groupAccountDAO.updateAccountType(account);
+        System.out.println("Account type updated for account: " + account);
     }
     
     
 
+
     public GroupAccountBean getGroupInfo(int group_num) {
-        return groupAccountMapper.selectGroupAccountByGroupNum(group_num);
+        return groupAccountDAO.selectGroupAccountByGroupNum(group_num);
     }
+    
+    
 
     public Integer getLatestGroupNumByUser(int user_num) {
         return groupAccountMapper.getLatestGroupNumByUser(user_num);
     }
+
+    public List<AccountBean> selectGroupAccount(int user_num) {
+        return groupAccountDAO.selectGroupAccount(user_num);
+    }
+    
+  
+    public void addMemberToGroup(GroupAccountBean groupAccount) throws SQLException {
+    	groupAccountMapper.addMemberToGroup(groupAccount);
+    }
+    
+
+    
+    public List<AccountBean> selectGroupAccountsByUserNum(int user_num) {
+        List<AccountBean> selectGroupAccountsByUserNum = groupAccountDAO.selectGroupAccountsByUserNum(user_num);
+        System.out.println("Service selectGroupAccountsByUserNum = " + selectGroupAccountsByUserNum);
+        return selectGroupAccountsByUserNum;
+    }
+    
+
+    
+
+    public AutoBean getAutoInfo(String account) {
+        AutoBean getAutoInfo = groupAccountDAO.getAutoInfo(account);
+        System.out.println("Service getAutoInfo = " + getAutoInfo);
+        return getAutoInfo;
+    }
+
+    public GroupAccountBean getGroupInfobyAcc(String account) {
+        GroupAccountBean getGroupInfobyAcc = groupAccountDAO.getGroupInfobyAcc(account);
+        System.out.println("Service getGroupInfo = " + getGroupInfobyAcc);
+        return getGroupInfobyAcc;
+    }
+
+    public List<UserBean> getGroupMembers(int user_num) {
+        List<UserBean> getGroupMembers = groupAccountDAO.getGroupMembers(user_num);
+        System.out.println("Service getGroupMembers = " + getGroupMembers);
+        return getGroupMembers;
+    }
+
+    public List<GroupAccountBean> getGroupMemberDetails(int user_num) {
+        List<GroupAccountBean> getGroupMemberDetails = groupAccountDAO.getGroupMemberDetails(user_num);
+        System.out.println("Service getGroupMemberDetails = " + getGroupMemberDetails);
+        return getGroupMemberDetails;
+    }
+    
+    public UserBean getGroupLeaderNameByAccount(String account) {
+        System.out.println("Service: getGroupLeaderNameByAccount called with account: " + account); // 디버그용 로그
+        UserBean groupLeaderName = groupAccountDAO.getGroupLeaderNameByAccount(account);
+        System.out.println("Service groupLeaderName = " + groupLeaderName);
+        return groupLeaderName;
+    }
+    
+    public AccountBean totalBalance(String account) {
+		AccountBean totalBalance = groupAccountDAO.totalBalance(account);
+		System.out.println("Service totalBalance = " + totalBalance);
+		return totalBalance;
+	}
+    
+    public int getGroupNumByAccount(String account) {
+        return groupAccountDAO.getGroupNumByAccount(account);
+    }
+    
+    
 }
-
-
