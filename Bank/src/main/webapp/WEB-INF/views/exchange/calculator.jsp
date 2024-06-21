@@ -2,53 +2,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
+<c:set var="root" value="${pageContext.request.contextPath}/" />
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>환전 계산기</title>
-<style>
-body {
-	font-family: Arial, sans-serif;
-	margin: 20px;
-}
-
-.container {
-	max-width: 600px;
-	margin: 0 auto;
-	padding: 20px;
-	border: 1px solid #ccc;
-	border-radius: 10px;
-}
-
-.form-group {
-	margin-bottom: 15px;
-}
-
-label {
-	display: block;
-	margin-bottom: 5px;
-}
-
-input, select, button {
-	width: 100%;
-	padding: 10px;
-	margin: 5px 0 10px 0;
-}
-
-#result {
-	font-weight: bold;
-	margin-top: 20px;
-}
-</style>
+<title>환율 계산기</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
-
-
 
 $(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 핸들러 설정
 	
@@ -173,56 +137,77 @@ $(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 �
 
 </script>
 
-
 </head>
+
+<link rel="stylesheet" href="${root}css/exchange/calculator.css">
+
 <body>
-	
-	<div class="container">
-		<h1>환율 계산기</h1>
-		
-		<div class="form-group">
+    <!-- contentBox 안에 top을 넣는다 or contentBox 와 top을 담을 div를 하나 더 만든다 -->
+    <div class="contentBox">
 
-			<select class="selbox" title="환율계산기준 선택">
-				<!-- 230510 접근성반영(title추가) -->
-				<option value="1">매매기준율</option>
-				<option value="2">송금보내실때</option>
-				<option value="3">송금받으실때</option>
-			</select> <label for="currency">변환할 통화:</label> 
-			
-			<select class="ISOSelBox" id="currency" name="currency">
-			<c:forEach var="obj" items="${ExchangeRateList}">
-				<c:if test="${'KRW' != obj.code_money.toUpperCase().trim()}">
-					<option class="op_code_money" value="${obj.code_money}">${obj.code_money}&nbsp;&nbsp;(${obj.code_money_name})</option>
-				</c:if>
-			</c:forEach>
-			</select>
-			
-			<input type="number" class="currencyAmount"/>
-		</div>
-		
-		<div class="form-group">
-			<label for="amount">${beanKRW.code_money}&nbsp;&nbsp;(${beanKRW.code_money_name})</label> 
-			<input type="number" class="amount" />
-		</div>
-		
-		<h2>(${inquiryDate} 기준)</h2>
+        <div class="top">
+            <h1 class="subject">환율계산기</h1>
+            <div class="logo">
+                <img src="${root}img/NCBankIcon_2.png" alt="NCBank" class="iconStyle01">
+                <p class="logoName">NCBank</p>
+            </div>
+        </div>
+
+        <div class="content">
+            <select class="selbox sbStyle01" title="환율계산기준 선택">
+                <!-- 230510 접근성반영(title추가) -->
+                <option value="1">매매기준율</option>
+                <option value="2">송금보내실때</option>
+                <option value="3">송금받으실때</option>
+            </select>
 
 
-		<ul class="list_type1 s2">
-			<li>
-				환율계산기는 단순 참고용으로 위 계산결과는 환율변동 또는 우대율 적용에 따라 실제 거래 시 적용되는 환율과
-				다를 수 있습니다.
-			</li>
-			<li>
-				현재 고시된 환율은 미달러 기준 1만 달러 상당액 미만 시 적용되는 환율입니다.
-				<br>(단, USD, EUR, JPY, GBP, CAD, NZD, AUD, CNY, CHF, HKD, SGD, AED, THB를 제외한
-				기타 통화는 미달러 기준 5만 달러 상당액 미만)
-			</li>
-		</ul>
-		
-		<button type="button" class="btn-com ui-close" onclick="window.close();">닫기</button>
+            <!-- label + select에 name, id 뺏음 -->
+            <div class="selectArea">
 
-	</div>
+                <select class="ISOSelBox sbStyle02">
+                    <c:forEach var="obj" items="${ExchangeRateList}">
+                        <c:if test="${'KRW' != obj.code_money.toUpperCase().trim()}">
+                            <option class="op_code_money" value="${obj.code_money}">
+                                ${obj.code_money}&nbsp;&nbsp;(${obj.code_money_name})</option>
+                        </c:if>
+                    </c:forEach>
+                </select>
+
+                <input type="number" class="currencyAmount inpStyle01" />
+            </div> <!-- div.selectArea -->
+
+            <div class="iconArea">
+                <img src="${root}img/equal02.png" alt="equalIcon" class="iconStyle02">
+            </div>
+
+            <div class="selectArea">
+                <label for="amount"
+                    class="sbStyle02">${beanKRW.code_money}&nbsp;&nbsp;(${beanKRW.code_money_name})</label>
+                <input type="number" class="amount inpStyle01" />
+            </div>
+
+            <div class="textArea">
+                <p class="textType01">(${inquiryDate} 기준)</p>
+
+                <ul class="listType01">
+                    <li>
+                        환율계산기는 단순 참고용으로 위 계산결과는 환율변동 또는 우대율 적용에 따라 실제 거래 시 적용되는 환율과
+                        다를 수 있습니다.
+                    </li>
+                    <li>
+                        현재 고시된 환율은 미달러 기준 1만 달러 상당액 미만 시 적용되는 환율입니다.
+                        <br>(단, USD, EUR, JPY, GBP, CAD, NZD, AUD, CNY, CHF, HKD, SGD, AED, THB를 제외한
+                        기타 통화는 미달러 기준 5만 달러 상당액 미만)
+                    </li>
+                </ul>
+            </div>
+            <div class="btnArea">
+                <button type="button" class="btnStyle01" onclick="window.close();">닫기</button>
+            </div>
+        </div> <!-- div.content -->
+
+    </div> <!-- div.contentBox -->
 
 </body>
 </html>

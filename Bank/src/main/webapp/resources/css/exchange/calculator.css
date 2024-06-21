@@ -1,0 +1,153 @@
+@charset "UTF-8";
+
+/*
+[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
+display > overflow > float > position >
+
+width > height > margin > padding >
+
+color > font-style > font-weight > font-size >
+line-height > font-family > text-indent > text-align >
+
+background-color > background-image >
+background-position > background-size >
+background-repeat
+
+border > border-radius
+*/
+
+body {
+
+    width: 100%;
+    height: 100%;
+    
+    margin: 0px;
+    
+    font-size: 14px;
+    
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.contentBox{
+    width: 100%;
+    height: 100%;
+    
+    /* 자꾸 창 왼 오가 비어보여서 보정용으로 넣음 - gpt 한테 해결법 물어보기 */
+
+}
+
+/* top */
+.top {
+    width: 100%;
+    display: flex;
+
+    color: #ffffff;
+
+    background-color: deepskyblue;
+}
+
+.subject {
+    margin: 25px 30px 25px;
+
+    font-size: 20px;
+}
+
+.logo {
+    display: flex;
+    /* 오른쪽 끝에 붙이기 */
+    margin-left: auto;
+    margin-right: 20px;
+}
+.iconStyle01 {
+    width: 80px;
+    height: 80px;
+}
+
+.logoName {
+    margin-top: 18px;
+    margin-right: 5px;
+
+    font-size: 30px;
+}
+
+/* content */
+.content {
+    width: 90%;
+
+    margin: 30px auto;
+}
+
+.sbStyle01 {
+    width: 250px;
+    height: 30px;
+
+    background-color: whitesmoke;
+    border: 1px solid #c1bdba;
+}
+
+.selectArea {
+    display: flex;
+
+    height: 50px;
+
+    margin: 10px 0px;
+
+}
+.sbStyle02 {
+    width: 40%;
+   
+    background-color: #e8e8e8;
+    border: 1px solid #c1bdba;
+}
+.inpStyle01 {
+    width: 60%;
+
+    text-align: right;
+
+    border: 1px solid #c1bdba;
+}
+
+.iconArea {
+    margin: -10px 0px;
+    text-align: center;
+}
+
+.iconStyle02 {
+    width: 50px;
+    height: 50px;
+}
+
+ /* .textArea */
+
+.textType01 {
+    text-align: right;
+    font-size: 13px;
+}
+
+.listType01 {
+    margin-top: 40px;
+    margin-left: -10px;
+
+    font-size: 13px;
+}
+
+.btnArea {
+    text-align: center;
+}
+
+.btnStyle01 {
+    width: 100px;
+    height: 50px;
+
+    margin: 40px;
+
+    background-color: white;
+    border: 1px solid black;
+}
+
+.btnStyle01:hover {
+    background-color: #c1bdba;
+}
+
+
