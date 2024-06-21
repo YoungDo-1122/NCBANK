@@ -8,8 +8,11 @@
 	href="${pageContext.request.contextPath}/css/top_menu.css">
 
 <nav>
-	<a class="navbar-brand" href="${root}main"> <img
-		src="${root}/img/ncbank_logo.png" style="height: 100px" /></a>
+	<div class="brandlogo">
+	<a class="navbar-brand" href="${root}main"> 
+	<img src="${root}/img/ncbank_logo.png"/></a>
+	<p>NC은행</p>
+	</div>
 	<!-- 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
 			<span class="navbar-toggler-icon"></span> 
 		</button>-->

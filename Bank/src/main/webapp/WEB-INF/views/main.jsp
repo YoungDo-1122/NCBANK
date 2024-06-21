@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>NC은행</title>
+
 <!-- Bootstrap CDN -->
 <!-- <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"> -->
@@ -21,78 +22,80 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
+
 	<div class="container">
-		<div class="carousel-wrapper">
-			<div class="carousel">
-				<button class="carousel-button prev">&#10094;</button>
-				<img src="img/Bank1.png" alt="캐러셀 이미지 1" class="active"> <img
-					src="img/Bank2.png" alt="캐러셀 이미지 2"> <img src="img/Bank3.jpg"
-					alt="캐러셀 이미지 3">
-				<button class="carousel-button next">&#10095;</button>
+		<c:import url="/WEB-INF/views/include/top_menu.jsp" />
+		<div class="mainhome">
+			<div class="carousel-wrapper">
+				<div class="carousel">
+					<button class="carousel-button prev">&#10094;</button>
+					<img src="img/Bank1.png" alt="캐러셀 이미지 1" class="active"> <img
+						src="img/Bank2.png" alt="캐러셀 이미지 2"> <img
+						src="img/Bank3.jpg" alt="캐러셀 이미지 3">
+					<button class="carousel-button next">&#10095;</button>
+				</div>
+				<div class="quickLink">
+					<div class="quickLink-title">바로가기</div>
+					<ul>
+						<!--알아서 링크 거시고요 -->
+						<li><a href="#"> <img src="img/조회.png" alt="빠른링크1">
+								<p>조회</p>
+						</a></li>
+						<li><a href="#"> <img src="img/이체.png" alt="빠른링크2">
+								<p>이체</p>
+						</a></li>
+						<li><a href="#"> <img src="img/모임.png" alt="빠른링크3">
+								<p>모임</p>
+						</a></li>
+						<li><a href="#"> <img src="img/환율.png" alt="빠른링크4">
+								<p>환율</p>
+						</a></li>
+					</ul>
+				</div>
 			</div>
-			<div class="quickLink">
-				<div class="quickLink-title">바로가기</div>
-				<ul>
-					<!--알아서 링크 거시고요 -->
-					<li><a href="#"> <img src="img/조회.png" alt="빠른링크1">
-							<p>조회</p>
-					</a></li>
-					<li><a href="#"> <img src="img/이체.png" alt="빠른링크2">
-							<p>이체</p>
-					</a></li>
-					<li><a href="#"> <img src="img/모임.png" alt="빠른링크3">
-							<p>모임</p>
-					</a></li>
-					<li><a href="#"> <img src="img/환율.png" alt="빠른링크4">
-							<p>환율</p>
-					</a></li>
-				</ul>
+
+			<!-- 스크립트 코드 js파일로 이동후 임포트 시킨거 -->
+			<script type="text/javascript" src="${root}js/style_main.js"></script>
+
+			<div class="bottom_menu">
+				<div class="tabMenu">
+					<input type="radio" id="tab1" name="tabs" checked> <label
+						for="tab1">공지사항</label> <input type="radio" id="tab2" name="tabs">
+					<label for="tab2">새소식</label>
+
+					<div id="tab1Content" class="tabContent">
+						<!-- 공지사항 탭 내용 -->
+						<ul>
+							<c:forEach var='obj' items="${list[0]}">
+								<li><a
+									href="${root}board/read?board_info_idx=${board_list[0].board_info_idx}&content_idx=${obj.content_idx}&page=1">${obj.content_subject}</a></li>
+							</c:forEach>
+						</ul>
+					</div>
+					<div id="tab2Content" class="tabContent">
+						<ul>
+							<c:forEach var='obj' items="${list[1]}">
+								<li><a
+									href="${root}board/read?board_info_idx=${board_list[1].board_info_idx}&content_idx=${obj.content_idx}&page=1">${obj.content_subject}</a></li>
+							</c:forEach>
+						</ul>
+					</div>
+				</div>
+
+				<div class="exchange_rate">
+					<select id="currencySelect" name="currency">
+						<option value="USD">달러($)</option>
+						<option value="JPY">엔(¥)</option>
+						<option value="EUR">유로(€)</option>
+					</select> <img id="currencyImage" src="img/그웬2.jpg" alt="통화 이미지">
+				</div>
+
 			</div>
 		</div>
+		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	</div>
 
-	<!-- 스크립트 코드 js파일로 이동후 임포트 시킨거 -->
-	<script type="text/javascript" src="${root}js/style_main.js"></script>
 
-	<div class="bottom_menu">
-		<div class="tabMenu">
-			<input type="radio" id="tab1" name="tabs" checked> <label
-				for="tab1">공지사항</label> <input type="radio" id="tab2" name="tabs">
-			<label for="tab2">새소식</label>
-
-			<div id="tab1Content" class="tabContent">
-				<!-- 공지사항 탭 내용 -->
-				<ul>
-					<c:forEach var='obj' items="${list[0]}">
-						<li><a
-							href="${root}board/read?board_info_idx=${board_list[0].board_info_idx}&content_idx=${obj.content_idx}&page=1">${obj.content_subject}</a></li>
-					</c:forEach>
-				</ul>
-			</div>
-			<div id="tab2Content" class="tabContent">
-				<ul>
-					<c:forEach var='obj' items="${list[1]}">
-						<li><a
-							href="${root}board/read?board_info_idx=${board_list[1].board_info_idx}&content_idx=${obj.content_idx}&page=1">${obj.content_subject}</a></li>
-					</c:forEach>
-				</ul>
-			</div>
-		</div>
-
-		<div class="exchange_rate">
-			<select id="currencySelect" name="currency">
-				<option value="USD">달러($)</option>
-				<option value="JPY">엔(¥)</option>
-				<option value="EUR">유로(€)</option>
-			</select> <img id="currencyImage" src="img/그웬2.jpg" alt="통화 이미지">
-		</div>
-
-	</div>
-
-	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
-
-	 
 </body>
 <script>
 	$(document).ready(function() {
