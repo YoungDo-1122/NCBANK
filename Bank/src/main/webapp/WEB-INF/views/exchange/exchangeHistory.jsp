@@ -139,7 +139,6 @@ button a {
         <table border="1">
             <thead>
                 <tr>
-                	<th>선택</th>
                     <th>환전신청일</th>
                     <th>거래구분</th>
                     <th>통화</th>
@@ -153,9 +152,6 @@ button a {
             <tbody>
                 <c:forEach var="trade" items="${tradePlusList}">
                     <tr>
-                    	<td><input type="radio" name="selectedTrade" value="${trade.trade_num}"
-                                   data-code-money="${trade.code_money}"
-                                   data-trade-money="${trade.trade_money}"></td>
                         <td>${trade.trade_date}</td>
                         <td>${trade.trade_type}</td>
                         <td>${trade.code_money}</td>
@@ -220,29 +216,12 @@ button a {
             <button>
                 <a href="${root}main">메인페이지 가기</a>
             </button>
-            <button type="submit" a="">되팔기</button>
             <button>
                 <a href="${root}exchange/exchangeWallet">환전지갑 확인</a>
             </button>
         </div>
     </div>
 </div>
-<script>
-	// 왼쪽 사이드바 실행
-    function toggleMenu(menuId) {
-        var menus = document.getElementsByClassName('submenu');
-        for (var i = 0; i < menus.length; i++) {
-            menus[i].style.display = 'none';
-        }
-        var menu = document.getElementById(menuId);
-        if (menu.style.display === 'none') {
-            menu.style.display = 'block';
-        } else {
-            menu.style.display = 'none';
-        }
-    }
-	
-	
-</script>
+
 </body>
 </html>
