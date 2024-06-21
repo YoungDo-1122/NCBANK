@@ -95,7 +95,6 @@
         </div> <!-- div.contentWarp -->
 
 
-        <button class="rateChartBtn bType02">환율차트보기</button>
         
         <c:import url="../include/bottom_info.jsp" />
         

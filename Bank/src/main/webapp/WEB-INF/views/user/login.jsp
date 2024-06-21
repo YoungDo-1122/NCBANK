@@ -19,42 +19,45 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<c:import url="../include/top_menu.jsp" />
 
 	<div class="container">
-		<h2 class="text-primary">로그인</h2>
-		<c:if test="${fail}">
-			<div class="alert alert-danger">
-				<h3>로그인 실패</h3>
-				<p>아이디 비밀번호를 확인해주세요</p>
-			</div>
-		</c:if>
-		<form:form action="${root}user/login_pro" method="post"
-			modelAttribute="tempLoginBean">
-			<div class="form-group">
-				<form:label path="id">아이디</form:label>
-				<form:input path="id" class="form-control" placeholder="아이디"
-					required="required" />
-				<form:errors path="id" style='color:red' />
-			</div>
-			<div class="form-group">
-				<form:label path="pwd">비밀번호</form:label>
-				<form:password path="pwd" class='form-control' placeholder="비밀번호"
-					required="required" />
-				<form:errors path='pwd' style='color:red' />
-			</div>
-			<div>
-				<div class="form-group text-bottom">
-					<a href="${root}user/findID" class="btn-findid">아이디 찾기</a> <a
-						href="${root}user/findpwd" class="btn-findpwd">비밀번호 찾기</a>
+
+		<c:import url="../include/top_menu.jsp" />
+		<div class="loginform">
+			<h2 class="text-primary">로그인</h2>
+			<c:if test="${fail}">
+				<div class="alert alert-danger">
+					<h3>로그인 실패</h3>
+					<p>아이디 비밀번호를 확인해주세요</p>
 				</div>
-			</div>
-			<div class="form-group text-right">
-				<form:button class='btn btn-primary'>로그인</form:button>
-				<a href="${root}user/join" class="btn btn-danger">회원가입</a>
-			</div>
-		</form:form>
+			</c:if>
+			<form:form action="${root}user/login_pro" method="post"
+				modelAttribute="tempLoginBean">
+				<div class="form-group">
+					<form:label path="id">아이디</form:label>
+					<form:input path="id" class="form-control" placeholder="아이디"
+						required="required" />
+					<form:errors path="id" style='color:red' />
+				</div>
+				<div class="form-group">
+					<form:label path="pwd">비밀번호</form:label>
+					<form:password path="pwd" class='form-control' placeholder="비밀번호"
+						required="required" />
+					<form:errors path='pwd' style='color:red' />
+				</div>
+				<div>
+					<div class="form-group text-bottom">
+						<a href="${root}user/findID" class="btn-findid">아이디 찾기</a> <a
+							href="${root}user/findpwd" class="btn-findpwd">비밀번호 찾기</a>
+					</div>
+				</div>
+				<div class="form-group text-right">
+					<form:button class='btn btn-primary'>로그인</form:button>
+					<a href="${root}user/join" class="btn btn-danger">회원가입</a>
+				</div>
+			</form:form>
+		</div>
+			<c:import url="../include/bottom_info.jsp" />
 	</div>
-	<c:import url="../include/bottom_info.jsp" />
 </body>
 </html>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
 import ncbank.service.UserService;
+import ncbank.util.Encrypt;
 import ncbank.validator.UserValidator;
 
 @Controller
@@ -31,6 +33,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private Encrypt encrypt;
 
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
@@ -146,16 +151,42 @@ public class UserController {
 	 * "user/findPWD"; } userService.findMemberPwd(findMemberPwdBean); return
 	 * "user/findpwd_success"; }
 	 */
-	@GetMapping("/index")
-	public String index() {
-		return "user/index";
+
+	@GetMapping("/mypage")
+	public String myPage(Model model, HttpSession session) {
+		// 세션에서 로그인된 사용자 정보 가져오기
+		UserBean loginUserBean = (UserBean) session.getAttribute("loginUserBean");
+
+		if (loginUserBean == null) {
+			return "redirect:/login"; // 로그인되지 않은 경우 로그인 페이지로 리다이렉트
+		}
+
+		// 사용자 정보 조회
+		int userNum = loginUserBean.getUser_num();
+		UserBean user = userService.getUserInfo(userNum);
+
+		// 모델에 사용자 정보 추가
+		model.addAttribute("user", user);
+
+		return "user/mypage";
 	}
 
-	@GetMapping("/modify")
-	public String modify() {
-		return "user/modify";
-	}
-
+	/*
+	 * @PostMapping("/modify_pro") public String
+	 * modify_pro(@RequestParam("password") String
+	 * password, @ModelAttribute("users") UserBean userBean, HttpServletRequest
+	 * request, Model model) { UserBean loginUserBean = (UserBean)
+	 * request.getSession().getAttribute("loginUserBean"); if (loginUserBean ==
+	 * null) { return "user/mypage"; } UserBean tempLoginUserBean = new UserBean();
+	 * tempLoginUserBean.setId(loginUserBean.getId());
+	 * tempLoginUserBean.setPwd(password); userService.getLoginUserInfo(request,
+	 * tempLoginUserBean); if (loginUserBean.isUserLogin()) { // 비밀번호가 일치하면 업데이트 로직
+	 * 수행 userService.updateUserInfo(userBean); return "user/mypage"; } else {
+	 * model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다."); return
+	 * "redirect:/main"; }
+	 * 
+	 * }
+	 */
 	@GetMapping("/logout")
 	public String logout() {
 		loginUserBean.setUserLogin(false);
