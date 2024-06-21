@@ -88,7 +88,8 @@
 											</form:select></td>
 									</tr>
 									<tr>
-										<td colspan="2" align="center"><button type="submit">계좌
+										<td colspan="2" style="text-align : center; margin-top:20px;">
+										<button type="submit">계좌
 												개설</button></td>
 									</tr>
 								</table>

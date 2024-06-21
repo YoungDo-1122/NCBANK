@@ -51,7 +51,7 @@
 	<ul class="login">
 		<c:choose>
 			<c:when test="${loginUserBean.userLogin == true }">
-				<li class="nav-item"><a href="${root}user/modify"
+				<li class="nav-item"><a href="${root}user/mypage"
 					class="nav-link">마이페이지</a></li>
 				<li class="nav-item"><a href="${root}user/logout"
 					class="nav-link">로그아웃</a></li>
