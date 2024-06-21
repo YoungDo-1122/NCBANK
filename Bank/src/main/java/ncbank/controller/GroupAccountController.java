@@ -1,6 +1,7 @@
 package ncbank.controller;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ncbank.beans.AccountBean;
 import ncbank.beans.AutoBean;
 import ncbank.beans.GroupAccountBean;
 import ncbank.beans.UserBean;
-import ncbank.mapper.GroupAccountMapper;
 import ncbank.service.GroupAccountService;
 
 @Controller
@@ -25,20 +28,12 @@ public class GroupAccountController {
 
     @Autowired
     private GroupAccountService groupAccountService;
-
-    @Autowired
-    private GroupAccountMapper groupAccountMapper;
     
     @Resource(name = "loginUserBean")
     private UserBean loginUserBean;
 
     @GetMapping("/create")
     public String create(Model model) {
-    	
-    	System.out.println("create method - loginUserBean: " + loginUserBean);
-        System.out.println("User Login Status: " + loginUserBean.isUserLogin());
-        System.out.println("User Num: " + loginUserBean.getUser_num());
-        
         if (loginUserBean.isUserLogin()) {
             List<AccountBean> accountList = groupAccountService.getAccountsByUserNum(loginUserBean.getUser_num());
             model.addAttribute("accountList", accountList);
@@ -52,12 +47,10 @@ public class GroupAccountController {
     public String opened(@RequestParam String groupname,
                          @RequestParam String grouptype,
                          @RequestParam String accounts,
-                         @RequestParam String ac_name,
                          Model model) {
         model.addAttribute("groupname", groupname);
         model.addAttribute("grouptype", grouptype);
         model.addAttribute("accounts", accounts);
-        model.addAttribute("ac_name", ac_name);
 
         String accountNumber = accounts.replaceAll("\\[.*\\]", "").trim();
         List<AutoBean> accountInfoList = groupAccountService.infoList(accountNumber, loginUserBean.getUser_num());
@@ -73,7 +66,6 @@ public class GroupAccountController {
                                    @RequestParam String inputPassword,
                                    @RequestParam String groupname,
                                    @RequestParam String grouptype,
-                                   @RequestParam String ac_name,
                                    @RequestParam String auto_next_date,
                                    @RequestParam String auto_type,
                                    @RequestParam String auto_balance,
@@ -85,7 +77,6 @@ public class GroupAccountController {
             model.addAttribute("groupname", groupname);
             model.addAttribute("grouptype", grouptype);
             model.addAttribute("accounts", accounts);
-            model.addAttribute("ac_name", ac_name);
             model.addAttribute("auto_next_date", auto_next_date);
             model.addAttribute("auto_type", auto_type);
             model.addAttribute("auto_balance", auto_balance);
@@ -102,7 +93,6 @@ public class GroupAccountController {
             model.addAttribute("groupname", groupname);
             model.addAttribute("grouptype", grouptype);
             model.addAttribute("accounts", accounts);
-            model.addAttribute("ac_name", ac_name);
             model.addAttribute("auto_next_date", auto_next_date);
             model.addAttribute("auto_type", auto_type);
             model.addAttribute("auto_balance", auto_balance);
@@ -115,7 +105,6 @@ public class GroupAccountController {
     public String complete(@RequestParam String accounts,
                            @RequestParam String groupname,
                            @RequestParam String grouptype,
-                           @RequestParam String ac_name,
                            @RequestParam String inputPassword,
                            @RequestParam String auto_next_date,
                            @RequestParam String auto_type,
@@ -128,7 +117,7 @@ public class GroupAccountController {
             model.addAttribute("groupname", groupname);
             model.addAttribute("grouptype", grouptype);
             model.addAttribute("accounts", accounts);
-            model.addAttribute("ac_name", ac_name);
+
 
             List<AutoBean> accountInfoList = groupAccountService.infoList(accountNumber, loginUserBean.getUser_num());
             if (!accountInfoList.isEmpty()) {
@@ -146,6 +135,7 @@ public class GroupAccountController {
 
             try {
                 groupAccountService.createGroupAccount(groupAccount);
+                groupAccountService.updateAccountType(accountNumber);
             } catch (SQLException e) {
                 e.printStackTrace();
                 model.addAttribute("errorMessage", "그룹 정보 저장 중 오류가 발생했습니다.");
@@ -167,19 +157,25 @@ public class GroupAccountController {
             model.addAttribute("groupname", groupname);
             model.addAttribute("grouptype", grouptype);
             model.addAttribute("accounts", accounts);
-            model.addAttribute("ac_name", ac_name);
             model.addAttribute("auto_next_date", auto_next_date);
             model.addAttribute("auto_type", auto_type);
             model.addAttribute("auto_balance", auto_balance);
             return "groupAccount/groupAccountOpenedNext";
         }
     }
+    
+    
+    
+
+    
 
     @PostMapping("/getGroupInfo")
     @ResponseBody
     public GroupAccountBean getGroupInfo(@RequestParam("group_num") int group_num) {
         return groupAccountService.getGroupInfo(group_num);
     }
+    
+    
 
     @GetMapping("/acceptInvite")
     public String showAcceptInvitePage(@RequestParam("group_num") int group_num, Model model) {
@@ -234,4 +230,80 @@ public class GroupAccountController {
             return "groupAccount/groupAccountAcceptInvite";
         }
     }
+    
+    
+
+    
+    
+    
+    
+    @GetMapping("/management")
+    public String management(Model model) {
+        if (loginUserBean.isUserLogin()) {
+            List<AccountBean> groupAccountList = groupAccountService.selectGroupAccountsByUserNum(loginUserBean.getUser_num());
+            model.addAttribute("groupAccountList", groupAccountList);
+        } else {
+            model.addAttribute("groupAccountList", null);
+        }
+        return "groupAccount/groupAccountManagement";
+    }
+   
+
+    
+    
+    
+    @GetMapping("/groupAccountInfo")
+    @ResponseBody
+    public AutoBean getGroupAccountInfo(@RequestParam("account") String account) {
+        return groupAccountService.getAutoInfo(account);
+    }
+
+    @GetMapping("/groupInfo")
+    @ResponseBody
+    public GroupAccountBean getGroupInfo(@RequestParam("account") String account) {
+        GroupAccountBean groupInfo = groupAccountService.getGroupInfobyAcc(account);
+        if (groupInfo != null) {
+            groupInfo.setGroup_num(groupAccountService.getGroupNumByAccount(account));
+        }
+        return groupInfo;
+    }
+
+    @GetMapping("/groupMembers")
+    @ResponseBody
+    public List<UserBean> getGroupMembers(@RequestParam("account") String account) {
+        return groupAccountService.getGroupMembers(loginUserBean.getUser_num());
+    }
+
+    @GetMapping("/groupMemberDetails")
+    @ResponseBody
+    public List<GroupAccountBean> getGroupMemberDetails(@RequestParam("account") String account) {
+        return groupAccountService.getGroupMemberDetails(loginUserBean.getUser_num());
+    }
+    
+    
+    @GetMapping(value = "/groupLeader", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String getGroupLeader(@RequestParam("account") String account) {
+        UserBean groupLeaderName = groupAccountService.getGroupLeaderNameByAccount(account);
+        System.out.println("Controller groupLeaderName = " + groupLeaderName);
+
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(groupLeaderName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{\"error\": \"Failed to convert object to JSON\"}";
+        }
+    }
+    
+    @GetMapping("/totalBalance")
+    @ResponseBody
+    public AccountBean totalBalance(@RequestParam("account") String account ){
+    	AccountBean totalBalance = groupAccountService.totalBalance(account);
+    	System.out.println("Controller totalBalance = " + totalBalance);
+    	return totalBalance;
+    }
+    
+    
+
 }
