@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var='root' value="${pageContext.request.contextPath }/" />
+<c:set var='root' value="${pageContext.request.contextPath}/" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,11 +21,33 @@
             document.getElementById("confirmPasswordForm").submit();
         }
     }
+
+    function formatAutoType(autoType) {
+        return autoType == 0 ? '주간' : '월간';
+    }
+
+    function formatAutoNextDate(autoType, autoNextDate) {
+        return autoType == 0 ? autoNextDate + '요일' : autoNextDate + '일';
+    }
+
+    function formatBalance(balance) {
+        return balance + '원';
+    }
+
+    window.onload = function() {
+        var autoTypeElement = document.getElementById("auto_type");
+        var autoNextDateElement = document.getElementById("auto_next_date");
+        var autoBalanceElement = document.getElementById("auto_balance");
+
+        autoTypeElement.value = formatAutoType(autoTypeElement.value);
+        autoNextDateElement.value = formatAutoNextDate(autoTypeElement.value, autoNextDateElement.value);
+        autoBalanceElement.value = formatBalance(autoBalanceElement.value);
+    }
 </script>
 </head>
 <body>
+    <c:import url="/WEB-INF/views/include/top_menu.jsp" />
     <div class="main">
-        <c:import url="/WEB-INF/views/include/top_menu.jsp" />
         <div class="traveltitle">
             모임통장 계좌개설
             <hr />
@@ -42,7 +64,7 @@
             <div class="contents-1">
                 <div class="section-1">
                     <div class="contentsBox">
-                        <span class="contentsText">모임 개설</span><br>
+                        <span class="contentsText">모임통장 개설</span><br>
                         <span class="contentsText1">맞춤정보입력</span>
                     </div>
                     <div class="stepper">
@@ -67,7 +89,7 @@
                     <br/>
                     <div class="flexClass">
                         <span class="idbox">연결 계좌번호</span>
-                        <input class="rec6" id="group_account" name="group_account" value="${ac_name}${accounts}" readonly>
+                        <input class="rec6" id="group_account" name="group_account" value="[NC뱅크]${accounts}" readonly>
                     </div>
                     <br/>
                     <div class="flexClass">
@@ -94,7 +116,7 @@
                         <input type="hidden" name="group_num" value="${group_num}" /> <!-- group_num 추가 -->
                         <div class="flexClass">
                             <span class="idbox">비밀번호</span>
-                            <input type="password" name="inputPassword" class="rec6" placeholder="비밀번호를 다시 입력해주세요"/>
+                            <input type="password" name="inputPassword" class="rec6" placeholder="계좌 비밀번호를 다시 입력해주세요"/>
                         </div>
                         <br/>
                         <button type="button" onclick="confirmAndSubmit()">개설하기</button>
@@ -115,7 +137,7 @@
                 </div>
             </div>
         </div>
-        <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
     </div>
+    <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>
 </html>

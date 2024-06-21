@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var='root' value="${pageContext.request.contextPath }/" />
@@ -10,16 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>create</title>
 <!-- Bootstrap CDN -->
-<link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<link rel="stylesheet"    
-    href="${pageContext.request.contextPath}/css/agreement.css">
-<script
-    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-<script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/agreement.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script defer src="${pageContext.request.contextPath}/js/agreement.js"></script>
 <script type="text/javascript">
     var isUserLoggedIn = ${loginUserBean.userLogin ? 'true' : 'false'};
@@ -100,11 +94,9 @@
                                 <select id="accounts" name="accounts" class="rec6">
                                     <option value="" selected>선택</option>
                                     <c:forEach var="account" items="${accountList}">
-                                        <option value="[${account.ac_name}]${account.account}">${account.account}</option>
+                                        <option value="${account.account}">[NC뱅크]${account.account}</option>
                                     </c:forEach>
                                 </select>
-                            <input type="hidden" name="ac_name" value=""
-                                class="rec6" id="ac_name">
                             </div>
                             
                             <br />
@@ -350,7 +342,6 @@
             alert("모든 약관에 동의해주세요.");
         }
     }
-   
     
     </script>
 
