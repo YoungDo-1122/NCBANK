@@ -53,6 +53,8 @@ public class BoardController {
 		model.addAttribute("page", page);
 
 		model.addAttribute("loginUserId", loginUserbean.getId());
+		
+		
 //		System.out.println(loginUserbean.getId());
 
 		return "board/main";
@@ -99,7 +101,7 @@ public class BoardController {
 			return "board/write";
 		}
 		boardService.addContentInfo(writeContentBean);
-		return "board/main";
+		return "board/write_success";
 	}
 
 }

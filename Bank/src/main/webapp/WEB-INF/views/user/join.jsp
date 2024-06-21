@@ -128,7 +128,7 @@ function sendSMSVerification() {
 			<br>
 		</c:if>
 
-		<form:form action="${root}/user/join_pro" method="post"
+		<form:form action="${root}user/join_pro" method="post"
 			modelAttribute="mBean">
 			<form:hidden path="idExistCheck" />
 			<div class="form-group">

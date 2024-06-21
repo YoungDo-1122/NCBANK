@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ncbank.beans.UserBean;
 import ncbank.dao.UserDAO;
 import ncbank.service.UserService;
+import ncbank.util.Encrypt;
 import ncbank.validator.UserValidator;
 
 @Controller
@@ -31,6 +32,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private Encrypt encrypt;
 
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
@@ -146,14 +150,44 @@ public class UserController {
 	 * "user/findPWD"; } userService.findMemberPwd(findMemberPwdBean); return
 	 * "user/findpwd_success"; }
 	 */
-	@GetMapping("/index")
-	public String index() {
-		return "user/index";
+
+	@GetMapping("/mypage")
+	public String getUserInfo(Model model) {
+		int userNum = loginUserBean.getUser_num();
+
+		UserBean users = null;
+		try {
+			users = userService.getUserInfo(userNum);
+		} catch (IllegalArgumentException e) {
+			System.out.println("Error: " + e.getMessage());
+			return "user/mypage";
+		}
+		model.addAttribute("users", users);
+
+		return "user/mypage";
+
 	}
 
-	@GetMapping("/modify")
-	public String modify() {
-		return "user/modify";
+	@PostMapping("/modify_pro")
+	public String modify_pro(@RequestParam("password") String password, @ModelAttribute("users") UserBean userBean,
+			HttpServletRequest request, Model model) {
+		UserBean loginUserBean = (UserBean) request.getSession().getAttribute("loginUserBean");
+		if (loginUserBean == null) {
+			return "user/mypage";
+		}
+		UserBean tempLoginUserBean = new UserBean();
+		tempLoginUserBean.setId(loginUserBean.getId());
+		tempLoginUserBean.setPwd(password);
+		userService.getLoginUserInfo(request, tempLoginUserBean);
+		if (loginUserBean.isUserLogin()) {
+			// 비밀번호가 일치하면 업데이트 로직 수행
+			userService.updateUserInfo(userBean);
+			return "user/mypage";
+		} else {
+			model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
+			return "redirect:/main";
+		}
+
 	}
 
 	@GetMapping("/logout")
