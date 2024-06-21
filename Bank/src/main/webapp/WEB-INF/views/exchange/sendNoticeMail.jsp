@@ -9,12 +9,16 @@
 <meta charset="UTF-8">
 <title>exchange/sendNoticeMail.jsp</title>
 </head>
+<link rel="stylesheet" href="${root}css/exchange/sendNoticeMail.css">
+
 <body>
 	<h2>인라인 이미지 테스트</h2>
  	<!-- 인라인으로 이미지 첨부 - cid:사전에정의한 인라인명 -->
-	<img src="cid:Bank1" alt="YouTube Logo">
-	<img src="cid:Bank2" alt="YouTube Logo">
-	<img src="cid:Bank3" alt="YouTube Logo">
+ 	<img src="cid:Bank1" alt="Bank1" onerror="this.onerror=null; this.src='${root}${Bank1Path}';">
+ 	
+	<img src="cid:Bank1" alt="Bank1">
+	<img src="cid:Bank2" alt="Bank1">
+	<img src="cid:Bank3" alt="Bank1">
 	<h2>이미지 테스트</h2>
 	<br />
 	

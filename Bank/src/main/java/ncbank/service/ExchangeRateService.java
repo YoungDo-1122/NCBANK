@@ -95,6 +95,7 @@ public class ExchangeRateService {
 	
 	// 범위 날짜 환율 정보 - DB에서 가져오기
 	 public List<ExchangeRateBean> getDateRangeExchangeRate(String startDate, String endDate) {
+		 System.out.println("ExchangeRateService getExchangeRate()");
 		 System.out.println("startDate : " + startDate);
 		 System.out.println("endDate : " + endDate);
 		 

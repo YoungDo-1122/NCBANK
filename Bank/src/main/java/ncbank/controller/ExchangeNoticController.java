@@ -177,7 +177,7 @@ public class ExchangeNoticController {
     public String sendNoticeMail(HttpServletRequest request, HttpServletResponse response) {
 
         if (null == loginUserBean && !loginUserBean.isUserLogin()) {
-            return "exchange/rateInquiry";
+            return "user/not_login";
         }
         /* jsp 내용 메일 */
         ExchangeNoticeBean exchangeNoticeBean = exchangeNoticeService
@@ -213,6 +213,45 @@ public class ExchangeNoticController {
                 "/WEB-INF/views/exchange/sendNoticeMail.jsp", inlinePathImgs, request, response);
 
         return "exchange/rateInquiry";
+    }
+    
+    @GetMapping("sendNoticeMailView")
+    // Spring MVC에서 자동으로 HttpServletRequest와 HttpServletResponse 객체를 컨트롤러 메서드에 주입
+    public String sendNoticeMailView(HttpServletRequest request, HttpServletResponse response) {
+        if (null == loginUserBean && !loginUserBean.isUserLogin()) {
+            return "user/not_login";
+        }
+        System.out.println("sendNoticeMailView()");
+        /* jsp 내용 메일 */
+        ExchangeNoticeBean exchangeNoticeBean = exchangeNoticeService
+                .getExchangeRateNotice(loginUserBean.getUser_num());
+        if (null == exchangeNoticeBean) {
+        	System.out.println("exchangeNoticeBean is null");
+        	return "exchange/sendNoticeMail";
+        }
+        
+        // 신청한 알림정보
+
+        // Bean으로 빼보기
+        String noticeDate = dateManager.parseDateToString(exchangeNoticeBean.getNotice_date(), "yyyy.MM.dd");
+
+        request.setAttribute("ExchangeNoticeBean", exchangeNoticeBean);
+        request.setAttribute("noticeDate", noticeDate);
+
+        // 신청한 통화의 최근고지환율정보
+        ExchangeRateBean rateBean = exchangeRateService.findFinalExchangeRate(exchangeNoticeBean.getCode_money());
+        ExchangeRateDTO rateDTO = exchangeRateService.convertExchangeDTO(rateBean);
+        String inquiryDate = dateManager.parseDateToString(rateDTO.getCode_date(), "yyyy.MM.dd");
+
+        request.setAttribute("ExchangeRateBean", rateDTO);
+        request.setAttribute("inquiryDate", inquiryDate);
+        
+        request.setAttribute("Bank1Path", "resources/img/Bank1.png");
+        request.setAttribute("Bank2Path", "resources/img/Bank2.png");
+        request.setAttribute("Bank3Path", "resources/img/Bank3.png");
+        
+
+        return "exchange/sendNoticeMail";
     }
 
 } // class

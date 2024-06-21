@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+/*
+[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
+display > overflow > float > position >
+
+width > height > margin > padding >
+
+color > font-style > font-weight > font-size >
+line-height > font-family > text-indent > text-align >
+
+background-color > background-image >
+background-position > background-size >
+background-repeat
+
+border > border-radius
+*/
+
+body {
+	background-color: pink;
+}
+
+.content { 
+	background-color: gray;
+	
+	border: 3px soild blue;
+	border-radius: 5px;
+}

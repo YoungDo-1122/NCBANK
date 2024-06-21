@@ -138,14 +138,28 @@ $(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 �
 			return null;
 		}
 		
-		console.log("rate : " + rate);
+		var correctionRate = 1;
+		// 100 단위로 매매 기준율이 제공되는 통화들
+		switch (ISOCode) {
+		case "JPY":
+		case "IDR":
+			correctionRate = 100;
+			break;
+
+		default:
+			correctionRate = 1;
+			break;
+		}
+		console.log("correctionRate : " + correctionRate);
 		
 		var convertedAmount;
 		
 		if (0 == option) { // 원화 -> 통화
+			rate /= correctionRate;
 			convertedAmount = (inputAmount / rate).toFixed(2);
 			console.log("convertedAmount : " + convertedAmount);
 		} else if (1 == option) { // 통화 -> 원화
+			rate /= correctionRate;
 			convertedAmount = (inputAmount * rate).toFixed(2);
 			console.log("convertedAmount : " + convertedAmount);
 		}

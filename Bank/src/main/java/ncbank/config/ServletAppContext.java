@@ -281,7 +281,7 @@ public class ServletAppContext implements WebMvcConfigurer {
         reg1.addPathPatterns("/**");
 
         ExchangeRateInterceptor exchangeRateInterceptor = new ExchangeRateInterceptor(exchangeRateService,
-                codeMoneyService);
+                codeMoneyService, dateManager);
         InterceptorRegistration reg2 = registry.addInterceptor(exchangeRateInterceptor);
         reg2.addPathPatterns("/**");
 

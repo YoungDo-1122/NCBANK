@@ -34,7 +34,7 @@
 				<li><a href="${root}groupAccount/invite">모임원 초대하기</a></li>
 				<li><a href="${root}groupAccount/management">모임통장 관리</a>
 			</ul></li>
-		<li><a href="${root}exchange/rateInquiry">환전</a>
+		<li><a href="${root}exchange/sendNoticeMailView">환전</a>
 			<ul id=sub-menu>
 				<li><a href="${root}exchange/rateInquiry">환율 조회</a></li>
 				<li><a href="${root}exchange/notice">환율 알림 서비스</a></li>

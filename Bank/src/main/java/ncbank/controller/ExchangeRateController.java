@@ -137,15 +137,9 @@ public class ExchangeRateController {
     @GetMapping("/rateChart")
     public String rateChart(HttpServletRequest request, Model model) {
     	
-    	// 아마 이거 여기서 모델에 안줘도 리퀘스트 영역이라 jsp 에서 바로 땡겨올수 있을거임 ㅇㅇ
-    	List<CodeMoneyBean> codeMoneyList = (List<CodeMoneyBean>)request.getAttribute("codeMoneyList");
-    	if (null == codeMoneyList || codeMoneyList.isEmpty()) {
-    		System.out.println("ExchangeController calculator()");
-    		System.out.println("codeMoneyList is null");
-    		return "exchange/rateChart"; 
-    	}
-    	
-    	// DB에 존재하는 환율 데이터중 지정한 날짜범위의 데이터를 자ㅕ옴
+    	/*
+    	[인터셉터에서 데이터를 세팅하는걸로 바꿈]
+    	// DB에 존재하는 환율 데이터중 지정한 날짜범위의 데이터를 가져옴
     	List<ExchangeRateBean> ExchangeRateList = exchangeRateService.getDateRangeExchangeRate( 
     			dateManager.getMoveDate(dateManager.getCurrentDate("yyyyMMdd"), -6, 0, "yyyyMMdd"),
     			dateManager.getCurrentDate("yyyyMMdd"));
@@ -157,7 +151,7 @@ public class ExchangeRateController {
     	// 출력용 DTO로 전환
         List<ExchangeRateDTO> rateDtoList = exchangeRateService.convertExchangeDTOList(ExchangeRateList);
         
-        // if 3개월 까지의 차트정보를 보여줄꺼면 현재날짜 기준 3개월전까지 데이터를 들고가야 됨.
+        // if - 3개월 까지의 차트정보를 보여줄꺼면 현재날짜 기준 3개월전까지 데이터를 들고가야 됨.
         model.addAttribute("ExchangeRateList", rateDtoList);
         
         //System.out.println("ExchangeController rateChart()");
@@ -166,11 +160,9 @@ public class ExchangeRateController {
         for (var val : rateDtoList) {
         	if (!dateManager.isDatesEqual(startDate, dateManager.parseDateToString(val.getCode_date(), "yyyyMMdd"))) {
         		startDate = dateManager.parseDateToString(val.getCode_date(), "yyyyMMdd");
-        		//System.out.println("[date : " + dateManager.parseDateToString(val.getCode_date(), "yyyyMMdd") + "]");
-        		//System.out.println("strdate : " + val.getCode_date_str());
         	}
 		}
-
+		*/
     	
     	return "exchange/rateChart";
     }

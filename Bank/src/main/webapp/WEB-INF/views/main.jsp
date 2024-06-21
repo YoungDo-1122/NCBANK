@@ -81,11 +81,7 @@
 		</div>
 
 		<div class="exchange_rate">
-			<select id="currencySelect" name="currency">
-				<option value="USD">달러($)</option>
-				<option value="JPY">엔(¥)</option>
-				<option value="EUR">유로(€)</option>
-			</select> <img id="currencyImage" src="img/그웬2.jpg" alt="통화 이미지">
+			<c:import url="./exchange/rateChart.jsp"></c:import>
 		</div>
 
 	</div>
