@@ -11,10 +11,7 @@ public class TransferBean {
 	private String to_account;
 	private String from_account;
 	private String code_organ;
-
 	private String code_organ_name;
-
-	private AccountBean fromAccountDetails;
 
 	public String getCode_organ_name() {
 		return code_organ_name;
@@ -22,14 +19,6 @@ public class TransferBean {
 
 	public void setCode_organ_name(String code_organ_name) {
 		this.code_organ_name = code_organ_name;
-	}
-
-	public AccountBean getFromAccountDetails() {
-		return fromAccountDetails;
-	}
-
-	public void setFromAccountDetails(AccountBean fromAccountDetails) {
-		this.fromAccountDetails = fromAccountDetails;
 	}
 
 	public int getTrans_num() {

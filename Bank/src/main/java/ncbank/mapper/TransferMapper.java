@@ -9,7 +9,10 @@ import org.apache.ibatis.annotations.Select;
 import ncbank.beans.TransferBean;
 
 public interface TransferMapper {
-	@Insert("insert into transfer (trans_num, trans_type, trans_balance, trans_text, trans_date, to_account, from_account, code_organ) values(#{trans_num}, #{trans_type}, #{trans_balance}, #{trans_text}, sysdate, #{to_account}, #{from_account}, #{code_organ}")
+//	@Insert("insert into transfer (trans_num, trans_type, trans_balance, trans_text, trans_date, to_account, from_account, code_organ) values(#{trans_num}, #{trans_type}, #{trans_balance}, #{trans_text}, sysdate, #{to_account}, #{from_account}, #{code_organ}")
+//	public void addTransfer(TransferBean transferBean);
+	@Insert("INSERT INTO transfer (trans_num, trans_type, trans_balance, trans_text, trans_date, from_account, to_account, code_organ) "
+			+ "VALUES (SEQ_TRANSFER.NEXTVAL, #{trans_type}, #{trans_balance}, #{trans_text}, SYSDATE, #{from_account}, #{to_account}, #{code_organ})")
 	public void addTransfer(TransferBean transferBean);
 
 	@Select("<script>"

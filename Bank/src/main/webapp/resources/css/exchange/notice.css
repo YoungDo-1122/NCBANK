@@ -1,31 +1,166 @@
 @charset "UTF-8";
 
-/*
-[ 레이아웃 > 박스모델 > 글자 > 배경 > 기타 ]
-display > overflow > float > position >
-
-width > height > margin > padding >
-
-color > font-style > font-weight > font-size >
-line-height > font-family > text-indent > text-align >
-
-background-color > background-image >
-background-position > background-size >
-background-repeat
-
-border > border-radius
-*/
-
-body *{
-	text-align: center;
+.contentWarp {
+	display : flex;
+	height: 100vh;
+	padding: 0;
+	margin : 0;
 }
 
-/* 상단바를 제외시킨 컨텐츠 영역 */
-div.contentWarp {
-	overflow: auto;
-	
-	height: 90%;
-	margin: 120px auto;
-	
-	background-color: aliceblue;
+.LP {
+	margin: 0;
+	display: flex;
+}
+
+.LPWrap {
+	text-align: center;
+	background-color: #f8f9fa; /* 메뉴바 배경색 */
+	padding: 20px;
+	height: 100%;
+	border-right: 1px solid #dee2e6;
+	overflow-y: auto;
+	position: sticky;
+	top: 0;
+	width: 200px;
+}
+
+.LPWrap h2 {
+	font-size: 1.2em;
+	margin-bottom: 10px;
+	color: #343a40;
+}
+
+.LPWrap ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.LPWrap ul li {
+	margin-bottom: 10px;
+}
+
+.LPWrap ul li a {
+	text-decoration: none;
+	color: rgb(83, 169, 255);
+	display: block;
+	padding: 8px 12px;
+	border-radius: 4px;
+	transition: background-color 0.3s;
+}
+
+.LPWrap ul li a:hover {
+	background-color: #e9ecef;
+}
+
+.LPWrap .LPC01 {
+	border: 1px solid #dee2e6;
+	padding: 10px;
+	margin-bottom: 20px;
+	background-color: #fff;
+}
+
+#menu {
+	flex: 1;
+	padding: 20px;
+	border-right: 2px solid #dee2e6;
+}
+
+#content {
+	flex: 2;
+	padding: 20px;
+}
+
+.toparea .h1_title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 20px;
+	border: 1px solid #dee2e6;
+}
+
+.linemap {
+	margin-bottom: 20px;
+}
+
+.linemap a {
+	color: rgb(83, 169, 255);
+	text-decoration: none;
+	margin-right: 10px;
+}
+
+.linemap em {
+	font-style: normal;
+	color: #6c757d;
+}
+
+.tabMenu {
+	list-style: none;
+	padding: 0;
+	margin: 0; margin-bottom : 20px;
+	display: flex;
+	border-bottom: 2px solid #dee2e6;
+	margin-bottom: 20px;
+}
+
+.tabMenu li {
+	margin-right: 10px;
+}
+
+.tabMenu li a {
+	text-decoration: none;
+	display: block;
+	padding: 10px 20px;
+	background-color: #f8f9fa;
+	border: 1px solid #dee2e6;
+	border-bottom: none; border-radius : 4px 4px 0 0;
+	color: #495057;
+	border-radius: 4px 4px 0 0
+}
+
+.tabMenu li.on a {
+	background-color: rgb(83, 169, 255);
+	color: #fff;
+	border-top: 2px solid #000;
+	font-weight: bold;
+}
+
+/* Main content styles */
+#CP {
+	width: 100%; padding : 20px;
+	background-color: #ffffff;
+	border: 1px solid #dee2e6;
+	border-radius: 0 0 4px 4px;
+	padding: 20px;
+}
+
+.btnArea {
+	margin-top: 20px;
+}
+
+.btn-action {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.btn-action:hover {
+	background-color: rgb(83, 169, 255);
+}
+/*이건 나중에 바꿔야됨 왼쪽 메뉴바로 빼야함*/
+.rateCalculator {
+	background-color: rgb(83, 169, 255);
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-top: 20px;
+}
+
+.rateCalculator:hover {
+	background-color: rgb(13, 71, 161);
 }

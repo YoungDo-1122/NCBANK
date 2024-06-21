@@ -15,32 +15,32 @@
 		</button>-->
 	<!-- dropdown 메뉴 -->
 	<ul id="main-menu">
-		<li><a href="#">조회</a>
+		<li><a href="${root}account/accountCheck">조회</a>
 			<ul id=sub-menu>
-				<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+				<li><a href="${root}account/accountCheck">계좌조회</a></li>
 				<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
 			</ul></li>
-		<li><a href="#">이체</a>
+		<li><a href="${root}trans/transfer">이체</a>
 			<ul id=sub-menu>
-				<li><a href="${root}account/accountCreate">계좌 생성</a></li>
-				<li><a href="${root}trans/transfer">계좌 이체</a></li>
+				<li><a href="${root}account/accountCreate">계좌개설</a></li>
+				<li><a href="${root}trans/transfer">계좌이체</a></li>
 				<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
 				<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
 			</ul></li>
-		<li><a href="#">모임</a>
+		<li><a href="${root}groupAccount/about">모임</a>
 			<ul id=sub-menu>
 				<li><a href="${root}groupAccount/about">모임통장이란</a></li>
 				<li><a href="${root}groupAccount/create">모임통장개설</a></li>
 				<li><a href="${root}groupAccount/management">모임통장 관리</a>
 			</ul></li>
-		<li><a href="#">환전</a>
+		<li><a href="${root}exchange/rateInquiry">환전</a>
 			<ul id=sub-menu>
-				<li><a href="${root}exchange/rateInquiry">환전1</a></li>
-				<li><a href="${root}exchange/notice">환전2</a></li>
+				<li><a href="${root}exchange/rateInquiry">환율 조회</a></li>
+				<li><a href="${root}exchange/notice">환율 알림 서비스</a></li>
 				<li><a href="${root}exchange/exchangeAsk">환전 신청</a></li>
 				<li><a href="${root}exchange/exchangeHistory">환전 내역 조회</a></li>
 			</ul></li>
-		<li><a href="#">게시판</a>
+		<li><a href="${root}board/main?board_info_idx=1">게시판</a>
 			<ul id=sub-menu>
 				<li><a href="${root}board/main?board_info_idx=1">공지사항</a>
 				<li><a href="${root}board/main?board_info_idx=2">새소식</a>

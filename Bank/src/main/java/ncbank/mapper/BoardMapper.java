@@ -15,8 +15,8 @@ public interface BoardMapper {
 	
 	//글쓰기
 	@Insert("insert into content_table(content_idx, content_subject, content_text, "
-	        + "content_file, content_writer_idx, content_board_idx, content_date) "
-	        + "values (#{content_idx}, #{content_subject}, #{content_text}, #{content_file, jdbcType=VARCHAR}, "
+	        + "content_writer_idx, content_board_idx, content_date) "
+	        + "values (#{content_idx}, #{content_subject}, #{content_text}, "
 	        + "#{content_writer_idx}, #{content_board_idx}, sysdate)")
 	void addContentInfo(ContentBean writeContentBean);
 
@@ -37,9 +37,9 @@ public interface BoardMapper {
 //			+ "       a1.content_subject, a1.content_text, a1.content_file , a1.content_writer_idx "
 //			+ "from content_table a1, user_table a2 " + "where a1.content_writer_idx = a2.user_idx "
 //			+ "      and content_idx = #{content_idx}")
-	@Select("select content_idx,content_subject,to_char(content_date,'YYYY-MM-DD') as content_date, content_text, content_file from content_table where content_idx=#{content_idx}")
+	@Select("select content_idx,content_subject,to_char(content_date,'YYYY-MM-DD') as content_date, content_text from content_table where content_idx=#{content_idx}")
 	ContentBean getContentInfo(int content_idx);
-
+	
 	// 해당 게시판의 전체 글의 수 가져오기 페이지를 위해서
 	@Select("select count(*) from content_table where content_board_idx = #{content_board_idx}")
 	int getContentCnt(int content_board_idx);

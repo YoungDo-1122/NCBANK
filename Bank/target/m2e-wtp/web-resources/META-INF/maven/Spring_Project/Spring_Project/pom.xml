@@ -158,7 +158,7 @@
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
-		
+
 		<!-- ==========[메일 관련 의존성]========== -->
 		<dependency>
 			<groupId>javax.mail</groupId>
@@ -171,7 +171,6 @@
 			<version>1.6.2</version>
 		</dependency>
 		
-
 		<dependency>
 			<groupId>net.nurigo</groupId>
 			<artifactId>sdk</artifactId>

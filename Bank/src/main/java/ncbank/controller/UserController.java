@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import ncbank.beans.UserBean;
+import ncbank.dao.UserDAO;
 import ncbank.service.UserService;
 import ncbank.validator.UserValidator;
 
@@ -28,95 +29,155 @@ import ncbank.validator.UserValidator;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+	@Autowired
+	private UserService userService;
 
-    @Resource(name = "loginUserBean")
-    private UserBean loginUserBean;
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
 
-    @GetMapping("/login")
-    public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
-            @RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
-        model.addAttribute("fail", fail);
-        return "user/login";
-    }
+	@Autowired
+	private UserDAO userDAO;
 
-    @PostMapping("/login_pro")
-    public String login_pro(HttpServletRequest request,@Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean, 
-                            Model model, BindingResult result) {
+	@GetMapping("/login")
+	public String login(@ModelAttribute("tempLoginBean") UserBean tempLoginBean,
+			@RequestParam(value = "fail", defaultValue = "false") boolean fail, Model model) {
+		model.addAttribute("fail", fail);
+		return "user/login";
+	}
 
-        if (result.hasErrors()) {
-            return "user/login";
-        }
+	@PostMapping("/login_pro")
+	public String login_pro(@Valid @ModelAttribute("tempLoginBean") UserBean tempLoginBean, HttpServletRequest request,
+			Model model, BindingResult result) {
+		System.out.println("What't wrong?");
+		System.out.println(tempLoginBean);
+		System.out.println(request);
 
-        userService.getLoginUserInfo(request, tempLoginBean);
-        
+		if (result.hasErrors()) {
+			/*
+			 * result.getFieldErrorCount(); List<ObjectError> temp = result.getAllErrors();
+			 * for (ObjectError e : temp) { System.out.println(e.getDefaultMessage()); }
+			 */
 
-        if (loginUserBean.isUserLogin()) {
-            model.addAttribute("tempLoginBean", tempLoginBean);
-            return "user/login_success";
-        } else {
-            return "user/login_fail";
-        }
-    }
+			// if (loginUserBean.isUserLogin()) {
+			// model.addAttribute("tempLoginBean", tempLoginBean);
+			// System.out.println("User logged in with user_num: " +
+			// loginUserBean.getUser_num()); // 로그인 성공 시 user_num 출력
+			// return "user/login_success";
+			// } else {
+			// return "user/login_fail";
+			// }
+			// }
+			return "user/login";
+		}
 
-    @GetMapping("/join")
-    public String join(@ModelAttribute("mBean") UserBean mBean) {
-        return "user/join";
-    }
+		userService.getLoginUserInfo(request, tempLoginBean);
 
-    @PostMapping("/join_pro")
-    public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult) {
+		if (loginUserBean.isUserLogin()) {
+			model.addAttribute("tempLoginBean", tempLoginBean);
+			return "user/login_success";
+		} else {
+			model.addAttribute("fail", true);
+			return "user/login_fail";
+		}
+	}
 
-        if (memberResult.hasErrors()) {
-        	memberResult.getFieldErrorCount();
-        	List<ObjectError> temp = memberResult.getAllErrors();
-        	for(ObjectError e : temp ) {
-        		System.out.println(e.getDefaultMessage());
-        	}
-            return "user/join";
-        }
+	@GetMapping("/join")
+	public String join(@ModelAttribute("mBean") UserBean mBean) {
+		return "user/join";
+	}
 
-        String address = (mBean.getAdd2() != null && !mBean.getAdd2().isEmpty()) ? mBean.getAdd2() : mBean.getAdd3();
-        mBean.setAddress(address);
+	@PostMapping("/join_pro")
+	public String join_pro(@Valid @ModelAttribute("mBean") UserBean mBean, BindingResult memberResult, Model model) {
 
-        userService.addUserInfo(mBean);
+		mBean.setResident(mBean.getResident1() + "-" + mBean.getResident2());
 
-        return "user/join_success";
-    }
+		if (memberResult.hasErrors()) {
+			memberResult.getFieldErrorCount();
+			List<ObjectError> temp = memberResult.getAllErrors();
+			for (ObjectError e : temp) {
+				System.out.println(e.getDefaultMessage());
+			}
+			return "user/join";
+		}
 
-    @GetMapping("/index")
-    public String index() {
-        return "user/index";
-    }
+		if (!userService.canRegister(mBean.getPhone(), mBean.getResident())) {
+			model.addAttribute("errorMessage", "이미 가입되어 있는 전화번호나 주민번호가 존재합니다");
+			return "user/join";
+		}
 
-    @GetMapping("/modify")
-    public String modify() {
-        return "user/modify";
-    }
+		String address = (mBean.getAdd2() != null && !mBean.getAdd2().isEmpty()) ? mBean.getAdd2() : mBean.getAdd3();
+		mBean.setAddress(address);
 
-    @GetMapping("/logout")
-    public String logout() {
-        loginUserBean.setUserLogin(false);
-        return "user/logout";
-    }
+		userService.addUserInfo(mBean);
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        UserValidator validator1 = new UserValidator();
-        binder.addValidators(validator1);
-    }
-    
-    //문자인증
-    @PostMapping("/memberPhoneCheck")
-    public @ResponseBody String memberPhoneCheck(@RequestParam(value="to") String to) {
-    	System.out.println("------------------------------");
-    	String code = String.format("%06d", (int)(Math.random() * 900000));
-    	String text = ("[NC BANK] " + code);
-    	System.out.println(text);
-    	return code;
+		return "user/join_success";
+	}
+
+	@GetMapping("/findID")
+	public String findID(@ModelAttribute("findMemberIDBean") UserBean findMemberIDBean) {
+
+		return "user/findID";
+	}
+
+	@PostMapping("findID_pro")
+	public String findID_pro(@ModelAttribute("findMemberIDBean") UserBean findMemberIDBean, BindingResult result,
+			Model model) {
+		String checkedID = userDAO.findMemberId(findMemberIDBean);
+		System.out.println("checkedID : " + checkedID);
+
+		if (checkedID == null) {
+			model.addAttribute("message", "아이디를 찾을 수 없습니다.");
+			return "user/findID";
+		}
+
+		findMemberIDBean.setId(checkedID); // 저장
+		model.addAttribute("id", checkedID);
+		return "user/findID_success";
+	}
+
+	/*
+	 * @GetMapping("findpwd") public String
+	 * findpwd(@ModelAttribute("findMemberPwdBean") UserBean findMemberPwdBean) {
+	 * return "user/findpwd"; }
+	 * 
+	 * @PostMapping("/findpwd_pro") public String
+	 * findpwd_pro(@ModelAttribute("findMemberPwdBean") UserBean findMemberPwdBean,
+	 * BindingResult result, Model model) { if (result.hasErrors()) { return
+	 * "user/findPWD"; } userService.findMemberPwd(findMemberPwdBean); return
+	 * "user/findpwd_success"; }
+	 */
+	@GetMapping("/index")
+	public String index() {
+		return "user/index";
+	}
+
+	@GetMapping("/modify")
+	public String modify() {
+		return "user/modify";
+	}
+
+	@GetMapping("/logout")
+	public String logout() {
+		loginUserBean.setUserLogin(false);
+		return "user/logout";
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		UserValidator validator1 = new UserValidator();
+		binder.addValidators(validator1);
+	}
+
+	// 문자인증
+	@PostMapping("/memberPhoneCheck")
+	public @ResponseBody String memberPhoneCheck(@RequestParam(value = "to") String to) {
+		System.out.println("------------------------------");
+		String code = String.format("%06d", (int) (Math.random() * 900000));
+		String text = ("[NC BANK] " + code);
+		System.out.println(text);
+		return code;
 //      실제로 쓸때는 위에꺼 주석 처리하고 밑에꺼 써야댐
 //    	String vr = userService.verificationCode(to);
 //    	return vr;
-    }
+	}
 }

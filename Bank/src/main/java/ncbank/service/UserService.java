@@ -1,5 +1,9 @@
 package ncbank.service;
 
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.Random;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,10 +23,10 @@ import ncbank.util.SmsSender;
 public class UserService {
 
 	@Autowired
-	private UserDAO userDaO;
+	private UserMapper userMapper;
 
 	@Autowired
-	private UserMapper userMapper;
+	private UserDAO userDaO;
 
 	@Autowired
 	private Encrypt encrypt;
@@ -43,9 +47,16 @@ public class UserService {
 		return userDaO.checkUserExist(id);
 	}
 
+	public boolean canRegister(String phone, String resident) {
+		int phoneCount = userMapper.checkUserPhoneExist(phone);
+		int residentCount = userMapper.checkUserResidentExist(resident);
+
+		return phoneCount == 0 && residentCount == 0;
+	}
+
 	public void addUserInfo(UserBean mBean) {
-		String salt = encrypt.getSalt();
-		String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt);
+		String salt = encrypt.getSalt(); // 솔토
+		String encryptPasswd = encrypt.getEncrypt(mBean.getPwd(), salt); // 암호화된 비번 => 솔트 + 내가 입력한 비밀번호
 
 		mBean.setPwd(encryptPasswd);
 		mBean.setSalt(salt);
@@ -57,12 +68,9 @@ public class UserService {
 
 		UserBean dbUserBean = userDaO.getLoginUserInfo(tempLoginUserBean);
 		if (dbUserBean != null) {
-
 			String checkSalt = dbUserBean.getSalt(); // ㅅㅌ
 			String checkpasswd = dbUserBean.getPwd(); // DB PWD
-
 			String newPasswd = tempLoginUserBean.getPwd(); // newPasswd == 암호화전
-
 			String pwd = encrypt.getEncrypt(newPasswd, checkSalt); // pwd -> newPwd 암호화한거
 			System.out.println(checkpasswd);
 			System.out.println(pwd);
@@ -76,7 +84,8 @@ public class UserService {
 				HttpSession session = request.getSession();
 				session.setAttribute("loginUserBean", loginUserBean);
 
-				System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName() + " - " + loginUserBean.getUser_num());
+				System.out.println("Logged in user: " + loginUserBean.getId() + " - " + loginUserBean.getName() + " - "
+						+ loginUserBean.getUser_num());
 
 			} else {
 				loginUserBean.setUserLogin(false); // 로그인 실패
@@ -97,7 +106,18 @@ public class UserService {
 		} else {
 			return "fail";
 		}
-
 	}
-
+	/*
+	 * 비밀번호찾기 버튼 눌렀을떄 나오는 함수 public void findMemberPwd(UserBean findMemberPwdBean) {
+	 * 
+	 * String newsalt = encrypt.getSalt(); //새 솔트값 받았어
+	 * 
+	 * String newPwd = findMemberPwdBean.getPwd(); //암호화전 String newpass =
+	 * encrypt.getEncrypt(findMemberPwdBean.getPwd(), newsalt);
+	 * 
+	 * findMemberPwdBean.setPwd(newpass); findMemberPwdBean.setSalt(newsalt);
+	 * 
+	 * userDaO.findMemberPwd(findMemberPwdBean); }
+	 * 
+	 */
 }
