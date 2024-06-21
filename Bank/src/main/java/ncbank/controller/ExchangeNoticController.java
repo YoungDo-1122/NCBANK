@@ -205,9 +205,7 @@ public class ExchangeNoticController {
         // inlinePath : 인라인 이미지 이름, imgPath : 실제 이미지 경로
         Map<String, String> inlinePathImgs = new HashMap<String, String>();
 
-        inlinePathImgs.put("<Bank1>", rootPath + "resources/img/Bank1.png");
-        inlinePathImgs.put("<Bank2>", rootPath + "resources/img/Bank2.png");
-        inlinePathImgs.put("<Bank3>", rootPath + "resources/img/Bank3.jpg");
+        inlinePathImgs.put("<NCBankIcon>", rootPath + "resources/img/NCBankIcon_2.png");
 
         emailManager.sendJspEmailWithInlineImage("jcjhjg12@gmail.com", "인라인 이미지 메일 테스트",
                 "/WEB-INF/views/exchange/sendNoticeMail.jsp", inlinePathImgs, request, response);
@@ -246,10 +244,7 @@ public class ExchangeNoticController {
         request.setAttribute("ExchangeRateBean", rateDTO);
         request.setAttribute("inquiryDate", inquiryDate);
         
-        request.setAttribute("Bank1Path", "resources/img/Bank1.png");
-        request.setAttribute("Bank2Path", "resources/img/Bank2.png");
-        request.setAttribute("Bank3Path", "resources/img/Bank3.png");
-        
+        request.setAttribute("NCBankIcon2", "img/NCBankIcon_2.png");
 
         return "exchange/sendNoticeMail";
     }

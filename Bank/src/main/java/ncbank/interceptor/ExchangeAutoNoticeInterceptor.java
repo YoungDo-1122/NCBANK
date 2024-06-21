@@ -85,9 +85,7 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 		// inlinePath : 인라인 이미지 이름, imgPath : 실제 이미지 경로
 		Map<String, String> inlinePathImgs = new HashMap<String, String>();
 
-		inlinePathImgs.put("<Bank1>", rootPath + "resources/img/Bank1.png");
-		inlinePathImgs.put("<Bank2>", rootPath + "resources/img/Bank2.png");
-		inlinePathImgs.put("<Bank3>", rootPath + "resources/img/Bank3.jpg");
+		inlinePathImgs.put("<NCBankIcon>", rootPath + "resources/img/NCBankIcon_2.png");
 
 		emailManager.sendJspEmailWithInlineImage("jcjhjg12@gmail.com", "[NC은행] 환율알림서비스 안내",
 				"/WEB-INF/views/exchange/sendNoticeMail.jsp", inlinePathImgs, request, response);

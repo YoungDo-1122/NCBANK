@@ -95,7 +95,6 @@
     </div> <!-- div.contentWarp -->
 
 
-    <button class="rateChartBtn bType02">환율차트보기</button>
     
     <c:import url="../include/bottom_info.jsp" />
     
@@ -107,15 +106,6 @@
 
                 var url = "${root}/exchange/calculator"
                 var name = "환율 계산기"
-                var option = "width = 650px, height = 650px, top = 200px"
-                window.open(url, name, option);
-            });
-        	
-            $('.rateChartBtn').on("click", function (e) {
-                e.preventDefault();
-
-                var url = "${root}/exchange/rateChart"
-                var name = "환율 차트"
                 var option = "width = 650px, height = 650px, top = 200px"
                 window.open(url, name, option);
             });
