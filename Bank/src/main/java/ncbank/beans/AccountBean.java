@@ -8,11 +8,10 @@ import javax.validation.constraints.Size;
 public class AccountBean {
 	private String account;
 	@Size(max = 4, min = 4)
-	@Pattern(regexp = "\\d+", message = "숫자만 입력해야 합니다")
+	@Pattern(regexp = "\\d+", message = "숫자만 입력해야 합니다.")
 	private String ac_password;
-	private String ac_name;
 	@Size(max = 30, min = 1)
-	@Pattern(regexp = "\\d+", message = "숫자만 입력해야 합니다")
+	@Pattern(regexp = "\\d+", message = "숫자만 입력해야 합니다.")
 	private String ac_balance;
 	private Integer ac_type;
 	private Date ac_date;
@@ -34,14 +33,6 @@ public class AccountBean {
 		this.ac_password = ac_password;
 	}
 
-	public String getAc_name() {
-		return ac_name;
-	}
-
-	public void setAc_name(String ac_name) {
-		this.ac_name = ac_name;
-	}
-
 	public String getAccount() {
 		return account;
 	}
@@ -58,8 +49,8 @@ public class AccountBean {
 		this.ac_date = ac_date;
 	}
 
-	public Integer getAc_type() {
-		return ac_type;
+	public int getAc_type() {
+		return (ac_type != null) ? ac_type : 0;
 	}
 
 	public void setAc_type(Integer ac_type) {

@@ -45,7 +45,6 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("ExchangeAutoNoticeInterceptor preHandle()");
 		
 		sendNoticeMail(request, response);
 		
@@ -53,20 +52,23 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 	}
 	
 	private void sendNoticeMail(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
+		
 		// 로그인 상태가 아니면 메일전송 x
 		if (null == loginUserBean && !loginUserBean.isUserLogin()) {
+			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
 			System.out.println("not login");
 			return;
 		}
 		
 		ExchangeAutoNoticeBean autoNoticeBean = autoNoticeService.getExchangeAutoNotice(loginUserBean.getUser_num());
 		if (null == autoNoticeBean) {
+			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
 			System.out.println("autoNoticeBean is null");
 			return;
 		}
-		System.out.println("SendState : " + autoNoticeBean.getSend_state());
+
 		if (1 == autoNoticeBean.getSend_state()) { // 이미 보냈으면 X
+			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
 			System.out.println("sendState : 1 (이미보낸상태)");
 			return;
 		}
@@ -102,6 +104,7 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 		// 신청한 알림에 대한 정보
 		ExchangeNoticeBean exchangeNoticeBean = noticeService.getExchangeRateNotice(loginUserBean.getUser_num());
 		if (null == exchangeNoticeBean) {
+			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
 			System.out.println("exchangeNoticeBean is null");
 			return false;
 		}
@@ -109,6 +112,7 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 		// ExchangeRateInterceptor 에서 저장한 최종고시 환율정보
 		List<ExchangeRateDTO> rateDtoList = (List<ExchangeRateDTO>)request.getAttribute("FinalExchangeRateList");
 		if (null == rateDtoList || rateDtoList.isEmpty()) {
+			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
 			System.out.println("rateDtoList is null");
 			return false;
 		}
@@ -117,12 +121,12 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 		for (ExchangeRateDTO dto : rateDtoList) {
 			if (exchangeNoticeBean.getCode_money().toUpperCase().equals(
 					dto.getCode_money().toUpperCase())) { // 알림을 신청한 통화의 최종고시 환율 탐색
-				System.out.println("find equal code_money Bean");
 				exchangeRateBean = dto;
 				break;
 			} 
 		}
 		if (null == exchangeRateBean) {
+			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
 			System.out.println("exchangeRateBean is null");
 			return false;
 		}
@@ -162,6 +166,7 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 		
 		// 최종고시 환율(defaultRate)이 무너지지 않았을경우 예외처리
 		if (0 > comparisonResult) {
+			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
 			System.out.println("defaultRate < noticeRate");
 			return false;
 		}

@@ -15,7 +15,10 @@ public class ExchangeRateDAO {
     private ExchangeRateMapper exchangeRateMapper;
 
     /* Select */
-
+    public List<ExchangeRateBean> getAllExchangeRate() {
+    	return exchangeRateMapper.getAllExchangeRate();
+    }
+    
     // DB에 저장되어 있는 데이터중 가장 최신의 환율 데이터 가져오기
     public List<ExchangeRateBean> getFinalExchangeRate() {
     	return exchangeRateMapper.getFinalExchangeRate();
@@ -30,10 +33,13 @@ public class ExchangeRateDAO {
         return exchangeRateMapper.getExchangeRate(date);
     }
     
+    // 범위 날짜 환율 정보 - DB에서 가져오기
+    public List<ExchangeRateBean> getDateRangeExchangeRate(String startDate, String endDate) {
+    	return exchangeRateMapper.getDateRangeExchangeRate(startDate, endDate);
+    }
    
     /* insert */
     public void addExchangeRate(ExchangeRateBean exchangeBean) {
-    	System.out.println("ExchangeRateDAO addExchangeRate()");
         exchangeRateMapper.addExchangeRate(exchangeBean);
     }
 

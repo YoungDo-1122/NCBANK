@@ -151,7 +151,7 @@
 }
 /*이건 나중에 바꿔야됨 왼쪽 메뉴바로 빼야함*/
 .rateCalculator {
-	background-color: #17a2b8;
+	background-color: rgb(83, 169, 255);
 	color: white;
 	border: none;
 	padding: 10px 20px;
@@ -162,5 +162,5 @@
 }
 
 .rateCalculator:hover {
-	background-color: #117a8b;
+	background-color: rgb(13, 71, 161);
 }

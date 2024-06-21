@@ -32,10 +32,14 @@
 				<div class="LPC01">
 					<h2>외환</h2>
 					<ul>
-						<li><a href="#">테스트링크1</a></li>
-						<li><a href="#">테스트링크2</a></li>
-						<li><a href="#">테스트링크3</a></li>
-						<li><a href="#">테스트링크4</a></li>
+					    <li><a href="${root}exchange/rateInquiry">환율 조회</a></li>
+					    <li><a href="${root}exchange/notice">환율 알림 서비스</a></li>
+					    <li><a href="${root}exchange/exchangeAsk">환전 신청</a></li>
+					    <li><a href="${root}exchange/exchangeHistory">환전 내역 조회</a></li>
+					</ul>
+					
+					<ul>
+					    <li class="rateCalculator">환율 계산기</li>
 					</ul>
 				</div>
 			</div>
@@ -56,10 +60,10 @@
 									<button type="button" class="bType02" onclick="today()">오늘</button>
 									<button type="button" class="bType02" onclick="yesterday()">전일</button>
 									<button type="button" class="btn" onclick="tomorrow()">다음일</button>
-								</div> <!-- required="required" : 반드시 폼 값을 채워야 한다. --> <input
-								class="dateinput" type="date" id="inquiryDate"
-								name="inquiryDate" required="required"> <script
-									type="text/javascript">
+								</div> <!-- required="required" : 반드시 폼 값을 채워야 한다. --> 
+								<input class="dateinput" type="date" id="inquiryDate"
+									name="inquiryDate" required="required"> 
+								<script	type="text/javascript">
 									// 서버에서 전달된 날짜 값 -> js 변수
 									var inquiryDate = "${inquiryDate2}";
 									// input에 기본값으로 설정
@@ -127,8 +131,25 @@
 		</div>
 		<!-- div.CP -->
 	</div>
+
+
 	<c:import url="../include/bottom_info.jsp" />
 
+	<script type="text/javascript">
+            $(document).ready(function () { // 문서가 완전히 로드된 후 이벤트 핸들러 설정
+                
+            	$('.rateCalculator').on("click", function (e) {
+                    e.preventDefault();
+
+                    var url = "${root}/exchange/calculator"
+                    var name = "환율 계산기"
+                    var option = "width = 650px, height = 650px, top = 200px"
+                    window.open(url, name, option);
+                });
+            	
+            }); // $(document).ready
+        </script>
+	
 	<script type="text/javascript"
 		src="${root}js/exchange/inquiryDateBtn.js"></script>
 

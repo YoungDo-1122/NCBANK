@@ -10,7 +10,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>계좌 조회</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/accountCreate.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/accountCreate.css" />
 
 <!-- 부트스트랩 CDN -->
 <script
@@ -25,13 +26,13 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-                <div class="enquiry">
-                    <h3>조회</h3>
-                    <ul>
-                        <li><a href="${root}account/accountCheck">계좌 조회</a></li>
-                        <li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-                    </ul>
-                </div>
+				<div class="enquiry">
+					<h3>조회</h3>
+					<ul>
+						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+					</ul>
+				</div>
 				<div class="transfer">
 					<h3>이체</h3>
 					<ul>
@@ -73,12 +74,12 @@
 									<tr>
 										<td>계좌 비밀번호</td>
 										<td><input type="password" name="acPassword"
-											required="true" placeholder="계좌 비밀번호" /></td>
+											required="required" placeholder="계좌 비밀번호" maxlength="4" /></td>
 									</tr>
 									<tr>
 										<td>계좌 비밀번호 확인</td>
 										<td><input type="password" name="acPasswordConfirm"
-											required="true" placeholder="계좌 비밀번호 확인" /></td>
+											required="required" placeholder="계좌 비밀번호 확인" maxlength="4" /></td>
 									</tr>
 									<tr>
 										<td>계좌 분류</td>

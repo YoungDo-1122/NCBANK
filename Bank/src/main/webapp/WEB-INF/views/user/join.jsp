@@ -133,7 +133,8 @@ function sendSMSVerification() {
 			<form:hidden path="idExistCheck" />
 			<div class="form-group">
 				<form:label path="name">이름</form:label>
-				<form:input path="name" placeholder="이름" class='form-control' />
+				<form:input path="name" placeholder="이름" class='form-control'
+					required="required" />
 				<form:errors path="name" style='color:red' />
 			</div>
 			<div class="form-group">
@@ -141,11 +142,11 @@ function sendSMSVerification() {
 				<div class="resident">
 					<form:input path="resident1" placeholder="앞자리 6자리"
 						class='form-front' maxlength="6"
-						style="width: 100px; display: inline-block;" />
+						style="width: 100px; display: inline-block;" required="required" />
 					<label style="margin: 10px;">-</label>
 					<form:password path="resident2" placeholder="뒷자리 7자리"
 						class='form-back' maxlength="7"
-						style="width: 100px; display: inline-block;" />
+						style="width: 100px; display: inline-block;" required="required" />
 				</div>
 				<form:errors path="resident1" style='color:red' />
 				<form:errors path="resident2" style='color:red' />
@@ -154,7 +155,7 @@ function sendSMSVerification() {
 				<form:label path="id">아이디</form:label>
 				<div class="input-group">
 					<form:input path="id" class='form-control' placeholder="아이디"
-						onkeypress="resetUserIdExist()" />
+						onkeypress="resetUserIdExist()" required="required" />
 					<div class="input-group-append">
 						<button type="button" class="btn btn-primary"
 							onclick="checkUserIdExist()">중복확인</button>
@@ -165,30 +166,33 @@ function sendSMSVerification() {
 
 			<div class="form-group">
 				<form:label path="pwd">비밀번호</form:label>
-				<form:password path="pwd" placeholder="비밀번호" class='form-control' />
+				<form:password path="pwd" placeholder="비밀번호" class='form-control'
+					required="required" />
 				<form:errors path='pwd' style='color:red' />
 			</div>
 
 			<div class="form-group">
 				<form:label path="pwd2">비밀번호 확인</form:label>
 				<form:password path="pwd2" placeholder="비밀번호 확인"
-					class='form-control' />
+					class='form-control' required="required" />
 				<form:errors path='pwd2' style='color:red' />
 			</div>
 
 			<div class="form-group">
 				<form:label path="address">주소</form:label>
 				<div class="input-group mb-2">
-					<form:input path="add1" placeholder="우편번호" class="form-control" />
+					<form:input path="add1" placeholder="우편번호" class="form-control"
+						required="required" />
 					<div class="input-group-append">
 						<button type="button" class="btn btn-primary"
 							onclick="execDaumPostCode()">우편번호 찾기</button>
 					</div>
 				</div>
 				<form:input path="add2" placeholder="도로명 주소"
-					class='form-control space-between-inputs' />
+					class='form-control space-between-inputs' required="required" />
 				<br />
-				<form:input path="add3" placeholder="상세 주소" class='form-control' />
+				<form:input path="add3" placeholder="상세 주소" class='form-control'
+					required="required" />
 				<form:errors path='add1' style='color:red' />
 				<form:errors path='add3' style='color:red' />
 
@@ -199,8 +203,8 @@ function sendSMSVerification() {
 					<label for="phone" class="col-form-label">전화번호</label>
 					<div class="input-group">
 						<input id="phone" type="text" name="phone"
-							placeholder="전화번호 ('-'까지 입력)" class="form-control"
-							maxlength="13" />
+							placeholder="전화번호 ('-'까지 입력)" class="form-control" maxlength="13"
+							required="required" />
 						<div class="input-group-append">
 							<button type="button" class="btn btn-primary"
 								onclick="sendSMSVerification()">인증번호 받기</button>
@@ -213,7 +217,7 @@ function sendSMSVerification() {
 				<div class="col">
 					<div class="input-group">
 						<input id="verificationCode" type="text" name="verificationCode"
-							placeholder="인증번호" class="form-control" />
+							placeholder="인증번호" class="form-control" required="required" />
 						<div class="input-group-append">
 							<button id="certifyCheck" type="button" class="btn btn-primary"
 								onclick="certifyCheck()">인증번호 확인</button>

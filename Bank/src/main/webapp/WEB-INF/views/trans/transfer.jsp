@@ -43,6 +43,10 @@
 	text-align: left;
 	border: 1px solid #ddd;
 }
+
+.error {
+	color: red;
+}
 </style>
 </head>
 <body>
@@ -82,14 +86,18 @@
 			</div>
 			<div class="col-md-10">
 				<table>
-					<form:form action="${root}trans/transfer_pass" method="post"
-						modelAttribute="accountBean" id="passwordForm">
+					<form:form action="${root}trans/transfer_confirm" method="post"
+						modelAttribute="transferBean" id="transferBean">
 						<table>
 							<tr>
 								<th><h2>출금 정보</h2></th>
 							</tr>
 							<tr>
-								<td><form:select path="account" id="account">
+								<th>출금 계좌</th>
+							</tr>
+							<tr>
+								<td><form:select path="from_account" id="account"
+										required="required">
 										<form:option value="">선택</form:option>
 										<c:forEach var="account" items="${accounts}">
 											<form:option value="${account.account}">[${account.ac_type}] ${account.account}</form:option>
@@ -100,15 +108,12 @@
 								<th>계좌 비밀번호 확인</th>
 							</tr>
 							<tr>
-								<td><form:password path="ac_password" placeholder="숫자 4자리"
-										maxlength="4" id="ac_password" /> <form:errors
-										path="ac_password" cssClass="error" />
-									<button type="submit">비밀번호 확인</button></td>
+								<td><input type="password" name="ac_password"
+									placeholder="숫자 4자리" maxlength="4" id="ac_password"
+									required="required" />&nbsp;&nbsp;<form:errors
+										path="from_account" cssClass="error" /></td>
 							</tr>
 						</table>
-					</form:form>
-					<form:form action="${root}trans/transfer_confirm" method="post"
-						modelAttribute="transferBean" id="transferForm">
 						<table>
 							<tr>
 								<td><h2>입금 정보</h2></td>
@@ -117,7 +122,7 @@
 								<th>입금 은행</th>
 							</tr>
 							<tr>
-								<td><form:select path="code_organ">
+								<td><form:select path="code_organ" required="required">
 										<form:option value="">선택</form:option>
 										<c:forEach var="codeOrgan" items="${codeOrganNames}">
 											<form:option value="${codeOrgan.code_organ}">${codeOrgan.code_organ_name}</form:option>
@@ -129,23 +134,23 @@
 							</tr>
 							<tr>
 								<td><form:input path="to_account"
-										placeholder="입금계좌 ('-'빼고)" /> <form:errors
+										placeholder="입금계좌 ('-'빼고)" required="required" /> <form:errors
 										path="to_account" cssClass="error" /></td>
 							</tr>
 							<tr>
 								<th>이체금액</th>
 							</tr>
 							<tr>
-								<td><form:input path="trans_balance" placeholder="이체금액" />
-									<form:errors path="trans_balance" cssClass="error" /></td>
+								<td><form:input path="trans_balance" placeholder="이체금액"
+										required="required" /> <form:errors path="trans_balance"
+										cssClass="error" /></td>
 							</tr>
 							<tr>
 								<th>이체메모</th>
 							</tr>
 							<tr>
-								<td><form:input path="trans_text"
-										placeholder="(선택) 이체메모" /> <form:errors path="trans_text"
-										cssClass="error" /></td>
+								<td><form:input path="trans_text" placeholder="(선택) 이체메모" />
+									<form:errors path="trans_text" cssClass="error" /></td>
 							</tr>
 							<tr>
 								<td>
