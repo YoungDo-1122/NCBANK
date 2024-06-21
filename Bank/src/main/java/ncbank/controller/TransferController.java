@@ -48,7 +48,7 @@ public class TransferController {
 
 		int userNum = loginUserBean.getUser_num();
 		System.out.println("이체내역 계좌 : " + account);
-		System.out.println("이체내역 회원 번호 : " + userNum);
+//		System.out.println("이체내역 회원 번호 : " + userNum);
 
 		List<TransferBean> transfers;
 		if (account != null && !account.isEmpty()) {
@@ -109,26 +109,28 @@ public class TransferController {
 				.orElse(null);
 
 		if (fromAccount == null || !fromAccount.getAc_password().equals(acPassword)) {
-			result.rejectValue("ac_password", "error.ac_password", "비밀번호가 일치하지 않습니다");
+			result.rejectValue("from_account", "error.from_account", "비밀번호가 일치하지 않습니다");
+			System.out.println("입력한 비밀번호 : " + acPassword);
+			System.out.println("계좌 비밀번호 : " + fromAccount.getAc_password());
 			model.addAttribute("accounts", accounts);
 
 			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
 			model.addAttribute("codeOrganNames", codeOrganNames);
 			return "trans/transfer";
 		}
-		// 출금 내역 추가
-		transferBean.setTrans_type(-1); // 출금
+		// 출금 및 입금 내역 추가
+//		transferBean.setTrans_type(-1); // 출금
 		transferService.addTransfer(transferBean);
-
-		// 입금 내역 추가
-		TransferBean depositBean = new TransferBean();
-		depositBean.setTrans_type(1); // 입금
-		depositBean.setTrans_balance(transferBean.getTrans_balance());
-		depositBean.setTrans_text(transferBean.getTrans_text());
-		depositBean.setFrom_account(transferBean.getTo_account());
-		depositBean.setTo_account(transferBean.getFrom_account());
-		depositBean.setCode_organ(transferBean.getCode_organ());
-		transferService.addTransfer(depositBean);
+//
+//		// 입금 내역 추가
+//		TransferBean depositBean = new TransferBean();
+//		depositBean.setTrans_type(1); // 입금
+//		depositBean.setTrans_balance(transferBean.getTrans_balance());
+//		depositBean.setTrans_text(transferBean.getTrans_text());
+//		depositBean.setFrom_account(transferBean.getTo_account());
+//		depositBean.setTo_account(transferBean.getFrom_account());
+//		depositBean.setCode_organ(transferBean.getCode_organ());
+//		transferService.addTransfer(depositBean);
 		return "redirect:/trans/transferCheck";
 	}
 

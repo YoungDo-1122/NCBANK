@@ -9,7 +9,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>이체내역 확인</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/transferCheck.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/transferCheck.css" />
 <!-- 부트스트랩 CDN -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -23,23 +24,23 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-                <div class="enquiry">
-                    <h3>조회</h3>
-                    <ul>
-                        <li><a href="${root}account/accountCheck">계좌 조회</a></li>
-                        <li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-                    </ul>
-                </div>
-                <div class="transfer">
-                    <h3>이체</h3>
-                    <ul>
-                        <li><a href="${root}account/accountCreate">계좌 개설</a></li>
-                        <li><a href="${root}trans/transfer">계좌 이체</a></li>
-                        <li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-                        <li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
-                    </ul>
-                </div>
-            </div>
+				<div class="enquiry">
+					<h3>조회</h3>
+					<ul>
+						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+					</ul>
+				</div>
+				<div class="transfer">
+					<h3>이체</h3>
+					<ul>
+						<li><a href="${root}account/accountCreate">계좌 개설</a></li>
+						<li><a href="${root}trans/transfer">계좌 이체</a></li>
+						<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
+						<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
+					</ul>
+				</div>
+			</div>
 			<div class="col-md-10">
 				<c:choose>
 					<c:when test="${not empty transfers}">
@@ -78,8 +79,9 @@
 												<tr>
 													<td><c:if test="${transfer.trans_type eq 1}">입금</c:if>
 														<c:if test="${transfer.trans_type eq 2}">출금</c:if></td>
-													<td>${transfer.trans_balance}</td>
-													<td>${transfer.code_organ_name}&nbsp;${transfer.to_account}</td>
+													<td><c:if test="${transfer.trans_type eq 1}">+&nbsp;${transfer.trans_balance}</c:if>
+														<c:if test="${transfer.trans_type eq 2}">-&nbsp;${transfer.trans_balance}</c:if></td>
+													<td>[${transfer.code_organ_name}]${transfer.to_account}</td>
 													<td>${transfer.from_account}</td>
 													<td>${transfer.trans_balance}</td>
 													<td>${transfer.trans_text}</td>
