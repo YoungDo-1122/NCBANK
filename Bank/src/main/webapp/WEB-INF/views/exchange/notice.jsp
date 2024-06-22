@@ -126,7 +126,7 @@
                             var left = (window.screen.width / 2) - (width / 2);
                             var top = (window.screen.height / 2) - (height / 2);
                             var option = "width=" + width + ", height=" + height + ", top=" + top + ", left=" + left
-                                + ", munubar=no, scrollbars=no";
+                            	+ ", munubar=no, scrollbars=no";
                             window.open(url, name, option);
                         });
 

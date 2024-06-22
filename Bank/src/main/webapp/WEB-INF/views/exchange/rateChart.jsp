@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>exchange/rateChart</title>
+<title>환율차트</title>
 
 <!-- 통계 그래프/차트 를 만들기 위한 라이브러리 -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -27,7 +27,7 @@
 			<div class="logo">
 				<img src="${root}img/NCBankIcon_2.png" alt="NCBank"
 					class="iconStyle01">
-				<p class="logoName">NCBank</p>
+				<p class="logoName">NC뱅크</p>
 			</div>
 		</div>
 		

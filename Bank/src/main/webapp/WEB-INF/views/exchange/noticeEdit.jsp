@@ -110,7 +110,7 @@
 
 				var url = "${root}/exchange/rateChart"
 				var name = "환율 차트"
-					 var width = 500;
+				var width = 500;
                 var height = 700;
                 var left = (window.screen.width / 2) - (width / 2);
                 var top = (window.screen.height / 2) - (height / 2);

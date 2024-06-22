@@ -149,7 +149,7 @@ $(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 �
             <h1 class="subject">환율계산기</h1>
             <div class="logo">
                 <img src="${root}img/NCBankIcon_2.png" alt="NCBank" class="iconStyle01">
-                <p class="logoName">NCBank</p>
+                <p class="logoName">NC뱅크</p>
             </div>
         </div>
 
@@ -182,7 +182,7 @@ $(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 �
             </div>
 
             <div class="selectArea">
-                <input type="text" id="amount" class="sbStyle02"
+                <input type="text" id="amount" class="sbStyle03"
                     value="${beanKRW.code_money} (${beanKRW.code_money_name})" readonly>
                 <input type="number" class="amount inpStyle01" />
             </div>
