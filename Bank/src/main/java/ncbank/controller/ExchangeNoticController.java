@@ -153,7 +153,7 @@ public class ExchangeNoticController {
     }
 
     // success
-    @GetMapping("noiticeRegisterEditSuccess")
+    @GetMapping("noticeRegisterEditSuccess")
     public String noiticeRegisterEditSuccess(Model model) {
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "user/not_login";

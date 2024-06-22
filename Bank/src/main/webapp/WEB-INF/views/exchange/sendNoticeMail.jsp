@@ -7,9 +7,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>exchange/sendNoticeMail.jsp</title>
+<title>환율알림 메일 서비스</title>
 </head>
 
+<!-- 메일전송에 담기는 jsp에서는 css, style 안먹음 => 인라인으로 해야됨 -->
 <link rel="stylesheet" href="${root}css/exchange/sendNoticeMail.css">
 
 <body>
@@ -18,10 +19,10 @@
         <div class="logo" style="display: flex; margin: 5px 20px 5px;">
         	<!-- 인라인으로 이미지 첨부 - cid:사전에정의한 인라인명 -->
             <img src="cid:NCBankIcon" alt="NCBank" class="logoIcon" style="width: 100px; height: 100px;">&nbsp;
-            <p class="logoName" style="margin: 18px 10px 0px; font-size: 50px;">NC Bank</p>
+            <p class="logoName" style="margin: 18px 10px 0px; font-size: 50px;">NC 뱅크</p>
             <!-- 테스트 확인용 -->
             <img src="${root}${NCBankIcon2}" alt="NCBank" border="0" class="logoIcon" style="width: 100px; height: 100px;">&nbsp;
-            <p class="logoName" style="margin: 18px 10px 0px; font-size: 50px;">NC Bank</p>
+            <p class="logoName" style="margin: 18px 10px 0px; font-size: 50px;">NC 뱅크</p>
         </div>
     </div>
 
