@@ -5,6 +5,7 @@ import java.util.Date;
 public class TransferBean {
 	private int trans_num;
 	private int trans_type;
+	private String trans_money;
 	private String trans_balance;
 	private String trans_text;
 	private Date trans_date;
@@ -12,6 +13,14 @@ public class TransferBean {
 	private String from_account;
 	private String code_organ;
 	private String code_organ_name;
+
+	public String getTrans_money() {
+		return trans_money;
+	}
+
+	public void setTrans_money(String trans_money) {
+		this.trans_money = trans_money;
+	}
 
 	public String getCode_organ_name() {
 		return code_organ_name;

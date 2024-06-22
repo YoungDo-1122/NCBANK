@@ -11,7 +11,7 @@
 <body>
 	<script>
 		alert('글 작성이 완료되었습니다.')
-		location.href = '${root}board/main';
+		location.href = '${root}main';
 	</script>
 </body>
 </html>

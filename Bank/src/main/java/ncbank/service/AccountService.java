@@ -15,11 +15,11 @@ import ncbank.dao.AccountDAO;
 
 @Service
 public class AccountService {
-	@Autowired
-	private AccountDAO accountDAO;
-
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
+
+	@Autowired
+	private AccountDAO accountDAO;
 
 	private static final String codeOrgan = "005";
 
@@ -30,12 +30,20 @@ public class AccountService {
 		return loginUserBean.getUser_num();
 	}
 
+	public UserBean getUserInfo(int userNum) {
+		return accountDAO.getUserInfo(userNum);
+	}
+
 	public List<AccountBean> getAccount(int userNum) {
 		return accountDAO.getAccount(userNum);
 	}
 
-	public UserBean getUserInfo(int userNum) {
-		return accountDAO.getUserInfo(userNum);
+	public void updateAccountBalance(AccountBean accountBean) {
+		accountDAO.updateAccountBalance(accountBean);
+	}
+
+	public AccountBean getAccountByNumber(String accountNumber) {
+		return accountDAO.getAccountByNumber(accountNumber);
 	}
 
 	// 실제 회원가입 시 사용되는 함수
@@ -52,8 +60,8 @@ public class AccountService {
 		// 최근 계좌 개설일 찾기
 		Date lastCreateDate = getLastAccountCreateDate(accounts);
 
+		// 30일이 지났는지 확인
 		if (lastCreateDate != null) {
-			// 30일이 지났는지 확인
 			long diffInMillis = new Date().getTime() - lastCreateDate.getTime();
 			long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
 
@@ -113,6 +121,12 @@ public class AccountService {
 	// 회원번호를 8자리로 포맷팅하는 함수 (앞을 0으로 채움)
 	private String formatMemberNumber(int userNum) {
 		return String.format("%0" + userAccountLength + "d", userNum);
+	}
+
+	public boolean isValidAccountNumber(String accountNumber) {
+		int checkDigit = Character.getNumericValue(accountNumber.charAt(accountNumber.length() - 1));
+		String baseNumber = accountNumber.substring(0, accountNumber.length() - 1);
+		return calculateLuhnCheckDigit(baseNumber) == checkDigit;
 	}
 
 	// Luhn 알고리즘으로 검증 숫자 계산하는 함수

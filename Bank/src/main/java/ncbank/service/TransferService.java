@@ -7,18 +7,19 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ncbank.beans.CodeOrganBean;
+import ncbank.beans.AccountBean;
 import ncbank.beans.TransferBean;
 import ncbank.beans.UserBean;
 import ncbank.dao.TransferDAO;
 
 @Service
 public class TransferService {
+	// 입금 1, 출금 2
 	@Autowired
 	private TransferDAO transferDAO;
 
 	@Autowired
-	private CodeOrganService codeOrganService;
+	private AccountService accountService;
 
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
@@ -28,76 +29,90 @@ public class TransferService {
 		return loginUserBean.getUser_num();
 	}
 
-	public void addTransfer(TransferBean transferBean) {
-		// 출금 내역 추가
-		transferBean.setTrans_type(2); // 출금
-		transferDAO.addTransfer(transferBean);
-
-		// 입금 내역 추가
-		TransferBean depositBean = new TransferBean();
-		depositBean.setTrans_type(1); // 입금
-		depositBean.setTrans_balance(transferBean.getTrans_balance());
-		depositBean.setTrans_text(transferBean.getTrans_text());
-		depositBean.setFrom_account(transferBean.getTo_account());
-		depositBean.setTo_account(transferBean.getFrom_account());
-		depositBean.setCode_organ(transferBean.getCode_organ());
-		transferDAO.addTransfer(depositBean);
-	}
-
 	public List<TransferBean> getTransfer(int userNum, String account) {
 		List<TransferBean> transfers = transferDAO.getTransfer(userNum, account);
-		List<CodeOrganBean> codeOrganBeans = codeOrganService.getCode_organ_name();
-
-		for (TransferBean transfer : transfers) {
-			String codeOrganCode = transfer.getCode_organ();
-			for (CodeOrganBean codeOrgan : codeOrganBeans) {
-				if (codeOrgan.getCode_organ().equals(codeOrganCode)) {
-					transfer.setCode_organ_name(codeOrgan.getCode_organ_name());
-					break;
-				}
-			}
-		}
-
 		return transfers;
 	}
 
-//	public void addTransfer(TransferBean transferBean) {
-//		transferDAO.addTransfer(transferBean);
-//
-//		if ("005".equals(transferBean.getCode_organ())) {
-//			// 입금
-//			TransferBean depositBean = new TransferBean();
-//			depositBean.setTrans_type(1);
-//			depositBean.setTrans_balance(transferBean.getTrans_balance());
-//			depositBean.setTrans_text(transferBean.getTrans_text());
-//			depositBean.setFrom_account(transferBean.getTo_account());
-//			depositBean.setTo_account(transferBean.getFrom_account());
-//			depositBean.setCode_organ(transferBean.getCode_organ());
-//			transferDAO.addTransfer(depositBean);
-//		}
-//
-////		if ("005".equals(transferBean.getCode_organ())) {
-////			transferDAO.addTransfer(depositBean);
-////		} else {
-////			depositBean.setFrom_account("외부 은행");
-////			transferDAO.addTransfer(depositBean);
-////		}
-//	}
+	public void addTransfer(TransferBean transferBean) throws Exception {
+		// 출금 계좌와 입금 계좌가 동일할 경우 예외 발생
+		if (transferBean.getFrom_account().equals(transferBean.getTo_account())) {
+			throw new Exception("출금 계좌와 입금 계좌는 동일할 수 없습니다.");
+		}
 
-//	public List<TransferBean> getTransfer(int userNum, String account) {
-//		List<TransferBean> transfers = transferDAO.getTransfer(userNum, account);
-//		List<CodeOrganBean> codeOrganBeans = codeOrganService.getCode_organ_name();
-//
-//		for (TransferBean transfer : transfers) {
-//			String codeOrganCode = transfer.getCode_organ();
-//			for (CodeOrganBean codeOrgan : codeOrganBeans) {
-//				if (codeOrgan.getCode_organ().equals(codeOrganCode)) {
-//					transfer.setCode_organ_name(codeOrgan.getCode_organ_name());
-//					break;
-//				}
-//			}
-//		}
-//
-//		return transfers;
-//	}
+		System.out.println("codeOrgan3 : " + transferBean.getCode_organ());
+
+		AccountBean fromAccount = accountService.getAccountByNumber(transferBean.getFrom_account());
+
+		// 계좌 잔액 확인 및 업데이트
+		double fromBalance = Double.parseDouble(fromAccount.getAc_balance());
+		double transferAmount = Double.parseDouble(transferBean.getTrans_money());
+
+		if (fromBalance < transferAmount) {
+			throw new Exception("잔액이 부족합니다.");
+		}
+		
+		System.out.println("codeOrgan4 : " + transferBean.getCode_organ());
+
+		// 내부 계좌와 외부 계좌 구분
+		if ("005".equals(transferBean.getCode_organ())) {
+
+			AccountBean toAccount = accountService.getAccountByNumber(transferBean.getTo_account());
+
+			// Luhn 알고리즘 검사
+			if (!accountService.isValidAccountNumber(transferBean.getTo_account())) {
+				throw new Exception("입금 계좌번호가 유효하지 않습니다.");
+			}
+
+			// 내부 이체: 입금 내역 추가
+			if (toAccount != null) {
+				double toBalance = Double.parseDouble(toAccount.getAc_balance());
+				toBalance += transferAmount;
+				toAccount.setAc_balance(String.valueOf(Math.round(toBalance))); // 정수로 저장
+				accountService.updateAccountBalance(toAccount);
+
+				TransferBean depositBean = new TransferBean();
+				depositBean.setTrans_type(1); // 입금
+				depositBean.setTrans_money(String.valueOf(Math.round(transferAmount))); // 이체 금액 설정
+				depositBean.setTrans_text(transferBean.getTrans_text());
+				depositBean.setFrom_account(transferBean.getFrom_account());
+				depositBean.setTo_account(transferBean.getTo_account());
+				depositBean.setCode_organ("005"); // 입금은행 설정
+				depositBean.setTrans_balance(String.valueOf(Math.round(toBalance))); // 입금 후 잔액 설정
+				transferDAO.addTransfer(depositBean);
+			}
+		}
+		
+		System.out.println("codeOrgan5 : " + transferBean.getCode_organ());
+
+		// 출금 내역 추가
+		fromBalance -= transferAmount;
+		fromAccount.setAc_balance(String.valueOf(Math.round(fromBalance))); // 정수로 저장
+		accountService.updateAccountBalance(fromAccount);
+
+		TransferBean withdrawBean = new TransferBean();
+		withdrawBean.setTrans_type(2); // 출금
+		withdrawBean.setTrans_money(String.valueOf(Math.round(transferAmount))); // 이체 금액 설정
+		withdrawBean.setTrans_text(transferBean.getTrans_text());
+		withdrawBean.setFrom_account(transferBean.getFrom_account());
+		withdrawBean.setTo_account(transferBean.getTo_account());
+		withdrawBean.setCode_organ(transferBean.getCode_organ()); // 출금은행 설정
+		withdrawBean.setTrans_balance(String.valueOf(Math.round(fromBalance))); // 출금 후 잔액 설정
+		transferDAO.addTransfer(withdrawBean);
+		
+		System.out.println("codeOrgan6 : " + transferBean.getCode_organ());
+
+		// 외부 이체 처리 추가
+		if (!"005".equals(transferBean.getCode_organ())) {
+			TransferBean externalDepositBean = new TransferBean();
+			externalDepositBean.setTrans_type(1); // 입금
+			externalDepositBean.setTrans_money(String.valueOf(Math.round(transferAmount))); // 이체 금액 설정
+			externalDepositBean.setTrans_text(transferBean.getTrans_text());
+			externalDepositBean.setFrom_account(transferBean.getFrom_account());
+			externalDepositBean.setTo_account(transferBean.getTo_account());
+			externalDepositBean.setCode_organ(transferBean.getCode_organ()); // 입금은행 설정
+			externalDepositBean.setTrans_balance("0"); // 외부 이체는 잔액 설정이 필요 없음
+			transferDAO.addTransfer(externalDepositBean);
+		}
+	}
 }

@@ -9,7 +9,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>계좌 이체</title>
-<!-- 부트스트랩 CDN -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script
@@ -18,6 +17,13 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function() {
+		<c:if test="${not empty transferError}">
+		alert("이체에 실패했습니다. 다시 시도해 주세요.");
+		</c:if>
+	});
+</script>
 <style>
 .col-md-10, .col-md-2 {
 	border: 1px solid #ddd;
@@ -63,7 +69,7 @@
 							<ul>
 								<li><a href="${root}account/accountCheck">계좌 조회</a></li>
 								<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-
+								<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
 							</ul>
 						</td>
 					</tr>
@@ -77,8 +83,8 @@
 							<ul>
 								<li><a href="${root}account/accountCreate">계좌 개설</a></li>
 								<li><a href="${root}trans/transfer">계좌 이체</a></li>
-								<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-								<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
+								<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
+								<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
 							</ul>
 						</td>
 					</tr>
@@ -100,7 +106,13 @@
 										required="required">
 										<form:option value="">선택</form:option>
 										<c:forEach var="account" items="${accounts}">
-											<form:option value="${account.account}">[${account.ac_type}] ${account.account}</form:option>
+											<form:option value="${account.account}">
+												<c:choose>
+													<c:when test="${account.ac_type == 0}">[저축예금]${account.account}</c:when>
+													<c:when test="${account.ac_type == 1}">[모임통장]${account.account}</c:when>
+													<c:when test="${account.ac_type == 2}">[적금통장]${account.account}</c:when>
+												</c:choose>
+											</form:option>
 										</c:forEach>
 									</form:select></td>
 							</tr>
@@ -113,8 +125,6 @@
 									required="required" />&nbsp;&nbsp;<form:errors
 										path="from_account" cssClass="error" /></td>
 							</tr>
-						</table>
-						<table>
 							<tr>
 								<td><h2>입금 정보</h2></td>
 							</tr>
@@ -141,8 +151,8 @@
 								<th>이체금액</th>
 							</tr>
 							<tr>
-								<td><form:input path="trans_balance" placeholder="이체금액"
-										required="required" /> <form:errors path="trans_balance"
+								<td><form:input path="trans_money" placeholder="이체금액"
+										required="required" /> <form:errors path="trans_money"
 										cssClass="error" /></td>
 							</tr>
 							<tr>

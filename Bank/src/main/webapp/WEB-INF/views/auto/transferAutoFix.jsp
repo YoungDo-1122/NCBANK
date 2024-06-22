@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>계좌 조회</title>
+<title>자동이체 수정</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/accountCheck.css" />
 <script
@@ -44,18 +44,31 @@
 			<div class="col-md-10">
 				<table>
 					<tr>
-						<th><h2>입 / 출금 계좌</h2></th>
+						<td><select id="accountSelect">
+								<option value="">계좌를 선택하세요</option>
+								<c:forEach var="account" items="${accounts}">
+									<option value="${account.account}"
+										<c:if test="${account.account eq selectedAccount}">selected</c:if>>${account.account}</option>
+								</c:forEach>
+						</select>
+							<button onclick="filterTransfers()">조회</button></td>
+					</tr>
+				</table>
+				<table>
+					<tr>
+						<th><h2>자동이체 조회/수정/삭제</h2></th>
 					</tr>
 					<tr>
 						<td>
 							<table>
 								<thead>
 									<tr>
-										<th>계좌분류</th>
-										<th>계좌번호</th>
-										<th>잔액</th>
-										<th>계좌개설일</th>
-										<th>업무</th>
+										<th>자동이체명</th>
+										<th>입금계좌</th>
+										<th>이체금액</th>
+										<th>이체종료일</th>
+										<th>이체주기</th>
+										<th>이체일자</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -99,5 +112,16 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+	<script>
+		function filterTransfers() {
+			var selectedAccount = document.getElementById("accountSelect").value;
+			if (!selectedAccount) {
+				alert('계좌를 선택해 주세요');
+				return;
+			}
+			window.location.href = "${root}trans/transferCheck?account="
+					+ selectedAccount;
+		}
+	</script>
 </body>
 </html>
