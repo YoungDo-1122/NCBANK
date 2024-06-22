@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -120,4 +121,13 @@ public class UserService {
 	 * userDaO.findMemberPwd(findMemberPwdBean); }
 	 * 
 	 */
+
+	public UserBean getUserInfo(int userNum) {
+		return userDaO.getUserInfo(userNum);
+	}
+
+	public void updateUserInfo(UserBean userBean) {
+		userDaO.updateUserInfo(userBean);
+	}
+
 }

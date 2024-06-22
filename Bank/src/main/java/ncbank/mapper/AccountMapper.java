@@ -11,7 +11,7 @@ import ncbank.beans.UserBean;
 
 public interface AccountMapper {
 
-	@Select("select * from account where user_num = #{userNum}")
+	@Select("select * from account where user_num = #{userNum} order by ac_date desc")
 	List<AccountBean> getAccount(@Param("userNum") int userNum);
 
 	@Select("select * from member where user_num = #{userNum}")

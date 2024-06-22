@@ -68,9 +68,13 @@ import ncbank.utility.EmailManager;
 // @ComponentScan(basePackages = {"kr.co.soldesk.controller",
 // "kr.co.soldesk.service", "kr.co.soldesk.dao"})
 @PropertySource("/WEB-INF/properties/db.properties") // 로드할 Property 파일 위치 지정 (서버에 연결)
+// @PropertySource("/WEB-INF/properties/application.properties")
 public class ServletAppContext implements WebMvcConfigurer {
 
     /* ==========[DB 접속 데이터]========== */
+
+    // @Value("${openai.api.key}")
+    // private String apiKey;
 
     // @Value : 지정된 Property 파일에서 값을 필드로 주입받음 (lombok 꺼 말고 springframework 꺼 임포트)
     @Value("${db.classname}")

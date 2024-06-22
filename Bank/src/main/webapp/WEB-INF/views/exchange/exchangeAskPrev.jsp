@@ -3,13 +3,13 @@
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
 
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/teststyle_top.css">
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>exchangeAskPrev</title>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/teststyle_top.css"/>
 </head>
 <body>
 	

@@ -20,6 +20,6 @@ public interface TransferMapper {
 			+ "FROM transfer t " + "JOIN account a ON t.from_account = a.account "
 			+ "JOIN login l ON a.user_num = l.user_num " + "LEFT JOIN code_organ c ON t.code_organ = c.code_organ "
 			+ "WHERE l.user_num = #{userNum} " + "<if test='account != null'>AND t.from_account = #{account}</if>"
-			+ "</script>")
+			+ "order by trans_date desc </script>")
 	List<TransferBean> getTransfer(@Param("userNum") int userNum, @Param("account") String account);
 }

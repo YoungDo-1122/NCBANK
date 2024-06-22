@@ -98,3 +98,8 @@
 .col-md-10 button:hover {
 	background-color: #0056b3;
 }
+
+input[type="password"], select {
+	height: 30px;
+	font-size: 16px;
+}

@@ -17,8 +17,9 @@ public class BoardMainSerivce {
 	private BoardDao boardDao;
 	
 	public List<ContentBean> getMainList(int board_info_idx){
-		RowBounds rowBounds = new RowBounds(0,5);
-		return boardDao.getContentList(board_info_idx, rowBounds);
+		int start = 1;
+		int end = 5;
+		return boardDao.getContentList(board_info_idx, start, end);
 	}
 
 }

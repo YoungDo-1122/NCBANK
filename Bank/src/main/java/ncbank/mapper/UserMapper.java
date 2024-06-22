@@ -1,6 +1,7 @@
 package ncbank.mapper;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -41,5 +42,12 @@ public interface UserMapper {
     // 비밀번호 변경 pwd, salt
     @Update("update login set pwd=#{pwd},salt=#{salt} where id=#{id}")
     public void findMemberPwd(UserBean findMemberPwdBean);
-
+    
+    //마이페이지에 정보 띄우기용
+    @Select("select * from member m join login l on l.user_num = m.user_num where m.user_num = #{userNum}")
+    UserBean getUserInfo(@Param("userNum") int userNum);
+    
+    //정보수정
+    @Update("update member set phone=#{phone},email=#{email} where id=#{id}")
+    public void updateUserInfo(UserBean userBean);
 }

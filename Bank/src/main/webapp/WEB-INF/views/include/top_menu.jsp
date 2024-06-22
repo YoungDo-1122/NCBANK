@@ -8,8 +8,11 @@
 	href="${pageContext.request.contextPath}/css/top_menu.css">
 
 <nav>
-	<a class="navbar-brand" href="${root}main"> <img
-		src="${root}/img/ncbank_logo.png" style="height: 100px" /></a>
+	<div class="brandlogo">
+	<a class="navbar-brand" href="${root}main"> 
+	<img src="${root}/img/ncbank_logo.png"/></a>
+	<p>NC은행</p>
+	</div>
 	<!-- 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
 			<span class="navbar-toggler-icon"></span> 
 		</button>-->
@@ -50,7 +53,7 @@
 	<ul class="login">
 		<c:choose>
 			<c:when test="${loginUserBean.userLogin == true }">
-				<li class="nav-item"><a href="${root}user/modify"
+				<li class="nav-item"><a href="${root}user/mypage"
 					class="nav-link">마이페이지</a></li>
 				<li class="nav-item"><a href="${root}user/logout"
 					class="nav-link">로그아웃</a></li>
