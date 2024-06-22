@@ -182,8 +182,8 @@ $(document).ready(function() { // 문서가 완전히 로드된 후 이벤트 �
             </div>
 
             <div class="selectArea">
-                <label for="amount"
-                    class="sbStyle02">${beanKRW.code_money}&nbsp;&nbsp;(${beanKRW.code_money_name})</label>
+                <input type="text" id="amount" class="sbStyle02"
+                    value="${beanKRW.code_money} (${beanKRW.code_money_name})" readonly>
                 <input type="number" class="amount inpStyle01" />
             </div>
 

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<c:set var="root" value="${pageContext.request.contextPath}" />
+<c:set var="root" value="${pageContext.request.contextPath}/" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,36 +16,63 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
+<link rel="stylesheet" href="${root}css/exchange/rateChart.css">
+
 <body>
     
-    <h2>환율차트</h2>
+    <div class="contentBox">
     
-    <label for="currency">통화&nbsp;:&nbsp;</label>
-    <select id="currency" name="currency">
-        <c:forEach var="obj" items="${codeMoneyList}">
-            <c:if test="${'KRW' != fn:trim(obj.code_money).toUpperCase()}">
-                <option class="op_code_money" value="${obj.code_money}">${obj.code_money}&nbsp;&nbsp;(${obj.code_money_name})</option>
-            </c:if>
-        </c:forEach>
-    </select>
+		<div class="top">
+			<h1 class="subject">환율차트</h1>
+			<div class="logo">
+				<img src="${root}img/NCBankIcon_2.png" alt="NCBank"
+					class="iconStyle01">
+				<p class="logoName">NCBank</p>
+			</div>
+		</div>
+		
+		<div class="content">
 
-	<!-- 1: 매매기준, 2: 송금할때, 3: 송금받을때  -->
-	<label for="FXRate">환율 정보&nbsp;:&nbsp;</label>
-    <select id="FXRate" name="period">
-        <option value="1">매매 기준율</option>
-        <option value="2">송금할 때</option>
-        <option value="3">송금받을 때</option>
-    </select>
-    
- 	<label for="period">기간 선택&nbsp;:&nbsp;</label>
-	<select id="period" name="period">
-		<option value="1week">1주</option>
-		<option value="1month">1개월</option>
-		<option value="3month">3개월</option>
-		<option value="6month">6개월</option>
-	</select>
+            <div class="selectArea">
+                <!-- 1: 매매기준, 2: 송금할때, 3: 송금받을때  -->
+                <select class="sbStyle01" id="FXRate" name="period">
+                    <option value="1">매매 기준율</option>
+                    <option value="2">송금할 때</option>
+                    <option value="3">송금받을 때</option>
+                </select>
+            </div>
 
-	<canvas id="exchangeRateChart" width="400" height="200"></canvas>
+            <div class="selectArea">
+
+                <select class="sbStyle02" id="currency" name="currency">
+                    <c:forEach var="obj" items="${codeMoneyList}">
+                        <c:if test="${'KRW' != fn:trim(obj.code_money).toUpperCase()}">
+                            <option class="op_code_money" value="${obj.code_money}">
+                                ${obj.code_money}&nbsp;&nbsp;(${obj.code_money_name})</option>
+                        </c:if>
+                    </c:forEach>
+                </select>
+
+                <select class="sbStyle03" id="period" name="period">
+                    <option value="1week">1주</option>
+                    <option value="1month">1개월</option>
+                    <option value="3month">3개월</option>
+                    <option value="6month">6개월</option>
+                </select>
+            </div> <!-- div.selectArea -->
+
+            <div class="textArea">
+                <p class="textType01">(${finalInquiryDate} 기준)</p>
+            </div>
+
+            <canvas id="exchangeRateChart" width="400" height="200"></canvas>
+
+            <div class="btnArea">
+                <button type="button" class="btnStyle01" onclick="window.close();">닫기</button>
+            </div>
+        </div> <!-- div.content -->
+
+    </div> <!-- div.contentBox -->
 
 <script>
 $(document).ready(function() {

@@ -36,6 +36,9 @@
                     
                     <ul>
                         <li class="rateCalculator">환율 계산기</li>
+                        <!-- 환율 차트 판업 -->
+                        <li class="rateChartBtn bType02">환율차트보기</li>
+			
                     </ul>
                 </div>
             </div>
@@ -112,7 +115,21 @@
                 	+ ", munubar=no, scrollbars=no";
                 window.open(url, name, option);
             });
+			
+        	$('.rateChartBtn').on("click", function(e) {
+				e.preventDefault();
 
+				var url = "${root}/exchange/rateChart"
+				var name = "환율 차트"
+					 var width = 500;
+                var height = 700;
+                var left = (window.screen.width / 2) - (width / 2);
+                var top = (window.screen.height / 2) - (height / 2);
+                var option = "width=" + width + ", height=" + height + ", top=" + top + ", left=" + left
+                	+ ", munubar=no, scrollbars=no";
+				window.open(url, name, option);
+			});
+        	
         }); // $(document).ready
     </script>
 

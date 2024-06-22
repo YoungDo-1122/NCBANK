@@ -21,11 +21,8 @@ body {
     height: 100%;
 
     margin: 0px;
-
+    
     font-size: 14px;
-
-    overflow-x: hidden;
-    overflow-y: hidden;
 
 }
 
@@ -75,61 +72,53 @@ body {
     margin: 30px auto;
 }
 
-.sbStyle01 {
-    width: 250px;
-    height: 30px;
-
-    background-color: whitesmoke;
-    border: 1px solid #c1bdba;
-}
-
 .selectArea {
     display: flex;
 
     height: 50px;
 
     margin: 10px 0px;
+}
+.sbStyle01 {
+    width: 250px;
+    height: 30px;
 
+    margin: 10px 5px;
+
+    background-color: whitesmoke;
+    border: 1px solid #c1bdba;
 }
 .sbStyle02 {
-    width: 40%;
-   
+    width: 50%;
+    
+    margin: 10px 5px;
     text-align: center;
 
     background-color: #e8e8e8;
     border: 1px solid #c1bdba;
 }
-.inpStyle01 {
-    width: 60%;
 
-    text-align: right;
+.sbStyle03 {
+    width: 50%;
+   
+    margin: 10px 5px;
+    text-align: center;
 
+    background-color: #e8e8e8;
     border: 1px solid #c1bdba;
 }
 
-.iconArea {
-    margin: -10px 0px;
-    text-align: center;
-}
 
-.iconStyle02 {
-    width: 50px;
-    height: 50px;
+.textArea {
+    margin-top: 50px;
+    margin-bottom: -20px;
 }
-
- /* .textArea */
 
 .textType01 {
     text-align: right;
     font-size: 13px;
 }
 
-.listType01 {
-    margin-top: 40px;
-    margin-left: -10px;
-
-    font-size: 13px;
-}
 
 .btnArea {
     text-align: center;
@@ -148,3 +137,5 @@ body {
 .btnStyle01:hover {
     background-color: #c1bdba;
 }
+
+

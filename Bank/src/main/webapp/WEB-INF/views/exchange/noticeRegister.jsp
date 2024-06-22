@@ -165,7 +165,12 @@ b {
 
 				var url = "${root}/exchange/rateChart"
 				var name = "환율 차트"
-				var option = "width = 650px, height = 650px, top = 200px"
+				var width = 500;
+                var height = 700;
+                var left = (window.screen.width / 2) - (width / 2);
+                var top = (window.screen.height / 2) - (height / 2);
+                var option = "width=" + width + ", height=" + height + ", top=" + top + ", left=" + left
+                	+ ", munubar=no, scrollbars=no";
 				window.open(url, name, option);
 			});
 
