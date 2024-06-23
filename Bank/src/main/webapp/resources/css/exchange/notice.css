@@ -1,5 +1,36 @@
 @charset "UTF-8";
 
+/* 모임 통장 css */
+body {
+	margin: 0;
+    padding: 0;
+    
+    color: #333333;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+
+	background-color: #e0e0e0; /* 더 진한 회색 */
+}
+.container {
+	display: flex;
+	flex-direction: column;
+	
+	width: 70%;
+	max-width: 1400px;
+	margin: 0 auto;
+	padding: 20px;
+	align-items: center;
+	
+	font-family: Arial, Helvetica, sans-serif;
+   
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	box-sizing: border-box; /* 패딩 포함하여 전체 너비 계산 */
+	
+	background-color: #ffffff;
+	border-radius: 10px;
+}
+
+/*
 .container {
 	font-family: Arial, Helvetica, sans-serif;
 	width: 70%;
@@ -10,65 +41,20 @@
 	flex-flow: column;
 	align-items: center;
 }
+*/
 
 .contentWarp {
 	width: 100%;
 	padding: 0;
 	margin: 0;
+	
 }
 
-.LP {
+.LPCP {
 	margin: 0;
 	display: flex;
 }
 
-.LPWrap {
-	text-align: center;
-	background-color:#fdfdfd; /* 메뉴바 배경색 */
-	padding: 20px;
-	height: 100%;
-	border-right: 1px solid #dee2e6;
-	overflow-y: auto;
-	position: sticky;
-	top: 0;
-	width: 15%
-}
-
-.LPWrap h2 {
-	font-size:16px;
-	margin-bottom: 10px;
-	color: #343a40;
-}
-
-.LPWrap ul {
-	list-style-type: none;
-	padding: 0;
-}
-
-.LPWrap ul li {
-	margin-bottom: 10px;
-}
-
-.LPWrap ul li a {
-	text-decoration: none;
-	color: rgb(83, 169, 255);
-	font-size : 12px;
-	display: block;
-	padding: 8px 12px;
-	border-radius: 4px;
-	transition: background-color 0.3s;
-}
-
-.LPWrap ul li a:hover {
-	background-color: #e9ecef;
-}
-
-.LPWrap .LPC01 {
-	border: 1px solid #dee2e6;
-	padding: 10px;
-	margin-bottom: 20px;
-	background-color: #fff;
-}
 
 #menu {
 	flex: 1;
@@ -162,17 +148,4 @@
 .btn-action:hover {
 	background-color: rgb(83, 169, 255);
 }
-/*이건 나중에 바꿔야됨 왼쪽 메뉴바로 빼야함*/
-.rateCalculator {
-	text-decoration: none;
-	font-size: 12px;
-	color: rgb(83, 169, 255);
-	display: block;
-	padding: 8px 12px;
-	border-radius: 4px;
-	transition: background-color 0.3s;
-}
 
-.rateCalculator:hover {
-	background-color: #fafafa;
-}
