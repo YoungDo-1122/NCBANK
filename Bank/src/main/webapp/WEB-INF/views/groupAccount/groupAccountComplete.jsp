@@ -5,122 +5,150 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>complete</title>
-  <link rel="stylesheet" href="${root}css/createnext.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-  <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-  <script>
-    // 카카오 초기화
-    Kakao.init('ff8ba07dd1c6c1c318c25c022ce8bb5e'); // 앱 키
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>모임통장 신청 완료</title>
+<%--  <link rel="stylesheet" href="${root}css/createnext.css"> --%>
+<link rel="stylesheet" href="${root}css/complete.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-    function sendKakaoLink() {
-        $.ajax({
-            url: '${root}groupAccount/getGroupInfo',
-            method: 'POST',
-            data: { group_num: '${groupInfo.group_num}' },
-            success: function(response) {
-                console.log('Group info:', response); // 디버깅 로그 추가
-                if (response && response.group_num) {
-                    const groupNum = response.group_num;
-                    Kakao.Link.sendCustom({
-                        templateId: 109036, // 템플릿 ID
-                        templateArgs: {
-                            'group_num': groupNum // 동적 group_num 전달
-                        }
-                    });
-                } else {
-                    console.error('Unexpected response structure:', response);
-                    alert('그룹 정보를 가져오는데 실패했습니다. 응답 데이터가 올바르지 않습니다.');
-                }
-            },
-            error: function(error) {
-                console.error('Error:', error);
-                alert('그룹 정보를 가져오는데 실패했습니다.');
-            }
-        });
-    }
+<script>
+	// 카카오 초기화
+	Kakao.init('ff8ba07dd1c6c1c318c25c022ce8bb5e'); // 앱 키
 
-    function formatAutoType(autoType) {
-        return autoType == 0 ? '주간' : '월간';
-    }
+	function sendKakaoLink() {
+		$.ajax({
+			url : '${root}groupAccount/getGroupInfo',
+			method : 'POST',
+			data : {
+				group_num : '${groupInfo.group_num}'
+			},
+			success : function(response) {
+				console.log('Group info:', response); // 디버깅 로그 추가
+				if (response && response.group_num) {
+					const groupNum = response.group_num;
+					Kakao.Link.sendCustom({
+						templateId : 109036, // 템플릿 ID
+						templateArgs : {
+							'group_num' : groupNum
+						// 동적 group_num 전달
+						}
+					});
+				} else {
+					console.error('Unexpected response structure:', response);
+					alert('그룹 정보를 가져오는데 실패했습니다. 응답 데이터가 올바르지 않습니다.');
+				}
+			},
+			error : function(error) {
+				console.error('Error:', error);
+				alert('그룹 정보를 가져오는데 실패했습니다.');
+			}
+		});
+	}
 
-    function formatAutoNextDate(autoType, autoNextDate) {
-        return autoType == 0 ? autoNextDate + '요일' : autoNextDate + '일';
-    }
+	function formatAutoType(autoType) {
+		return autoType == 0 ? '주간' : '월간';
+	}
 
-    function formatBalance(balance) {
-        return balance + '원';
-    }
+	function formatAutoNextDate(autoType, autoNextDate) {
+		return autoType == '주간' ? autoNextDate + '요일' : autoNextDate + '일';
+	}
 
-    window.onload = function() {
-        var autoTypeElement = document.getElementById("auto_type_value");
-        var autoNextDateElement = document.getElementById("auto_next_date_value");
-        var autoBalanceElement = document.getElementById("auto_balance_value");
+	function formatMoney(money) {
+		return money + '원';
+	}
 
-        autoTypeElement.innerText = formatAutoType(autoTypeElement.innerText);
-        autoNextDateElement.innerText = formatAutoNextDate(autoTypeElement.innerText, autoNextDateElement.innerText);
-        autoBalanceElement.innerText = formatBalance(autoBalanceElement.innerText);
-    }
-  </script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      margin: 0;
-      padding: 0;
-    }
-    .main {
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      text-align: center;
-      background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      margin-top: 50px;
-    }
-    .info {
-      text-align: left;
-      margin-top: 20px;
-    }
-    .info span {
-      display: block;
-      margin: 5px 0;
-    }
-    .btn-invite {
-      margin-top: 20px;
-      background-color: #ffeb00;
-      color: #3c1e1e;
-      border: none;
-      padding: 10px 20px;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .btn-invite:hover {
-      background-color: #ffd700;
-    }
-  </style>
+	window.onload = function() {
+		var autoTypeElement = document.getElementById("auto_type_value");
+		var autoNextDateElement = document.getElementById("auto_next_date_value");
+		var autoMoneyElement = document.getElementById("auto_money");
+
+		var autoTypeValue = autoTypeElement.innerText.trim();
+		var autoNextDateValue = autoNextDateElement.innerText.trim();
+		var autoMoneyValue = autoMoneyElement.innerText.trim();
+
+		console.log('Auto Type:', autoTypeValue);
+		console.log('Auto Next Date:', autoNextDateValue);
+		console.log('Auto Money:', autoMoneyValue);
+
+		var autoTypeFormatted = formatAutoType(autoTypeValue);
+		var autoNextDateFormatted = formatAutoNextDate(autoTypeFormatted, autoNextDateValue);
+		var autoMoneyFormatted = formatMoney(autoMoneyValue);
+
+		autoTypeElement.innerText = autoTypeFormatted;
+		autoNextDateElement.innerText = autoNextDateFormatted;
+		autoMoneyElement.innerText = autoMoneyFormatted;
+	}
+</script>
 </head>
 <body>
-  <div class="main">
-    <c:import url="/WEB-INF/views/include/top_menu.jsp" />
-    <h2>모임통장 신청 완료</h2>
-    <p>이제 모임통장에 친구를 초대해보세요</p>
+	<div class="container">
+		<c:import url="/WEB-INF/views/include/top_menu.jsp" />
+		<div class="traveltitle">
+			모임통장 개설 완료!
+			<hr />
+		</div>
+		<div class="contents">
+			<div class="menu1">
+				<a href="group">모임약관동의</a> <a href="groupInvite">모임통장 초대</a>
+				<div class="menu1-1">모임통장 개설</div>
+				<div class="menuhr">
+					<hr />
+				</div>
+			</div>
+			<div class="contents-1">
+				<div class="section-1">
+					<div class="contentsText"></div>
+					<div class="stepper">
+						<div class="line"></div>
+						<div class="step">
+							<div class="circle">1</div>
+						</div>
+						<div class="step">
+							<div class="circle">2</div>
+						</div>
+						<div class="step">
+							<div class="circle active">3</div>
+						</div>
+					</div>
+				</div>
 
-    <div class="info">
-      <%-- <span>모임장 연결계좌: [NC뱅크]${accounts}</span> --%>
-      <span>모임통장 계좌번호: [NC뱅크]${accounts}</span>
-      <span>회비 정보: <span id="auto_type_value">${accountInfo.auto_type}</span> / <span id="auto_next_date_value">${accountInfo.auto_next_date}</span> / <span id="auto_balance_value">${accountInfo.auto_balance}</span></span>
-      <span>모임통장 신청일: ${applicationDate}</span>
-    </div>
+				<div class="group71">
+					<div class="flexClass">
+						<span class="idbox"> <span class="groupname">${groupname}모임</span>
+						</span>
+					</div>
+					<br />
+					<div class="flexClass">
+						<span class="idbox">연결 계좌번호</span> <span class="rec6" id="group_account">[NC뱅크]${accounts}</span>
+					</div>
+					<div class="flexClass">
+						<span class="idbox">자동이체 주기</span> <span class="rec6" id="auto_type_value">${accountInfo.auto_type}</span>
+					</div>
+					<div class="flexClass">
+						<span class="idbox">자동이체 납부일</span> <span class="rec6" id="auto_next_date_value">${accountInfo.auto_next_date}</span>
+					</div>
 
-    <button class="btn btn-primary btn-invite" onclick="sendKakaoLink()">카카오톡으로 모임원 초대하기</button>
-    <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
-  </div>
+					<div class="flexClass">
+						<span class="idbox">회비</span> <span class="rec6" id="auto_money">${accountInfo.auto_money}</span>
+					</div>
+					<br />
+					<div class="hanaClass">이제 모임통장에 친구를 초대해보세요!</div>
+					<p></p>
+					<p></p>
+
+					<button class="applyBtn" onclick="sendKakaoLink()">카카오톡으로 모임원 초대하기</button>
+					<p></p>
+
+					<button class="homeBtn" onclick="location.href='${root}main'">메인으로 이동</button>
+				</div>
+			</div>
+		</div>
+		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+	</div>
 </body>
 </html>

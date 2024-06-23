@@ -5,13 +5,31 @@ import java.util.Date;
 public class TransferBean {
 	private int trans_num;
 	private int trans_type;
+	private String trans_money;
 	private String trans_balance;
 	private String trans_text;
 	private Date trans_date;
 	private String to_account;
 	private String from_account;
 	private String code_organ;
+	private int user_num;
 	private String code_organ_name;
+
+	public int getUser_num() {
+		return user_num;
+	}
+
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
+	}
+
+	public String getTrans_money() {
+		return trans_money;
+	}
+
+	public void setTrans_money(String trans_money) {
+		this.trans_money = trans_money;
+	}
 
 	public String getCode_organ_name() {
 		return code_organ_name;

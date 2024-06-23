@@ -30,6 +30,7 @@ import ncbank.interceptor.ExchangeAutoNoticeInterceptor;
 import ncbank.interceptor.ExchangeRateInterceptor;
 import ncbank.interceptor.TopMenuInterceptor;
 import ncbank.mapper.AccountMapper;
+import ncbank.mapper.AutoMapper;
 import ncbank.mapper.BoardMapper;
 import ncbank.mapper.CodeMoneyMapper;
 import ncbank.mapper.CodeOrganMapper;
@@ -50,6 +51,12 @@ import ncbank.service.TopMenuService;
 import ncbank.utility.DateManager;
 import ncbank.utility.EmailManager;
 
+// OpenAI ChatGPT 2개(Configuration,PropertySource)
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+
+
 // 주소가 요청됨 -> 컨트롤러에서 해당하는 주소를 찾음 (서버에게 컨트롤러가 어디에 있는지 알려줘야 함)
 // ServletAppContext : 직접적으로 서버(웹)에 전달해주는 등록소 - 웹까지 뻗어나갈 애들을 등록
 
@@ -68,17 +75,19 @@ import ncbank.utility.EmailManager;
 // @ComponentScan(basePackages = {"kr.co.soldesk.controller",
 // "kr.co.soldesk.service", "kr.co.soldesk.dao"})
 @PropertySource("/WEB-INF/properties/db.properties") // 로드할 Property 파일 위치 지정 (서버에 연결)
-// @PropertySource("/WEB-INF/properties/application.properties")
+//@PropertySource("/WEB-INF/properties/application.properties")
+//@PropertySource("/WEB-INF/properties/chatai.properties")
 public class ServletAppContext implements WebMvcConfigurer {
 
     /* ==========[DB 접속 데이터]========== */
 
-    // @Value("${openai.api.key}")
-    // private String apiKey;
+	// @Value : 지정된 Property 파일에서 값을 필드로 주입받음 (lombok 꺼 말고 springframework 꺼 임포트)
 
-    // @Value : 지정된 Property 파일에서 값을 필드로 주입받음 (lombok 꺼 말고 springframework 꺼 임포트)
-    @Value("${db.classname}")
-    private String db_classname;
+//	@Value("${openai.api.key}")
+//	private String apiKey;
+
+	@Value("${db.classname}")
+	private String db_classname;
 
     @Value("${db.url}")
     private String db_url;
@@ -195,26 +204,12 @@ public class ServletAppContext implements WebMvcConfigurer {
         return factoryBean;
     }
 
-    @Bean
-    public MapperFactoryBean<AccountMapper> accountMapper(SqlSessionFactory sqlSessionFactory) {
-        MapperFactoryBean<AccountMapper> factoryBean = new MapperFactoryBean<>(AccountMapper.class);
-        factoryBean.setSqlSessionFactory(sqlSessionFactory);
-        return factoryBean;
-    }
-
-    @Bean
-    public MapperFactoryBean<CodeOrganMapper> codeOrganMapper(SqlSessionFactory sqlSessionFactory) {
-        MapperFactoryBean<CodeOrganMapper> factoryBean = new MapperFactoryBean<>(CodeOrganMapper.class);
-        factoryBean.setSqlSessionFactory(sqlSessionFactory);
-        return factoryBean;
-    }
-
-    @Bean
-    public MapperFactoryBean<ExchangeMapper> getExchangeMapper(SqlSessionFactory factory) throws Exception {
-        MapperFactoryBean<ExchangeMapper> factoryBean = new MapperFactoryBean<>(ExchangeMapper.class);
-        factoryBean.setSqlSessionFactory(factory);
-        return factoryBean;
-    }
+	@Bean
+	public MapperFactoryBean<ExchangeMapper> getExchangeMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<ExchangeMapper> factoryBean = new MapperFactoryBean<>(ExchangeMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
 
     @Bean
     public MapperFactoryBean<CreateExchangeBean> getCreateExchangeBean(SqlSessionFactory factory) throws Exception {
@@ -223,19 +218,12 @@ public class ServletAppContext implements WebMvcConfigurer {
         return factoryBean;
     }
 
-    @Bean
-    public MapperFactoryBean<TransferMapper> transferMapper(SqlSessionFactory factory) {
-        MapperFactoryBean<TransferMapper> factoryBean = new MapperFactoryBean<>(TransferMapper.class);
-        factoryBean.setSqlSessionFactory(factory);
-        return factoryBean;
-    }
-
-    @Bean
-    public MapperFactoryBean<CrerateTradeBean> getCrerateTradeBean(SqlSessionFactory factory) throws Exception {
-        MapperFactoryBean<CrerateTradeBean> factoryBean = new MapperFactoryBean<>(CrerateTradeBean.class);
-        factoryBean.setSqlSessionFactory(factory);
-        return factoryBean;
-    }
+	@Bean
+	public MapperFactoryBean<CrerateTradeBean> getCrerateTradeBean(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<CrerateTradeBean> factoryBean = new MapperFactoryBean<>(CrerateTradeBean.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
 
     @Bean
     public MapperFactoryBean<WalletBean> getWalletBean(SqlSessionFactory factory) throws Exception {
@@ -252,8 +240,36 @@ public class ServletAppContext implements WebMvcConfigurer {
         return factoryBean;
     }
 
-    /* ==========[Interceptors]========== */
-    // WebMvcConfigurer 제공 메소드
+	@Bean
+	public MapperFactoryBean<CodeOrganMapper> codeOrganMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<CodeOrganMapper> factoryBean = new MapperFactoryBean<>(CodeOrganMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+
+	@Bean
+	public MapperFactoryBean<AccountMapper> accountMapper(SqlSessionFactory sqlSessionFactory) {
+		MapperFactoryBean<AccountMapper> factoryBean = new MapperFactoryBean<>(AccountMapper.class);
+		factoryBean.setSqlSessionFactory(sqlSessionFactory);
+		return factoryBean;
+	}
+
+	@Bean
+	public MapperFactoryBean<TransferMapper> transferMapper(SqlSessionFactory factory) {
+		MapperFactoryBean<TransferMapper> factoryBean = new MapperFactoryBean<>(TransferMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+
+	@Bean
+	public MapperFactoryBean<AutoMapper> autoMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<AutoMapper> factoryBean = new MapperFactoryBean<>(AutoMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+
+	/* ==========[Interceptors]========== */
+	// WebMvcConfigurer 제공 메소드
 
     // DB 정보보다 위에 있으면 못읽는 에러가 있을수도 있음 (그럴 시 Value 밑으로)
     @Autowired

@@ -1,15 +1,31 @@
 @charset "UTF-8";
 
+
+body {
+    background-color: #e0e0e0; /* 더 진한 회색 */
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
 .section-4 {
 	overflow: auto;
 	height: 600px;
 }
 
-.main {
-	width: 100%;
-	height: auto;
-	min-height: 100%;
-	padding-bottom: 100px;
+.container {
+   font-family: Arial, Helvetica, sans-serif;
+   width: 70%;
+   max-width: 1400px;
+   margin: 0 auto;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   background-color: #ffffff;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   border-radius: 10px;
+   padding: 20px;
+   box-sizing: border-box; /* 패딩 포함하여 전체 너비 계산 */
 }
 
 .menu1-1 {
@@ -21,24 +37,25 @@
 }
 
 .traveltitle {
-	text-align: left;
-	left: 10px;
-	color: #7a7d7d;
-	font-size: 29px;
-	width: 1155px;
-	margin: 100px auto;
-	font-weight: 600;
+    text-align: center;
+    color: #4a4a4a;
+    font-size: 32px;
+    margin: 40px 0 20px;
+    font-weight: bold;
+    width: 100%;
 }
 
 .traveltitle hr {
-	border: 1px solid #929292;
+    border: 1px solid #007bff;
+    width: 80px;
+    margin-top: 10px;
 }
 
 .contents {
-	width: 1200px;
+	width: 100%;
 	height: 100%;
 	display: flex;
-	margin: 30px auto;
+	margin: 10px auto;
 }
 
 .menu1 a:hover {
@@ -136,7 +153,7 @@
 }
 
 .newAccount {
-	width: 240px;
+	width: 300px;
 	border: 1px solid rgb(83, 169, 255);
 	border-radius: 5px;
 	font-weight: 700;
@@ -168,7 +185,7 @@
 	margin: 20px auto;
 	background: rgb(83, 169, 255);
 	border: 1px solid #FFFFFF;
-	border-radius: 5px;
+	border-radius: 20px;
 }
 
 .applyBtn {
@@ -182,7 +199,13 @@
 	margin: 0 auto;
 	width: 100%;
 	padding: 15px 0;
+	border-radius: 10px;
 }
+.applyBtn:hover {
+	 background-color: #0056b3;
+}
+
+
 
 .classSection {
 	display: flex;
@@ -230,7 +253,7 @@
 	height: 30px;
 	border-radius: 50%;
 	text-align: center;
-	line-height: 31px;
+	line-height: 28px;
 	background-color: #FFFFFF;
 	border: 2px solid rgb(83, 169, 255);
 	color: rgb(83, 169, 255);
@@ -330,6 +353,10 @@
 	border-radius: 10px;
 	text-align: center;
 	margin: 30px auto;
+}
+
+#calculate:hover { 
+	 background-color: #0056b3;
 }
 
 .idbox {
@@ -453,4 +480,8 @@ ul.footBtwrap {
 	width: 300px;
 	font-weight: 700;
 	cursor: pointer;
+}
+
+.fpmgBt2:hover {
+	 background-color: #0056b3;
 }

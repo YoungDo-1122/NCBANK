@@ -14,12 +14,12 @@ public interface TradeMapper {
 	// 특정 조건의 Trade 테이블 전체 다 불러오기 + 페이지
 	@Select("select tr.trade_num, tr.trade_date, tr.trade_type, "+
 			"tr.code_money, tr.trade_money, tr.trade_rate, "+
-			"tr.code_bank, cb.code_bank_tel, cb.code_bank_fax "+
+			"cb.code_bank_name, cb.code_bank_tel, cb.code_bank_fax "+
 			"from trade tr "+
 			"join code_bank cb "+
 			"on tr.code_bank = cb.code_bank "+
 			"and tr.user_num = #{user_num} "+
-			"order by tr.trade_date desc")
+			"order by tr.trade_num desc")
     List<CrerateTradeBean> getTradePlusList(@Param("user_num") int user_num, RowBounds rowBounds);
 	// 얘도 페이지
 	@Select("SELECT COUNT(*) FROM trade WHERE user_num=#{user_num}")

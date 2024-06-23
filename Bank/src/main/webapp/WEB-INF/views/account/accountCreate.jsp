@@ -22,84 +22,86 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-2">
-				<div class="enquiry">
-					<h3>조회</h3>
-					<ul>
-						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
-						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-					</ul>
+	<div class="container">
+		<c:import url="/WEB-INF/views/include/top_menu.jsp" />
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="enquiry">
+						<h5>조회</h5>
+						<ul>
+							<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+							<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+						</ul>
+					</div>
+					<div class="transfer">
+						<h5>이체</h5>
+						<ul>
+							<li><a href="${root}account/accountCreate">계좌 개설</a></li>
+							<li><a href="${root}trans/transfer">계좌 이체</a></li>
+							<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
+							<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="transfer">
-					<h3>이체</h3>
-					<ul>
-						<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-						<li><a href="${root}trans/transfer">계좌 이체</a></li>
-						<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-						<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-md-10">
-				<table>
-					<tr>
-						<th><h2>계좌 개설</h2></th>
-					</tr>
-					<tr>
-						<td><c:if test="${not empty errorMessage}">
-								<div style="color: red;">${errorMessage}</div>
-							</c:if> <form:form modelAttribute="accountBean"
-								action="${root}account/accountCreate" method="post">
-								<table>
-									<tr>
-										<td>성명</td>
-										<td>${users.name}</td>
-									</tr>
-									<tr>
-										<td>주소</td>
-										<td>${users.address}</td>
-									</tr>
-									<tr>
-										<td>전화번호</td>
-										<td>${users.phone}</td>
-									</tr>
+				<div class="col-md-10">
+					<table>
+						<tr>
+							<th><h3>계좌 개설</h3></th>
+						</tr>
+						<tr>
+							<td><c:if test="${not empty errorMessage}">
+									<div style="color: red;">${errorMessage}</div>
+								</c:if> <form:form modelAttribute="accountBean"
+									action="${root}account/accountCreate" method="post">
+									<table>
+										<tr>
+											<td>성명</td>
+											<td>${users.name}</td>
+										</tr>
+										<tr>
+											<td>주소</td>
+											<td>${users.address}</td>
+										</tr>
+										<tr>
+											<td>전화번호</td>
+											<td>${users.phone}</td>
+										</tr>
 
-									<tr>
-										<td>이메일</td>
-										<td>${users.email}</td>
-									</tr>
-									<tr>
-										<td>계좌 비밀번호</td>
-										<td><input type="password" name="acPassword"
-											required="required" placeholder="계좌 비밀번호" maxlength="4" /></td>
-									</tr>
-									<tr>
-										<td>계좌 비밀번호 확인</td>
-										<td><input type="password" name="acPasswordConfirm"
-											required="required" placeholder="계좌 비밀번호 확인" maxlength="4" /></td>
-									</tr>
-									<tr>
-										<td>계좌 분류</td>
-										<td><form:select path="ac_type" required="true">
-												<form:option value="">선택</form:option>
+										<tr>
+											<td>이메일</td>
+											<td>${users.email}</td>
+										</tr>
+										<tr>
+											<td>계좌 비밀번호</td>
+											<td><input type="password" name="acPassword"
+												required="required" placeholder="계좌 비밀번호" maxlength="4" /></td>
+										</tr>
+										<tr>
+											<td>계좌 비밀번호 확인</td>
+											<td><input type="password" name="acPasswordConfirm"
+												required="required" placeholder="계좌 비밀번호 확인" maxlength="4" /></td>
+										</tr>
+										<tr>
+											<td>계좌 분류</td>
+											<td><form:select path="ac_type" required="true">
 												<form:option value="0">저축예금</form:option>
-											</form:select></td>
-									</tr>
-									<tr>
-										<td colspan="2" style="text-align : center; margin-top:20px;">
-										<button type="submit">계좌
-												개설</button></td>
-									</tr>
-								</table>
-							</form:form></td>
-					</tr>
-				</table>
+												<form:option value="2">적금통장</form:option>
+												</form:select></td>
+										</tr>
+										<tr>
+											<td colspan="2" style="text-align: center; margin-top: 20px;">
+												<button type="submit">계좌 개설</button>
+											</td>
+										</tr>
+									</table>
+								</form:form></td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
+		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	</div>
-	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>
 </html>

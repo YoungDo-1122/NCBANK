@@ -58,32 +58,24 @@ public class UserController {
 		System.out.println(request);
 
 		if (result.hasErrors()) {
-			/*
-			 * result.getFieldErrorCount(); List<ObjectError> temp = result.getAllErrors();
-			 * for (ObjectError e : temp) { System.out.println(e.getDefaultMessage()); }
-			 */
-
-			// if (loginUserBean.isUserLogin()) {
-			// model.addAttribute("tempLoginBean", tempLoginBean);
-			// System.out.println("User logged in with user_num: " +
-			// loginUserBean.getUser_num()); // 로그인 성공 시 user_num 출력
-			// return "user/login_success";
-			// } else {
-			// return "user/login_fail";
-			// }
-			// }
+			
 			return "user/login";
 		}
 
 		userService.getLoginUserInfo(request, tempLoginBean);
 
 		if (loginUserBean.isUserLogin()) {
-			model.addAttribute("tempLoginBean", tempLoginBean);
-			return "user/login_success";
-		} else {
-			model.addAttribute("fail", true);
-			return "user/login_fail";
-		}
+	        String redirectUrl = (String) request.getSession().getAttribute("redirectAfterLogin");
+	        if (redirectUrl != null) {
+	            request.getSession().removeAttribute("redirectAfterLogin");
+	            System.out.println("Redirect URL found and set in session: " + redirectUrl); // 디버깅 메시지
+	            return "redirect:/" + redirectUrl; // 리다이렉트 URL로 이동
+	        }
+	        return "user/login_success";
+	    } else {
+	        model.addAttribute("fail", true);
+	        return "user/login_fail";
+	    }
 	}
 
 	@GetMapping("/join")

@@ -15,7 +15,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 </head>
 <body>
-<div class="main">
+<div class="container">
         <c:import url="/WEB-INF/views/include/top_menu.jsp" />
         <div class="traveltitle">
             모임통장 계좌개설
@@ -52,7 +52,7 @@
                 <div class="group71">
                     <div class="flexClass">
                         <span class="idbox">
-                            <span class="groupname">${groupname}</span>[<span>${grouptype}</span>]
+                            <span class="groupname">모임명: ${groupname}</span>
                         </span>
                     </div>
                     <br/>
@@ -64,17 +64,17 @@
             
                     <form method="post" action="${root}groupAccount/groupAccountOpenedNext" id="passwordForm">
                         <input type="hidden" name="groupname" value="${groupname}" />
-                        <input type="hidden" name="grouptype" value="${grouptype}" />
+
                         <input type="hidden" name="accounts" value="${accounts}" />
                         <input type="hidden" name="auto_next_date" value="${accountInfo.auto_next_date}" />
                         <input type="hidden" name="auto_type" value="${accountInfo.auto_type}" />
-                        <input type="hidden" name="auto_balance" value="${accountInfo.auto_balance}" />
+                        <input type="hidden" name="auto_money" value="${accountInfo.auto_money}" />
                         <div class="flexClass">
                             <span class="idbox">비밀번호</span>
                             <input type="password" name="inputPassword" class="rec6" placeholder="계좌 비밀번호를 입력해주세요"/>
                         </div>
                         <br/>
-                        <button type="submit">개설하기</button>
+                        <button class="applyBtn" type="submit">개설하기</button>
                     </form>
                     <c:if test="${not empty errorMessage}">
                         <div class="alert alert-danger">${errorMessage}</div>

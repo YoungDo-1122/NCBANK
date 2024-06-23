@@ -18,7 +18,7 @@ public interface GroupAccountMapper {
     @Select("SELECT account, ac_type FROM account WHERE user_num = #{user_num}")
     List<AccountBean> selectAccountByUserNum(@Param("user_num") int user_num);
 
-    @Select("SELECT a.auto_balance, a.auto_type, a.auto_next_date, a.auto_status, ac.ac_password "
+    @Select("SELECT a.auto_type, a.auto_next_date, a.auto_money, ac.ac_password "
             + "FROM auto a, account ac, member m "
             + "WHERE a.to_account = ac.account AND ac.user_num = m.user_num AND ac.account = #{account} AND m.user_num = #{user_num}")
     List<AutoBean> infoList(@Param("account") String account, @Param("user_num") int user_num);
@@ -77,7 +77,7 @@ public interface GroupAccountMapper {
     
     
     
-    @Select("SELECT a.auto_balance, a.auto_type, a.auto_next_date, a.auto_end " +
+    @Select("SELECT a.auto_money, a.auto_type, a.auto_next_date, a.auto_end " +
             "FROM auto a " +
             "JOIN account acc ON a.to_account = acc.account " +
             "WHERE acc.account = #{account} AND acc.ac_type = 1")

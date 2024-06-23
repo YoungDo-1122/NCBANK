@@ -26,13 +26,16 @@
 	color: #fff;
 	align-items: center;
 	padding: 10px 20px;
-	font-size: 16px;
+	font-size: 14px;
 }
 
 .btnArea a:hover {
 	background-color: rgb(13, 71, 161);
 }
-
+.tit_dep2 {
+	font-weight: bold;
+	font-size: 17px;
+}
 .s5 {
 	text-align: right;
 }

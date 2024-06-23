@@ -1,10 +1,11 @@
 package ncbank.controller;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,11 +46,9 @@ public class GroupAccountController {
 
     @PostMapping("/groupAccountOpened")
     public String opened(@RequestParam String groupname,
-                         @RequestParam String grouptype,
                          @RequestParam String accounts,
                          Model model) {
         model.addAttribute("groupname", groupname);
-        model.addAttribute("grouptype", grouptype);
         model.addAttribute("accounts", accounts);
 
         String accountNumber = accounts.replaceAll("\\[.*\\]", "").trim();
@@ -65,21 +64,19 @@ public class GroupAccountController {
     public String validatePassword(@RequestParam String accounts,
                                    @RequestParam String inputPassword,
                                    @RequestParam String groupname,
-                                   @RequestParam String grouptype,
                                    @RequestParam String auto_next_date,
                                    @RequestParam String auto_type,
-                                   @RequestParam String auto_balance,
+                                   @RequestParam String auto_money,
                                    Model model) {
         String accountNumber = accounts.replaceAll("\\[.*\\]", "").trim();
         AccountBean accountBean = groupAccountService.getAccountByAccountNumber(accountNumber);
 
         if (accountBean != null && accountBean.getAc_password().equals(inputPassword)) {
             model.addAttribute("groupname", groupname);
-            model.addAttribute("grouptype", grouptype);
             model.addAttribute("accounts", accounts);
             model.addAttribute("auto_next_date", auto_next_date);
             model.addAttribute("auto_type", auto_type);
-            model.addAttribute("auto_balance", auto_balance);
+            model.addAttribute("auto_money", auto_money);
 
             List<AutoBean> accountInfoList = groupAccountService.infoList(accountNumber, loginUserBean.getUser_num());
             if (!accountInfoList.isEmpty()) {
@@ -91,11 +88,10 @@ public class GroupAccountController {
         } else {
             model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
             model.addAttribute("groupname", groupname);
-            model.addAttribute("grouptype", grouptype);
             model.addAttribute("accounts", accounts);
             model.addAttribute("auto_next_date", auto_next_date);
             model.addAttribute("auto_type", auto_type);
-            model.addAttribute("auto_balance", auto_balance);
+            model.addAttribute("auto_money", auto_money);
 
             return "groupAccount/groupAccountOpened";
         }
@@ -104,18 +100,16 @@ public class GroupAccountController {
     @PostMapping("/complete")
     public String complete(@RequestParam String accounts,
                            @RequestParam String groupname,
-                           @RequestParam String grouptype,
                            @RequestParam String inputPassword,
                            @RequestParam String auto_next_date,
                            @RequestParam String auto_type,
-                           @RequestParam String auto_balance,
+                           @RequestParam String auto_money,
                            Model model) {
         String accountNumber = accounts.replaceAll("\\[.*\\]", "").trim();
         AccountBean accountBean = groupAccountService.getAccountByAccountNumber(accountNumber);
 
         if (accountBean != null && accountBean.getAc_password().equals(inputPassword)) {
             model.addAttribute("groupname", groupname);
-            model.addAttribute("grouptype", grouptype);
             model.addAttribute("accounts", accounts);
 
 
@@ -155,11 +149,10 @@ public class GroupAccountController {
         } else {
             model.addAttribute("errorMessage", "비밀번호가 일치하지 않습니다.");
             model.addAttribute("groupname", groupname);
-            model.addAttribute("grouptype", grouptype);
             model.addAttribute("accounts", accounts);
             model.addAttribute("auto_next_date", auto_next_date);
             model.addAttribute("auto_type", auto_type);
-            model.addAttribute("auto_balance", auto_balance);
+            model.addAttribute("auto_money", auto_money);
             return "groupAccount/groupAccountOpenedNext";
         }
     }
@@ -190,8 +183,10 @@ public class GroupAccountController {
                                Model model,
                                HttpSession session) {
         if (!loginUserBean.isUserLogin()) {
-            session.setAttribute("redirectAfterLogin", "groupAccount/acceptInviteAction?group_num=" + group_num + "&action=" + action);
-            return "redirect:/user/login";
+        	session.setAttribute("notLoginMessage", "로그인 해주세요.");
+            session.setAttribute("redirectAfterLogin", "groupAccount/acceptInvite?group_num=" + group_num + "&action=" + action);
+            System.out.println("Redirect URL set in session: " + "groupAccount/acceptInvite?group_num=" + group_num + "&action=" + action);
+            return "groupAccount/showAlert";
         }
 
         return handleAcceptInvite(group_num, action, model);
@@ -304,6 +299,18 @@ public class GroupAccountController {
     	return totalBalance;
     }
     
+    @GetMapping("/about")
+    public String about() {
+    	return "groupAccount/groupAccountAbout";
+    }
     
+    @GetMapping("/members")
+    public String members() {
+    	return "groupAccount/groupAccountMembers";
+    }
+    @GetMapping("/book")
+    public String book() {
+    	return "groupAccount/groupAccountBook";
+    }
 
 }
