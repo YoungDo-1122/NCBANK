@@ -21,10 +21,22 @@
     <c:import url="../include/top_menu.jsp" />
     <div class="ASK">
         <div class="LP">
-        
-            <c:import url="./LPSide.jsp"></c:import>
-            
-        
+            <div class="LPWrap">
+                <div class="LPC01">
+                    <h2>외환</h2>
+                    <ul>
+                        <li><a href="${root}exchange/rateInquiry">환율 조회</a></li>
+                        <li><a href="${root}exchange/notice">환율 알림 서비스</a></li>
+                        <li><a href="${root}exchange/exchangeAsk">환전 신청</a></li>
+                        <li><a href="${root}exchange/exchangeHistory">환전 내역 조회</a></li>
+                    </ul>
+                    
+                    <ul>
+                        <li class="rateCalculator">환율 계산기</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
         <div class="main-content">
             <h1>환전 신청</h1>
@@ -132,7 +144,6 @@
         
             </form:form>
         </div>
-    </div> <!-- LP -->
     </div>
     <c:import url="../include/bottom_info.jsp" />
     </div>

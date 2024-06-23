@@ -28,8 +28,8 @@
             <hr />
         </div>
         
-        <div class="contents"> <!-- ASK -->
-            <div class="menu1"> <!-- LP -->
+        <div class="contents">
+            <div class="menu1">
                 <div class="menu1-1">모임약관동의</div>
                 <div class="menuhr">
                     <hr/>

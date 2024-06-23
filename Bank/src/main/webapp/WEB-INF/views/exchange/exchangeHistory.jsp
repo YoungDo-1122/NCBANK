@@ -15,7 +15,7 @@
 
 </head>
 <body>
-	<div class="contentWarp">
+	 <div class="contentWarp">
 	<c:import url="../include/top_menu.jsp" />
 	<div class="ASKHistory">
         <div class="LP">
