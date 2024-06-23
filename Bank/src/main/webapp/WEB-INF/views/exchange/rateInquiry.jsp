@@ -150,7 +150,7 @@
 			});
 
 		}); // $(document).ready
-	</script>
+
 
                     var url = "${root}/exchange/calculator"
                     var name = "환율 계산기"
@@ -165,7 +165,7 @@
             	
             }); // $(document).ready
         </script>
-	
+
 	<script type="text/javascript"
 		src="${root}js/exchange/inquiryDateBtn.js"></script>
 

@@ -93,13 +93,15 @@
 			</div>
 		</div>
 
-        </div> <!-- div.CP -->
+		<!-- div.CP -->
 
-    </div> <!-- div.contentWarp -->
+		<!-- div.contentWarp -->
 
-    <c:import url="../include/bottom_info.jsp" />
+		<c:import url="../include/bottom_info.jsp" />
+	</div>
 
-    <script type="text/javascript">
+
+	<script type="text/javascript">
         $(document).ready(function () { // 문서가 완전히 로드된 후 이벤트 핸들러 설정
 
             $('.rateCalculator').on("click", function (e) {

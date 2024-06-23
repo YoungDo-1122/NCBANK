@@ -91,13 +91,14 @@
 										<tr>
 											<th colspan="4" class="total">입 / 출금계좌 총 잔액</th>
 											<td class="total-balance">&#92;${totalBalance}원</td>
-										
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</table>
+
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
