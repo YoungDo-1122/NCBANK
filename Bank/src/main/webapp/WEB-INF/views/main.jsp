@@ -34,6 +34,7 @@
 						src="img/Bank3.jpg" alt="캐러셀 이미지 3">
 					<button class="carousel-button next">&#10095;</button>
 				</div>
+			</div>
 				<div class="quickLink">
 					<div class="quickLink-title">바로가기</div>
 					<ul>
@@ -52,7 +53,6 @@
 						</a></li>
 					</ul>
 				</div>
-			</div>
 
 			<!-- 스크립트 코드 js파일로 이동후 임포트 시킨거 -->
 			<script type="text/javascript" src="${root}js/style_main.js"></script>

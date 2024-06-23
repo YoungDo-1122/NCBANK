@@ -51,6 +51,12 @@ import ncbank.service.TopMenuService;
 import ncbank.utility.DateManager;
 import ncbank.utility.EmailManager;
 
+// OpenAI ChatGPT 2개(Configuration,PropertySource)
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+
+
 // 주소가 요청됨 -> 컨트롤러에서 해당하는 주소를 찾음 (서버에게 컨트롤러가 어디에 있는지 알려줘야 함)
 // ServletAppContext : 직접적으로 서버(웹)에 전달해주는 등록소 - 웹까지 뻗어나갈 애들을 등록
 
@@ -70,6 +76,7 @@ import ncbank.utility.EmailManager;
 // "kr.co.soldesk.service", "kr.co.soldesk.dao"})
 @PropertySource("/WEB-INF/properties/db.properties") // 로드할 Property 파일 위치 지정 (서버에 연결)
 //@PropertySource("/WEB-INF/properties/application.properties")
+//@PropertySource("/WEB-INF/properties/chatai.properties")
 public class ServletAppContext implements WebMvcConfigurer {
 
 	/* ==========[DB 접속 데이터]========== */

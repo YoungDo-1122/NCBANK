@@ -16,9 +16,10 @@
 
 </head>
 <body>
-    <c:import url="../include/top_menu.jsp" />
 
     <div class="contentWarp">
+    <c:import url="../include/top_menu.jsp" />
+    <div class="ASK">
         <div class="LP">
             <div class="LPWrap">
                 <div class="LPC01">
@@ -41,10 +42,10 @@
             <h1>환전 신청</h1>
             <form:form action="${root}exchange/exchangeAskSuccess" method="post" modelAttribute="createExchangeBean">
     
-                <div class="form-group form-group-exchange">
+                <div class="form-group-exchange">
                     <form:label path="code_money">환전신청금액</form:label>
-                    <div class="input-group input-group-exchange">
-                        <form:select path="code_money" id="code_money" style="width: 100px;">
+                    <div class="input-group-exchange">
+                        <form:select path="code_money" id="code_money" >
                             <form:option value="AED">AED</form:option>
                             <form:option value="AUD">AUD</form:option>
                             <form:option value="BHD">BHD</form:option>
@@ -69,15 +70,15 @@
                             <form:option value="THB">THB</form:option>
                             <form:option value="USD">USD</form:option>
                         </form:select>
-                        <form:input type="number" path="trade_money" class="form-control" id="trade_money_input" onkeyup="getExchangeMoney(); hideExchangeTable();" style="flex: 2;"/>
-                        <button type="button" id="trade_money_btn">환전예상금액 확인</button>
+                        <form:input type="number" path="trade_money" class="form-control" id="trade_money_input" onkeyup="getExchangeMoney(); hideExchangeTable();" />
+                        <button type="button" id="trade_money_btn">환전금액</button>
                     </div>
                 </div>
     
-                <table border="1" id="exchangeTable" style="display: none;">
+                <table id="exchangeTable" style="display: none;">
                     <tr>
                         <th>원화금액</th>
-                        <td id="exchange_payMoney" style="width: 200px;"></td>
+                        <td id="exchange_payMoney" ></td>
                     </tr>
                     <tr>
                         <th>현재고시환율</th>
@@ -100,7 +101,7 @@
                 <form:hidden path="preferential_money" id="hidden_preferential_money"/>
                 
                 <h1>고객정보 입력</h1>
-                <div class="form-group form-group-account">
+                <div class="form-group-account">
                     <form:label path="account">출금계좌선택</form:label>
                     <form:select path="account" id="account">
                         <c:forEach var="accountItem" items="${getAccountList}">
@@ -110,23 +111,23 @@
                 </div>
     
                 <h1>수령정보 입력</h1>
-                <div class="form-group form-group-search">
+                <div class="form-group-search">
                         <label for="searchAddr">희망지점조회</label>
-                        <input type="text" id="searchAddr" name="searchAddr" />
-                        <button type="button" id="searchAddrBtn" class="btn btn-secondary" onclick="searchBank()">조회</button>
-                    
+                        <div class="input-group-search">
+	                        <input type="text" id="searchAddr" name="searchAddr" />
+	                        <button type="button" id="searchAddrBtn" class="btn btn-secondary" onclick="searchBank()">조회</button>
+                    	</div>
                 </div>
 
-                <div class="form-group form-group-branch">
-                    <form:label path="code_bank_name">수령희망지점</form:label>
-                    <form:select path="code_bank_name" id="code_bank_name">
-                        <c:forEach var="codeBankitem" items="${codeBankNameList}">
-                            <form:option value="${codeBankitem.code_bank_name}">${codeBankitem.code_bank_name}</form:option>
-                        </c:forEach>
-                    </form:select> 
-                </div>
+                <div class="form-group-branch">
+				    <form:label path="code_bank_name">수령희망지점</form:label>
+				    <form:select path="code_bank_name" id="code_bank_name">
+				        
+				    </form:select> 
+				</div>
+
             
-                <div class="form-group form-group-date">
+                <div class="form-group-date">
                     <form:label path="trade_reservation_date">수령희망일</form:label>
                     <form:input path="trade_reservation_date" type="date" class="form-control" id="trade_reservation_date"/>
                 </div>
@@ -144,8 +145,8 @@
             </form:form>
         </div>
     </div>
-
     <c:import url="../include/bottom_info.jsp" />
+    </div>
 
     <script>
     
@@ -293,6 +294,8 @@
         var keyword = document.getElementById("searchAddr").value.toLowerCase();
         // Select
         var $select = document.getElementById("code_bank_name");
+     	// form-group-branch 요소를 가져옵니다.
+        var formGroupBranch = document.querySelector('.form-group-branch');
     
         // 기존 옵션 제거
         while ($select.options.length > 0) {
@@ -318,6 +321,7 @@
             option.text = "일치하는 결과가 없습니다";
             $select.appendChild(option);
         }
+     	
         
         setCodeBank()
     }
@@ -337,6 +341,44 @@
          var userNum = ${loginUserBean.user_num};
             document.getElementById("hidden_user_num").value = userNum;
         setCodeBank();
+        
+        // 현재 날짜를 가져옵니다.
+        var today = new Date();
+
+        // 현재 날짜를 yyyy-mm-dd 형식으로 변환합니다.
+        var yyyy = today.getFullYear();
+        var mm = today.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더합니다.
+        var dd = today.getDate();
+
+        if (mm < 10) mm = '0' + mm;
+        if (dd < 10) dd = '0' + dd;
+
+        var todayStr = yyyy + '-' + mm + '-' + dd;
+
+        // 한 달 후 날짜를 계산합니다.
+        var nextMonth = new Date(today);
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+        var yyyyNext = nextMonth.getFullYear();
+        var mmNext = nextMonth.getMonth() + 1;
+        var ddNext = nextMonth.getDate();
+
+        if (mmNext < 10) mmNext = '0' + mmNext;
+        if (ddNext < 10) ddNext = '0' + ddNext;
+
+        var nextMonthStr = yyyyNext + '-' + mmNext + '-' + ddNext;
+
+        // trade_reservation_date 요소의 min과 max 속성을 설정합니다.
+        var dateInput = document.getElementById("trade_reservation_date");
+        dateInput.setAttribute("min", todayStr);
+        dateInput.setAttribute("max", nextMonthStr);
+        
+     	// code_bank_name 요소에서 옵션 제거
+        var codeBankSelect = document.getElementById("code_bank_name");
+        while (codeBankSelect.options.length > 0) {
+            codeBankSelect.remove(0);
+        }
+        
     }; 
     
     

@@ -11,7 +11,7 @@
 	<div class="brandlogo">
 	<a class="navbar-brand" href="${root}main"> 
 	<img src="${root}/img/ncbank_logo.png"/></a>
-	<p>NC은행</p>
+	<p>NC BANK</p>
 	</div>
 	<!-- 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
 			<span class="navbar-toggler-icon"></span> 
