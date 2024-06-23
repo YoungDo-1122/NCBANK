@@ -1,14 +1,25 @@
 @charset "UTF-8";
 
-.contentWarp {
+body {
+    background-color: #e0e0e0; /* 더 진한 회색 */
     font-family: Arial, Helvetica, sans-serif;
-    width: 70%;
-    max-width: 1400px;
-    max-height: fit-content;
-    margin: 0 auto;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.contentWarp {
+   font-family: Arial, Helvetica, sans-serif;
+   width: 70%;
+   max-width: 1400px;
+   margin: 0 auto;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   background-color: #ffffff;
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   border-radius: 10px;
+   padding: 20px;
+   box-sizing: border-box; /* 패딩 포함하여 전체 너비 계산 */
 }
 
 .ASK {
@@ -24,7 +35,7 @@
     display: flex;
 }
 
-.LPWrap {
+/* .LPWrap {
     text-align: center;
     background-color: #f8f9fa;
     padding: 20px;
@@ -67,7 +78,7 @@
     padding: 10px;
     margin-bottom: 20px;
     background-color: #fff;
-}
+} */
 
 /* [메인 내용] 시작 */
 
@@ -128,8 +139,7 @@ h1 {
 }
 
 .input-group-exchange button:hover {
-    background-color: black;
-    color: rgb(83, 169, 255);
+   background-color: #0056b3;
 }
 
 /* Account 관련 */
@@ -201,8 +211,8 @@ h1 {
 }
 
 .form-group-search button:hover {
-    background-color: black;
-    color: rgb(83, 169, 255);
+    background-color: #0056b3;
+
 }
 
 /* Branch 관련 */
@@ -283,8 +293,7 @@ th {
 }
 
 .btn-primary:hover {
-    background-color: black;
-    color: rgb(83, 169, 255);
+    background-color: #0056b3;
 }
 
 .btn-secondary {
