@@ -3,20 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
-
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/top_menu.css">
-
 <nav>
 	<div class="brandlogo">
-	<a class="navbar-brand" href="${root}main"> 
-	<img src="${root}/img/ncbank_logo.png"/></a>
-	<p>NC BANK</p>
+		<a class="navbar-brand" href="${root}main"> <img
+			src="${root}/img/ncbank_logo.png" /></a>
+		<p>NC BANK</p>
 	</div>
-	<!-- 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
-			<span class="navbar-toggler-icon"></span> 
-		</button>-->
-	<!-- dropdown 메뉴 -->
 	<ul id="main-menu">
 		<li><a href="${root}account/accountCheck">조회</a>
 			<ul id=sub-menu>
@@ -29,7 +23,6 @@
 				<li><a href="${root}account/accountCreate">계좌개설</a></li>
 				<li><a href="${root}trans/transfer">계좌이체</a></li>
 				<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
-				<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
 			</ul></li>
 		<li><a href="${root}groupAccount/about">모임</a>
 			<ul id=sub-menu>
@@ -50,7 +43,6 @@
 				<li><a href="${root}board/main?board_info_idx=2">새소식</a>
 			</ul></li>
 	</ul>
-
 	<ul class="login">
 		<c:choose>
 			<c:when test="${loginUserBean.userLogin == true }">

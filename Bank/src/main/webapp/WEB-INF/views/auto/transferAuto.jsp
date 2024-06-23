@@ -64,14 +64,6 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-				<div class="enquiry">
-					<h3>조회</h3>
-					<ul>
-						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
-						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-						<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
-					</ul>
-				</div>
 				<div class="transfer">
 					<h3>이체</h3>
 					<ul>

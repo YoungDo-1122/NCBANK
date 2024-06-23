@@ -11,12 +11,23 @@ public class AutoBean {
 	private String auto_type;
 	private String auto_next_date;
 	private Date auto_start;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date auto_end;
 	private String to_account;
 	private String code_organ;
 	private String from_account;
 	private int user_num;
+
+	private String code_organ_name;
+
+	public String getCode_organ_name() {
+		return code_organ_name;
+	}
+
+	public void setCode_organ_name(String code_organ_name) {
+		this.code_organ_name = code_organ_name;
+	}
+
 	public int getAuto_num() {
 		return auto_num;
 	}
@@ -72,6 +83,7 @@ public class AutoBean {
 	public void setAuto_end(Date auto_end) {
 		this.auto_end = auto_end;
 	}
+
 	public String getTo_account() {
 		return to_account;
 	}
@@ -79,6 +91,7 @@ public class AutoBean {
 	public void setTo_account(String to_account) {
 		this.to_account = to_account;
 	}
+
 	public String getCode_organ() {
 		return code_organ;
 	}

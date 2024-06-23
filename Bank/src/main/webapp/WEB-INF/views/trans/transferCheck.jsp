@@ -27,6 +27,17 @@
 		window.location.href = "${root}trans/transferCheck?account="
 				+ selectedAccount;
 	}
+	function formatBalance(balance) {
+		return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	function formatAccount(account) {
+		if (account.startsWith("005")) {
+			return account.replace(/(\d{3})(\d{8})(\d{2})(\d{1})/,
+					"$1-$2-$3-$4");
+		}
+		return account;
+	}
 </script>
 </head>
 <body>
@@ -41,14 +52,6 @@
 							<li><a href="${root}account/accountCheck">계좌 조회</a></li>
 							<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
 							<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
-						</ul>
-					</div>
-					<div class="transfer">
-						<h5>이체</h5>
-						<ul>
-							<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-							<li><a href="${root}trans/transfer">계좌 이체</a></li>
-							<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
 						</ul>
 					</div>
 				</div>
@@ -90,11 +93,27 @@
 													<tr>
 														<td><c:if test="${transfer.trans_type eq 1}">입금</c:if>
 															<c:if test="${transfer.trans_type eq 2}">출금</c:if></td>
-														<td><c:if test="${transfer.trans_type eq 1}">+&nbsp;${transfer.trans_money}</c:if>
-															<c:if test="${transfer.trans_type eq 2}">-&nbsp;${transfer.trans_money}</c:if></td>
-														<td>[${transfer.code_organ_name}]${transfer.to_account}</td>
-														<td>&#8361;&nbsp;${transfer.trans_balance}</td>
-														<td>[NC뱅크]${transfer.from_account}</td>
+														<td><c:if test="${transfer.trans_type eq 1}">+<script>
+															document
+																	.write(formatBalance("${transfer.trans_money}"));
+														</script>
+															</c:if> <c:if test="${transfer.trans_type eq 2}">-<script>
+																document
+																		.write(formatBalance("${transfer.trans_money}"));
+															</script>
+															</c:if></td>
+														<td>[${transfer.code_organ_name}]&nbsp;<script>
+															document
+																	.write(formatAccount("${transfer.to_account}"));
+														</script></td>
+														<td>&#8361;&nbsp;<script>
+															document
+																	.write(formatBalance("${transfer.trans_balance}"));
+														</script></td>
+														<td>[NC뱅크]&nbsp;<script>
+															document
+																	.write(formatAccount("${transfer.from_account}"));
+														</script></td>
 														<td>${transfer.trans_text}</td>
 														<td><fmt:formatDate value="${transfer.trans_date}"
 																pattern="yyyy.MM.d" /></td>
