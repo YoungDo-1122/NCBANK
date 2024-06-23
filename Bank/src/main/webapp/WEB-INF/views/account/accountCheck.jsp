@@ -20,44 +20,46 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-2">
-				<div class="enquiry">
-					<h3>조회</h3>
-					<ul>
-						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
-						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-					</ul>
+	<div class="container">
+
+		<c:import url="/WEB-INF/views/include/top_menu.jsp" />
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-2">
+					<div class="enquiry">
+						<h5>조회</h5>
+						<ul>
+							<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+							<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+						</ul>
+					</div>
+					<div class="transfer">
+						<h5>이체</h5>
+						<ul>
+							<li><a href="${root}account/accountCreate">계좌 개설</a></li>
+							<li><a href="${root}trans/transfer">계좌 이체</a></li>
+							<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
+							<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="transfer">
-					<h3>이체</h3>
-					<ul>
-						<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-						<li><a href="${root}trans/transfer">계좌 이체</a></li>
-						<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
-						<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-md-10">
-				<table>
-					<tr>
-						<th><h2>입 / 출금 계좌</h2></th>
-					</tr>
-					<tr>
-						<td>
-							<table>
-								<thead>
-									<tr>
-										<th>계좌분류</th>
-										<th>계좌번호</th>
-										<th>잔액</th>
-										<th>계좌개설일</th>
-										<th>업무</th>
-									</tr>
-								</thead>
+				<div class="col-md-10">
+					<table>
+						<tr>
+							<th><h3>입 / 출금 계좌</h3></th>
+						</tr>
+						<tr>
+							<td>
+								<table>
+									<thead>
+										<tr>
+											<th>계좌분류</th>
+											<th>계좌번호</th>
+											<th>잔액</th>
+											<th>계좌개설일</th>
+											<th>업무</th>
+										</tr>
+									</thead>
 									<tbody>
 										<c:set var="totalBalance" value="0" />
 										<c:forEach var="account" items="${accounts}">
@@ -69,26 +71,27 @@
 														<c:when test="${account.ac_type == 1}">
 											모임통장
 											</c:when>
-												</c:choose></td>
-											<td>${account.account}</td>
-											<td>&#92;${account.ac_balance}</td>
-											<td><fmt:formatDate value="${account.ac_date}"
-													pattern="yyyy년 M월 d일 EEEE HH:mm:ss" /></td>
-											<td>
-												<button
-													onclick="window.location.href='${root}trans/transferCheck'">이체내역
-													조회</button>
-												<button
-													onclick="window.location.href='${root}trans/transfer'">계좌
-													이체</button>
-											</td>
-										</tr>
-										<c:set var="totalBalance"
-											value="${totalBalance + account.ac_balance}" />
-									</c:forEach>
-									<tr>
-										<th colspan="4" class="total">입 / 출금계좌 총 잔액</th>
-										<td>&#92;${totalBalance}</td>
+													</c:choose></td>
+												<td>${account.account}</td>
+												<td>${account.ac_balance}</td>
+												<td><fmt:formatDate value="${account.ac_date}"
+														pattern="yyyy년 M월 d일 EEEE HH:mm:ss" /></td>
+												<td>
+													<button class="transfer-check-button"
+														onclick="window.location.href='${root}trans/transferCheck'">이체내역
+														조회</button>
+													<button class="transfer-button"
+														onclick="window.location.href='${root}trans/transfer'">계좌
+														이체</button>
+												</td>
+											</tr>
+											<c:set var="totalBalance"
+												value="${totalBalance + account.ac_balance}" />
+										</c:forEach>
+										<tr>
+											<th colspan="4" class="total">입 / 출금계좌 총 잔액</th>
+											<td class="total-balance">&#92;${totalBalance}원</td>
+										
 									</tr>
 								</tbody>
 							</table>

@@ -17,7 +17,7 @@ public class BoardMainSerivce {
 	
 	public List<ContentBean> getMainList(int board_info_idx){
 		int start = 1;
-		int end = 5;
+		int end = 4;
 		return boardDao.getContentList(board_info_idx, start, end);
 	}
 

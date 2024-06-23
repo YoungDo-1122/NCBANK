@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>계좌 이체</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/transferCheck.css" />
+	href="${pageContext.request.contextPath}/css/accountCreate.css" />
 
 <!-- 부트스트랩 CDN -->
 <script
@@ -22,39 +22,28 @@
 
 </head>
 <body>
+<div class="container">
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-				<table>
-					<tr>
-						<th><h3>조회</h3></th>
-					</tr>
-					<tr>
-						<td>
-							<ul>
-								<li><a href="${root}account/accountCheck">계좌 조회</a></li>
-								<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-								<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
-							</ul>
-						</td>
-					</tr>
-					<tr>
-						<th>
-							<h3>이체</h3>
-						</th>
-					</tr>
-					<tr>
-						<td>
-							<ul>
-								<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-								<li><a href="${root}trans/transfer">계좌 이체</a></li>
-								<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
-								<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
-							</ul>
-						</td>
-					</tr>
-				</table>
+				<div class="enquiry">
+					<h5>조회</h5>
+					<ul>
+						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+						<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
+					</ul>
+				</div>
+				<div class="transfer">
+					<h5>이체</h5>
+					<ul>
+						<li><a href="${root}account/accountCreate">계좌 개설</a></li>
+						<li><a href="${root}trans/transfer">계좌 이체</a></li>
+						<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
+						<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
+					</ul>
+				</div>
 			</div>
 			<div class="col-md-10">
 				<table>
@@ -62,7 +51,7 @@
 						modelAttribute="transferBean" id="transferBean">
 						<table>
 							<tr>
-								<th><h2>출금 정보</h2></th>
+								<th><h3>출금 정보</h3></th>
 							</tr>
 							<tr>
 								<th>출금 계좌</th>
@@ -140,5 +129,6 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+	</div>
 </body>
 </html>
