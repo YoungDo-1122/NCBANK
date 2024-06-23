@@ -2,7 +2,6 @@ package ncbank.service;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +16,9 @@ public class BoardMainSerivce {
 	private BoardDao boardDao;
 	
 	public List<ContentBean> getMainList(int board_info_idx){
-		RowBounds rowBounds = new RowBounds(0,5);
-		return boardDao.getContentList(board_info_idx, rowBounds);
+		int start = 1;
+		int end = 4;
+		return boardDao.getContentList(board_info_idx, start, end);
 	}
 
 }

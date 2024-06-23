@@ -2,7 +2,6 @@ package ncbank.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,14 +22,14 @@ public class BoardDao {
 		return boardMapper.getBoardInfoName(board_info_idx);
 	}
 
-	public List<ContentBean> getContentList(int board_info_idx, RowBounds rowBounds) {
-		return boardMapper.getContentList(board_info_idx, rowBounds);
+	public List<ContentBean> getContentList(int board_info_idx, int start, int end) {
+	    return boardMapper.getContentList(board_info_idx, start, end);
 	}
 
 	public ContentBean getContentInfo(int content_idx) {
 		return boardMapper.getContentInfo(content_idx);
 	}
-	
+
 	public int getContentCnt(int content_board_idx) {
 		return boardMapper.getContentCnt(content_board_idx);
 	}

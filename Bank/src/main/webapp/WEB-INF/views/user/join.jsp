@@ -88,6 +88,12 @@ function execDaumPostCode() {
 //휴대폰번호 인증번호 보내기 버튼 클릭 이벤트
 function sendSMSVerification() {
 	var to = $('input[name="phone"]').val();
+	
+	if(!to){
+		alert("전화번호를 입력해주세요");
+		return;
+	}
+	
 	$.ajax({
 		url: '${root}user/memberPhoneCheck',
 		type: 'POST',
@@ -118,129 +124,131 @@ function sendSMSVerification() {
 </script>
 
 <body>
-	<c:import url="../include/top_menu.jsp" />
 	<div class="container">
-		<h2 class="text-primary">회원가입</h2>
+		<c:import url="../include/top_menu.jsp" />
+		<div class="joinform">
+			<h2 class="text-primary">회원가입</h2>
 
-		<!-- 에러 발생시 -->
-		<c:if test="${not empty errorMessage}">
-			<div class="alert alert-danger" style='color: red'>${errorMessage}</div>
-			<br>
-		</c:if>
+			<!-- 에러 발생시 -->
+			<c:if test="${not empty errorMessage}">
+				<div class="alert alert-danger" style='color: red'>${errorMessage}</div>
+				<br>
+			</c:if>
 
-		<form:form action="${root}/user/join_pro" method="post"
-			modelAttribute="mBean">
-			<form:hidden path="idExistCheck" />
-			<div class="form-group">
-				<form:label path="name">이름</form:label>
-				<form:input path="name" placeholder="이름" class='form-control'
-					required="required" />
-				<form:errors path="name" style='color:red' />
-			</div>
-			<div class="form-group">
-				<form:label path="resident">주민번호</form:label>
-				<div class="resident">
-					<form:input path="resident1" placeholder="앞자리 6자리"
-						class='form-front' maxlength="6"
-						style="width: 100px; display: inline-block;" required="required" />
-					<label style="margin: 10px;">-</label>
-					<form:password path="resident2" placeholder="뒷자리 7자리"
-						class='form-back' maxlength="7"
-						style="width: 100px; display: inline-block;" required="required" />
-				</div>
-				<form:errors path="resident1" style='color:red' />
-				<form:errors path="resident2" style='color:red' />
-			</div>
-			<div class="form-group">
-				<form:label path="id">아이디</form:label>
-				<div class="input-group">
-					<form:input path="id" class='form-control' placeholder="아이디"
-						onkeypress="resetUserIdExist()" required="required" />
-					<div class="input-group-append">
-						<button type="button" class="btn btn-primary"
-							onclick="checkUserIdExist()">중복확인</button>
-					</div>
-				</div>
-				<form:errors path="id" style='color:red' />
-			</div>
-
-			<div class="form-group">
-				<form:label path="pwd">비밀번호</form:label>
-				<form:password path="pwd" placeholder="비밀번호" class='form-control'
-					required="required" />
-				<form:errors path='pwd' style='color:red' />
-			</div>
-
-			<div class="form-group">
-				<form:label path="pwd2">비밀번호 확인</form:label>
-				<form:password path="pwd2" placeholder="비밀번호 확인"
-					class='form-control' required="required" />
-				<form:errors path='pwd2' style='color:red' />
-			</div>
-
-			<div class="form-group">
-				<form:label path="address">주소</form:label>
-				<div class="input-group mb-2">
-					<form:input path="add1" placeholder="우편번호" class="form-control"
+			<form:form action="${root}user/join_pro" method="post"
+				modelAttribute="mBean">
+				<form:hidden path="idExistCheck" />
+				<div class="form-group">
+					<form:label path="name">이름</form:label>
+					<form:input path="name" placeholder="이름" class='form-control'
 						required="required" />
-					<div class="input-group-append">
-						<button type="button" class="btn btn-primary"
-							onclick="execDaumPostCode()">우편번호 찾기</button>
-					</div>
+					<form:errors path="name" style='color:red' />
 				</div>
-				<form:input path="add2" placeholder="도로명 주소"
-					class='form-control space-between-inputs' required="required" />
-				<br />
-				<form:input path="add3" placeholder="상세 주소" class='form-control'
-					required="required" />
-				<form:errors path='add1' style='color:red' />
-				<form:errors path='add3' style='color:red' />
-
-				<form:hidden path="address" id="address" />
-			</div>
-			<div class="form-group row">
-				<div class="col">
-					<label for="phone" class="col-form-label">전화번호</label>
+				<div class="form-group">
+					<form:label path="resident">주민번호</form:label>
+					<div class="resident">
+						<form:input path="resident1" placeholder="앞자리 6자리"
+							class='form-front' maxlength="6"
+							style="width: 100px; display: inline-block;" required="required" />
+						<label style="margin: 10px;">-</label>
+						<form:password path="resident2" placeholder="뒷자리 7자리"
+							class='form-back' maxlength="7"
+							style="width: 100px; display: inline-block;" required="required" />
+					</div>
+					<form:errors path="resident1" style='color:red' />
+					<form:errors path="resident2" style='color:red' />
+				</div>
+				<div class="form-group">
+					<form:label path="id">아이디</form:label>
 					<div class="input-group">
-						<input id="phone" type="text" name="phone"
-							placeholder="전화번호 ('-'까지 입력)" class="form-control" maxlength="13"
+						<form:input path="id" class='form-control' placeholder="아이디"
+							onkeypress="resetUserIdExist()" required="required" />
+						<div class="input-group-append">
+							<button type="button" class="btn btn-primary"
+								onclick="checkUserIdExist()">중복확인</button>
+						</div>
+					</div>
+					<form:errors path="id" style='color:red' />
+				</div>
+
+				<div class="form-group">
+					<form:label path="pwd">비밀번호</form:label>
+					<form:password path="pwd" placeholder="비밀번호" class='form-control'
+						required="required" />
+					<form:errors path='pwd' style='color:red' />
+				</div>
+
+				<div class="form-group">
+					<form:label path="pwd2">비밀번호 확인</form:label>
+					<form:password path="pwd2" placeholder="비밀번호 확인"
+						class='form-control' required="required" />
+					<form:errors path='pwd2' style='color:red' />
+				</div>
+
+				<div class="form-group">
+					<form:label path="address">주소</form:label>
+					<div class="input-group mb-2">
+						<form:input path="add1" placeholder="우편번호" class="form-control"
 							required="required" />
 						<div class="input-group-append">
 							<button type="button" class="btn btn-primary"
-								onclick="sendSMSVerification()">인증번호 받기</button>
+								onclick="execDaumPostCode()">우편번호 찾기</button>
 						</div>
 					</div>
-					<form:errors path="phone" style='color:red' />
+					<form:input path="add2" placeholder="도로명 주소"
+						class='form-control space-between-inputs' required="required" />
+					<br />
+					<form:input path="add3" placeholder="상세 주소" class='form-control'
+						required="required" />
+					<form:errors path='add1' style='color:red' />
+					<form:errors path='add3' style='color:red' />
+
+					<form:hidden path="address" id="address" />
 				</div>
-			</div>
-			<div class="form-group row">
-				<div class="col">
-					<div class="input-group">
-						<input id="verificationCode" type="text" name="verificationCode"
-							placeholder="인증번호" class="form-control" required="required" />
-						<div class="input-group-append">
-							<button id="certifyCheck" type="button" class="btn btn-primary"
-								onclick="certifyCheck()">인증번호 확인</button>
+				<div class="form-group row">
+					<div class="col">
+						<label for="phone" class="col-form-label">전화번호</label>
+						<div class="input-group">
+							<input id="phone" type="text" name="phone"
+								placeholder="전화번호 ('-'까지 입력)" class="form-control"
+								maxlength="13" required="required" />
+							<div class="input-group-append">
+								<button type="button" class="btn btn-primary"
+									onclick="sendSMSVerification()">인증번호 받기</button>
+							</div>
 						</div>
+						<form:errors path="phone" style='color:red' />
 					</div>
-					<form:errors path="verificationCode" style='color:red' />
 				</div>
-			</div>
-			<div class="form-group">
-				<form:label path="email" type="email">이메일</form:label>
-				<form:input path="email" type="email" placeholder="(선택) 이메일"
-					class='form-control' />
-			</div>
-			<div class="form-group">
-				<form:hidden path="join_date" />
-			</div>
-			<div class="form-group">
-				<div class="text-right">
-					<form:button type="submit" class='btn btn-primary'>회원가입</form:button>
+				<div class="form-group row">
+					<div class="col">
+						<div class="input-group">
+							<input id="verificationCode" type="text" name="verificationCode"
+								placeholder="인증번호" class="form-control" required="required" />
+							<div class="input-group-append">
+								<button id="certifyCheck" type="button" class="btn btn-primary"
+									onclick="certifyCheck()">인증번호 확인</button>
+							</div>
+						</div>
+						<form:errors path="verificationCode" style='color:red' />
+					</div>
 				</div>
-			</div>
-		</form:form>
+				<div class="form-group">
+					<form:label path="email" type="email">이메일</form:label>
+					<form:input path="email" type="email" placeholder="(선택) 이메일"
+						class='form-control' />
+				</div>
+				<div class="form-group">
+					<form:hidden path="join_date" />
+				</div>
+				<div class="form-group">
+					<div class="text-right">
+						<form:button type="submit" class='btn btn-primary'>회원가입</form:button>
+					</div>
+				</div>
+			</form:form>
+		</div>
+		<c:import url="../include/bottom_info.jsp" />
 	</div>
-	<c:import url="../include/bottom_info.jsp" />
 </body>
 </html>

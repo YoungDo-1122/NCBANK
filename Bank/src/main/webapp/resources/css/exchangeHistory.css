@@ -1,90 +1,179 @@
 @charset "UTF-8";
 
-body {
-	font-family: Arial, sans-serif;
+.contentWarp {
+    font-family: Arial, Helvetica, sans-serif;
+    width: 70%;
+    max-width: 1400px;
+    max-height: fit-content;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.content {
-	display: flex;
+.ASKHistory {
+    display: flex;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
-.sidebar {
-	width: 200px;
-	background-color: #f8f8f8;
-	padding: 20px;
+.LP {
+    margin: 0;
+    display: flex;
 }
 
-.sidebar h2 {
-	margin-top: 0;
+.LPWrap {
+    text-align: center;
+    background-color: #f8f9fa;
+    padding: 20px;
+    height: 100%;
+    border-right: 1px solid #dee2e6;
+    top: 0;
+    width: 200px;
 }
 
-.sidebar ul {
-	list-style-type: none;
-	padding-left: 0;
+.LPWrap h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #343a40;
 }
 
-.sidebar ul ul {
-	padding-left: 20px;
+.LPWrap ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.sidebar ul li {
-	margin-bottom: 10px;
+.LPWrap ul li {
+    margin-bottom: 10px;
 }
+
+.LPWrap ul li a {
+    text-decoration: none;
+    color: rgb(83, 169, 255);
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.LPWrap ul li a:hover {
+    background-color: #e9ecef;
+}
+
+.LPWrap .LPC01 {
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+/* [메인 내용] 시작 */
 
 .main-content {
-	flex-grow: 1;
-	padding: 20px;
+    flex: 1;
+    padding: 20px;
 }
 
-.main-content h2 {
-	margin-top: 0;
+h1 {
+    color: rgb(83, 169, 255);
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-top:27px;
 }
 
-.search-section {
-	margin-bottom: 20px;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-.date-range {
-	display: flex;
-	align-items: center;
+table, th, td {
+   /*  border: 1px solid #dddddd; */
+   
+    padding: 12px;
+    /* text-align: left; */
+    text-align:center;
 }
 
-.date-range input {
-	margin: 0 5px;
+th {
+	border-top: 1px solid black;
+	border-bottom: 0.1px solid #dddddd;
+ 	background-color: #f4f4f4;   
+}
+td {
+    
+	border-bottom: 0.1px solid #dddddd;
+    
 }
 
-.radio-buttons {
-	margin: 10px 0;
-}
 
-.result-section {
-	margin-top: 20px;
-}
-
-.result-section table {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-.result-section th, .result-section td {
-	padding: 10px;
-	text-align: center;
-}
-
-.result-section th {
-	background-color: #f0f0f0;
+.pagination-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .pagination {
-	margin-top: 10px;
-	text-align: center;
+    display: flex;
+    list-style-type: none;
+    padding: 0;
 }
 
-.action-buttons {
-	margin-top: 10px;
-	text-align: center;
+.page-item {
+    margin: 0 5px;
 }
 
-.action-buttons button {
-	margin: 0 5px;
+.page-item.disabled .page-link {
+    cursor: not-allowed;
+    color: #999999;
+}
+
+.page-item.active .page-link {
+    background-color: rgb(83, 169, 255); /* 신한은행 색상 */
+    color: white;
+    border-radius: 4px;
+}
+
+.page-link {
+    color: rgb(83, 169, 255); /* 신한은행 색상 */
+    padding: 8px 12px;
+    text-decoration: none;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.page-link:hover {
+    background-color: #e9ecef;
+}
+
+button {
+    background-color: rgb(83, 169, 255); /* 신한은행 색상 */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: rgb(83, 169, 255); /* 신한은행 색상 */
+    color: white;
+}
+
+button a {
+    color: white;
+    text-decoration: none;
+}
+
+
+.actions{
+	display: flex;
+    justify-content: flex-end;
 }

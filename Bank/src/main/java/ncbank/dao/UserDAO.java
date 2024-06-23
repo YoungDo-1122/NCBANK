@@ -50,5 +50,13 @@ public class UserDAO {
 	public void findMemberPwd(UserBean findMemberPwdBean) {
 		userMapper.findMemberPwd(findMemberPwdBean);
 	}
+	
+	public UserBean getUserInfo(int userNum) {
+		return userMapper.getUserInfo(userNum);
+	}
+	
+	 public void updateUserInfo(UserBean userBean) {
+		 userMapper.updateUserInfo(userBean);
+	 }
 
 }

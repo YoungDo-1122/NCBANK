@@ -15,9 +15,19 @@ public class CrerateTradeBean {
     private String code_bank_tel ;
 	private String code_bank_fax ;
 	private String code_money;
+	private String code_bank_name;
+
 	
 	
 	
+	
+	
+	public String getCode_bank_name() {
+		return code_bank_name;
+	}
+	public void setCode_bank_name(String code_bank_name) {
+		this.code_bank_name = code_bank_name;
+	}
 	public String getCode_money() {
 		return code_money;
 	}

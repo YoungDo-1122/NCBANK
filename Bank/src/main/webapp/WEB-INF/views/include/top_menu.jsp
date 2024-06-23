@@ -8,8 +8,11 @@
 	href="${pageContext.request.contextPath}/css/top_menu.css">
 
 <nav>
-	<a class="navbar-brand" href="${root}main"> <img
-		src="${root}/img/ncbank_logo.png" style="height: 100px" /></a>
+	<div class="brandlogo">
+	<a class="navbar-brand" href="${root}main"> 
+	<img src="${root}/img/ncbank_logo.png"/></a>
+	<p>NC BANK</p>
+	</div>
 	<!-- 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu">
 			<span class="navbar-toggler-icon"></span> 
 		</button>-->
@@ -19,13 +22,14 @@
 			<ul id=sub-menu>
 				<li><a href="${root}account/accountCheck">계좌조회</a></li>
 				<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+				<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
 			</ul></li>
 		<li><a href="${root}trans/transfer">이체</a>
 			<ul id=sub-menu>
 				<li><a href="${root}account/accountCreate">계좌개설</a></li>
 				<li><a href="${root}trans/transfer">계좌이체</a></li>
-				<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-				<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
+				<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
+				<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
 			</ul></li>
 		<li><a href="${root}groupAccount/about">모임</a>
 			<ul id=sub-menu>
@@ -50,7 +54,7 @@
 	<ul class="login">
 		<c:choose>
 			<c:when test="${loginUserBean.userLogin == true }">
-				<li class="nav-item"><a href="${root}user/modify"
+				<li class="nav-item"><a href="${root}user/mypage"
 					class="nav-link">마이페이지</a></li>
 				<li class="nav-item"><a href="${root}user/logout"
 					class="nav-link">로그아웃</a></li>

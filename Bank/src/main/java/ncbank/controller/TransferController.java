@@ -22,6 +22,7 @@ import ncbank.beans.UserBean;
 import ncbank.service.AccountService;
 import ncbank.service.CodeOrganService;
 import ncbank.service.TransferService;
+import ncbank.validator.ExceptionMessage;
 
 @Controller
 @RequestMapping("/trans")
@@ -47,9 +48,6 @@ public class TransferController {
 		}
 
 		int userNum = loginUserBean.getUser_num();
-		System.out.println("이체내역 계좌 : " + account);
-//		System.out.println("이체내역 회원 번호 : " + userNum);
-
 		List<TransferBean> transfers;
 		if (account != null && !account.isEmpty()) {
 			transfers = transferService.getTransfer(userNum, account);
@@ -88,10 +86,9 @@ public class TransferController {
 
 	@PostMapping("/transfer_confirm")
 	public String transferConfirm(@Valid @ModelAttribute("transferBean") TransferBean transferBean,
-			@RequestParam("ac_password") String acPassword, Model model, BindingResult result) {
-
+			@RequestParam("ac_password") String acPassword, Model model, BindingResult result) throws Exception {
 		if (result.hasErrors()) {
-			int userNum = transferService.getUserNum();
+			int userNum = loginUserBean.getUser_num();
 			List<AccountBean> accounts = accountService.getAccount(userNum);
 			model.addAttribute("accounts", accounts);
 
@@ -101,7 +98,7 @@ public class TransferController {
 		}
 
 		// 계좌 비밀번호 확인
-		int userNum = transferService.getUserNum();
+		int userNum = loginUserBean.getUser_num();
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 
 		AccountBean fromAccount = accounts.stream()
@@ -110,82 +107,38 @@ public class TransferController {
 
 		if (fromAccount == null || !fromAccount.getAc_password().equals(acPassword)) {
 			result.rejectValue("from_account", "error.from_account", "비밀번호가 일치하지 않습니다");
-			System.out.println("입력한 비밀번호 : " + acPassword);
-			System.out.println("계좌 비밀번호 : " + fromAccount.getAc_password());
 			model.addAttribute("accounts", accounts);
 
 			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
 			model.addAttribute("codeOrganNames", codeOrganNames);
 			return "trans/transfer";
 		}
-		// 출금 및 입금 내역 추가
-//		transferBean.setTrans_type(-1); // 출금
-		transferService.addTransfer(transferBean);
-//
-//		// 입금 내역 추가
-//		TransferBean depositBean = new TransferBean();
-//		depositBean.setTrans_type(1); // 입금
-//		depositBean.setTrans_balance(transferBean.getTrans_balance());
-//		depositBean.setTrans_text(transferBean.getTrans_text());
-//		depositBean.setFrom_account(transferBean.getTo_account());
-//		depositBean.setTo_account(transferBean.getFrom_account());
-//		depositBean.setCode_organ(transferBean.getCode_organ());
-//		transferService.addTransfer(depositBean);
+
+		// code_organ이 "005"일 때만 계좌번호 유효성 확인
+		if ("005".equals(transferBean.getCode_organ())
+				&& !accountService.isValidAccountNumber(transferBean.getTo_account())) { // 유효성 검사 조건 추가
+			result.rejectValue("to_account", "error.to_account", "유효한 계좌번호가 아닙니다");
+			model.addAttribute("accounts", accounts);
+
+			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
+			model.addAttribute("codeOrganNames", codeOrganNames);
+			return "trans/transfer";
+		}
+
+		try {
+			transferBean.setUser_num(loginUserBean.getUser_num());
+			transferService.addTransfer(transferBean);
+		} catch (ExceptionMessage e) {
+			System.out.println("ExceptionMessage : " + e);
+			result.rejectValue("to_account", "error.to_account", e.getMessage());
+			model.addAttribute("accounts", accounts);
+
+			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
+			model.addAttribute("codeOrganNames", codeOrganNames);
+			model.addAttribute("transferError", true); // 이체 실패 여부를 모델에 추가
+			return "trans/transfer";
+		}
+
 		return "redirect:/trans/transferCheck";
 	}
-
-//	@PostMapping("/check_password")
-//	public @ResponseBody boolean checkPassword(@RequestBody AccountBean accountBean) {
-//		
-//		int userNum = loginUserBean.getUser_num();
-//		List<AccountBean> accounts = accountService.getAccount(userNum);
-//		
-//		AccountBean fromAccount = accounts.stream()
-//				.filter(account -> account.getAccount().equals(accountBean.getAccount())).findFirst().orElse(null);
-//		
-//		return fromAccount != null && fromAccount.getAc_password().equals(accountBean.getAc_password());
-//	}
-
-//	@PostMapping("/transfer_confirm")
-//	public String transferConfirm(@Valid @ModelAttribute("transferBean") TransferBean transferBean, Model model,
-//			BindingResult result) {
-//
-//		if (result.hasErrors()) {
-//			model.addAttribute("codeOrganNames", codeOrganService.getCode_organ_name());
-//			return "trans/transferDetails";
-//		}
-//
-//		transferService.addTransfer(transferBean);
-//
-//		return "redirect:/trans/transferCheck";
-//	}
-
-//	@PostMapping("/transfer_pass")
-//	public String transferPass(@Valid @ModelAttribute("accountBean") AccountBean accountBean, Model model,
-//			BindingResult result) {
-//
-//		int userNum = loginUserBean.getUser_num();
-//		List<AccountBean> accounts = accountService.getAccount(userNum);
-//
-//		AccountBean fromAccount = accounts.stream()
-//				.filter(account -> account.getAccount().equals(accountBean.getAccount())).findFirst().orElse(null);
-//
-//		List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
-//
-//		if (fromAccount != null && fromAccount.getAc_password().equals(accountBean.getAc_password())) {
-//			model.addAttribute("passwordMatch", true);
-//			model.addAttribute("transferBean", new TransferBean());
-//			model.addAttribute("fromAccount", fromAccount.getAccount());
-//			model.addAttribute("codeOrganNames", codeOrganNames);
-//		} else {
-//			model.addAttribute("passwordMismatch", true);
-//			result.rejectValue("ac_password", "error.ac_password", "비밀번호가 일치하지 않습니다");
-//			model.addAttribute("accounts", accounts);
-//			model.addAttribute("codeOrganNames", codeOrganNames);
-//		}
-//		model.addAttribute("accountBean", accountBean);
-//
-//		return "trans/transfer";
-//	}
-
 }

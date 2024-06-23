@@ -1,9 +1,5 @@
 package ncbank.service;
 
-import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.Random;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -120,4 +116,13 @@ public class UserService {
 	 * userDaO.findMemberPwd(findMemberPwdBean); }
 	 * 
 	 */
+
+	public UserBean getUserInfo(int userNum) {
+		return userDaO.getUserInfo(userNum);
+	}
+
+	public void updateUserInfo(UserBean userBean) {
+		userDaO.updateUserInfo(userBean);
+	}
+
 }
