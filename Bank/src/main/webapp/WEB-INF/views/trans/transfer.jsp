@@ -26,22 +26,35 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-				<div class="enquiry">
-					<h3>조회</h3>
-					<ul>
-						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
-						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-					</ul>
-				</div>
-				<div class="transfer">
-					<h3>이체</h3>
-					<ul>
-						<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-						<li><a href="${root}trans/transfer">계좌 이체</a></li>
-						<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-						<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
-					</ul>
-				</div>
+				<table>
+					<tr>
+						<th><h3>조회</h3></th>
+					</tr>
+					<tr>
+						<td>
+							<ul>
+								<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+								<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+								<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th>
+							<h3>이체</h3>
+						</th>
+					</tr>
+					<tr>
+						<td>
+							<ul>
+								<li><a href="${root}account/accountCreate">계좌 개설</a></li>
+								<li><a href="${root}trans/transfer">계좌 이체</a></li>
+								<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
+								<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
+							</ul>
+						</td>
+					</tr>
+				</table>
 			</div>
 			<div class="col-md-10">
 				<table>
@@ -59,7 +72,13 @@
 										required="required">
 										<form:option value="">선택</form:option>
 										<c:forEach var="account" items="${accounts}">
-											<form:option value="${account.account}">[${account.ac_type}] ${account.account}</form:option>
+											<form:option value="${account.account}">
+												<c:choose>
+													<c:when test="${account.ac_type == 0}">[저축예금]${account.account}</c:when>
+													<c:when test="${account.ac_type == 1}">[모임통장]${account.account}</c:when>
+													<c:when test="${account.ac_type == 2}">[적금통장]${account.account}</c:when>
+												</c:choose>
+											</form:option>
 										</c:forEach>
 									</form:select></td>
 							</tr>
@@ -69,11 +88,9 @@
 							<tr>
 								<td><input type="password" name="ac_password"
 									placeholder="숫자 4자리" maxlength="4" id="ac_password"
-									required="required" />&nbsp;&nbsp;<form:errors
-										path="from_account" cssClass="error" /></td>
+									required="required" /> <form:errors path="from_account"
+										cssClass="error" /></td>
 							</tr>
-						</table>
-						<table>
 							<tr>
 								<td><h2>입금 정보</h2></td>
 							</tr>
@@ -100,8 +117,8 @@
 								<th>이체금액</th>
 							</tr>
 							<tr>
-								<td><form:input path="trans_balance" placeholder="이체금액"
-										required="required" /> <form:errors path="trans_balance"
+								<td><form:input path="trans_money" placeholder="이체금액"
+										required="required" /> <form:errors path="trans_money"
 										cssClass="error" /></td>
 							</tr>
 							<tr>

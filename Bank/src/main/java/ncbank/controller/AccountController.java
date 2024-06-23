@@ -34,8 +34,6 @@ public class AccountController {
 		}
 		// 로그인한 회원의 회원번호 저장
 		int userNum = loginUserBean.getUser_num();
-		System.out.println("계좌 조회 회원 번호 : " + userNum);
-		
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 		model.addAttribute("accounts", accounts);
 
@@ -89,21 +87,5 @@ public class AccountController {
 		}
 
 		return "redirect:/account/accountCheck";
-	}
-
-	@GetMapping("/transferAuto")
-	public String TransferAuto() {
-		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
-			return "user/not_login";
-		}
-		return "account/transferAuto";
-	}
-
-	@GetMapping("/transferAutoFix")
-	public String TransferAutoFix() {
-		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
-			return "user/not_login";
-		}
-		return "account/transferAutoFix";
 	}
 }

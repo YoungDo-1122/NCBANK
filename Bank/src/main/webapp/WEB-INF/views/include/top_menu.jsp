@@ -22,13 +22,14 @@
 			<ul id=sub-menu>
 				<li><a href="${root}account/accountCheck">계좌조회</a></li>
 				<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+				<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
 			</ul></li>
 		<li><a href="${root}trans/transfer">이체</a>
 			<ul id=sub-menu>
 				<li><a href="${root}account/accountCreate">계좌개설</a></li>
 				<li><a href="${root}trans/transfer">계좌이체</a></li>
-				<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-				<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
+				<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
+				<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
 			</ul></li>
 		<li><a href="${root}groupAccount/about">모임</a>
 			<ul id=sub-menu>

@@ -27,7 +27,7 @@
                 if (response && response.group_num) {
                     const groupNum = response.group_num;
                     Kakao.Link.sendCustom({
-                        templateId: 109036, // 템플릿 ID
+                        templateId: 109117, // 템플릿 ID
                         templateArgs: {
                             'group_num': groupNum // 동적 group_num 전달
                         }

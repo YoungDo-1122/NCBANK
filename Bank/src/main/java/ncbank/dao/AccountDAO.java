@@ -14,15 +14,23 @@ public class AccountDAO {
 	@Autowired
 	private AccountMapper accountMapper;
 
-	public List<AccountBean> getAccount(int userNum) {
-		return accountMapper.getAccount(userNum);
-	}
-
 	public UserBean getUserInfo(int userNum) {
 		return accountMapper.getUserInfo(userNum);
 	}
 
+	public List<AccountBean> getAccount(int userNum) {
+		return accountMapper.getAccount(userNum);
+	}
+
 	public void createAccount(AccountBean accountBean) {
 		accountMapper.createAccount(accountBean);
+	}
+
+	public void updateAccountBalance(AccountBean accountBean) {
+		accountMapper.updateAccountBalance(accountBean);
+	}
+
+	public AccountBean getAccountByNumber(String accountNumber) {
+		return accountMapper.getAccountByNumber(accountNumber);
 	}
 }
