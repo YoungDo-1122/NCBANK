@@ -254,7 +254,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 	}
 
 	@Bean
-	public MapperFactoryBean<AutoMapper> autoMapper(SqlSessionFactory factory) {
+	public MapperFactoryBean<AutoMapper> autoMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<AutoMapper> factoryBean = new MapperFactoryBean<>(AutoMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;

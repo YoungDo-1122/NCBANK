@@ -117,7 +117,7 @@
 							</tr>
 							<tr id="transferEndDateRow">
 								<td>이체 종료일</td>
-								<td><form:input type="date" path="end_date" id="end_date"
+								<td><form:input type="date" path="auto_end" id="auto_end"
 										required="true" /></td>
 							</tr>
 							<tr>
@@ -165,7 +165,12 @@
 				transferDaySelect.appendChild(lastDayOption);
 			}
 		}
-		document.addEventListener("DOMContentLoaded", updateTransferDayOptions);
+
+		document.addEventListener("DOMContentLoaded", function() {
+			document.getElementById("auto_type").addEventListener("change",
+					updateTransferDayOptions);
+			updateTransferDayOptions(); // 페이지 로드 시 초기화
+		});
 	</script>
 </body>
 </html>

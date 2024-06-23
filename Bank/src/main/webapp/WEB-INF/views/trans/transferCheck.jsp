@@ -28,6 +28,7 @@
 					<ul>
 						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
 						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+						<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
 					</ul>
 				</div>
 				<div class="transfer">

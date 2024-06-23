@@ -17,13 +17,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(function() {
-		<c:if test="${not empty transferError}">
-		alert("이체에 실패했습니다. 다시 시도해 주세요.");
-		</c:if>
-	});
-</script>
 <style>
 .col-md-10, .col-md-2 {
 	border: 1px solid #ddd;
@@ -122,8 +115,8 @@
 							<tr>
 								<td><input type="password" name="ac_password"
 									placeholder="숫자 4자리" maxlength="4" id="ac_password"
-									required="required" />&nbsp;&nbsp;<form:errors
-										path="from_account" cssClass="error" /></td>
+									required="required" /> <form:errors path="from_account"
+										cssClass="error" /></td>
 							</tr>
 							<tr>
 								<td><h2>입금 정보</h2></td>

@@ -11,6 +11,7 @@ import ncbank.beans.AccountBean;
 import ncbank.beans.TransferBean;
 import ncbank.beans.UserBean;
 import ncbank.dao.TransferDAO;
+import ncbank.validator.ExceptionMessage;
 
 @Service
 public class TransferService {
@@ -25,7 +26,6 @@ public class TransferService {
 	private UserBean loginUserBean;
 
 	public int getUserNum() {
-		System.out.println(loginUserBean.getUser_num());
 		return loginUserBean.getUser_num();
 	}
 
@@ -37,10 +37,8 @@ public class TransferService {
 	public void addTransfer(TransferBean transferBean) throws Exception {
 		// 출금 계좌와 입금 계좌가 동일할 경우 예외 발생
 		if (transferBean.getFrom_account().equals(transferBean.getTo_account())) {
-			throw new Exception("출금 계좌와 입금 계좌는 동일할 수 없습니다.");
+			throw new ExceptionMessage("출금 계좌와 입금 계좌는 동일할 수 없습니다");
 		}
-
-		System.out.println("codeOrgan3 : " + transferBean.getCode_organ());
 
 		AccountBean fromAccount = accountService.getAccountByNumber(transferBean.getFrom_account());
 
@@ -49,11 +47,8 @@ public class TransferService {
 		double transferAmount = Double.parseDouble(transferBean.getTrans_money());
 
 		if (fromBalance < transferAmount) {
-			throw new Exception("잔액이 부족합니다.");
+			throw new ExceptionMessage("잔액이 부족합니다");
 		}
-		
-		System.out.println("codeOrgan4 : " + transferBean.getCode_organ());
-
 		// 내부 계좌와 외부 계좌 구분
 		if ("005".equals(transferBean.getCode_organ())) {
 
@@ -61,10 +56,10 @@ public class TransferService {
 
 			// Luhn 알고리즘 검사
 			if (!accountService.isValidAccountNumber(transferBean.getTo_account())) {
-				throw new Exception("입금 계좌번호가 유효하지 않습니다.");
+				throw new ExceptionMessage("입금 계좌번호가 유효하지 않습니다");
 			}
 
-			// 내부 이체: 입금 내역 추가
+			// 내부 이체 입금 내역 추가
 			if (toAccount != null) {
 				double toBalance = Double.parseDouble(toAccount.getAc_balance());
 				toBalance += transferAmount;
@@ -79,11 +74,10 @@ public class TransferService {
 				depositBean.setTo_account(transferBean.getTo_account());
 				depositBean.setCode_organ("005"); // 입금은행 설정
 				depositBean.setTrans_balance(String.valueOf(Math.round(toBalance))); // 입금 후 잔액 설정
+				depositBean.setUser_num(transferBean.getUser_num()); // 회원 번호 설정
 				transferDAO.addTransfer(depositBean);
 			}
 		}
-		
-		System.out.println("codeOrgan5 : " + transferBean.getCode_organ());
 
 		// 출금 내역 추가
 		fromBalance -= transferAmount;
@@ -98,9 +92,8 @@ public class TransferService {
 		withdrawBean.setTo_account(transferBean.getTo_account());
 		withdrawBean.setCode_organ(transferBean.getCode_organ()); // 출금은행 설정
 		withdrawBean.setTrans_balance(String.valueOf(Math.round(fromBalance))); // 출금 후 잔액 설정
+		withdrawBean.setUser_num(transferBean.getUser_num()); // 회원 정보 설정
 		transferDAO.addTransfer(withdrawBean);
-		
-		System.out.println("codeOrgan6 : " + transferBean.getCode_organ());
 
 		// 외부 이체 처리 추가
 		if (!"005".equals(transferBean.getCode_organ())) {
@@ -112,6 +105,7 @@ public class TransferService {
 			externalDepositBean.setTo_account(transferBean.getTo_account());
 			externalDepositBean.setCode_organ(transferBean.getCode_organ()); // 입금은행 설정
 			externalDepositBean.setTrans_balance("0"); // 외부 이체는 잔액 설정이 필요 없음
+			externalDepositBean.setUser_num(transferBean.getUser_num()); // 회원 번호 설정
 			transferDAO.addTransfer(externalDepositBean);
 		}
 	}

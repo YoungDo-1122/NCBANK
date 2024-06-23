@@ -12,7 +12,16 @@ public class TransferBean {
 	private String to_account;
 	private String from_account;
 	private String code_organ;
+	private int user_num;
 	private String code_organ_name;
+
+	public int getUser_num() {
+		return user_num;
+	}
+
+	public void setUser_num(int user_num) {
+		this.user_num = user_num;
+	}
 
 	public String getTrans_money() {
 		return trans_money;

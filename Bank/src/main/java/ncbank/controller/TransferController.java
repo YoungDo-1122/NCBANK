@@ -22,6 +22,7 @@ import ncbank.beans.UserBean;
 import ncbank.service.AccountService;
 import ncbank.service.CodeOrganService;
 import ncbank.service.TransferService;
+import ncbank.validator.ExceptionMessage;
 
 @Controller
 @RequestMapping("/trans")
@@ -85,12 +86,9 @@ public class TransferController {
 
 	@PostMapping("/transfer_confirm")
 	public String transferConfirm(@Valid @ModelAttribute("transferBean") TransferBean transferBean,
-			@RequestParam("ac_password") String acPassword, Model model, BindingResult result) {
-		
-		System.out.println("codeOrgan1" + transferBean.getCode_organ());
-
+			@RequestParam("ac_password") String acPassword, Model model, BindingResult result) throws Exception {
 		if (result.hasErrors()) {
-			int userNum = transferService.getUserNum();
+			int userNum = loginUserBean.getUser_num();
 			List<AccountBean> accounts = accountService.getAccount(userNum);
 			model.addAttribute("accounts", accounts);
 
@@ -100,7 +98,7 @@ public class TransferController {
 		}
 
 		// 계좌 비밀번호 확인
-		int userNum = transferService.getUserNum();
+		int userNum = loginUserBean.getUser_num();
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 
 		AccountBean fromAccount = accounts.stream()
@@ -115,8 +113,6 @@ public class TransferController {
 			model.addAttribute("codeOrganNames", codeOrganNames);
 			return "trans/transfer";
 		}
-		
-		System.out.println("codeOrgan2" + transferBean.getCode_organ());
 
 		// code_organ이 "005"일 때만 계좌번호 유효성 확인
 		if ("005".equals(transferBean.getCode_organ())
@@ -130,12 +126,11 @@ public class TransferController {
 		}
 
 		try {
+			transferBean.setUser_num(loginUserBean.getUser_num());
 			transferService.addTransfer(transferBean);
-		} catch (Exception e) {
-			
-			System.out.println("Exception : " + e);
-			
-			result.rejectValue("trans_balance", "error.trans_balance", e.getMessage());
+		} catch (ExceptionMessage e) {
+			System.out.println("ExceptionMessage : " + e);
+			result.rejectValue("to_account", "error.to_account", e.getMessage());
 			model.addAttribute("accounts", accounts);
 
 			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();

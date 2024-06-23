@@ -26,7 +26,6 @@ public class AccountService {
 	private static final int userAccountLength = 8;
 
 	public int getUserNum() {
-		System.out.println("AccountService userNum : " + loginUserBean.getUser_num());
 		return loginUserBean.getUser_num();
 	}
 

@@ -21,6 +21,10 @@ public class AutoDAO {
 		return autoMapper.getAuto(user_num);
 	}
 
+	public AutoBean getAutoByAutoNum(int auto_num) {
+		return autoMapper.getAutoByAutoNum(auto_num);
+	}
+
 	public void updateAuto(AutoBean autoBean) {
 		autoMapper.updateAuto(autoBean);
 	}
