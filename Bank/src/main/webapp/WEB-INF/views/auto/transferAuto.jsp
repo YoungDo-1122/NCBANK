@@ -18,27 +18,58 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script>
+	function updateTransferDayOptions() {
+		var autoTypeSelect = document.getElementById("auto_type");
+		var transferDaySelect = document.getElementById("auto_next_date");
+		var selectedValue = autoTypeSelect.value;
+
+		transferDaySelect.innerHTML = "";
+
+		if (selectedValue == "0") {
+			document.getElementById("transferDayRow").style.display = "none";
+		} else if (selectedValue == "1") {
+			document.getElementById("transferDayRow").style.display = "table-row";
+			var daysOfWeek = [ "일", "월", "화", "수", "목", "금", "토" ];
+			daysOfWeek.forEach(function(day, index) {
+				var option = document.createElement("option");
+				option.value = index + 1;
+				option.text = day;
+				transferDaySelect.appendChild(option);
+			});
+		} else if (selectedValue == "2") {
+			document.getElementById("transferDayRow").style.display = "table-row";
+			for (var day = 1; day <= 31; day++) {
+				var option = document.createElement("option");
+				option.value = day;
+				option.text = day;
+				transferDaySelect.appendChild(option);
+			}
+			var lastDayOption = document.createElement("option");
+			lastDayOption.value = "32";
+			lastDayOption.text = "말일";
+			transferDaySelect.appendChild(lastDayOption);
+		}
+	}
+
+	document.addEventListener("DOMContentLoaded", function() {
+		document.getElementById("auto_type").addEventListener("change",
+				updateTransferDayOptions);
+		updateTransferDayOptions(); // 페이지 로드 시 초기화
+	});
+</script>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-				<div class="enquiry">
-					<h3>조회</h3>
-					<ul>
-						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
-						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-						<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
-					</ul>
-				</div>
 				<div class="transfer">
 					<h3>이체</h3>
 					<ul>
 						<li><a href="${root}account/accountCreate">계좌 개설</a></li>
 						<li><a href="${root}trans/transfer">계좌 이체</a></li>
 						<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
-						<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
 					</ul>
 				</div>
 			</div>
@@ -132,45 +163,5 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
-	<script>
-		function updateTransferDayOptions() {
-			var autoTypeSelect = document.getElementById("auto_type");
-			var transferDaySelect = document.getElementById("auto_next_date");
-			var selectedValue = autoTypeSelect.value;
-
-			transferDaySelect.innerHTML = "";
-
-			if (selectedValue == "0") {
-				document.getElementById("transferDayRow").style.display = "none";
-			} else if (selectedValue == "1") {
-				document.getElementById("transferDayRow").style.display = "table-row";
-				var daysOfWeek = [ "일", "월", "화", "수", "목", "금", "토" ];
-				daysOfWeek.forEach(function(day, index) {
-					var option = document.createElement("option");
-					option.value = index + 1;
-					option.text = day;
-					transferDaySelect.appendChild(option);
-				});
-			} else if (selectedValue == "2") {
-				document.getElementById("transferDayRow").style.display = "table-row";
-				for (var day = 1; day <= 31; day++) {
-					var option = document.createElement("option");
-					option.value = day;
-					option.text = day;
-					transferDaySelect.appendChild(option);
-				}
-				var lastDayOption = document.createElement("option");
-				lastDayOption.value = "32";
-				lastDayOption.text = "말일";
-				transferDaySelect.appendChild(lastDayOption);
-			}
-		}
-
-		document.addEventListener("DOMContentLoaded", function() {
-			document.getElementById("auto_type").addEventListener("change",
-					updateTransferDayOptions);
-			updateTransferDayOptions(); // 페이지 로드 시 초기화
-		});
-	</script>
 </body>
 </html>

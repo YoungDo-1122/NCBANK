@@ -47,7 +47,22 @@ public class AutoController {
 
 		int userNum = loginUserBean.getUser_num();
 		List<AutoBean> autoList = autoService.getAuto(userNum);
+		List<AccountBean> accounts = accountService.getAccount(userNum);
+		List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
+
+		// 각 AutoBean 객체에 code_organ_name 설정
+		for (AutoBean auto : autoList) {
+			for (CodeOrganBean codeOrgan : codeOrganNames) {
+				if (auto.getCode_organ().equals(codeOrgan.getCode_organ())) {
+					auto.setCode_organ_name(codeOrgan.getCode_organ_name());
+					break;
+				}
+			}
+		}
+
 		model.addAttribute("autoList", autoList);
+		model.addAttribute("accounts", accounts);
+		model.addAttribute("codeOrganNames", codeOrganNames);
 
 		return "auto/transferAutoCheck";
 	}

@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>이체내역 확인</title>
+<title>이체내역 조회</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/transferCheck.css" />
 <script
@@ -17,6 +17,28 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script>
+	function filterTransfers() {
+		var selectedAccount = document.getElementById("accountSelect").value;
+		if (!selectedAccount) {
+			alert('계좌를 선택해 주세요');
+			return;
+		}
+		window.location.href = "${root}trans/transferCheck?account="
+				+ selectedAccount;
+	}
+	function formatBalance(balance) {
+		return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	function formatAccount(account) {
+		if (account.startsWith("005")) {
+			return account.replace(/(\d{3})(\d{8})(\d{2})(\d{1})/,
+					"$1-$2-$3-$4");
+		}
+		return account;
+	}
+</script>
 </head>
 <body>
 	<div class="container">
@@ -29,15 +51,7 @@
 						<ul>
 							<li><a href="${root}account/accountCheck">계좌 조회</a></li>
 							<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-						</ul>
-					</div>
-					<div class="transfer">
-						<h5>이체</h5>
-						<ul>
-							<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-							<li><a href="${root}trans/transfer">계좌 이체</a></li>
-							<li><a href="${root}account/transferAuto">자동이체 등록</a></li>
-							<li><a href="${root}account/transferAutoFix">자동이체 수정</a></li>
+							<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
 						</ul>
 					</div>
 				</div>
@@ -51,43 +65,59 @@
 											<c:forEach var="account" items="${accounts}">
 												<option value="${account.account}"
 													<c:if test="${account.account eq selectedAccount}">selected</c:if>>${account.account}</option>
-												</c:forEach>
-											</select>
-												<button onclick="filterTransfers()">조회</button></td>
-										</tr>
-									</table>
-									<table>
-										<tr>
-											<th><h2>입 / 출금 계좌</h2></th>
-										</tr>
-										<tr>
-											<td>
-												<table>
-													<thead>
-														<tr>
-															<th>거래유형</th>
-															<th>이체금액</th>
-															<th>입금계좌</th>
-															<th>이체 후 잔액</th>
-															<th>출금계좌</th>
-															<th>이체 메모</th>
-															<th>일시</th>
-														</tr>
-													</thead>
-													<tbody>
-														<c:forEach var="transfer" items="${transfers}">
-															<tr>
-																<td><c:if test="${transfer.trans_type eq 1}">입금</c:if>
-																	<c:if test="${transfer.trans_type eq 2}">출금</c:if></td>
-																<td><c:if test="${transfer.trans_type eq 1}">+&nbsp;${transfer.trans_money}</c:if>
-																	<c:if test="${transfer.trans_type eq 2}">-&nbsp;${transfer.trans_money}</c:if></td>
-																<td>[${transfer.code_organ_name}]${transfer.to_account}</td>
-																<td>&#92;${transfer.trans_balance}</td>
-																<td>[NC뱅크]${transfer.from_account}</td>
-																<td>${transfer.trans_text}</td>
-																<td><fmt:formatDate value="${transfer.trans_date}"
-																		pattern="yyyy년 M월 d일 EEEE HH:mm:ss" /></td>
-															</tr>
+											</c:forEach>
+									</select>
+										<button onclick="filterTransfers()">조회</button></td>
+								</tr>
+							</table>
+							<table>
+								<tr>
+									<th><h2>입 / 출금 계좌</h2></th>
+								</tr>
+								<tr>
+									<td>
+										<table>
+											<thead>
+												<tr>
+													<th>거래유형</th>
+													<th>이체금액</th>
+													<th>입금계좌</th>
+													<th>이체 후 잔액</th>
+													<th>출금계좌</th>
+													<th>이체 메모</th>
+													<th>일시</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="transfer" items="${transfers}">
+													<tr>
+														<td><c:if test="${transfer.trans_type eq 1}">입금</c:if>
+															<c:if test="${transfer.trans_type eq 2}">출금</c:if></td>
+														<td><c:if test="${transfer.trans_type eq 1}">+<script>
+															document
+																	.write(formatBalance("${transfer.trans_money}"));
+														</script>
+															</c:if> <c:if test="${transfer.trans_type eq 2}">-<script>
+																document
+																		.write(formatBalance("${transfer.trans_money}"));
+															</script>
+															</c:if></td>
+														<td>[${transfer.code_organ_name}]&nbsp;<script>
+															document
+																	.write(formatAccount("${transfer.to_account}"));
+														</script></td>
+														<td>&#8361;&nbsp;<script>
+															document
+																	.write(formatBalance("${transfer.trans_balance}"));
+														</script></td>
+														<td>[NC뱅크]&nbsp;<script>
+															document
+																	.write(formatAccount("${transfer.from_account}"));
+														</script></td>
+														<td>${transfer.trans_text}</td>
+														<td><fmt:formatDate value="${transfer.trans_date}"
+																pattern="yyyy.MM.d" /></td>
+													</tr>
 												</c:forEach>
 											</tbody>
 										</table>
@@ -119,16 +149,5 @@
 		</div>
 		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	</div>
-	<script>
-		function filterTransfers() {
-			var selectedAccount = document.getElementById("accountSelect").value;
-			if (!selectedAccount) {
-				alert('계좌를 선택해 주세요');
-				return;
-			}
-			window.location.href = "${root}trans/transferCheck?account="
-					+ selectedAccount;
-		}
-	</script>
 </body>
 </html>

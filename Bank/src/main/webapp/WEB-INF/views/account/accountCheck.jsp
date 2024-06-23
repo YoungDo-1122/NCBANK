@@ -18,10 +18,19 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script>
+	function formatBalance(balance) {
+		return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	function formatAccountNumber(accountNumber) {
+		return accountNumber.replace(/(\d{3})(\d{8})(\d{2})(\d{1})/,
+				"$1-$2-$3-$4");
+	}
+</script>
 </head>
 <body>
 	<div class="container">
-
 		<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 		<div class="container-fluid">
 			<div class="row">
@@ -31,15 +40,7 @@
 						<ul>
 							<li><a href="${root}account/accountCheck">계좌 조회</a></li>
 							<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-						</ul>
-					</div>
-					<div class="transfer">
-						<h5>이체</h5>
-						<ul>
-							<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-							<li><a href="${root}trans/transfer">계좌 이체</a></li>
-							<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
-							<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
+							<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
 						</ul>
 					</div>
 				</div>
@@ -72,17 +73,22 @@
 											모임통장
 											</c:when>
 													</c:choose></td>
-												<td>${account.account}</td>
-												<td>${account.ac_balance}</td>
+												<td><script>
+													document
+															.write(formatAccountNumber("[NC뱅크]&nbsp;${account.account}"));
+												</script></td>
+												<td><script>
+													document
+															.write("&#8361;&nbsp;"
+																	+ formatBalance("${account.ac_balance}"));
+												</script></td>
 												<td><fmt:formatDate value="${account.ac_date}"
-														pattern="yyyy년 M월 d일 EEEE HH:mm:ss" /></td>
+														pattern="yyyy.MM.d" /></td>
 												<td>
 													<button class="transfer-check-button"
-														onclick="window.location.href='${root}trans/transferCheck'">이체내역
-														조회</button>
+														onclick="window.location.href='${root}trans/transferCheck'">조회</button>
 													<button class="transfer-button"
-														onclick="window.location.href='${root}trans/transfer'">계좌
-														이체</button>
+														onclick="window.location.href='${root}trans/transfer'">이체</button>
 												</td>
 											</tr>
 											<c:set var="totalBalance"
@@ -90,14 +96,19 @@
 										</c:forEach>
 										<tr>
 											<th colspan="4" class="total">입 / 출금계좌 총 잔액</th>
-											<td class="total-balance">&#92;${totalBalance}원</td>
-										
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</table>
+											<td class="total-balance"><script>
+												var totalBalance = <c:out value="${totalBalance}" />;
+												document
+														.write("&#8361;&nbsp;"
+																+ formatBalance(totalBalance));
+											</script></td>
+										</tr>
+									</tbody>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />

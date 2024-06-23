@@ -7,6 +7,8 @@
 	max-height: fit-content;
 	margin: 0 auto;
 	display: flex;
+	 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   border-radius: 10px;
 	flex-flow: column;
 	align-items: center;
 }
@@ -61,7 +63,8 @@
 }
 
 .col-md-2 ul li a:hover {
-	background-color: #fafafa; /* 링크 호버 배경색 */
+	background-color: rgb(83, 169, 255);
+	color : white;
 }
 
 .col-md-2 .enquiry, .col-md-2 .transfer {
@@ -79,8 +82,12 @@
 	width: 83.33333333%;
 }
 
-.col-md-10 h3 {
+.col-md-10 thead tr {
 	border-bottom: rgb(83, 169, 255);
+}
+
+.col-md-10 h3 {
+	border: rgb(83, 169, 255);
 }
 
 .col-md-10 table {
