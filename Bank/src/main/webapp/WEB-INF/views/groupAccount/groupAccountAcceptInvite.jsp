@@ -6,39 +6,28 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>acceptinvite</title>
-  <link rel="stylesheet" href="${root}css/createnext.css">
+  <title>모임통장 초대</title>
+  <link rel="stylesheet" href="${root}css/acceptinvite.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: '맑은 고딕', 'Malgun Gothic', '돋움', Dotum, Helvetica, AppleGothic, Sans-serif;
       background-color: #f8f9fa;
       margin: 0;
       padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    .main {
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      text-align: center;
-      background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-      margin-top: 50px;
-    }
-    .info {
-      text-align: left;
+  
+ 
+    .btn-container {
       margin-top: 20px;
-    }
-    .info span {
-      display: block;
-      margin: 5px 0;
     }
     .btn-invite {
-      margin-top: 20px;
       background-color: #ffeb00;
       color: #3c1e1e;
       border: none;
@@ -50,19 +39,69 @@
     .btn-invite:hover {
       background-color: #ffd700;
     }
+    .acceptBtn, .declineBtn {
+      font-weight: 700;
+      font-size: 18px;
+      color: #FFFFFF;
+      border: 0;
+      padding: 5px 20px;
+      border-radius: 10px;
+      margin: 0 10px;
+      transition: background-color 0.3s ease;
+    }
+    .acceptBtn {
+      background: rgb(83, 169, 255);
+    }
+    .acceptBtn:hover {
+      background-color: #0056b3;
+    }
+    .declineBtn {
+      background: #555555;
+    }
+    .declineBtn:hover {
+      background-color: #777777;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background: #f8f9fa;
+      flex-shrink: 0;
+    }
+    h2, p {
+      font-family: '맑은 고딕', 'Malgun Gothic', '돋움', Dotum, Helvetica, AppleGothic, Sans-serif;
+    }
+    h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 16px;
+      font-weight: 400;
+      color: #666;
+      margin-bottom: 30px;
+    }
   </style>
 </head>
 <body>
-  <c:import url="/WEB-INF/views/include/top_menu.jsp" />
-  <div class="main">
-    <h2>모임통장 초대</h2>
-    <p>모임통장에 초대되었습니다. 수락하시겠습니까?</p>
-    <form method="post" action="${root}groupAccount/acceptInvite">
-      <input type="hidden" name="group_num" value="${group_num}" />
-      <button type="submit" name="action" value="accept" class="btn btn-primary">수락</button>
-      <button type="submit" name="action" value="decline" class="btn btn-secondary">거절</button>
-    </form>
+  <div class="container">
+    <c:import url="/WEB-INF/views/include/top_menu.jsp" />
+    <div class="main">
+      <h2>모임통장 초대</h2>
+      <p>모임통장에 초대되었습니다. 수락하시겠습니까?</p>
+      <form method="post" action="${root}groupAccount/acceptInvite">
+        <input type="hidden" name="group_num" value="${group_num}" />
+        <div class="btn-container">
+          <button type="submit" name="action" value="accept" class="acceptBtn">수락</button>
+          <button type="submit" name="action" value="decline" class="declineBtn">거절</button>
+        </div>
+      </form>
+    </div>
+    <div class="blank"></div>
+  <footer>
+    <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+  </footer>
   </div>
-  <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 </body>
 </html>

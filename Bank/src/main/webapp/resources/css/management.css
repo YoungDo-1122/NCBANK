@@ -1,87 +1,232 @@
-.container-fluid {
-    padding: 0;
-    margin: 0;
+@charset "UTF-8";
+
+body {
+	background-color: #f8f9fa; /* 더 진한 회색 */
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	font-family: Arial, Helvetica, sans-serif;
+	width: 70%;
+	max-width: 1400px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	background-color: #ffffff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	border-radius: 10px;
+	padding: 20px;
+	box-sizing: border-box; /* 패딩 포함하여 전체 너비 계산 */
 }
 
 .row {
-    margin: 0;
-    display: flex;
+	margin: 0 auto;
+	display: flex;
+	width: 100%;
+	padding: 10px;
 }
 
 .col-md-2 {
-    background-color: #f8f9fa; /* �޴��� ���� */
-    padding: 20px;
-    height: 100vh; /* ��ü ���� */
-    border-right: 1px solid #dee2e6; /* ������ �׵θ� */
-    overflow-y: auto;
-    position: sticky;
-    top: 0;
-    width: 16.66666667%; /* col-md-2�� ũ�� ��ġ */
+	background-color: #f8f9fa;
+	padding: 20px;
+	height: 250px;
+	border-right: 1px solid #dee2e6;
+	overflow-y: auto;
+	position: flex;
+	top: 0;
+	width: 200px;
+	margin-top: 50px;
+	border-left: 1px solid #dee2e6;
+	border-top: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2d6;
 }
 
 .col-md-2 h3 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-    color: #343a40; /* ���� ���� */
+	font-size: 20px;
+	margin-bottom: 20px;
+	color: #343a40; /* 제목 색상 */
+	font-weight: bold;
+	text-align: center;
 }
 
 .col-md-2 ul {
-    list-style-type: none;
-    padding: 0;
+	list-style-type: none;
+	padding: 0;
+	text-align: center;
 }
 
 .col-md-2 ul li {
-    margin-bottom: 10px;
+	margin-bottom: 10px;
+	position: relative;
 }
 
 .col-md-2 ul li a {
-    text-decoration: none;
-    color: rgb(83, 169, 255); /* ��ũ ���� */
-    display: block;
-    padding: 8px 12px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+	text-decoration: none;
+	color: rgb(83, 169, 255); /* 링크 색상 */
+	display: block;
+	padding: 8px 12px;
+	border-radius: 4px;
+	transition: background-color 0.3s;
 }
 
 .col-md-2 ul li a:hover {
-    background-color: #e9ecef; /* ��ũ ȣ�� ���� */
+	background-color: rgb(83, 169, 255); /* 하이라이트 배경색 */
+	color: white; /* 하이라이트된 링크 색상 */
+}
+
+.col-md-2 ul li a.active::before {
+	content: '➤'; /* 화살표 기호 */
+	color: rgb(83, 169, 255); /* 화살표 색상 */
+	padding-right: 5px; /* 화살표와 텍스트 사이 간격 */
 }
 
 .col-md-2 .enquiry, .col-md-2 .transfer {
-    border: 1px solid #dee2e6;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 4px;
-    background-color: #ffffff;
+	border: 1px solid #dee2e6;
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 4px;
+	background-color: #ffffff;
 }
 
 .col-md-10 {
-    padding: 20px;
-    background-color: #ffffff;
-    width: 83.33333333%;
+	padding: 20px;
+	background-color: #ffffff;
+	width: calc(100% - 200px); /* 남은 너비를 차지하도록 설정 */
 }
 
-.col-md-10 table {
-    width: 70%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
 }
 
-.col-md-10 th, .col-md-10 td {
-    border: 1px solid #dee2e6;
-    padding: 10px;
-    text-align: left;
+.table th, .table td {
+	border-left: none;
+	border-right: none;
+	padding: 10px;
+	text-align: left;
 }
 
-.col-md-10 th {
-    background-color: #f8f9fa;
+.table th {
+	background-color: #ffffff;
 }
 
-.col-md-10 .total {
-    text-align: left;
+.total {
+	text-align: left;
 }
 
 .col-md-10 button {
+	background-color: rgb(83, 169, 255);
+	color: #ffffff;
+	border: none;
+	padding: 8px 12px;
+	cursor: pointer;
+	border-radius: 4px;
+	transition: background-color 0.3s;
+}
+
+.col-md-10 button:hover {
+	background-color: #0056b3;
+}
+
+.applyBox {
+	width: 358px;
+	height: 50px;
+	margin: 20px auto;
+	background: rgb(83, 169, 255);
+	border: 1px solid #FFFFFF;
+	border-radius: 20px;
+}
+
+.applyBtn {
+	font-weight: 700;
+	font-size: 18px;
+	text-align: center;
+	color: #FFFFFF;
+	background: rgb(83, 169, 255);
+	border: 0;
+	text-align: center;
+	margin: 0 auto;
+	width: 350px;
+	padding: 15px 0;
+	border-radius: 10px;
+}
+
+/* .traveltitle hr {
+	border: 1px solid #007bff;
+	margin-bottom: 10px;
+	margin-top: 10px;
+} */
+.flexClass {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+	background-color: #ffffff; /* 배경색 추가 */
+	border-radius: 5px; /* 모서리 둥글게 */
+	padding: 10px; /* 패딩 추가 */
+}
+
+.idbox {
+	flex: 1;
+	font-weight: bold;
+	font-size: 20px;
+	margin-right: 50px;
+	color:  rgb(83, 169, 255);
+	
+}
+
+.idboxtitle {
+	flex: 1;
+	font-weight: bold;
+	font-size: 25px;
+	color: rgb(83, 169, 255);
+	margin-bottom: 20px;
+}
+
+.rec6 {
+	flex: 2;
+	padding: 8px;
+	border: 1px solid #f8f9fa;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+select.rec6 {
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	padding: 10px;
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 16px;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+select.rec6:hover {
+	border-color: #007bff;
+	box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+select.rec6:focus {
+	border-color: #0056b3;
+	box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+	outline: none;
+}
+
+.section {
+	margin-top: 20px; /* 위쪽 간격 */
+	margin-bottom: 20px; /* 아래쪽 간격 */
+}
+
+.btn-right-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px; /* 필요한 경우 추가적인 마진 조정 */
+}
+
+.autoBtn {
     background-color: rgb(83, 169, 255);
     color: #ffffff;
     border: none;
@@ -91,6 +236,6 @@
     transition: background-color 0.3s;
 }
 
-.col-md-10 button:hover {
+.autoBtn:hover {
     background-color: #0056b3;
 }

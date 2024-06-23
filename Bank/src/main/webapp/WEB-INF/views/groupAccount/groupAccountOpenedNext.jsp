@@ -33,24 +33,24 @@
         return autoType == 0 ? autoNextDate + '요일' : autoNextDate + '일';
     }
 
-    function formatBalance(balance) {
-        return balance + '원';
+    function formatMoney(money) {
+        return money + '원';
     }
 
     window.onload = function() {
         var autoTypeElement = document.getElementById("auto_type");
         var autoNextDateElement = document.getElementById("auto_next_date");
-        var autoBalanceElement = document.getElementById("auto_balance");
+        var autoMoneyElement = document.getElementById("auto_money");
 
         autoTypeElement.value = formatAutoType(autoTypeElement.value);
         autoNextDateElement.value = formatAutoNextDate(autoTypeElement.value, autoNextDateElement.value);
-        autoBalanceElement.value = formatBalance(autoBalanceElement.value);
+        autoMoneyElement.value = formatMoney(autoMoneyElement.value);
     }
 </script>
 </head>
 <body>
+    <div class="container">
     <c:import url="/WEB-INF/views/include/top_menu.jsp" />
-    <div class="main">
         <div class="traveltitle">
             모임통장 계좌개설
             <hr />
@@ -86,7 +86,7 @@
                 <div class="group71">
                     <div class="flexClass">
                         <span class="idbox">
-                            <span class="groupname">${groupname}</span>[<span>${grouptype}</span>]
+                            <span class="groupname">모임명: ${groupname}</span>
                         </span>
                     </div>
                     <br/>
@@ -96,16 +96,17 @@
                     </div>
                     <br/>
                     <div class="flexClass">
-                        <span class="idbox">납부일</span>
-                        <input type="text" id="auto_next_date" name="auto_next_date" class="rec6" value="${accountInfo.auto_next_date}" readonly>
-                    </div>
-                    <div class="flexClass">
-                        <span class="idbox">자동이체 여부</span>
+                        <span class="idbox">자동이체 주기</span>
                         <input type="text" id="auto_type" name="auto_type" class="rec6" value="${accountInfo.auto_type}" readonly>
                     </div>
                     <div class="flexClass">
+                        <span class="idbox">자동이체 납부일</span>
+                        <input type="text" id="auto_next_date" name="auto_next_date" class="rec6" value="${accountInfo.auto_next_date}" readonly>
+                    </div>
+                    
+                    <div class="flexClass">
                         <span class="idbox">회비</span>
-                        <input type="text" id="auto_balance" name="auto_balance" class="rec6" value="${accountInfo.auto_balance}" readonly>
+                        <input type="text" id="auto_money" name="auto_money" class="rec6" value="${accountInfo.auto_money}" readonly>
                     </div>
                     <br/>
                     <form method="post" action="${root}groupAccount/complete" id="confirmPasswordForm">
@@ -115,14 +116,16 @@
                         <input type="hidden" name="ac_name" value="${ac_name}" />
                         <input type="hidden" name="auto_next_date" value="${accountInfo.auto_next_date}" />
                         <input type="hidden" name="auto_type" value="${accountInfo.auto_type}" />
-                        <input type="hidden" name="auto_balance" value="${accountInfo.auto_balance}" />
-                        <input type="hidden" name="group_num" value="${group_num}" /> <!-- group_num 추가 -->
+                        <input type="hidden" name="auto_money" value="${accountInfo.auto_money}" />
+                        <input type="hidden" name="group_num" value="${group_num}" /> 
                         <div class="flexClass">
                             <span class="idbox">비밀번호</span>
                             <input type="password" name="inputPassword" class="rec6" placeholder="계좌 비밀번호를 다시 입력해주세요"/>
                         </div>
                         <br/>
-                        <button type="button" onclick="confirmAndSubmit()">개설하기</button>
+                        
+                        <button class="applyBtn" type="button" onclick="confirmAndSubmit()">개설하기</button>
+                       
                     </form>
                     <c:if test="${not empty errorMessage}">
                         <div class="alert alert-danger">${errorMessage}</div>
@@ -134,13 +137,13 @@
                             <input type="hidden" name="ac_name" value="${ac_name}" />
                             <input type="hidden" name="auto_next_date" value="${accountInfo.auto_next_date}" />
                             <input type="hidden" name="auto_type" value="${accountInfo.auto_type}" />
-                            <input type="hidden" name="auto_balance" value="${accountInfo.auto_balance}" />
+                            <input type="hidden" name="auto_money" value="${accountInfo.auto_money}" />
                         </form>
                     </c:if>
                 </div>
             </div>
         </div>
-    </div>
     <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+    </div>
 </body>
 </html>

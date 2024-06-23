@@ -17,7 +17,6 @@ public class AutoBean {
 	private String code_organ;
 	private String from_account;
 	private int user_num;
-
 	public int getAuto_num() {
 		return auto_num;
 	}
@@ -73,7 +72,6 @@ public class AutoBean {
 	public void setAuto_end(Date auto_end) {
 		this.auto_end = auto_end;
 	}
-
 	public String getTo_account() {
 		return to_account;
 	}
@@ -81,7 +79,6 @@ public class AutoBean {
 	public void setTo_account(String to_account) {
 		this.to_account = to_account;
 	}
-
 	public String getCode_organ() {
 		return code_organ;
 	}

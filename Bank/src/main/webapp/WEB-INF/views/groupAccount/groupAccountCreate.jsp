@@ -9,7 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>create</title>
 <!-- Bootstrap CDN -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/agreement.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
@@ -21,9 +20,9 @@
 </head>
 <body>
 
-    <c:import url="/WEB-INF/views/include/top_menu.jsp" />
 
-    <div class="main">
+    <div class="container">
+    <c:import url="/WEB-INF/views/include/top_menu.jsp" />
         <div class="traveltitle">
             모임통장 계좌 개설
             <hr />
@@ -35,8 +34,8 @@
                 <div class="menuhr">
                     <hr/>
                 </div>
-                <a href="${root}groupAccount/groupAccountOpened">모임통장 개설</a>
-                <a href="groupAccountInvite">모임통장 초대</a>
+                <a href="">모임통장 개설</a>
+                <a href="">모임통장 초대</a>
             </div>
 
             <div class="contents-1">
@@ -55,12 +54,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="section-2">
-                    <div>실시간 환율 확인</div>
-                    <div>회비 장부 관리</div>
-                </div>
+                
                 <div class="section-3">
-                    <div class="newAccount">유의사항을 꼭 확인하세요!</div>
+                    <div class="newAccount">안내 및 유의사항을 꼭 확인하세요!</div>
                     <div class="hanaClassBox">
                     <div class="hanaClass">NCBANK 모임통장</div>
                     </div>
@@ -80,14 +76,7 @@
                                     autocomplete="off" />
                             </div>
                             <br />
-                            <div class="flexClass">
-                                <span class="idbox">모임 카테고리 선택</span> <select name="grouptype"
-                                    class="rec6">
-                                    <option value="" selected>선택</option>
-                                    <option value="여행">여행</option>
-                                </select>
-                            </div>
-                            <br />
+                           
                             
                             <div class="flexClass">
                                 <span class="idbox">계좌선택</span> 
@@ -290,9 +279,9 @@
                 </div>
             </div>
         </div>
+    <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
     </div>
     
-    <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
     
     <script>
     document.querySelector('.plusButton').addEventListener('click', function() {
@@ -305,6 +294,7 @@
     function openModal() {
         if(!isUserLoggedIn){
             alert('로그인 해주세요.');
+            window.location.href = '${root}user/login'; 
             return;
         }
         var modal = document.getElementById('agreeModal');

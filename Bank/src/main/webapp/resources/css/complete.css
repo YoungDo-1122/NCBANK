@@ -1,14 +1,15 @@
 @charset "UTF-8";
 
+
 body {
-    background-color: #f8f9fa !important; /* 더 진한 회색 */
+    background-color: #e0e0e0 !important; /* 더 진한 회색 */
     font-family: Arial, Helvetica, sans-serif !important;
     margin: 0 !important;
     padding: 0 !important;
 }
 
 .container {
-	font-family: Arial, Helvetica, sans-serif;
+   font-family: Arial, Helvetica, sans-serif;
    width: 70%;
    max-width: 1400px;
    margin: 0 auto;
@@ -18,8 +19,8 @@ body {
    background-color: #ffffff;
    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
    border-radius: 10px;
-   padding: 20px;
-   box-sizing: border-box; /* 패딩 포함하여 전체 너비 계산 */
+   padding: 25px;
+
 }
 
 .menu1-1 {
@@ -46,10 +47,11 @@ body {
 }
 
 .contents {
-	width: 1200px;
-	display: flex;
+	width: 100%;
 	height: 100%;
+	display: flex;
 	margin: 30px auto;
+	box-sizing: border-box; /* 패딩 포함하여 전체 너비 계산 */
 }
 
 .menu1 a:hover {
@@ -79,8 +81,6 @@ body {
 
 .menuhr hr {
 	border: 2px solid rgb(83, 169, 255);
-	margin: 2px;
-	margin-bottom: 10px;
 }
 
 .contents-1 {
@@ -90,16 +90,12 @@ body {
 	display: table;
 }
 
-.contentsBox {
-	float: left;
-}
-
 .contentsText {
 	font-weight: 600;
 	font-size: 17px;
 	color: #606060;
 	float: left;
-	padding-top: 7px;
+	padding: 13px 0;
 }
 
 .section-1 div:nth-child(2) {
@@ -153,7 +149,7 @@ body {
 }
 
 .newAccount {
-	width: 141px;
+	width: 240px;
 	border: 1px solid rgb(83, 169, 255);
 	border-radius: 5px;
 	font-weight: 700;
@@ -164,7 +160,7 @@ body {
 	margin: 30px auto;
 }
 
-.hanaClassBox {
+.FClassBox {
 	width: 511px;
 	padding: 15px 0;
 	margin: 0 auto;
@@ -185,7 +181,7 @@ body {
 	margin: 20px auto;
 	background: rgb(83, 169, 255);
 	border: 1px solid #FFFFFF;
-	border-radius: 5px;
+	border-radius: 20px;
 }
 
 .applyBtn {
@@ -196,13 +192,24 @@ body {
 	background: rgb(83, 169, 255);
 	border: 0;
 	text-align: center;
-	margin: 10 auto;
-	width: 120px;
+	margin: 0 auto;
+	width: 60%;
 	padding: 10px 0;
 	border-radius: 10px;
 }
-.applyBtn:hover {
-	background-color: #0056b3;
+
+.homeBtn {
+	font-weight: 700;
+	font-size: 18px;
+	text-align: center;
+	color: #FFFFFF;
+	background: #878787;
+	border: 0;
+	text-align: center;
+	margin: 0 auto;
+	width: 25%;
+	padding: 10px 0;
+	border-radius: 10px;
 }
 
 .classSection {
@@ -224,13 +231,20 @@ body {
 	float: right;
 	text-align: right;
 }
-/* �뒪�뀒�띁 而⑦뀒�씠�꼫 */
+
+.class-1 {
+	cursor: pointer;
+}
+
+.hidden {
+	display: none;
+}
+
 .stepper {
 	display: flex;
 	align-items: center;
 }
 
-/* 媛� �뒪�꺆 */
 .step {
 	display: flex;
 	flex-direction: column;
@@ -239,7 +253,6 @@ body {
 	z-index: 1;
 }
 
-/* �썝 �삎�깭 �뒪���씪 */
 .circle {
 	width: 30px;
 	height: 30px;
@@ -255,13 +268,11 @@ body {
 	margin-bottom: 5px;
 }
 
-/* �솢�꽦 �뒪�꺆 �뒪���씪 */
 .active {
 	background-color: rgb(83, 169, 255);
 	color: #FFFFFF;
 }
 
-/* 媛�濡쒖꽑 �뒪���씪 */
 .line {
 	width: 170px;
 	height: 3px;
@@ -270,7 +281,6 @@ body {
 	left: 180px;
 }
 
-/* �씪踰� �뒪���씪 */
 .label {
 	font-family: 'Inter';
 	font-weight: 600;
@@ -278,8 +288,46 @@ body {
 	color: rgb(83, 169, 255);
 }
 
+.agreeDetail {
+	display: none;
+	margin-top: 20px;
+	padding: 0 0 20px 20px;
+}
+
+.plusButton {
+	border: 0;
+	background: 0;
+	font-size: 18px;
+	font-weight: 600;
+	color: #878787;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 2;
+}
+
+.modal-content {
+	background-color: #fff;
+	margin: 150px auto;
+	padding: 30px;
+	width: 600px;
+	border-radius: 5px;
+}
+
+.close-btn {
+	float: right;
+	cursor: pointer;
+}
+
 .group71 {
-	text-align: center;
+	display: grid;
 }
 
 .rec6 {
@@ -294,220 +342,156 @@ body {
 	border-radius: 10px;
 }
 
-.pay1 {
-	width: 49%;
-	height: 50px;
-	padding: 15px;
-	background: #FFFFFF;
-	border: 1px solid #CDC9C9;
-	border-radius: 10px;
-	float: left;
-}
-
-.pay2 {
-	width: 49%;
-	height: 50px;
-	padding: 15px;
-	background: #FFFFFF;
-	border: 1px solid #CDC9C9;
-	border-radius: 10px;
-	margin-left: 0;
-	float: right;
-}
-
-.gradio {
-	padding: 15px;
-	width: 10%;
-}
-
-.rec7 {
-	box-sizing: border-box;
-	position: absolute;
-	width: 141px;
-	height: 50px;
-	background: #FFFFFF;
-	border: 1px solid rgb(83, 169, 255);
-	border-radius: 10px;
-}
-
-#signup {
-	width: 69px;
-	height: 30px;
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 25px;
-	line-height: 30px;
-	text-align: center;
-	color: #000000;
-}
-
-.idbox {
-	padding: 10px;
-	box-sizing: border-box;
-	text-align: left;
-	display: flex;
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 400;
-	font-size: 15px;
-	line-height: 18px;
-	text-align: center;
-	color: #000000;
-}
-
-#calculate {
-	box-sizing: border-box;
-	width: 800px;
-	height: 50px;
-	background: rgb(83, 169, 255);
-	color: #FFFFFF;
-	border: 1px solid rgb(83, 169, 255);
-	border-radius: 10px;
-	margin-top: 30px;
-}
-
-#calculate:hover {
-	transform: scale(1.009);
-	transition: transform 0.1s ease-in-out;
-}
-
-.box2>button>span {
-	width: 300.21px;
-	height: 18px;
-	font-family: 'Inter';
-	font-style: normal;
-	font-weight: 700;
-	font-size: 15px;
-	line-height: 18px;
-	text-align: center;
-	color: rgb(83, 169, 255);
-}
-
 .flexClass {
 	display: inline-block;
 	width: 800px;
 	margin-bottom: 20px;
 }
 
-.contentsText1 {
-	font-size: 14px;
+#calculate {
+	box-sizing: border-box;
+	width: 500px;
+	height: 50px;
+	background: rgb(83, 169, 255);
+	color: #FFFFFF;
+	border: 1px solid rgb(83, 169, 255);
+	border-radius: 10px;
+	text-align: center;
+	margin: 30px auto;
 }
 
-.payBox {
+.idbox {
+	text-align: left;
+}
+
+h2 {
+	text-align: center;
+}
+
+form {
 	margin: 0 auto;
 }
 
-#selAccount {
-	background-color: #f0f0f0;
+ul>li {
+	list-style: none
 }
 
+a {
+	text-decoration: none;
+}
+
+.clearfix::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+#joinForm {
+	width: 700px;
+	margin: 0 auto;
+}
+
+ul.join_box {
+	border: 1px solid #ddd;
+	background-color: #fff;
+	padding: 30px;
+	border-radius: 10px;
+}
+
+.checkBox, .checkBox>ul {
+	position: relative;
+	padding-left: 0;
+}
+
+.checkBox>ul>li {
+	float: left;
+}
+
+.checkBox>ul>li:first-child {
+	width: 85%;
+	padding: 15px;
+	font-weight: 600;
+	color: #888;
+}
+
+.checkBox>ul>li:nth-child(2) {
+	position: absolute;
+	top: 50%;
+	right: 30px;
+	margin-top: -12px;
+}
+
+.checkBox textarea {
+	width: 96%;
+	height: 90px;
+	margin: 0 2%;
+	background-color: #f7f7f7;
+	color: #888;
+	border: none;
+}
+
+.footBtwrap {
+	margin-top: 15px;
+	padding: 30px;
+}
+
+.footBtwrap>li {
+	height: 60px;
+	width: 50%;
+	height: 60px;
+	margin: 0 auto;
+}
+
+ul.footBtwrap {
+	margin-top: 20px; /* 占쎈연獄쏄퉮�뱽 占쎈쐭 占쎈뮎�뵳占� 占쎈땾 占쎌뿳占쎈뮸占쎈빍占쎈뼄. */
+	padding: 30px;
+}
+
+.g__pop-content {
+	color: #2f2f2f;
+}
+
+.footBtwrap>li>button {
+	font-weight: 700;
+	font-size: 18px;
+	text-align: center;
+	color: #FFFFFF;
+	background: rgb(83, 169, 255);
+	border: 0;
+	text-align: center;
+	margin: 0 auto;
+	width: 100%;
+	padding: 15px 0;
+}
+
+.fpmgBt1 {
+	background-color: #fff;
+	color: #888
+}
+
+.fpmgBt2 {
+	background-color: rgb(83, 169, 255);
+	color: #fff;
+	border: 0;
+	padding: 10px;
+	margin: 0 auto;
+	text-align: center;
+	border-radius: 10px;
+	margin-top: 30px;
+	width: 300px;
+	font-weight: 700;
+	cursor: pointer;
+}
 .groupname {
 	color: rgb(83, 169, 255);
 	font-size: 20px;
 	font-weight: 700;
 }
 
-.modal {
-	display: none;
-	position: fixed;
-	z-index: 1;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	overflow: auto;
-	background: #00000075;
+.applyBtn:hover {
+	background-color: #0056b3;
 }
 
-.modal-content {
-	background-color: #ffffff;
-	margin: 15% auto;
-	padding: 20px;
-	width: 450px;
-	height: 560px;
-	border-radius: 20px;
-}
-
-.close {
-	color: #aaa;
-	float: right;
-	font-size: 28px;
-	font-weight: bold;
-}
-
-.close:hover, .close:focus {
-	color: black;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-.login {
-	color: #000000;
-	text-align: center;
-	display: inline-block;
-}
-
-.login img {
-	width: 150px;
-	margin: 20px auto;
-}
-
-#phone-number, #auth-number {
-	width: 70%;
-	border-radius: 10px;
-	height: 50px;
-	float: left;
-	display: flex;
-	mix-blend-mode: normal;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	margin: 10px 0 5px 0;
-	background: 0;
-	border: 0;
-	border-bottom: solid 3px #b1b1b1;
-	color: black;
-}
-
-#phone-number::placeholder, #auth-number::placeholder {
-	text-align: left;
-	color: white;
-	background: 0;
-}
-
-.confirm-button, #auth-req-button {
-	align-items: center;
-	justify-content: center;
-	width: 25%;
-	float: right;
-	border: 1px solid #a7a9a9;
-	background-color: #a7a9a9;
-	mix-blend-mode: normal;
-	color: white;
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	border-radius: 10px;
-	margin: 10px 0 14px 0;
-	color: #010101;
-	font-weight: 700;
-	padding: 15px 0;
-	font-size: 15px;
-}
-
-.authbox {
-	width: 100%;
-}
-
-.phone-container {
-	width: 100%;
-	text-align: center;
-	margin-top: 30px;
-}
-
-.button-container:hover {
-	transform: scale(1.01);
-	transition: transform .2s;
-}
-
-.alert-danger {
-    margin-top: 10px; /* 위쪽에 20px 간격 추가 */
-    margin-bottom: 10px; /* 아래쪽에 20px 간격 추가 */
+.homeBtn:hover {
+	background-color: #6d6d6d;
 }

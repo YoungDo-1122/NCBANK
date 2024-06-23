@@ -20,6 +20,16 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+ <script>
+    $(document).ready(function() {
+        <c:if test="${not empty redirectAfterLogin}">
+          console.log('Redirect URL is: ${redirectAfterLogin}'); // 디버깅 메시지
+          if (confirm('수락 페이지로 돌아가시겠습니까?')) {
+            window.location.href = '${pageContext.request.contextPath}/${redirectAfterLogin}';
+          }
+        </c:if>
+    });
+  </script>
 </head>
 <body>
 
