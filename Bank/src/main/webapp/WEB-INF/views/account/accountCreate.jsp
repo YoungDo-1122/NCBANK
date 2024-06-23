@@ -9,11 +9,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>계좌 조회</title>
+<title>계좌 개설</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/accountCreate.css" />
-
-<!-- 부트스트랩 CDN -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -32,6 +30,7 @@
 						<ul>
 							<li><a href="${root}account/accountCheck">계좌 조회</a></li>
 							<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+							<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
 						</ul>
 					</div>
 					<div class="transfer">
@@ -40,7 +39,6 @@
 							<li><a href="${root}account/accountCreate">계좌 개설</a></li>
 							<li><a href="${root}trans/transfer">계좌 이체</a></li>
 							<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
-							<li><a href="${root}auto/transferAutoFix">자동이체 수정</a></li>
 						</ul>
 					</div>
 				</div>
@@ -85,8 +83,8 @@
 										<tr>
 											<td>계좌 분류</td>
 											<td><form:select path="ac_type" required="true">
-												<form:option value="0">저축예금</form:option>
-												<form:option value="2">적금통장</form:option>
+													<form:option value="0">저축예금</form:option>
+													<form:option value="2">적금통장</form:option>
 												</form:select></td>
 										</tr>
 										<tr>
