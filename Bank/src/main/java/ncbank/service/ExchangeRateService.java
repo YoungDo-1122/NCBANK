@@ -63,13 +63,21 @@ public class ExchangeRateService {
 		while (null == beanList) {
 			exchangeRateDate = dateManager.getMoveDate(exchangeRateDate, -1, "yyyyMMdd");
 			beanList = getExchangeRate(exchangeRateDate);
-			System.out.println("while count : " + (++count));
+			
 			System.out.println("exchangeRateDate : " + exchangeRateDate);
-			if (30 < count) { // 무한루프 방지
+			
+			if (null == beanList) {
+				System.out.println("while null count : " + (++count));
+			} else {
+				count = 0;
+			}
+			
+			if (7 < count) { // 무한루프 방지
 				break;
 			}
 		}
 		if (null == beanList) {
+			
 			System.out.println("ExchangeRateService findFinalExchangeRate()");
 			System.out.println("beanList is null");
 			System.out.println("exchangeRateDate : " + exchangeRateDate);
@@ -134,13 +142,15 @@ public class ExchangeRateService {
 		while (!dateManager.isDatesEqual(exchangeRateDate, endDate)) {
 			List<ExchangeRateBean> beanList = getExchangeRate(exchangeRateDate);
 			exchangeRateDate = dateManager.getMoveDate(exchangeRateDate, 1, "yyyyMMdd");
-			System.out.println("while count : " + (++count));
 			System.out.println("exchangeRateDate : " + exchangeRateDate);
 			if (null == beanList) {
+				System.out.println("while null count : " + (++count));	
 				System.out.println("ExchangeRateService addRateInquiry_DateRange()");
-				System.out.println("beanList is null - date : : " + exchangeRateDate);
+				System.out.println("beanList is null - date : " + exchangeRateDate);
+			} else {
+				count = 0;
 			}
-			if (1000 < count) { // 무한루프 방지
+			if (7 < count) { // 무한루프 방지
 				break;
 			}
 		}
@@ -178,7 +188,12 @@ public class ExchangeRateService {
 		ExchangeRateDTO rateDto = new ExchangeRateDTO();
 		
 		exchangeBeanToDto(rateBean, rateDto);
-		rateDto.setCode_money_name(codeMoneyService.getCodeMoneyName(rateBean.getCode_money()));
+		String codeMoneyName = codeMoneyService.getCodeMoneyName(rateBean.getCode_money());
+		if (null == codeMoneyName) {
+			System.out.println("ExchangeRateService convertExchangeDTO()");
+			System.out.println("codeMoneyName is null");
+		}
+		rateDto.setCode_money_name(codeMoneyName);
 		
 		return rateDto;
 	}

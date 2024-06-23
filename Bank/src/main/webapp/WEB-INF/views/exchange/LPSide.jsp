@@ -22,7 +22,7 @@
                 </li>
 
                 <li>
-                    <a href="${root}exchange/notice">환율 알림 서비스</a>
+                    <a href="${root}exchange/notice">환율 알림<br />서비스</a>
                 </li>
 
                 <li>
@@ -30,7 +30,7 @@
                 </li>
 
                 <li>
-                    <a href="${root}exchange/exchangeHistory">환전 내역 조회</a>
+                    <a href="${root}exchange/exchangeHistory">환전 내역<br />조회</a>
                 </li>
 
                 <hr class="contour"/>

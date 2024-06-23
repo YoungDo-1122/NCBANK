@@ -100,7 +100,32 @@
 						</c:forEach>
 					</ul>
 				</div>
+				
+				<!-- 환율 정보 -->
+				<div class="miniRateView">
+					<h2>미니뷰 테스트</h2>
+					<script>
+				        $(document).ready(function() {
+				        	 var ISOCodes = "USD,JPY,EUR,CNH"; // 여러 통화 코드를 쉼표로 구분된 문자열로 정의
 
+				             $.ajax({
+				                 url: "${root}exchange/miniRateInquiry",
+				                 type: "GET",
+				                 data: { ISOCode: ISOCodes },
+				                 success: function(data) {
+				                     $(".miniExchangeRate").html(data); // 응답 데이터를 miniExchangeRate div에 삽입
+				                 },
+				                 error: function() {
+				                     alert("환율 정보를 가져오는 데 실패했습니다.");
+				                 }
+				             });
+				        });
+				    </script>
+				    <div class="miniExchangeRate"></div>
+				    	
+				    
+			</div>
+				
 		</div>
 		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	</div>
