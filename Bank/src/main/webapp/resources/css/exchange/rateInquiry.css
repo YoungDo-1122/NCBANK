@@ -68,6 +68,10 @@ body {
 	margin-bottom: 20px;
 }
 
+.tType02 th {
+	background-color: #f2f2f2;
+}
+
 .tType02 th, .tType02 td {
 	border: 1px solid #ddd;
 	padding: 8px;
@@ -96,8 +100,15 @@ body {
 	cursor: pointer;
 }
 
+.bType01:hover {
+	background-color: #1e90ff;
+}
+
 .bType02 {
 	background-color: #6c757d;
+}
+.bType02:hover {
+	background-color: dimpary;
 }
 
 .submitArea {
@@ -117,6 +128,10 @@ body {
 	margin-bottom: 20px;
 }
 
+.tType01 th {
+	background-color: #f2f2f2;
+}
+
 .tType01 th, .tType01 td {
 	border: 1px solid #ddd;
 	padding: 8px;
@@ -131,6 +146,10 @@ body {
 	background-color: #f4f4f4;
 	border-bottom: 1px solid #ddd;
 	text-align: center;
+}
+
+.rightText {
+	margin-left: auto
 }
 
 .tLeft {

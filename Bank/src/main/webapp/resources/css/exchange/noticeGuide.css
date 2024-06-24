@@ -34,7 +34,8 @@ body {
 .contentBox {
     width: 80%;
     height: 80%;
-
+	padding: 10px;
+	
     border-radius: 10px;
 }
 
@@ -56,7 +57,6 @@ body {
 
 
 .subTextArea {
-    margin-right: 50px;
     text-align: right;
 }
 

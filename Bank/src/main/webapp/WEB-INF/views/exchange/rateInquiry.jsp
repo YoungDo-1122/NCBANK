@@ -46,7 +46,7 @@
                                                 onclick="today()">오늘</button>
                                             <button type="button" class="bType02"
                                                 onclick="yesterday()">전일</button>
-                                            <button type="button" class="btn"
+                                            <button type="button" class="bType02"
                                                 onclick="tomorrow()">다음일</button>
                                         </div> <!-- required="required" : 반드시 폼 값을 채워야 한다. --> <input
                                             class="dateinput" type="date" id="inquiryDate"
@@ -74,9 +74,7 @@
 					 -->
                     <div class="inquiryTable">
                         <p class="txtRateBox">
-                            <span class="fl"> 기준일시 | <strong>${inquiryDate1}</strong>&nbsp;
-                            </span> <span class="fr"> 기준일시 | <strong>${inquiryDate2}</strong>&nbsp;
-                            </span>
+                            <span class="rightText"> 기준일시 | <strong>${inquiryDate1}</strong>&nbsp;</span> 
                         </p>
 
                         <table class="tType01">
