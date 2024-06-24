@@ -91,7 +91,13 @@ public class ExchangeNoticController {
         if (null == loginUserBean || !loginUserBean.isUserLogin()) {
             return "user/not_login";
         }
-
+        
+        // 입력 오륲 임시 예외처리
+        if (null == exchangeNoticeBean.getNotice_email() || exchangeNoticeBean.getNotice_email().isEmpty()
+        		|| 0.0f >= exchangeNoticeBean.getNotice_rate()) {
+        	return notice(2, model);
+        }
+        
         System.out.println("userNum : " + loginUserBean.getUser_num());
         exchangeNoticeBean.setUser_num(loginUserBean.getUser_num());
         exchangeNoticeBean
@@ -125,7 +131,12 @@ public class ExchangeNoticController {
         if (null == loginUserBean || !loginUserBean.isUserLogin()) {
             return "user/not_login";
         }
-
+        
+        if (null == exchangeNoticeBean.getNotice_email() || exchangeNoticeBean.getNotice_email().isEmpty()
+        		|| 0.0f >= exchangeNoticeBean.getNotice_rate()) {
+        	return notice(3, model);
+        }
+        
         exchangeNoticeService.updateExchangeRateNotice(exchangeNoticeBean);
         // 환율 알림 변경 시 자동알림의 state 를 변경해 다시 알림을 받을 준비를 한다
         autoNoticeService.updateExchangeAutoNotice(0, loginUserBean.getUser_num());
@@ -169,7 +180,21 @@ public class ExchangeNoticController {
 
         return notice(5, model);
     }
-
+    
+    // 입력오류 - 마저해야됨
+    @GetMapping("noticeInputError")
+    public String noticeInputError(
+    		@RequestParam(value="noticContentIndex", defaultValue="0") int noticContentIndex,
+    		Model model) {
+        if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+            return "user/not_login";
+        }
+        
+        model.addAttribute("noticContentIndex", noticContentIndex);
+        
+        return "exchange/noticeInputError";
+    }
+    
     // 메일전송
     @GetMapping("sendNoticeMail")
     // Spring MVC에서 자동으로 HttpServletRequest와 HttpServletResponse 객체를 컨트롤러 메서드에 주입

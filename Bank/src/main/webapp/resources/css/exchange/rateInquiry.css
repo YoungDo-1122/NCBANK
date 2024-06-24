@@ -132,6 +132,10 @@ body {
 	background-color: #f2f2f2;
 }
 
+.tType01 tr:hover {
+	background-color: #fdfdfd;
+}
+
 .tType01 th, .tType01 td {
 	border: 1px solid #ddd;
 	padding: 8px;
