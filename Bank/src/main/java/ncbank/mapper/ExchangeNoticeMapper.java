@@ -27,7 +27,7 @@ public interface ExchangeNoticeMapper {
 	
 	/* update */
 	@Update("update notice " 
-			+ "set rateType = #{rateType}, notice_rate = #{notice_rate}, notice_email = #{notice_email}, "
+			+ "set notice_rate_type = #{notice_rate_type}, notice_rate = #{notice_rate}, notice_email = #{notice_email}, "
 			+ "code_money = (select code_money from code_money where code_money = #{code_money}) "
 			+ "where user_num = (select user_num from member where user_num = #{user_num})")
 	public void updateExchangeRateNotice(ExchangeNoticeBean noticeBean);
@@ -48,15 +48,15 @@ public interface ExchangeNoticeMapper {
 	/* insert */
 	// 테이블안에 같은 code_money 없으면 추가
 	// 여기 조건 손봐야됨 회원 한명당 하나의 알림만 가질수 있게 (중복 불가)
-	@Insert("insert into notice(notice_num, rateType, notice_rate, notice_email, notice_date, user_num, code_money) "
-			+ "select notice_seq.nextval, #{rateType}, #{notice_rate}, #{notice_email}, #{notice_date}, m.user_num, cm.code_money "
+	@Insert("insert into notice(notice_num, notice_rate_type, notice_rate, notice_email, notice_date, user_num, code_money) "
+			+ "select notice_seq.nextval, #{notice_rate_type}, #{notice_rate}, #{notice_email}, #{notice_date}, m.user_num, cm.code_money "
 			+ "from member m, code_money cm "
 			+ "where m.user_num = #{user_num} and cm.code_money = #{code_money} "
 			+ "and not exists (select 1 from notice n where n.code_money = #{code_money} and n.user_num = #{user_num})")
 	public void addExchangeRateNotice(ExchangeNoticeBean noticeBean);
 	
-	@Insert("insert into notice(notice_num, rateType, notice_rate, notice_email, notice_date, user_num, code_money) "
-			+ "values(notice_seq.nextval, #{rateType}, #{notice_rate}, #{notice_email}, #{notice_date}, "
+	@Insert("insert into notice(notice_num, notice_rate_type, notice_rate, notice_email, notice_date, user_num, code_money) "
+			+ "values(notice_seq.nextval, #{notice_rate_type}, #{notice_rate}, #{notice_email}, #{notice_date}, "
 			+ "(select user_num from member where user_num = #{user_num}),  "
 			+ "(select code_money from code_money where code_money = #{code_money}))")
 	public void addExchangeRateNotice2(ExchangeNoticeBean noticeBean);

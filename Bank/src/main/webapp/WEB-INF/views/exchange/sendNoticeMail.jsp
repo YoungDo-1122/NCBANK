@@ -20,9 +20,6 @@
         	<!-- 인라인으로 이미지 첨부 - cid:사전에정의한 인라인명 -->
             <img src="cid:NCBankIcon" alt="NCBank" class="logoIcon" style="width: 100px; height: 100px;">&nbsp;
             <p class="logoName" style="margin: 18px 10px 0px; font-size: 50px;">NC 뱅크</p>
-            <!-- 테스트 확인용 -->
-            <img src="${root}${NCBankIcon2}" alt="NCBank" border="0" class="logoIcon" style="width: 100px; height: 100px;">&nbsp;
-            <p class="logoName" style="margin: 18px 10px 0px; font-size: 50px;">NC 뱅크</p>
         </div>
     </div>
 
@@ -52,13 +49,13 @@
                             <th style="width: 20%; padding: 10px 5px; color: #222222; font-size: 13px; background-color: #f5f5f5; border: 1px solid #e8e8e8;">고시환율기준</th>
                             <td style="width: 30%; padding: 10px 5px; color: #222222; font-size: 13px; background-color: #ffffff; border: 1px solid #e8e8e8;">
                                 <c:choose>
-                                    <c:when test="${1 == ExchangeNoticeBean.rateType}">
+                                    <c:when test="${1 == ExchangeNoticeBean.notice_rate_type}">
                                         매매기준율
                                     </c:when>
-                                    <c:when test="${2 == ExchangeNoticeBean.rateType}">
+                                    <c:when test="${2 == ExchangeNoticeBean.notice_rate_type}">
                                         송금보내실때
                                     </c:when>
-                                    <c:when test="${3 == ExchangeNoticeBean.rateType}">
+                                    <c:when test="${3 == ExchangeNoticeBean.notice_rate_type}">
                                         송금받으실때
                                     </c:when>
                                     <c:otherwise>

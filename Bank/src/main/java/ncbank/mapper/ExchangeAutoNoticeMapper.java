@@ -21,19 +21,19 @@ public interface ExchangeAutoNoticeMapper {
 			+ "where notice_num = (select notice_num from notice where user_num = #{user_num})")
 	public ExchangeAutoNoticeBean getExchangeAutoNotice(int user_num);
 	
-	@Select("select send_state " + "from auto_notice "
+	@Select("select notice_send_state " + "from auto_notice "
 			+ "where notice_num = (select notice_num from notice where user_num = #{user_num})")
 	public int getAutoNoticeSendState(int user_num);
 	
 	/* update */
-	@Update("update auto_notice set send_state = #{send_state}, "
-			+ "update_date = #{update_date} "
+	@Update("update auto_notice set notice_send_state = #{send_state}, "
+			+ "notice_update_date = #{update_date} "
 			+ "where notice_num = (select notice_num from notice where user_num = #{user_num})")
 	public void updateExchangeAutoNotice(@Param("send_state") int send_state, 
 			@Param("update_date") Date update_date, @Param("user_num") int user_num);
 	
 	/* insert */
-	@Insert("insert into auto_notice(notice_num, update_date) " 
+	@Insert("insert into auto_notice(notice_num, notice_update_date) " 
 			+ "values((select notice_num from notice where user_num = #{user_num}), " 
 			+ "#{update_date})")
 	public void addExchangeAutoNotice(@Param("user_num") int user_num, @Param("update_date") Date update_date);

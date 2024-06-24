@@ -62,7 +62,7 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 			return;
 		}
 
-		if (1 == autoNoticeBean.getSend_state()) { // 이미 보냈으면 X
+		if (1 == autoNoticeBean.getNotice_send_state()) { // 이미 보냈으면 X
 			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
 			System.out.println("sendState : 1 (이미보낸상태)");
 			return;
@@ -128,7 +128,7 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 
 		// 설정한 환율선이 무너졌는가 ? -> 근데 이걸 여기서 하는게 맞나?
 		// 알림 신청한 기준에 따라 적용할 기준 정하기 - 1: 매매기준, 2: 송금할때, 3: 송금받을때
-		int rateType = exchangeNoticeBean.getRateType();
+		int rateType = exchangeNoticeBean.getNotice_rate_type();
 		BigDecimal defaultRate;
 
 		switch (rateType) {

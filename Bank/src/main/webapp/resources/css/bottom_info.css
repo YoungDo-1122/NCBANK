@@ -17,7 +17,7 @@ footer {
 	width: 100%;
 	max-width: 1637px;
 	margin: 0 auto;
-	padding: 0 20px;
+	/* padding: 0 20px; */ /* 석준 수정 */
 	background-color:rgba(255, 255, 255, 0.8);
 }
 
