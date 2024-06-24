@@ -92,6 +92,11 @@ public class AutoController {
 	@PostMapping("/transferAuto") // 자동이체 등록 폼 제출을 처리하는 메소드 추가
 	public String addTransferAuto(@ModelAttribute("autoBean") AutoBean autoBean,
 			@RequestParam("ac_password") String acPassword, Model model, BindingResult result) {
+		if (result.hasErrors()) {
+			model.addAttribute("accounts", accountService.getAccount(loginUserBean.getUser_num()));
+			model.addAttribute("codeOrganNames", codeOrganService.getCode_organ_name());
+			return "auto/transferAuto";
+		}
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "user/not_login";
 		}
@@ -110,15 +115,21 @@ public class AutoController {
 		}
 
 		try {
-			// 로그인한 사용자의 user_num 설정
 			autoBean.setUser_num(loginUserBean.getUser_num());
-
-			// 자동이체 정보를 데이터베이스에 추가
 			autoService.addAuto(autoBean);
+		} catch (ExceptionMessage e) {
+			result.rejectValue("to_account", "error.to_account", e.getMessage());
+			System.out.println("자동이체 : " + e.getMessage());
+			model.addAttribute("accounts", accounts);
+			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
+			model.addAttribute("codeOrganNames", codeOrganNames);
+			return "auto/transferAuto";
 		} catch (Exception e) {
-
-			System.out.println("Exception : " + e);
-
+			e.printStackTrace();
+			result.rejectValue("to_account", "error.to_account", "자동이체 등록 중 오류가 발생했습니다.");
+			model.addAttribute("accounts", accounts);
+			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
+			model.addAttribute("codeOrganNames", codeOrganNames);
 			return "auto/transferAuto";
 		}
 
@@ -127,13 +138,18 @@ public class AutoController {
 
 	// 수정 페이지
 	@GetMapping("/transferAutoFix")
-	public String TransferAutoFix(Model model) {
+	public String TransferAutoFix(@RequestParam("auto_num") int auto_num, Model model) {
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "user/not_login";
 		}
+		AutoBean autoBean = autoService.getAutoByAutoNum(auto_num);
 		int userNum = loginUserBean.getUser_num();
 		List<AccountBean> accounts = accountService.getAccount(userNum);
+		List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
+
+		model.addAttribute("autoBean", autoBean);
 		model.addAttribute("accounts", accounts);
+		model.addAttribute("codeOrganNames", codeOrganNames);
 		return "auto/transferAutoFix";
 	}
 
@@ -159,37 +175,36 @@ public class AutoController {
 		try {
 			autoService.updateAuto(autoBean);
 		} catch (ExceptionMessage e) {
+			result.rejectValue("to_account", "error.to_account", e.getMessage());
+			int userNum = loginUserBean.getUser_num();
+			List<AccountBean> accounts = accountService.getAccount(userNum);
+			model.addAttribute("accounts", accounts);
+			return "auto/transferAutoFix";
+		} catch (Exception e) {
 			e.printStackTrace();
+			result.rejectValue("to_account", "error.to_account", "자동이체 수정 중 오류가 발생했습니다.");
+			int userNum = loginUserBean.getUser_num();
+			List<AccountBean> accounts = accountService.getAccount(userNum);
+			model.addAttribute("accounts", accounts);
+			return "auto/transferAutoFix";
 		}
 
 		return "redirect:/auto/transferAutoCheck"; // 자동이체 조회 페이지로 리디렉션
 	}
 
-	// 삭제 페이지
-	@GetMapping("/deleteTransferAuto")
-	public String deleteTranferAuto() {
-		return "auto/deleteTransferAuto";
-	}
-
 	// 삭제 API
 	@PostMapping("/deleteTransferAuto")
-	public String deleteTranferAuto(@RequestParam(name = "auto_num", required = false) int auto_num,
-			@RequestParam(name = "ac_password", required = false) int acPassword, Model model, BindingResult result) {
+	public String deleteTranferAuto(@RequestParam(name = "auto_num", required = true) int auto_num, Model model) {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 
-		// 계좌 비밀번호 확인
-		AutoBean auto = autoService.getAutoByAutoNum(auto_num);
-
-		String accountNumber = auto.getFrom_account();
-		AccountBean accounts = accountService.getAccountByNumber(accountNumber);
-
-		if (accounts == null || !accounts.getAc_password().equals(acPassword)) {
-			result.rejectValue("from_account", "error.from_account", "비밀번호가 일치하지 않습니다");
-
-			int userNum = loginUserBean.getUser_num();
-			List<AutoBean> autoList = autoService.getAuto(userNum);
-			model.addAttribute("autoList", autoList);
-
-			return "/auto/transferAutoCheck";
+		try {
+			autoService.deleteAuto(auto_num);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "자동이체 삭제 중 오류가 발생했습니다.");
+			return "auto/transferAutoCheck";
 		}
 
 		// 자동이체 정보 삭제
