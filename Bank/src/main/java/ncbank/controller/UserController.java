@@ -58,24 +58,24 @@ public class UserController {
 		System.out.println(request);
 
 		if (result.hasErrors()) {
-			
+
 			return "user/login";
 		}
 
 		userService.getLoginUserInfo(request, tempLoginBean);
 
 		if (loginUserBean.isUserLogin()) {
-	        String redirectUrl = (String) request.getSession().getAttribute("redirectAfterLogin");
-	        if (redirectUrl != null) {
-	            request.getSession().removeAttribute("redirectAfterLogin");
-	            System.out.println("Redirect URL found and set in session: " + redirectUrl); // 디버깅 메시지
-	            return "redirect:/" + redirectUrl; // 리다이렉트 URL로 이동
-	        }
-	        return "user/login_success";
-	    } else {
-	        model.addAttribute("fail", true);
-	        return "user/login_fail";
-	    }
+			String redirectUrl = (String) request.getSession().getAttribute("redirectAfterLogin");
+			if (redirectUrl != null) {
+				request.getSession().removeAttribute("redirectAfterLogin");
+				System.out.println("Redirect URL found and set in session: " + redirectUrl); // 디버깅 메시지
+				return "redirect:/" + redirectUrl; // 리다이렉트 URL로 이동
+			}
+			return "user/login_success";
+		} else {
+			model.addAttribute("fail", true);
+			return "user/login_fail";
+		}
 	}
 
 	@GetMapping("/join")
@@ -200,7 +200,7 @@ public class UserController {
 		System.out.println(text);
 		return code;
 //      실제로 쓸때는 위에꺼 주석 처리하고 밑에꺼 써야댐
-//    	String vr = userService.verificationCode(to);
-//    	return vr;
+//		String vr = userService.verificationCode(to);
+//		return vr;
 	}
 }

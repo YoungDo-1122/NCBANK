@@ -83,7 +83,7 @@
 													<th>거래유형</th>
 													<th>이체금액</th>
 													<th>입금계좌</th>
-													<th>이체 후 잔액</th>
+													<!-- <th>이체 후 잔액</th> -->
 													<th>출금계좌</th>
 													<th>이체 메모</th>
 													<th>일시</th>
@@ -107,10 +107,10 @@
 															document
 																	.write(formatAccount("${transfer.to_account}"));
 														</script></td>
-														<td>&#8361;&nbsp;<script>
+														<!-- <td>&#8361;&nbsp;<script>
 															document
 																	.write(formatBalance("${transfer.trans_balance}"));
-														</script></td>
+														</script></td> -->
 														<td>[NC뱅크]&nbsp;<script>
 															document
 																	.write(formatAccount("${transfer.from_account}"));

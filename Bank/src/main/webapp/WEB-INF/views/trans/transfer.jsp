@@ -70,7 +70,7 @@
 											cssClass="error" /></td>
 								</tr>
 								<tr>
-									<td><h2>입금 정보</h2></td>
+									<td><h3>입금 정보</h3></td>
 								</tr>
 								<tr>
 									<th>입금 은행</th>

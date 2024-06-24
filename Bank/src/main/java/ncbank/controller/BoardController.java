@@ -53,8 +53,7 @@ public class BoardController {
 		model.addAttribute("page", page);
 
 		model.addAttribute("loginUserId", loginUserbean.getId());
-		
-		
+
 //		System.out.println(loginUserbean.getId());
 
 		return "board/main";
@@ -65,7 +64,7 @@ public class BoardController {
 			@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		model.addAttribute("board_info_idx", board_info_idx);
 		model.addAttribute("content_idx", content_idx);
-		model.addAttribute("loginUserBean",loginUserbean);
+		model.addAttribute("loginUserBean", loginUserbean);
 		/*
 		 * model.addAttribute("loginUserBean", loginU serBean); 아마 글 수정삭제 때문에 필요한거 같으넫
 		 * 우리한텐 필요 없을듯?
@@ -100,7 +99,9 @@ public class BoardController {
 			}
 			return "board/write";
 		}
+
 		boardService.addContentInfo(writeContentBean);
+
 		return "board/write_success";
 	}
 

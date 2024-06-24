@@ -30,18 +30,16 @@
         </c:if>
     });
   </script>
-  <style>
-     footer {
-    margin-top: auto; /* 자동으로 아래로 밀리게 설정 */
-    padding-top: 80px !important;
-    width: 100%; 
-    background-color: #f1f1f1;
-    text-align: center;
-    margin: -20px;
-    
+<style>
+footer {
+	margin-top: auto;
+	width: 100%;
+	background-color: #f1f1f1;
+	text-align: center;
+	margin: -20px;
 }
-  </style>
-  
+</style>
+
 </head>
 <body>
 
@@ -156,7 +154,7 @@
 			</div>
 		</div>
 		<footer>
-		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+			<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 		</footer>
 	</div>
 </body>
