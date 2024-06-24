@@ -70,9 +70,11 @@ public class AutoController {
 	// 등록 페이지
 	@GetMapping("/transferAuto")
 	public String TransferAuto(Model model) {
+		// 로그인 확인
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "user/not_login";
 		}
+		// 로그인한 회원의 회원번호
 		int userNum = loginUserBean.getUser_num();
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 		model.addAttribute("accounts", accounts);
