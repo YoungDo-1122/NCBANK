@@ -10,9 +10,7 @@ public class AutoBean {
 	private String auto_money;
 	private String auto_type;
 	private String auto_next_date;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date auto_start;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date auto_end;
 	private String to_account;
 	private String code_organ;
