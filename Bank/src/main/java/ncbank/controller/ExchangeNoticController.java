@@ -73,7 +73,7 @@ public class ExchangeNoticController {
         if (null == loginUserBean || !loginUserBean.isUserLogin()) {
             return "user/not_login";
         }
-
+        
         // 기존 등록된 알림이 있다면 변경 페이지로
         ExchangeNoticeBean noticeBean = exchangeNoticeService.getExchangeRateNotice(loginUserBean.getUser_num());
 

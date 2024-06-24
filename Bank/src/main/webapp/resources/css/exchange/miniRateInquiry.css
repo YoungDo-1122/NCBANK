@@ -27,14 +27,16 @@ border > border-radius
     font-family: Arial, Helvetica, sans-serif;
 
     border-radius: 5px;
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
+    background-color: #f0f8ff;
 }
 
 .top {
     display: flex;
 
     border-radius: 5px 5px 0px 0px;
-    background-color: gainsboro;
+    /* background-color: gainsboro; */
+     background-color: #99CCFF;
 }
 .subject {
     margin-left: 10px;
@@ -57,6 +59,11 @@ border > border-radius
 
     border-collapse: separate;
 	border-spacing: 20px 10px; /* 여백 */
+}
+
+.aType01 {
+	 color: #444444;
+	 text-decoration: none;
 }
 
 .tType01 th {

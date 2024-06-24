@@ -74,6 +74,9 @@ import ncbank.utility.EmailManager;
 //@PropertySource("/WEB-INF/properties/application.properties")
 //@PropertySource("/WEB-INF/properties/chatai.properties")
 //@EnableAspectJAutoProxy(proxyTargetClass = false)
+
+//쳇봇용
+@PropertySource("/WEB-INF/properties/chatai.properties") 
 public class ServletAppContext implements WebMvcConfigurer {
 
 	/* ==========[DB 접속 데이터]========== */

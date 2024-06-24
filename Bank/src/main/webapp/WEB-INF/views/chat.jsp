@@ -7,10 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>게시판 프로젝트</title>
+<title>ChatBot</title>
 <!-- Bootstrap CDN -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -18,24 +17,35 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
-</head>
+
+<link rel="stylesheet" href="${root}css/chat.css">
+
 <body>
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
-	<div class="container">
-		<h1>ChatGPT Response</h1>
-		<form action="${root}chat" method="get">
-			<div class="form-group">
-				<label for="prompt">Enter your prompt:</label> <input type="text"
-					class="form-control" id="prompt" name="prompt" required>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form>
-		<div class="mt-4">
-			<h3>Response:</h3>
-			<p>${response}</p>
-		</div>
-	</div>
+	
+	<div class="contentBox">
+        <h1 class="subject">[Beta]&nbsp;AI ChatBot</h1>
+
+        <form action="${root}chat" method="get">
+            <div class="questionArea">
+                <label for="prompt" class="questionLab">Enter any prompt&nbsp;:&nbsp;</label>
+
+                <div class="questionInputArea">
+                    <input type="text" class="questionInput" id="prompt" name="prompt" required>
+
+                    <button type="submit" class="btnStyle01">질문</button>
+                </div>
+            </div>
+
+        </form>
+        <div class="answerArea">
+            <h3 class="answerSubject">AI Response&nbsp;:&nbsp;</h3>
+            <p class="answerResult">${response}</p>
+        </div>
+    </div>
+	
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+	
 </body>
 </html>
- --%>
+ 

@@ -41,7 +41,9 @@
                             <td>
                                 <img class="FlagImg" src="${root}img/Flags/${rateDTO.code_money}.png" onerror="this.style.display='none'">
                             </td>
-                            <td>${rateDTO.code_money}</td>
+                            <td>
+                            	<a class="aType01" href="${root}exchange/rateInquiry">${rateDTO.code_money}</a>
+                            </td>
                             <td class="tR">${rateDTO.ex_standard}</td>
                             <td class="cBlue tR">${rateDTO.ex_buy}</td>
                             <td class="cRed tR">${rateDTO.ex_sell}</td>

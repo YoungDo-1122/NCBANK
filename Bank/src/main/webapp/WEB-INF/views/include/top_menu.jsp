@@ -58,5 +58,11 @@
 					class="nav-link">회원가입</a></li>
 			</c:otherwise>
 		</c:choose>
+		
+		<!-- 쳇봇 -->
+		<li class="nav-item">
+			<a href="${root}/chat">[Beta] AI Chatbot</a>
+		</li>
+		
 	</ul>
 </nav>
