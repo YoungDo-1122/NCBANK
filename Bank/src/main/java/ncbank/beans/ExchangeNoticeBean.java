@@ -7,7 +7,7 @@ public class ExchangeNoticeBean {
 	
 	private int notice_num;
 	// 1: 매매기준, 2: 송금할때, 3: 송금받을때 
-	private int rateType;
+	private int notice_rate_type;
 	private float notice_rate;
 	private String notice_email;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -23,11 +23,11 @@ public class ExchangeNoticeBean {
 		this.notice_num = notice_num;
 	}
 	
-	public int getRateType() {
-		return rateType;
+	public int getNotice_rate_type() {
+		return notice_rate_type;
 	}
-	public void setRateType(int rateType) {
-		this.rateType = rateType;
+	public void setNotice_rate_type(int notice_rate_type) {
+		this.notice_rate_type = notice_rate_type;
 	}
 	
 	public float getNotice_rate() {
