@@ -32,15 +32,15 @@
     margin-bottom: 10px;
     padding: 5px;
 
-    color: dodgerblue;
+    color: rgb(83, 169, 255);
     font-size: 22px;
 	
-	border-bottom: 3px solid dodgerblue;
+	border-bottom: 3px solid rgb(83, 169, 255);
 }
 
 .contour { /* 구분선 용 */
-	background-color: dodgerblue;
-    border-bottom: 2px solid dodgerblue;
+	background-color: rgb(83, 169, 255);
+    border-bottom: 2px solid rgb(83, 169, 255);
 }
 
 .LPWrap ul {

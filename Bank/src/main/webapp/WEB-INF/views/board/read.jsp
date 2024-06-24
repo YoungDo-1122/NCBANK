@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<div class="content-group mb-4">
-				<label class="font-weight-bold">내용</label>
+				<label class="font-weight-bold"></label>
 				<textarea id="board_content" name="board_content"
 					class="form-control" disabled="disabled">${readContentBean.content_text}</textarea>
 			</div>
