@@ -2,8 +2,6 @@ package ncbank.beans;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 public class AutoBean {
 	private int auto_num;
 	private String auto_name;
@@ -11,7 +9,6 @@ public class AutoBean {
 	private String auto_type;
 	private String auto_next_date;
 	private Date auto_start;
-	@DateTimeFormat(pattern = "yyyy.MM.dd")
 	private Date auto_end;
 	private String to_account;
 	private String code_organ;

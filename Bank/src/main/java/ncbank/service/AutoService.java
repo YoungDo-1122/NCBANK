@@ -38,10 +38,16 @@ public class AutoService {
 
 		}
 		autoBean.setAuto_start(new Date()); // 자동 이체 시작일을 현재 날짜로 설정
+		// 자동이체 종료일이 null인 경우, 무한히 반복되도록 설정
+		if (autoBean.getAuto_end() == null) {
+			autoBean.setAuto_end(null);
+		}
+
 		try {
 			autoDAO.addAuto(autoBean);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(e);
 			throw new ExceptionMessage("자동이체 등록 중 오류가 발생했습니다.");
 		}
 	}
@@ -69,6 +75,7 @@ public class AutoService {
 			autoDAO.updateAuto(autoBean);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(e);
 			throw new ExceptionMessage("자동이체 수정 중 오류가 발생했습니다.");
 		}
 	}

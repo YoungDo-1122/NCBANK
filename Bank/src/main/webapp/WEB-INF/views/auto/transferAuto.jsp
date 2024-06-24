@@ -146,8 +146,7 @@
 						</tr>
 						<tr id="transferEndDateRow">
 							<td>이체 종료일</td>
-							<td><form:input type="date" path="auto_end" id="auto_end"
-									required="true" /></td>
+							<td><form:input type="date" path="auto_end" id="auto_end" /></td>
 						</tr>
 						<tr>
 							<td colspan="2" style="text-align: center; margin-top: 20px;">

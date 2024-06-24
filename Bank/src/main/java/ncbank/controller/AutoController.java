@@ -3,7 +3,10 @@ package ncbank.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +41,8 @@ public class AutoController {
 	@Autowired
 	private AutoService autoService;
 
+	private static final Logger logger = LoggerFactory.getLogger(AutoController.class);
+
 	// 조회 페이지
 	@GetMapping("/transferAutoCheck")
 	public String TransferAutoCheck(Model model) {
@@ -69,7 +74,7 @@ public class AutoController {
 
 	// 등록 페이지
 	@GetMapping("/transferAuto")
-	public String TransferAuto(Model model) {
+	public String addTransferAuto(Model model) {
 		// 로그인 확인
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "user/not_login";
@@ -90,14 +95,16 @@ public class AutoController {
 
 	// 등록 API
 	@PostMapping("/transferAuto") // 자동이체 등록 폼 제출을 처리하는 메소드 추가
-	public String addTransferAuto(@ModelAttribute("autoBean") AutoBean autoBean,
+	public String addTransferAuto(@Valid @ModelAttribute("autoBean") AutoBean autoBean,
 			@RequestParam("ac_password") String acPassword, Model model, BindingResult result) {
 		if (result.hasErrors()) {
+			logger.error("폼 검증 오류: {}", result.getAllErrors());
 			model.addAttribute("accounts", accountService.getAccount(loginUserBean.getUser_num()));
 			model.addAttribute("codeOrganNames", codeOrganService.getCode_organ_name());
 			return "auto/transferAuto";
 		}
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			logger.warn("로그인되지 않은 사용자 접근");
 			return "user/not_login";
 		}
 
@@ -106,6 +113,7 @@ public class AutoController {
 		AccountBean accounts = accountService.getAccountByNumber(accountNumber);
 
 		if (accounts == null || !accounts.getAc_password().equals(acPassword)) {
+			logger.warn("비밀번호가 일치하지 않음");
 			result.rejectValue("from_account", "error.from_account", "비밀번호가 일치하지 않습니다");
 			model.addAttribute("accounts", accounts);
 
@@ -116,8 +124,14 @@ public class AutoController {
 
 		try {
 			autoBean.setUser_num(loginUserBean.getUser_num());
+
+			// 자동이체 종료일이 선택되지 않았을 때 null로 설정하여 계속 자동이체 되도록 설정
+			if (autoBean.getAuto_end() == null) {
+				autoBean.setAuto_end(null);
+			}
 			autoService.addAuto(autoBean);
 		} catch (ExceptionMessage e) {
+			logger.error("자동이체 등록 중 오류: {}", e.getMessage());
 			result.rejectValue("to_account", "error.to_account", e.getMessage());
 			System.out.println("자동이체 : " + e.getMessage());
 			model.addAttribute("accounts", accounts);
@@ -125,7 +139,9 @@ public class AutoController {
 			model.addAttribute("codeOrganNames", codeOrganNames);
 			return "auto/transferAuto";
 		} catch (Exception e) {
+			logger.error("예기치 않은 오류", e);
 			e.printStackTrace();
+			System.out.println(e);
 			result.rejectValue("to_account", "error.to_account", "자동이체 등록 중 오류가 발생했습니다.");
 			model.addAttribute("accounts", accounts);
 			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
@@ -182,6 +198,7 @@ public class AutoController {
 			return "auto/transferAutoFix";
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(e);
 			result.rejectValue("to_account", "error.to_account", "자동이체 수정 중 오류가 발생했습니다.");
 			int userNum = loginUserBean.getUser_num();
 			List<AccountBean> accounts = accountService.getAccount(userNum);
@@ -203,6 +220,7 @@ public class AutoController {
 			autoService.deleteAuto(auto_num);
 		} catch (Exception e) {
 			e.printStackTrace();
+			System.out.println(e);
 			model.addAttribute("errorMessage", "자동이체 삭제 중 오류가 발생했습니다.");
 			return "auto/transferAutoCheck";
 		}
