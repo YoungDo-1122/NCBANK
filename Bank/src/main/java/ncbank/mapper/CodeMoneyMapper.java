@@ -8,7 +8,7 @@ import ncbank.beans.CodeMoneyBean;
 
 public interface CodeMoneyMapper {
 
-    // code_money table ¿¡¼­ µ¥ÀÌÅÍ °¡Á®¿À±â
+    // code_money table ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     @Select("select code_money, code_money_name " +
             "from code_money " + "order by code_money")
     public List<CodeMoneyBean> getCodeMoneyList();

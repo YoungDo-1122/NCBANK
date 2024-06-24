@@ -1,6 +1,8 @@
 package ncbank.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,10 +94,50 @@ public class ExchangeRateController {
     public String addRateInquiry_DateRange() {
     	
     	exchangeRateService.addRateInquiry_DateRange(
-    			dateManager.getMoveDate(dateManager.getCurrentDate("yyyyMMdd"), -6, 0, "yyyyMMdd"), 
+    			dateManager.getMoveDate(dateManager.getCurrentDate("yyyyMMdd"), -13, 0, "yyyyMMdd"), 
     			dateManager.getCurrentDate("yyyyMMdd"));
     	
     	return "exchange/rateInquiry";
+    }
+    
+    @GetMapping("miniRateInquiry")
+    public String miniRateInquiry(
+    		@RequestParam(value="ISOCode", defaultValue="USD") String ISOCode,
+    		Model model) {
+    	
+    	System.out.println("ExchangeRateController miniRateInquiry()");
+    	
+    	List<ExchangeRateDTO> rateDTOList = new ArrayList<ExchangeRateDTO>();
+    	
+    	String[] ISOCodeArr = ISOCode.split(",");
+    	System.out.println("ISOCodeArr" + ISOCodeArr);
+    	for (String ISO : ISOCodeArr) {
+    		ExchangeRateBean rateBean = exchangeRateService.findFinalExchangeRate(ISO);
+        	if (null == rateBean) {
+        		System.out.println("ExchangeRateController miniRateInquiry()");
+        		System.out.println("rateBean is null");
+        		continue;
+        	}
+        	
+        	ExchangeRateDTO rateDTO = exchangeRateService.convertExchangeDTO(rateBean);
+        	if (null == rateDTO) {
+        		System.out.println("ExchangeRateController miniRateInquiry()");
+        		System.out.println("rateDTO is null");
+        		continue;
+        	}
+			
+        	rateDTOList.add(rateDTO);
+		}
+    	if (null == rateDTOList || rateDTOList.isEmpty()) {
+    		System.out.println("ExchangeRateController miniRateInquiry()");
+    		System.out.println("rateDTOList is null");
+    		return "exchange/miniRateInquiry";
+    	}
+    	
+    	model.addAttribute("rateDTOList", rateDTOList);
+    	System.out.println("succese");
+    	
+    	return "exchange/miniRateInquiry";
     }
     
     /* ==========[환율 계산기]========== */

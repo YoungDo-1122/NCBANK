@@ -110,9 +110,9 @@
 																test="${auto.auto_type eq 3}">매월</c:if></td>
 														<td>${auto.auto_next_date}</td>
 														<td><button class="transfer-check-button"
-																onclick="window.location.href='${root}trans/transferCheck'">수정</button>
+																onclick="window.location.href='${root}auto/transferAutoFix'">수정</button>
 															<button class="transfer-button"
-																onclick="window.location.href='${root}trans/transfer'">삭제</button></td>
+																onclick="window.location.href='${root}auto/deleteTransferAuto'">삭제</button></td>
 													</tr>
 												</c:forEach>
 											</tbody>

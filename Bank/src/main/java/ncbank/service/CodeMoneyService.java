@@ -23,7 +23,13 @@ public class CodeMoneyService {
 	}
 	
 	public String getCodeMoneyName(String code_money) {
-		return codeMoneyDAO.getCodeMoneyName(code_money);
+		String codeMoneyName = codeMoneyDAO.getCodeMoneyName(code_money);
+		if (null == codeMoneyName || codeMoneyName.isEmpty()) {
+			System.out.println("CodeMoneyService getCodeMoneyName()");
+			System.out.println("codeMoneyName is null");
+			return null;
+		}
+		return codeMoneyName;
 	}
 
 }

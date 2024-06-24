@@ -69,7 +69,31 @@
 			</div>
 			<!-- 스크립트 코드 js파일로 이동후 임포트 시킨거 -->
 			<%-- <script type="text/javascript" src="${root}js/style_main.js"></script>--%>
-			<div class="bottom_menu">
+
+		<!-- 환율 정보 -->
+		<div class="miniRateView">
+			<script>
+		        $(document).ready(function() {
+		        	 var ISOCodes = "USD,JPY,EUR,CNH"; // 여러 통화 코드를 쉼표로 구분된 문자열로 정의
+	
+		             $.ajax({
+		                 url: "${root}exchange/miniRateInquiry",
+		                 type: "GET",
+		                 data: { ISOCode: ISOCodes },
+		                 success: function(data) {
+		                     $(".miniExchangeRate").html(data); // 응답 데이터를 miniExchangeRate div에 삽입
+		                 },
+		                 error: function() {
+		                     alert("환율 정보를 가져오는 데 실패했습니다.");
+		                 }
+		             });
+		        });
+		    </script>
+			<div class="miniExchangeRate" ></div>
+		</div> <!-- div.miniRateView -->
+		
+
+		<div class="bottom_menu">
 				<div class="board bd1">
 					<div class="tit">
 						<h4>공지사항</h4>
@@ -100,12 +124,10 @@
 						</c:forEach>
 					</ul>
 				</div>
-
+				
 		</div>
 		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	</div>
-
-
 
 
 </body>
