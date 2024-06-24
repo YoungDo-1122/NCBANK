@@ -17,136 +17,127 @@
 </head>
 <body>
 
-    <div class="contentWarp">
+    <div class="container">
     <c:import url="../include/top_menu.jsp" />
-    <div class="ASK">
+    <div class="contentWarpASK">
         <div class="LP">
-            <div class="LPWrap">
-                <div class="LPC01">
-                    <h2>외환</h2>
-                    <ul>
-                        <li><a href="${root}exchange/rateInquiry">환율 조회</a></li>
-                        <li><a href="${root}exchange/notice">환율 알림 서비스</a></li>
-                        <li><a href="${root}exchange/exchangeAsk">환전 신청</a></li>
-                        <li><a href="${root}exchange/exchangeHistory">환전 내역 조회</a></li>
-                    </ul>
-                    
-                    <ul>
-                        <li class="rateCalculator">환율 계산기</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <h1>환전 신청</h1>
-            <form:form action="${root}exchange/exchangeAskSuccess" method="post" modelAttribute="createExchangeBean">
-    
-                <div class="form-group-exchange">
-                    <form:label path="code_money">환전신청금액</form:label>
-                    <div class="input-group-exchange">
-                        <form:select path="code_money" id="code_money" >
-                            <form:option value="AED">AED</form:option>
-                            <form:option value="AUD">AUD</form:option>
-                            <form:option value="BHD">BHD</form:option>
-                            <form:option value="BND">BND</form:option>
-                            <form:option value="CAD">CAD</form:option>
-                            <form:option value="CHF">CHF</form:option>
-                            <form:option value="CNH">CNH</form:option>
-                            <form:option value="DKK">DKK</form:option>
-                            <form:option value="EUR">EUR</form:option>
-                            <form:option value="GBP">GBP</form:option>
-                            <form:option value="HKD">HKD</form:option>
-                            <form:option value="IDR">IDR</form:option>
-                            <form:option value="JPY">JPY</form:option>
-                            <form:option value="KRW">KRW</form:option>
-                            <form:option value="KWD">KWD</form:option>
-                            <form:option value="MYR">MYR</form:option>
-                            <form:option value="NOK">NOK</form:option>
-                            <form:option value="NZD">NZD</form:option>
-                            <form:option value="SAR">SAR</form:option>
-                            <form:option value="SEK">SEK</form:option>
-                            <form:option value="SGD">SGD</form:option>
-                            <form:option value="THB">THB</form:option>
-                            <form:option value="USD">USD</form:option>
-                        </form:select>
-                        <form:input type="number" path="trade_money" class="form-control" id="trade_money_input" onkeyup="getExchangeMoney(); hideExchangeTable();" />
-                        <button type="button" id="trade_money_btn">환전금액</button>
-                    </div>
-                </div>
-    
-                <table id="exchangeTable" style="display: none;">
-                    <tr>
-                        <th>원화금액</th>
-                        <td id="exchange_payMoney" ></td>
-                    </tr>
-                    <tr>
-                        <th>현재고시환율</th>
-                        <td id="exchange_cash_buying_rate"></td>
-                    </tr>
-                    <tr>
-                        <th>적용환율</th>
-                        <td id="trade_rate"></td>
-                    </tr>
-                    <tr>
-                        <th>우대금액</th>
-                        <td id="preferential_money"></td>
-                    </tr>
-                </table>
-                
-                <!-- 히든으로 숨겨가기(원화금액, 현재고시환율, 적용환율, 우대금액) -->
-                <form:hidden path="exchange_payMoney" id="hidden_exchange_payMoney"/>
-                <form:hidden path="exchange_cash_buying_rate" id="hidden_exchange_cash_buying_rate"/>
-                <form:hidden path="trade_rate" id="hidden_trade_rate"/>
-                <form:hidden path="preferential_money" id="hidden_preferential_money"/>
-                
-                <h1>고객정보 입력</h1>
-                <div class="form-group-account">
-                    <form:label path="account">출금계좌선택</form:label>
-                    <form:select path="account" id="account">
-                        <c:forEach var="accountItem" items="${getAccountList}">
-                            <form:option value="${accountItem.account}">${accountItem.account}</form:option>
-                        </c:forEach>
-                    </form:select>
-                </div>
-    
-                <h1>수령정보 입력</h1>
-                <div class="form-group-search">
-                        <label for="searchAddr">희망지점조회</label>
-                        <div class="input-group-search">
-	                        <input type="text" id="searchAddr" name="searchAddr" />
-	                        <button type="button" id="searchAddrBtn" class="btn btn-secondary" onclick="searchBank()">조회</button>
-                    	</div>
-                </div>
-
-                <div class="form-group-branch">
-				    <form:label path="code_bank_name">수령희망지점</form:label>
-				    <form:select path="code_bank_name" id="code_bank_name">
-				        
-				    </form:select> 
-				</div>
-
-            
-                <div class="form-group-date">
-                    <form:label path="trade_reservation_date">수령희망일</form:label>
-                    <form:input path="trade_reservation_date" type="date" class="form-control" id="trade_reservation_date"/>
-                </div>
-            
-                <!-- 히든으로 숨겨가기(은행번호,회원번호) -->
-                <form:hidden path="code_bank" id="hidden_code_bank"/>
-                <form:hidden path="user_num" id="hidden_user_num"/>
         
-                <div class="next">
-                    <div class="text-right">
-                        <button type="submit" class="btn btn-primary">다음</button>
-                    </div>
-                </div>
+            <c:import url="./LPSide.jsp"></c:import>
+            
         
-            </form:form>
-        </div>
-    </div>
+
+	        <div class="main-content">
+	        	
+	            <h3 class="h3_title">환전 신청</h3>
+	            <form:form action="${root}exchange/exchangeAskSuccess" method="post" modelAttribute="createExchangeBean">
+	    
+	                <div class="form-group-exchange">
+	                    <form:label path="code_money">환전신청금액</form:label>
+	                    <div class="input-group-exchange">
+	                        <form:select path="code_money" id="code_money" >
+	                            <form:option value="AED">AED</form:option>
+	                            <form:option value="AUD">AUD</form:option>
+	                            <form:option value="BHD">BHD</form:option>
+	                            <form:option value="BND">BND</form:option>
+	                            <form:option value="CAD">CAD</form:option>
+	                            <form:option value="CHF">CHF</form:option>
+	                            <form:option value="CNH">CNH</form:option>
+	                            <form:option value="DKK">DKK</form:option>
+	                            <form:option value="EUR">EUR</form:option>
+	                            <form:option value="GBP">GBP</form:option>
+	                            <form:option value="HKD">HKD</form:option>
+	                            <form:option value="IDR">IDR</form:option>
+	                            <form:option value="JPY">JPY</form:option>
+	                            <form:option value="KRW">KRW</form:option>
+	                            <form:option value="KWD">KWD</form:option>
+	                            <form:option value="MYR">MYR</form:option>
+	                            <form:option value="NOK">NOK</form:option>
+	                            <form:option value="NZD">NZD</form:option>
+	                            <form:option value="SAR">SAR</form:option>
+	                            <form:option value="SEK">SEK</form:option>
+	                            <form:option value="SGD">SGD</form:option>
+	                            <form:option value="THB">THB</form:option>
+	                            <form:option value="USD">USD</form:option>
+	                        </form:select>
+	                        <form:input type="number" path="trade_money" class="form-control" id="trade_money_input" onkeyup="getExchangeMoney(); hideExchangeTable();" />
+	                        <button type="button" id="trade_money_btn">환전금액</button>
+	                    </div>
+	                </div>
+	    
+	                <table id="exchangeTable" style="display: none;">
+	                    <tr>
+	                        <th>원화금액</th>
+	                        <td id="exchange_payMoney" ></td>
+	                    </tr>
+	                    <tr>
+	                        <th>현재고시환율</th>
+	                        <td id="exchange_cash_buying_rate"></td>
+	                    </tr>
+	                    <tr>
+	                        <th>적용환율</th>
+	                        <td id="trade_rate"></td>
+	                    </tr>
+	                    <tr>
+	                        <th>우대금액</th>
+	                        <td id="preferential_money"></td>
+	                    </tr>
+	                </table>
+	                
+	                <!-- 히든으로 숨겨가기(원화금액, 현재고시환율, 적용환율, 우대금액) -->
+	                <form:hidden path="exchange_payMoney" id="hidden_exchange_payMoney"/>
+	                <form:hidden path="exchange_cash_buying_rate" id="hidden_exchange_cash_buying_rate"/>
+	                <form:hidden path="trade_rate" id="hidden_trade_rate"/>
+	                <form:hidden path="preferential_money" id="hidden_preferential_money"/>
+	                
+	                <h3>고객정보 입력</h3>
+	                <div class="form-group-account">
+	                    <form:label path="account">출금계좌선택</form:label>
+	                    <form:select path="account" id="account">
+	                        <c:forEach var="accountItem" items="${getAccountList}">
+	                            <form:option value="${accountItem.account}">${accountItem.account}</form:option>
+	                        </c:forEach>
+	                    </form:select>
+	                </div>
+	    
+	                <h3>수령정보 입력</h3>
+	                <div class="form-group-search">
+	                        <label for="searchAddr">희망지점조회</label>
+	                        <div class="input-group-search">
+		                        <input type="text" id="searchAddr" name="searchAddr" />
+		                        <button type="button" id="searchAddrBtn" class="btn btn-secondary" onclick="searchBank()">조회</button>
+	                    	</div>
+	                </div>
+	
+	                <div class="form-group-branch">
+					    <form:label path="code_bank_name">수령희망지점</form:label>
+					    <form:select path="code_bank_name" id="code_bank_name">
+					        
+					    </form:select> 
+					</div>
+	
+	            
+	                <div class="form-group-date">
+	                    <form:label path="trade_reservation_date">수령희망일</form:label>
+	                    <form:input path="trade_reservation_date" type="date" class="form-control" id="trade_reservation_date"/>
+	                </div>
+	            
+	                <!-- 히든으로 숨겨가기(은행번호,회원번호) -->
+	                <form:hidden path="code_bank" id="hidden_code_bank"/>
+	                <form:hidden path="user_num" id="hidden_user_num"/>
+	        
+	                <div class="next">
+	                    <div class="text-right">
+	                        <button type="submit" class="btn btn-primary">다음</button>
+	                    </div>
+	                </div>
+	        
+	            </form:form> <!-- createExchangeBean -->
+	            
+	        </div> <!-- main-content -->
+    	</div> <!-- LP -->
+    </div> <!-- contentWarpASK -->
     <c:import url="../include/bottom_info.jsp" />
-    </div>
+    </div> <!-- container -->
 
     <script>
     
@@ -201,10 +192,10 @@
         
         // #1. Spread X
         if(selectedCurrency === "KRW" || selectedCurrency === "BND"){
-            document.getElementById("exchange_payMoney").innerText =          Math.round(tradeMoney * rate) + "원";
-            document.getElementById("exchange_cash_buying_rate").innerText = Math.round((rate + Number.EPSILON) * 100) / 100 + "원";
-            document.getElementById("trade_rate").innerText =                  Math.round((rate + Number.EPSILON) * 100) / 100 + "원";
-            document.getElementById("preferential_money").innerText =          0 + "원";
+            document.getElementById("exchange_payMoney").innerText =          Math.round(tradeMoney * rate) + " 원";
+            document.getElementById("exchange_cash_buying_rate").innerText = Math.round((rate + Number.EPSILON) * 100) / 100 + " 원";
+            document.getElementById("trade_rate").innerText =                  Math.round((rate + Number.EPSILON) * 100) / 100 + " 원";
+            document.getElementById("preferential_money").innerText =          0 + " 원";
             
             document.getElementById("hidden_exchange_payMoney").value =        Math.round(tradeMoney * rate);
             document.getElementById("hidden_exchange_cash_buying_rate").value = Math.round((rate + Number.EPSILON) * 100) / 100;
@@ -221,20 +212,20 @@
             selectedCurrency === "THB" || selectedCurrency === "USD" ) {
             
             if(selectedCurrency === "JPY" || selectedCurrency === "IDR" ){
-                document.getElementById("exchange_payMoney").innerText =          (Math.round(((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) * tradeMoney)/100 + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-                document.getElementById("exchange_cash_buying_rate").innerText = (Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-                document.getElementById("trade_rate").innerText =                  (Math.round((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-                document.getElementById("preferential_money").innerText =          (Math.round((((tradeMoney * rate * selectedSpread * selectedPreferentialRate) + Number.EPSILON) * 100)/100) / 100).toFixed(2) + "원";
+                document.getElementById("exchange_payMoney").innerText =          (Math.round(((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) * tradeMoney)/100 + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+                document.getElementById("exchange_cash_buying_rate").innerText = (Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+                document.getElementById("trade_rate").innerText =                  (Math.round((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+                document.getElementById("preferential_money").innerText =          (Math.round((((tradeMoney * rate * selectedSpread * selectedPreferentialRate) + Number.EPSILON) * 100)/100) / 100).toFixed(2) + " 원";
                 
                 document.getElementById("hidden_exchange_payMoney").value =        Math.round(((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) * tradeMoney) / 100 + Number.EPSILON) * 100)) / 100;
                 document.getElementById("hidden_exchange_cash_buying_rate").value = Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100;
                 document.getElementById("hidden_trade_rate").value =                Math.round((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) + Number.EPSILON) * 100)) / 100;
                 document.getElementById("hidden_preferential_money").value =        Math.round((((tradeMoney * rate * selectedSpread * selectedPreferentialRate) + Number.EPSILON) * 100)/100) / 100;
             } else {
-                document.getElementById("exchange_payMoney").innerText =          (Math.round(((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) * tradeMoney) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-                document.getElementById("exchange_cash_buying_rate").innerText = (Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-                document.getElementById("trade_rate").innerText =                  (Math.round((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-                document.getElementById("preferential_money").innerText =          (Math.round((((tradeMoney * rate * selectedSpread * selectedPreferentialRate) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
+                document.getElementById("exchange_payMoney").innerText =          (Math.round(((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) * tradeMoney) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+                document.getElementById("exchange_cash_buying_rate").innerText = (Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+                document.getElementById("trade_rate").innerText =                  (Math.round((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+                document.getElementById("preferential_money").innerText =          (Math.round((((tradeMoney * rate * selectedSpread * selectedPreferentialRate) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
                 
                 document.getElementById("hidden_exchange_payMoney").value =        Math.round(((((rate + rate * selectedSpread * (1 - selectedPreferentialRate)) * tradeMoney) + Number.EPSILON) * 100)) / 100;
                 document.getElementById("hidden_exchange_cash_buying_rate").value = Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100;
@@ -248,10 +239,10 @@
             selectedCurrency === "DKK" || selectedCurrency === "NOK" || selectedCurrency === "SAR" || 
             selectedCurrency === "SEK") {
                 
-            document.getElementById("exchange_payMoney").innerText =          (Math.round(((((rate + rate * selectedSpread) * tradeMoney) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-            document.getElementById("exchange_cash_buying_rate").innerText = (Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-            document.getElementById("trade_rate").innerText =                  (Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100).toFixed(2) + "원";
-            document.getElementById("preferential_money").innerText =          0 + "원";
+            document.getElementById("exchange_payMoney").innerText =          (Math.round(((((rate + rate * selectedSpread) * tradeMoney) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+            document.getElementById("exchange_cash_buying_rate").innerText = (Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+            document.getElementById("trade_rate").innerText =                  (Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100).toFixed(2) + " 원";
+            document.getElementById("preferential_money").innerText =          0 + " 원";
             
             document.getElementById("hidden_exchange_payMoney").value =        Math.round(((((rate + rate * selectedSpread) * tradeMoney) + Number.EPSILON) * 100)) / 100;
             document.getElementById("hidden_exchange_cash_buying_rate").value = Math.round((((rate + rate * selectedSpread) + Number.EPSILON) * 100)) / 100;
