@@ -327,4 +327,24 @@ public class GroupAccountController {
 	        return groupAccountService.getAccountTransfers(account);
 	    }
 
+	 @GetMapping("/delete")
+	 public String deleteGroup(@RequestParam("group_num") int group_num, Model model) {
+	     GroupAccountBean groupAccount = groupAccountService.getGroupInfo(group_num);
+	     if (groupAccount != null && groupAccount.getGroup_leader().equals("1") && groupAccount.getUser_num() == loginUserBean.getUser_num()) {
+	         try {
+	             String accountNumber = groupAccountService.getAccountNumberByGroupNum(group_num);
+	             groupAccountService.deleteGroup(group_num, accountNumber);
+	             model.addAttribute("message", "모임이 성공적으로 해체되었습니다.");
+	             return "groupAccount/groupAccountDeleted"; // 성공 메시지를 보여주는 JSP로 리디렉션
+	         } catch (SQLException e) {
+	             e.printStackTrace();
+	             model.addAttribute("errorMessage", "모임 해체 중 오류가 발생했습니다.");
+	             return "groupAccount/groupAccountManagement"; // 오류 메시지를 보여주는 JSP로 리디렉션
+	         }
+	     } else {
+	         model.addAttribute("errorMessage", "모임 해체 권한이 없습니다.");
+	         return "groupAccount/groupAccountManagement"; // 오류 메시지를 보여주는 JSP로 리디렉션
+	     }
+	 }
+	 
 }

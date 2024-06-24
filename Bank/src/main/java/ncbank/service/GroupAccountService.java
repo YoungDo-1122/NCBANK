@@ -153,4 +153,10 @@ public class GroupAccountService {
         return groupAccountDAO.getAccountTransfers(account);
     }
     
+    public String getAccountNumberByGroupNum(int group_num) {
+        return groupAccountDAO.getAccountNumberByGroupNum(group_num);
+    }
+    
+    
+    
 }

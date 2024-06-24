@@ -150,6 +150,10 @@ public class GroupAccountDAO {
     public List<TransferBean> getAccountTransfers(String account) {
         return groupAccountMapper.getAccountTransfers(account);
     }
+    
+    public String getAccountNumberByGroupNum(int group_num) {
+        return groupAccountMapper.getAccountNumberByGroupNum(group_num);
+    }
 	
 	
 
