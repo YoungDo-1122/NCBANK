@@ -17,6 +17,17 @@
 <script type="text/javascript">
     var isUserLoggedIn = ${loginUserBean.userLogin ? 'true' : 'false'};
 </script>
+<style>
+footer {
+    margin-top: auto; /* 자동으로 아래로 밀리게 설정 */
+    width: 100%; 
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: -20px 0;
+    margin: -20px;
+}
+</style>
+
 </head>
 <body>
     <div class="container">
@@ -277,7 +288,9 @@
                 </div>
             </div>
         </div>
+        <footer>
     <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+    </footer>
     </div>
     
     

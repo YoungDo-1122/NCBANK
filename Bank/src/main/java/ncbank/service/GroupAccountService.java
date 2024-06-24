@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ncbank.beans.AccountBean;
 import ncbank.beans.AutoBean;
 import ncbank.beans.GroupAccountBean;
+import ncbank.beans.TransferBean;
 import ncbank.beans.UserBean;
 import ncbank.dao.GroupAccountDAO;
 import ncbank.mapper.GroupAccountMapper;
@@ -136,5 +137,20 @@ public class GroupAccountService {
         return groupAccountDAO.getGroupNumByAccount(account);
     }
     
+    @Transactional
+    public void deleteGroup(int group_num, String account) throws SQLException {
+        groupAccountDAO.deleteGroup(group_num);
+        groupAccountDAO.updateAccountTypeToNormal(account);
+    }
+
+    public void deleteMember(int userNum) throws Exception {
+        System.out.println("Deleting member with userNum: " + userNum); // 디버그용 로그
+        groupAccountDAO.deleteMember(userNum);
+        System.out.println("Member with userNum: " + userNum + " deleted successfully"); // 디버그용 로그
+    }
+    
+    public List<TransferBean> getAccountTransfers(String account) {
+        return groupAccountDAO.getAccountTransfers(account);
+    }
     
 }

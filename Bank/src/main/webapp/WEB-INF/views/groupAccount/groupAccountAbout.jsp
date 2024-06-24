@@ -13,6 +13,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="${root}css/about.css">
+    <style>
+      footer {
+    margin-top: auto; /* 자동으로 아래로 밀리게 설정 */
+    width: 100%; 
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 40px;
+    margin: -20px;
+}
+    </style>
+    
 </head>
 
 <body>
@@ -54,7 +65,10 @@
                 </div>
             </div>
         </div>
+        
+        <footer>
         <c:import url="../include/bottom_info.jsp" />
+        </footer>
     </div>
 </body>
 

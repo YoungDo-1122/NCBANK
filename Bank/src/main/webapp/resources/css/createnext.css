@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 body {
-    background-color: #f8f9fa !important; /* 더 진한 회색 */
+    background-color: #e0e0e0 !important; /* 더 진한 회색 */
     font-family: Arial, Helvetica, sans-serif !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -9,7 +9,7 @@ body {
 
 .container {
 	font-family: Arial, Helvetica, sans-serif;
-   width: 70%;
+   width: 85%;
    max-width: 1400px;
    margin: 0 auto;
    display: flex;
@@ -200,6 +200,7 @@ body {
 	width: 120px;
 	padding: 10px 0;
 	border-radius: 10px;
+	cursor: pointer;
 }
 .applyBtn:hover {
 	background-color: #0056b3;
@@ -510,4 +511,9 @@ body {
 .alert-danger {
     margin-top: 10px; /* 위쪽에 20px 간격 추가 */
     margin-bottom: 10px; /* 아래쪽에 20px 간격 추가 */
+}
+
+footer {
+	padding: 70px;
+	
 }

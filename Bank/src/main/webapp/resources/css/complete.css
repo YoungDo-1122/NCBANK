@@ -196,6 +196,7 @@ body {
 	width: 60%;
 	padding: 10px 0;
 	border-radius: 10px;
+	cursor: pointer;
 }
 
 .homeBtn {
@@ -210,6 +211,7 @@ body {
 	width: 25%;
 	padding: 10px 0;
 	border-radius: 10px;
+	cursor: pointer;
 }
 
 .classSection {
@@ -494,4 +496,8 @@ ul.footBtwrap {
 
 .homeBtn:hover {
 	background-color: #6d6d6d;
+}
+
+footer {
+	padding: 40px;
 }

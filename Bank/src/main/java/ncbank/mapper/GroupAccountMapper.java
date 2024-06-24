@@ -2,6 +2,7 @@ package ncbank.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -11,6 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import ncbank.beans.AccountBean;
 import ncbank.beans.AutoBean;
 import ncbank.beans.GroupAccountBean;
+import ncbank.beans.TransferBean;
 import ncbank.beans.UserBean;
 
 public interface GroupAccountMapper {
@@ -41,6 +43,15 @@ public interface GroupAccountMapper {
     		"VALUES (#{group_num}, #{user_num}, #{group_joindate}, '0', #{group_name, jdbcType=VARCHAR})")
     void addMemberToGroup(GroupAccountBean groupAccount);
 
+    
+    @Delete("DELETE FROM groupinfo WHERE group_num = #{group_num}")
+    void deleteGroup(@Param("group_num") int group_num);
+
+    @Update("UPDATE account SET ac_type = 0 WHERE account = #{account}")
+    void updateAccountTypeToNormal(@Param("account") String account);
+
+    @Select("SELECT account FROM account WHERE user_num = (SELECT user_num FROM groupinfo WHERE group_num = #{group_num}) AND ROWNUM = 1")
+    String getAccountNumberByGroupNum(@Param("group_num") int group_num);
     
     
     
@@ -111,5 +122,9 @@ public interface GroupAccountMapper {
     		+ "where a.user_num = g.user_num and a.ac_type=1 and account = #{account}")
     AccountBean totalBalance(@Param("account") String account);
     
+    @Delete("DELETE FROM groupinfo WHERE user_num = 2")
+    void deleteMember(int userNum);
     
+    @Select("SELECT * FROM transfer WHERE trans_type = 2 and user_num = 1")
+    List<TransferBean> getAccountTransfers(String account);
 }

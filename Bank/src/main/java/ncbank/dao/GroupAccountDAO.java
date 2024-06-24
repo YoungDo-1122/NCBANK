@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import ncbank.beans.AccountBean;
 import ncbank.beans.AutoBean;
 import ncbank.beans.GroupAccountBean;
+import ncbank.beans.TransferBean;
 import ncbank.beans.UserBean;
 import ncbank.mapper.GroupAccountMapper;
 
@@ -132,7 +133,23 @@ public class GroupAccountDAO {
 	}
 	
 	
-	
+	public void deleteGroup(int group_num) throws SQLException {
+        groupAccountMapper.deleteGroup(group_num);
+    }
+
+    public void updateAccountTypeToNormal(String account) throws SQLException {
+        groupAccountMapper.updateAccountTypeToNormal(account);
+    }
+
+    public void deleteMember(int userNum) throws Exception {
+        System.out.println("Deleting member with userNum: " + userNum); // 디버그용 로그
+        groupAccountMapper.deleteMember(userNum);
+        System.out.println("Member with userNum: " + userNum + " deleted successfully"); // 디버그용 로그
+    }
+    
+    public List<TransferBean> getAccountTransfers(String account) {
+        return groupAccountMapper.getAccountTransfers(account);
+    }
 	
 	
 

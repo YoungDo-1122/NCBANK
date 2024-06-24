@@ -22,160 +22,169 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
-// 카카오 초기화
-Kakao.init('ff8ba07dd1c6c1c318c25c022ce8bb5e'); // 앱 키
-
-function sendKakaoLink(groupNum) {
-    Kakao.Link.sendCustom({
-        templateId: 109036, // 템플릿 ID
-        templateArgs: {
-            'group_num': groupNum // 동적 group_num 전달
-        }
-    });
-}
-</script>
+	// 카카오 초기화
+	Kakao.init('ff8ba07dd1c6c1c318c25c022ce8bb5e'); // 앱 키
+	
+	function sendKakaoLink(groupNum) {
+	    Kakao.Link.sendCustom({
+	        templateId: 109036, // 템플릿 ID
+	        templateArgs: {
+	            'group_num': groupNum // 동적 group_num 전달
+	        }
+	    });
+	}
+	</script>
 
 <script type="text/javascript">
-    function formatDate(timestamp) {
-        var date = new Date(timestamp);
-        var year = date.getFullYear();
-        var month = ('0' + (date.getMonth() + 1)).slice(-2);
-        var day = ('0' + date.getDate()).slice(-2);
-        return year + '-' + month + '-' + day;
-    }
-
-    function formatAutoType(autoType) {
-        return autoType == 0 ? '주간' : '월간';
-    }
-
-    function formatAutoNextDate(autoType, autoNextDate) {
-        return autoType == 0 ? autoNextDate + '요일' : autoNextDate + '일';
-    }
-
-    function fetchAccountInfo(account) {
-    	const bankname = "[NC뱅크]";
-    	
-        $.ajax({
-            url: '${root}groupAccount/groupAccountInfo',
-            type: 'GET',
-            data: { account: account },
-            success: function(data) {
-                 $('#auto_money').text(data.auto_money + '원');
-                 $('#auto_type').text(formatAutoType(data.auto_type));
-                 $('#auto_next_date').text(formatAutoNextDate(data.auto_type, data.auto_next_date));
-                 $('#auto_end').text(formatDate(data.auto_end));
-                 $('#group_account').text(bankname + account); // 계좌번호 설정
-            },
-            error: function(err) {
-                console.log('Error fetching account info:', err);
-            }
-        });
-
-        $.ajax({
-            url: '${root}groupAccount/groupInfo',
-            type: 'GET',
-            data: { account: account },
-            success: function(data) {
-                $('#group_joindate').text(formatDate(data.group_joindate));
-                $('#group_leader').text(data.group_leader);
-                $('#group_name').text(data.group_name);
-                $('#group_num').val(data.group_num); // Hidden input에 group_num 설정
-            },
-            error: function(err) {
-                console.log('Error fetching group info:', err);
-            }
-        });
-
-        $.ajax({
-            url: '${root}groupAccount/groupMembers',
-            type: 'GET',
-            data: { account: account },
-            success: function(membersData) {
-                $.ajax({
-                    url: '${root}groupAccount/groupMemberDetails',
-                    type: 'GET',
-                    data: { account: account },
-                    success: function(detailsData) {
-                        var membersHtml = '';
-                        $.each(membersData, function(index, member) {
-                            var detail = detailsData[index];
-                            var isLeader = detail.group_leader == '1';
-                            var leaderText = isLeader ? '<span class="leader-text">모임장</span>' : '모임원';
-                            membersHtml += '<tr><td>' + member.name + '</td><td>' + member.phone + '</td><td>' + leaderText + '</td><td>' + formatDate(detail.group_joindate) + '</td></tr>';
-                        });
-                        $('#groupMembersTable tbody').html(membersHtml);
-                    },
-                    error: function(err) {
-                        console.log('Error fetching member details info:', err);
-                    }
-                });
-            },
-            error: function(err) {
-                console.log('Error fetching members info:', err);
-            }
-        });
-
-        $.ajax({
-            url: '${root}groupAccount/groupLeader',
-            type: 'GET',
-            data: { account: account },
-            dataType: 'json',
-            success: function(data) {
-                console.log('Group Leader:', data); // 디버그용 로그
-                if (data && data.name) {
-                    $('#group_leader_name').text(data.name); // 모임장 이름 표시
-                } else {
-                    console.error('Received invalid data:', data);
-                }
-            },
-            error: function(err) {
-                console.log('Error fetching group leader info:', err);
-            }
-        });
-
-        $.ajax({
-            url: '${root}groupAccount/totalBalance',
-            type: 'GET',
-            data: { account: account },
-            success: function(data) {
-                $('#ac_balance').text(data.ac_balance + '원');
-            },
-            error: function(err) {
-                console.log('Error fetching group info:', err);
-            }
-        });
-    }
-
-    function inviteToKakao() {
-        var groupNum = $('#group_num').val();
-        console.log("Inviting to Kakao with group_num: " + groupNum); // 디버그용 로그 추가
-        if (groupNum && groupNum != '0') {
-            sendKakaoLink(groupNum);
-        } else {
-            alert('모임 정보를 먼저 선택하세요.');
-        }
-    }
-    
-    document.addEventListener('DOMContentLoaded', function () {
-        const currentPath = window.location.pathname;
-        const menuItems = document.querySelectorAll('.col-md-2 ul li a');
-
-        menuItems.forEach(item => {
-            if (item.getAttribute('href') === currentPath) {
-                item.classList.add('active');
-            }
-        });
-    });
-</script>
+	    function formatDate(timestamp) {
+	        var date = new Date(timestamp);
+	        var year = date.getFullYear();
+	        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+	        var day = ('0' + date.getDate()).slice(-2);
+	        return year + '.' + month + '.' + day;
+	    }
+	
+	    function formatAutoType(autoType) {
+	        return autoType == 0 ? '주간' : '월간';
+	    }
+	
+	    function formatAutoNextDate(autoType, autoNextDate) {
+	        return autoType == 0 ? autoNextDate + '요일' : autoNextDate + '일';
+	    }
+	
+	    function fetchAccountInfo(account) {
+	    	const bankname = "[NC뱅크]";
+	    	
+	        $.ajax({
+	            url: '${root}groupAccount/groupAccountInfo',
+	            type: 'GET',
+	            data: { account: account },
+	            success: function(data) {
+	                 $('#auto_money').text(data.auto_money + '원');
+	                 $('#auto_type').text(formatAutoType(data.auto_type));
+	                 $('#auto_next_date').text(formatAutoNextDate(data.auto_type, data.auto_next_date));
+	                 $('#auto_end').text(formatDate(data.auto_end));
+	                 $('#group_account').text(bankname + account); // 계좌번호 설정
+	            },
+	            error: function(err) {
+	                console.log('Error fetching account info:', err);
+	            }
+	        });
+	
+	        $.ajax({
+	            url: '${root}groupAccount/groupInfo',
+	            type: 'GET',
+	            data: { account: account },
+	            success: function(data) {
+	                $('#group_joindate').text(formatDate(data.group_joindate));
+	                $('#group_leader').text(data.group_leader);
+	                $('#group_name').text(data.group_name);
+	                $('#group_num').val(data.group_num); // Hidden input에 group_num 설정
+	            },
+	            error: function(err) {
+	                console.log('Error fetching group info:', err);
+	            }
+	        });
+	
+	        $.ajax({
+	            url: '${root}groupAccount/groupMembers',
+	            type: 'GET',
+	            data: { account: account },
+	            success: function(membersData) {
+	                $.ajax({
+	                    url: '${root}groupAccount/groupMemberDetails',
+	                    type: 'GET',
+	                    data: { account: account },
+	                    success: function(detailsData) {
+	                        var membersHtml = '';
+	                        $.each(membersData, function(index, member) {
+	                            var detail = detailsData[index];
+	                            var isLeader = detail.group_leader == '1';
+	                            var leaderText = isLeader ? '<span class="leader-text">모임장</span>' : '모임원';
+	                            membersHtml += '<tr><td>' + member.name + '</td><td>' + member.phone + '</td><td>' + leaderText + '</td><td>' + formatDate(detail.group_joindate) + '</td></tr>';
+	                        });
+	                        $('#groupMembersTable tbody').html(membersHtml);
+	                    },
+	                    error: function(err) {
+	                        console.log('Error fetching member details info:', err);
+	                    }
+	                });
+	            },
+	            error: function(err) {
+	                console.log('Error fetching members info:', err);
+	            }
+	        });
+	
+	        $.ajax({
+	            url: '${root}groupAccount/groupLeader',
+	            type: 'GET',
+	            data: { account: account },
+	            dataType: 'json',
+	            success: function(data) {
+	                console.log('Group Leader:', data); // 디버그용 로그
+	                if (data && data.name) {
+	                    $('#group_leader_name').text(data.name); // 모임장 이름 표시
+	                } else {
+	                    console.error('Received invalid data:', data);
+	                }
+	            },
+	            error: function(err) {
+	                console.log('Error fetching group leader info:', err);
+	            }
+	        });
+	
+	        $.ajax({
+	            url: '${root}groupAccount/totalBalance',
+	            type: 'GET',
+	            data: { account: account },
+	            success: function(data) {
+	                $('#ac_balance').text(data.ac_balance + '원');
+	            },
+	            error: function(err) {
+	                console.log('Error fetching group info:', err);
+	            }
+	        });
+	    }
+	
+	    function inviteToKakao() {
+	        var groupNum = $('#group_num').val();
+	        console.log("Inviting to Kakao with group_num: " + groupNum); // 디버그용 로그 추가
+	        if (groupNum && groupNum != '0') {
+	            sendKakaoLink(groupNum);
+	        } else {
+	            alert('모임 정보를 먼저 선택하세요.');
+	        }
+	    }
+	    
+	    document.addEventListener('DOMContentLoaded', function () {
+	        const currentPath = window.location.pathname;
+	        const menuItems = document.querySelectorAll('.col-md-2 ul li a');
+	
+	        menuItems.forEach(item => {
+	            if (item.getAttribute('href') === currentPath) {
+	                item.classList.add('active');
+	            }
+	        });
+	    });
+	    
+	    function updateLinksWithAccount(account) {
+	        var memberLink = document.querySelector('a[href*="groupAccount/members"]');
+	        var bookLink = document.querySelector('a[href*="groupAccount/book"]');
+	        memberLink.href = '${root}groupAccount/members?account=' + account;
+	        bookLink.href = '${root}groupAccount/book?account=' + account;
+	    }
+	    
+	    function confirmDelete() {
+	        var group_num = document.getElementById("group_num").value;
+	        var confirmation = confirm("모임을 해체하시겠습니까?");
+	        if (confirmation) {
+	            window.location.href = '${root}groupAccount/delete?group_num=' + group_num;
+	        }
+	    }
+	</script>
 <style>
 .leader-text {
 	font-weight: bold;
-}
-
-.col-md-2 ul li a.active::before {
-	content: '➤'; /* 화살표 기호 */
-	color: rgb(83, 169, 255); /* 화살표 색상 */
-	padding-right: 5px; /* 화살표와 텍스트 사이 간격 */
 }
 
 .btn-container {
@@ -187,6 +196,13 @@ function sendKakaoLink(groupNum) {
 .btn-container button {
 	margin: 0 10px;
 }
+   footer {
+    margin-top: auto; /* 자동으로 아래로 밀리게 설정 */
+    width: 100%; 
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 0px 0;
+}
 </style>
 </head>
 <body>
@@ -194,18 +210,20 @@ function sendKakaoLink(groupNum) {
 		<div class="row">
 			<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 			<div class="col-md-2">
-				<h3>모임통장 관리</h3>
-				<ul>
-					<li><a href="${root}groupAccount/management" class="active">모임통장
-							정보</a></li>
-					<li><a href="${root}groupAccount/members">모임원 관리</a></li>
-					<li><a href="${root}groupAccount/book">회비 관리</a></li>
-				</ul>
+				<div class="menu1">
+                <div class="menu1-1">모임통장 정보</div>
+                <div class="menuhr">
+                    <hr/>
+                </div>
+                <a href="${root}groupAccount/members">모임원 관리</a>
+                <a href="${root}groupAccount/book">회비 관리</a>
+            </div>
+
 			</div>
 			<div class="col-md-10">
 				<div class="main">
 					<div class="traveltitle">
-
+						<div class="idboxtitle">모임통장 정보</div>
 						<hr />
 					</div>
 					<div class="contents">
@@ -297,11 +315,15 @@ function sendKakaoLink(groupNum) {
 								</div>
 								<input type="hidden" id="group_num" value="">
 							</div>
+							<input type="hidden" id="group_num" value="${group_num}">
 							<div class="btn-container">
 								<button class="applyBtn" onclick="inviteToKakao()">모임원
 									초대하기</button>
 								<button class="applyBtn"
 									onclick="location.href='${root}trans/transfer'">송금하기</button>
+		
+									<button class="deleteBtn" onclick="confirmDelete()">모임해체</button>
+
 							</div>
 						</div>
 					</div>
