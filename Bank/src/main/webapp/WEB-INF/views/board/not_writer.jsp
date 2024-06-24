@@ -4,5 +4,5 @@
 <c:set var="root" value="${pageContext.request.contextPath}/" />
 <script>
 	alert('작성자가 아닙니다.')
-	location.href = '${root}board/main';
+	location.href = '${root}main';
 </script>

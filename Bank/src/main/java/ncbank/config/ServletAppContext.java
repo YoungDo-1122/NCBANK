@@ -26,6 +26,7 @@ import ncbank.beans.CreateExchangeBean;
 import ncbank.beans.CrerateTradeBean;
 import ncbank.beans.UserBean;
 import ncbank.beans.WalletBean;
+import ncbank.interceptor.CheckWriterinterceptor;
 import ncbank.interceptor.ExchangeAutoNoticeInterceptor;
 import ncbank.interceptor.ExchangeRateInterceptor;
 import ncbank.interceptor.TopMenuInterceptor;
@@ -43,6 +44,7 @@ import ncbank.mapper.TopMenuMapper;
 import ncbank.mapper.TradeMapper;
 import ncbank.mapper.TransferMapper;
 import ncbank.mapper.UserMapper;
+import ncbank.service.BoardService;
 import ncbank.service.CodeMoneyService;
 import ncbank.service.ExchangeAutoNoticeService;
 import ncbank.service.ExchangeNoticeService;
@@ -92,6 +94,9 @@ public class ServletAppContext implements WebMvcConfigurer {
 
 	@Value("${db.password}")
 	private String db_password;
+
+	@Autowired
+	private BoardService boardService;
 
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
@@ -309,6 +314,10 @@ public class ServletAppContext implements WebMvcConfigurer {
 				noticeService, loginUserBean, dateManager, emailManager);
 		InterceptorRegistration reg3 = registry.addInterceptor(autoNoticeInterceptor);
 		reg3.addPathPatterns("/**");
+
+		CheckWriterinterceptor checkWriterinterceptor = new CheckWriterinterceptor(loginUserBean, boardService);
+		InterceptorRegistration reg4 = registry.addInterceptor(checkWriterinterceptor);
+		reg4.addPathPatterns("/board/modify", "/board/delete");
 	}
 
 	// Properties 파일을 Bean으로 등록 (아무데서나 사용가능하기 위해)

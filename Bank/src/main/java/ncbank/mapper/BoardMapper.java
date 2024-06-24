@@ -46,7 +46,7 @@ public interface BoardMapper {
 //			+ "       a1.content_subject, a1.content_text, a1.content_file , a1.content_writer_idx "
 //			+ "from content_table a1, user_table a2 " + "where a1.content_writer_idx = a2.user_idx "
 //			+ "      and content_idx = #{content_idx}")
-	@Select("select content_idx,content_subject,to_char(content_date,'YYYY-MM-DD') as content_date, content_text from content_table where content_idx=#{content_idx}")
+	@Select("SELECT a1.content_idx, a1.content_subject, to_char(a1.content_date, 'YYYY-MM-DD') as content_date, a1.content_text, a1.content_writer_idx FROM content_table a1, member a2 WHERE a1.content_writer_idx = a2.user_num AND a1.content_idx = #{content_idx}")
 	ContentBean getContentInfo(int content_idx);
 
 	// 글 수정하기
