@@ -18,8 +18,8 @@ border > border-radius
 
 
 .contentBox {
-	width: 400px;
-    margin: 10px 0px;
+	width: 500px;
+    margin: 30px 0px 50px;
     padding: 0px;
 
 	color: #333;
@@ -27,14 +27,14 @@ border > border-radius
     font-family: Arial, Helvetica, sans-serif;
 
     border-radius: 5px;
-    background-color: aqua;
+    background-color: whitesmoke;
 }
 
 .top {
     display: flex;
 
     border-radius: 5px 5px 0px 0px;
-    background-color: cadetblue;
+    background-color: gainsboro;
 }
 .subject {
     margin-left: 10px;
