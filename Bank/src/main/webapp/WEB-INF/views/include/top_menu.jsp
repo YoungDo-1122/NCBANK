@@ -40,7 +40,7 @@
 		<li><a href="${root}board/main?board_info_idx=1">게시판</a>
 			<ul id=sub-menu>
 				<li><a href="${root}board/main?board_info_idx=1">공지사항</a>
-				<li><a href="${root}board/main?board_info_idx=2">새소식</a>
+				<li><a href="${root}board/main?board_info_idx=2">자유게시판</a>
 			</ul></li>
 	</ul>
 	<ul class="login">

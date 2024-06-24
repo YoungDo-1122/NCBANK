@@ -44,7 +44,12 @@
 			<div class="form-group text-right">
 				<a
 					href="${root}board/main?board_info_idx=${board_info_idx}&page=${page}"
-					class="btn btn-primary">목록보기</a>
+					class="btn btn-primary">목록보기</a> <a
+					href="${root}board/modify?board_info_idx=${board_info_idx}&content_idx=${content_idx}&page=${page}"
+					class="btn btn-info">수정하기</a> <a
+					href="${root}board/delete?board_info_idx=${board_info_idx}&content_idx=${content_idx}&page=${page}"
+					class="btn btn-danger">삭제하기</a>
+
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />

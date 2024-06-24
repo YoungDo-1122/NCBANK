@@ -2,10 +2,12 @@ package ncbank.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.Update;
 
 import ncbank.beans.ContentBean;
 
@@ -46,6 +48,14 @@ public interface BoardMapper {
 //			+ "      and content_idx = #{content_idx}")
 	@Select("select content_idx,content_subject,to_char(content_date,'YYYY-MM-DD') as content_date, content_text from content_table where content_idx=#{content_idx}")
 	ContentBean getContentInfo(int content_idx);
+
+	// 글 수정하기
+	@Update("UPDATE content_table set content_subject = #{content_subject}, content_text = #{content_text} where content_idx = #{content_idx}")
+	void modifyContentInfo(ContentBean modifyContentBean);
+
+	// 글 삭제하기
+	@Delete("delete from content_table where content_idx = #{content_idx}")
+	void deleteContentInfo(int content_idx);
 
 	// 해당 게시판의 전체 글의 수 가져오기 페이지를 위해서
 	@Select("select count(*) from content_table where content_board_idx = #{content_board_idx}")

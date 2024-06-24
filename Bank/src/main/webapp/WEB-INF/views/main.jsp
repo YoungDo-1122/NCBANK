@@ -112,7 +112,7 @@ footer {
 			<div class="tabMenu">
 				<input type="radio" id="tab1" name="tabs" checked> <label
 					for="tab1">공지사항</label> <input type="radio" id="tab2" name="tabs">
-				<label for="tab2">새소식</label>
+				<label for="tab2">자유게시판</label>
 
 				<div id="tab1Content" class="tabContent">
 					<!-- 공지사항 탭 내용 -->

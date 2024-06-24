@@ -46,9 +46,9 @@ public class BoardService {
 	}
 
 	public List<ContentBean> getContentList(int board_info_idx, int page) {
-	    int start = (page - 1) * page_listcnt + 1;
-	    int end = start + page_listcnt - 1;
-	    return boardDao.getContentList(board_info_idx, start, end);
+		int start = (page - 1) * page_listcnt + 1;
+		int end = start + page_listcnt - 1;
+		return boardDao.getContentList(board_info_idx, start, end);
 	}
 
 	public ContentBean getContentInfo(int content_idx) {
@@ -63,17 +63,12 @@ public class BoardService {
 		return pageBean;
 	}
 
-	/*
-	 * // 이미지 처리 때문에 서비스 들어와야 함 public void modifyContentInfo(ContentBean
-	 * modifyContentBean) {
-	 * 
-	 * MultipartFile uploadFile = modifyContentBean.getUpload_file();
-	 * 
-	 * if (uploadFile.getSize() > 0) { String fileName = saveUploadFile(uploadFile);
-	 * modifyContentBean.setContent_file(fileName); }
-	 * 
-	 * 
-	 * }
-	 */
+	public void modifyContentInfo(ContentBean modifyContentBean) {
+		boardDao.modifyContentInfo(modifyContentBean);
+	}
+
+	public void deleteContentInfo(int content_idx) {
+		boardDao.deleteContentInfo(content_idx);
+	}
 
 }

@@ -23,15 +23,22 @@ public class BoardDao {
 	}
 
 	public List<ContentBean> getContentList(int board_info_idx, int start, int end) {
-	    return boardMapper.getContentList(board_info_idx, start, end);
+		return boardMapper.getContentList(board_info_idx, start, end);
 	}
 
 	public ContentBean getContentInfo(int content_idx) {
 		return boardMapper.getContentInfo(content_idx);
 	}
 
+	public void modifyContentInfo(ContentBean modifyContentBean) {
+		boardMapper.modifyContentInfo(modifyContentBean);
+	}
+
+	public void deleteContentInfo(int content_idx) {
+		boardMapper.deleteContentInfo(content_idx);
+	}
+
 	public int getContentCnt(int content_board_idx) {
 		return boardMapper.getContentCnt(content_board_idx);
 	}
-
 }

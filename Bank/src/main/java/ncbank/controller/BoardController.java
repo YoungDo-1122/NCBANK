@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ncbank.beans.ContentBean;
 import ncbank.beans.PageBean;
 import ncbank.beans.UserBean;
+import ncbank.service.BoardMainSerivce;
 import ncbank.service.BoardService;
 
 @Controller
@@ -103,6 +104,58 @@ public class BoardController {
 		boardService.addContentInfo(writeContentBean);
 
 		return "board/write_success";
+	}
+
+	@GetMapping("/not_writer")
+	public String not_writer() {
+		return "board/not_writer";
+	}
+
+	@GetMapping("/modify")
+	public String modify(@RequestParam("board_info_idx") int board_info_idx,
+			@RequestParam("content_idx") int content_idx, @RequestParam("page") int page,
+			@ModelAttribute("modifyContentBean") ContentBean modifyContentBean, Model model) {
+
+		model.addAttribute("board_info_idx", board_info_idx);
+		model.addAttribute("content_idx", content_idx);
+		model.addAttribute("page", page);
+
+		ContentBean tempContentBean = boardService.getContentInfo(content_idx);
+		modifyContentBean.setContent_date(tempContentBean.getContent_date());
+		modifyContentBean.setContent_subject(tempContentBean.getContent_subject());
+		modifyContentBean.setContent_text(tempContentBean.getContent_text());
+		modifyContentBean.setContent_writer_idx(tempContentBean.getContent_writer_idx());
+		modifyContentBean.setContent_board_idx(board_info_idx); // param값 그대로 가져오기
+		modifyContentBean.setContent_idx(content_idx); // param값 그대로 가져오기
+
+		return "board/modify";
+	}
+
+	@PostMapping("/modify_pro")
+	public String modify_pro(@Valid @ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
+			@RequestParam("page") int page, BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			return "board/modify";
+		}
+		// 업데이트
+		boardService.modifyContentInfo(modifyContentBean);
+
+		model.addAttribute("page", page);
+		return "board/modify_success";
+
+	}
+
+	@GetMapping("/delete")
+	public String delete(@RequestParam("board_info_idx") int board_info_idx,
+			@RequestParam("content_idx") int content_idx,
+			@ModelAttribute("deleteContentBean") ContentBean deleteContentBean, Model model) {
+
+		boardService.deleteContentInfo(content_idx);
+		// 해당하는 게시글로 이동하여 삭제여부 확인
+		model.addAttribute("board_info_idx", board_info_idx);
+
+		return "board/delete";
 	}
 
 }

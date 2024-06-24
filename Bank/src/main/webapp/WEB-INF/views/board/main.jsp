@@ -88,10 +88,18 @@
 			</div>
 
 			<div class="text-right">
-				<c:if test="${loginUserId=='soldesk'}">
-					<a href="${root}board/write?board_info_idx=${board_info_idx}"
-						class="btn btn-primary">글쓰기</a>
-				</c:if>
+				<c:choose>
+
+					<c:when test="${board_info_idx == 1 && loginUserId == 'soldesk'}">
+						<a href="${root}board/write?board_info_idx=${board_info_idx}"
+							class="btn btn-primary">글쓰기</a>
+					</c:when>
+
+					<c:when test="${board_info_idx == 2}">
+						<a href="${root}board/write?board_info_idx=${board_info_idx}"
+							class="btn btn-primary">글쓰기</a>
+					</c:when>
+				</c:choose>
 			</div>
 		</div>
 
