@@ -1,11 +1,11 @@
 @charset "UTF-8";
 
-body {
-    background-color: #e0e0e0; /* 더 진한 회색 */
+/* body {
+    background-color: #e0e0e0; 더 진한 회색
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
-}
+} */
 
 .container{
    font-family: Arial, Helvetica, sans-serif;
@@ -86,6 +86,7 @@ body {
     /* flex: 1; */
     padding: 20px;
     width:100%;
+    /* border: 1px solid #dee2e6; */
 }
 
 h3 {
@@ -112,13 +113,15 @@ table, th, td {
 th {
 	border-top: 1px solid black;
 	border-bottom: 0.1px solid #dddddd;
- 	background-color: #f4f4f4;   
+ 	background-color: #efefef;   
 }
 td {
     
 	border-bottom: 0.1px solid #dddddd;
     
 }
+
+
 
 
 .pagination-container {
