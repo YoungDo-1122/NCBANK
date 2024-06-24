@@ -24,8 +24,9 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-2">
-					<div class="transfer">
-						<h5>이체</h5>
+					<div class="transfer">이체</div>
+					<div class="transferhr">
+						<hr />
 						<ul>
 							<li><a href="${root}account/accountCreate">계좌 개설</a></li>
 							<li><a href="${root}trans/transfer">계좌 이체</a></li>

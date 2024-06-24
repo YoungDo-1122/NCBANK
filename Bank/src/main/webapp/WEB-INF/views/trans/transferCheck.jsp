@@ -46,14 +46,15 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-2">
-					<div class="enquiry">
-						<h5>조회</h5>
-						<ul>
-							<li><a href="${root}account/accountCheck">계좌 조회</a></li>
-							<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
-							<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
-						</ul>
+					<div class="enquiry">조회</div>
+					<div class="enquiryhr">
+						<hr />
 					</div>
+					<ul>
+						<li><a href="${root}account/accountCheck">계좌 조회</a></li>
+						<li><a href="${root}trans/transferCheck">이체내역 조회</a></li>
+						<li><a href="${root}auto/transferAutoCheck">자동이체 조회</a></li>
+					</ul>
 				</div>
 				<div class="col-md-10">
 					<c:choose>
@@ -72,7 +73,7 @@
 							</table>
 							<table>
 								<tr>
-									<th><h2>입 / 출금 계좌</h2></th>
+									<th><h4>입 / 출금 계좌</h4></th>
 								</tr>
 								<tr>
 									<td>
@@ -146,8 +147,8 @@
 					</c:choose>
 				</div>
 			</div>
+			<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 		</div>
-		<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
 	</div>
 </body>
 </html>

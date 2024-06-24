@@ -39,9 +39,12 @@
 			<div class="carousel-wrapper">
 				<div class="carousel">
 					<button class="carousel-button prev">&#10094;</button>
-					<img src="img/Bank1.png" alt="캐러셀 이미지 1" class="active"> <img
-						src="img/Bank2.png" alt="캐러셀 이미지 2"> <img
-						src="img/Bank3.jpg" alt="캐러셀 이미지 3">
+					<img src="img/Bank5.png" alt="캐러셀 이미지 1" class="active"> 
+					<img src="img/Bank2.png" alt="캐러셀 이미지 2"> 
+					<img src="img/Bank3.jpg" alt="캐러셀 이미지 3">
+					<img src="img/Bank4.png" alt="캐러셀 이미지 4">
+					<img src="img/Bank6.png" alt="캐러셀 이미지 5">
+					<img src="img/Bank7.png" alt="캐러셀 이미지 6">
 					<button class="carousel-button next">&#10095;</button>
 				</div>
 			</div>
@@ -49,18 +52,18 @@
 					<div class="quickLink-title">
 						<ul>
 							<!--알아서 링크 거시고요 -->
-							<li><a href="#"> <i
+							<li><a href="${root}account/accountCheck"> <i
 									class="fa-solid fa-magnifying-glass-dollar fa-3x"></i>
 									<div>조회</div>
 							</a></li>
-							<li><a href="#"> <i
+							<li><a href="${root}trans/transfer"> <i
 									class="fa-solid fa-money-bill-transfer fa-3x"></i>
 									<div>이체</div>
 							</a></li>
 							<li><a href="#"> <i class="fa-solid fa-users fa-3x"></i>
 									<div>모임</div>
 							</a></li>
-							<li><a href="#"> <img src="img/환율.png" alt="빠른링크4">
+							<li><a href="${root}exchange/rateInquiry"> <img src="img/환율.png" alt="빠른링크4">
 									<div>환율</div>
 							</a></li>
 						</ul>

@@ -19,8 +19,6 @@
 </script>
 </head>
 <body>
-
-
     <div class="container">
     <c:import url="/WEB-INF/views/include/top_menu.jsp" />
         <div class="traveltitle">

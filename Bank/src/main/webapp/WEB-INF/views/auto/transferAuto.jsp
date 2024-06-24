@@ -60,26 +60,28 @@
 </script>
 </head>
 <body>
+	<div class="container">
 	<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2">
-				<div class="transfer">
-					<h3>이체</h3>
-					<ul>
-						<li><a href="${root}account/accountCreate">계좌 개설</a></li>
-						<li><a href="${root}trans/transfer">계좌 이체</a></li>
-						<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
-					</ul>
+					<div class="transfer">이체</div>
+					<div class="transferhr">
+						<hr />
+						<ul>
+							<li><a href="${root}account/accountCreate">계좌 개설</a></li>
+							<li><a href="${root}trans/transfer">계좌 이체</a></li>
+							<li><a href="${root}auto/transferAuto">자동이체 등록</a></li>
+						</ul>
+					</div>
 				</div>
-			</div>
 			<div class="col-md-10">
 				<table>
 					<form:form modelAttribute="autoBean"
 						action="${root}auto/transferAuto" method="post">
 						<table>
 							<tr>
-								<th colspan="2"><h2>자동이체 등록</h2></th>
+								<th colspan="2"><h3>자동이체 등록</h3></th>
 							</tr>
 							<tr>
 								<td>자동이체명</td>
@@ -163,5 +165,6 @@
 		</div>
 	</div>
 	<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+	</div>
 </body>
 </html>
