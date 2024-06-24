@@ -98,7 +98,7 @@ b {
 
         <div class="textArea">
             <ul class="listType01">
-                <li>선택하신 통화의 환율이 지정하신 알림희망 환율범위에 도달하는 경우 문자메시지(SMS) 또는 이메일을 통해
+                <li>선택하신 통화의 환율이 지정하신 알림희망 환율범위에 도달하는 경우 이메일을 통해
                     안내 드립니다.</li>
                 <li>3개월 내 지정하신 알림희망 환율범위에 도달하지 않았거나 도달하여 알림 안내를 받은 경우<br>
                     서비스가 자동종료 되므로 추가로 알림을 받고자 하는 경우, 다시 서비스를 신청하시기 바랍니다.
@@ -142,7 +142,7 @@ b {
                                 <b class="bTag01">*&nbsp;</b>환율종류
                             </th>
                             <td>
-                                <form:select path="rateType" class="inputType01">
+                                <form:select path="notice_rate_type" class="inputType01">
                                     <form:option value="1">매매기준율</form:option>
                                     <form:option value="2">송금보내실때</form:option>
                                     <form:option value="3">송금받으실때</form:option>

@@ -56,7 +56,7 @@
 								<b class="bTag01">*&nbsp;</b>환율종류
 							</th>
 							<td>
-								<form:select path="rateType" class="inputType01">
+								<form:select path="notice_rate_type" class="inputType01">
 									<form:option value="1">매매기준율</form:option>
 									<form:option value="2">송금보내실때</form:option>
 									<form:option value="3">송금받으실때</form:option>
