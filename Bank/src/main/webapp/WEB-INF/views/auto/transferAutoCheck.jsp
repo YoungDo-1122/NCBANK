@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
 <!DOCTYPE html>
 <html>
@@ -110,10 +111,16 @@
 																test="${auto.auto_type eq 2}">매주</c:if> <c:if
 																test="${auto.auto_type eq 3}">매월</c:if></td>
 														<td>${auto.auto_next_date}</td>
-														<td><button class="transfer-check-button"
-																onclick="window.location.href='${root}auto/transferAutoFix'">수정</button>
-															<button class="transfer-button"
-																onclick="window.location.href='${root}auto/deleteTransferAuto'">삭제</button></td>
+														<td>
+															<button class="transfer-check-button"
+																onclick="window.location.href='${root}auto/transferAutoFix?auto_num=${auto.auto_num}'">수정</button>
+															<form:form action="${root}auto/deleteTransferAuto"
+																method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+																<input type="hidden" name="auto_num"
+																	value="${auto.auto_num}" />
+																<button type="submit">삭제</button>
+															</form:form>
+														</td>
 													</tr>
 												</c:forEach>
 											</tbody>

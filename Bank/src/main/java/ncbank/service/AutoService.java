@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ncbank.beans.AccountBean;
 import ncbank.beans.AutoBean;
 import ncbank.beans.UserBean;
 import ncbank.dao.AutoDAO;
@@ -32,9 +31,6 @@ public class AutoService {
 
 		// 내부 계좌와 외부 계좌 구분
 		if ("005".equals(autoBean.getCode_organ())) {
-
-			AccountBean toAccount = accountService.getAccountByNumber(autoBean.getTo_account());
-
 			// Luhn 알고리즘 검사
 			if (!accountService.isValidAccountNumber(autoBean.getTo_account())) {
 				throw new ExceptionMessage("입금 계좌번호가 유효하지 않습니다.");
@@ -42,7 +38,18 @@ public class AutoService {
 
 		}
 		autoBean.setAuto_start(new Date()); // 자동 이체 시작일을 현재 날짜로 설정
-		autoDAO.addAuto(autoBean);
+		// 자동이체 종료일이 null인 경우, 무한히 반복되도록 설정
+		if (autoBean.getAuto_end() == null) {
+			autoBean.setAuto_end(null);
+		}
+
+		try {
+			autoDAO.addAuto(autoBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+			throw new ExceptionMessage("자동이체 등록 중 오류가 발생했습니다.");
+		}
 	}
 
 	public List<AutoBean> getAuto(int user_num) {
@@ -58,19 +65,19 @@ public class AutoService {
 			throw new ExceptionMessage("출금 계좌와 입금 계좌는 동일할 수 없습니다.");
 		}
 
-		// 내부 계좌와 외부 계좌 구분
 		if ("005".equals(autoBean.getCode_organ())) {
-
-			AccountBean toAccount = accountService.getAccountByNumber(autoBean.getTo_account());
-
-			// Luhn 알고리즘 검사
 			if (!accountService.isValidAccountNumber(autoBean.getTo_account())) {
 				throw new ExceptionMessage("입금 계좌번호가 유효하지 않습니다.");
 			}
-
 		}
 
-		autoDAO.updateAuto(autoBean);
+		try {
+			autoDAO.updateAuto(autoBean);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e);
+			throw new ExceptionMessage("자동이체 수정 중 오류가 발생했습니다.");
+		}
 	}
 
 	public void deleteAuto(int auto_num) {

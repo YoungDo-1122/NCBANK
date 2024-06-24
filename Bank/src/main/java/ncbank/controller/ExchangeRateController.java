@@ -2,7 +2,6 @@ package ncbank.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ncbank.beans.CodeMoneyBean;
 import ncbank.beans.ExchangeRateBean;
 import ncbank.service.ExchangeRateService;
 import ncbank.utility.DateManager;
