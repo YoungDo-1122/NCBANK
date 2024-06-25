@@ -16,6 +16,11 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script>
+	function formatBalance(balance) {
+		return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+</script>
 </head>
 <body>
 	<div class="container">
@@ -44,7 +49,11 @@
 									<td>${trade.trade_date}</td>
 									<td>${trade.trade_type}</td>
 									<td>${trade.code_money}</td>
-									<td>${trade.trade_money}</td>
+									<td><script>
+													document
+															.write("&nbsp;"
+																	+ formatBalance("${trade.trade_money}"));
+												</script></td>
 									<td>${trade.trade_rate}</td>
 									<td>${trade.code_bank_name}</td>
 									<td>${trade.code_bank_tel}</td>

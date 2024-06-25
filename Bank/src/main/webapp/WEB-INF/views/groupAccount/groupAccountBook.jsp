@@ -4,7 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +19,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-
 <style>
 /* 테이블 헤더와 본문 내용 가운데 정렬 */
 #feesTable th, #feesTable td {
@@ -36,8 +34,11 @@ footer {
 	padding: 50px 0;
 }
 </style>
-
 <script>
+	function formatAccountNumber(accountNumber) {
+		return accountNumber.replace(/(\d{3})(\d{8})(\d{2})(\d{1})/,
+				"$1-$2-$3-$4");
+	}
 	function formatTransferDate(timestamp) {
 		var date = new Date(timestamp);
 		var year = date.getFullYear();
@@ -185,7 +186,13 @@ footer {
 								name="accounts" class="rec6">
 								<option value="" selected>선택</option>
 								<c:forEach var="groupAccount" items="${groupAccountList}">
-									<option value="${groupAccount.account}">[NC뱅크]${groupAccount.account}</option>
+
+									<option value="${groupAccount.account}"><script>
+										document
+												.write(formatAccountNumber("[NC뱅크]&nbsp;${groupAccount.account}"));
+									</script>
+									</option>
+
 								</c:forEach>
 							</select>
 						</div>

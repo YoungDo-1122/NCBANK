@@ -10,7 +10,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>모임통장 관리</title>
-<!-- Bootstrap CDN -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="${root}css/management.css">
@@ -22,6 +21,14 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script>
+	function formatBalance(balance) {
+		return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
+	function formatAccountNumber(accountNumber) {
+		return accountNumber.replace(/(\d{3})(\d{8})(\d{2})(\d{1})/,
+				"$1-$2-$3-$4");
+	}
 	// 카카오 초기화
 	Kakao.init('ff8ba07dd1c6c1c318c25c022ce8bb5e'); // 앱 키
 	
@@ -257,7 +264,10 @@ footer {
 											<option value="" selected>선택</option>
 											<c:forEach var="groupAccount" items="${groupAccountList}">
 												<option value="${groupAccount.account}"
-													<c:if test="${param.account == groupAccount.account}">selected</c:if>>[NC뱅크]${groupAccount.account}</option>
+													<c:if test="${param.account == groupAccount.account}">selected</c:if>><script>
+													document
+															.write(formatAccountNumber("[NC뱅크]&nbsp;${groupAccount.account}"));
+												</script></option>
 											</c:forEach>
 										</select>
 									</div>
@@ -327,9 +337,6 @@ footer {
 												<th>가입 날짜</th>
 											</tr>
 										</thead>
-										<tbody>
-											<!-- 모임원 정보-->
-										</tbody>
 									</table>
 								</div>
 								<input type="hidden" id="group_num" value="">
@@ -340,7 +347,6 @@ footer {
 									초대하기</button>
 								<button class="applyBtn"
 									onclick="location.href='${root}trans/transfer'">이체하기</button>
-
 								<button class="deleteBtn" onclick="confirmDelete()">모임해체</button>
 
 							</div>

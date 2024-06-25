@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -9,15 +10,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>모임원 관리</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="${root}css/management.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<!-- 카카오 SDK 추가 -->
-
 <script type="text/javascript">
+function formatAccountNumber(accountNumber) {
+	return accountNumber.replace(/(\d{3})(\d{8})(\d{2})(\d{1})/,
+			"$1-$2-$3-$4");
+}
     // 카카오 초기화
     Kakao.init('ff8ba07dd1c6c1c318c25c022ce8bb5e'); // 앱 키
     
@@ -206,23 +213,24 @@
 
 </script>
 <style>
-   footer {
-    margin-top: 120px; /* 자동으로 아래로 밀리게 설정 */
-    width: 100%; 
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 50px 0;
+footer {
+	margin-top: 120px; /* 자동으로 아래로 밀리게 설정 */
+	width: 100%;
+	background-color: #f1f1f1;
+	text-align: center;
+	padding: 50px 0;
 }
+
 .leader-text {
-    font-weight: bold;
-}    
+	font-weight: bold;
+}
 </style>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <c:import url="/WEB-INF/views/include/top_menu.jsp" />
-            <div class="col-md-2">
+	<div class="container">
+		<div class="row">
+			<c:import url="/WEB-INF/views/include/top_menu.jsp" />
+			<div class="col-md-2">
 				<div class="menu1">
 					<a href="${root}groupAccount/management">모임통장 정보</a>
 					<div class="menu1-1">모임원 관리</div>
@@ -232,55 +240,60 @@
 					<a href="${root}groupAccount/book">회비 관리</a>
 				</div>
 			</div>
-            <div class="col-md-10">
-                <div class="main">
-                    <div class="traveltitle">
-                        <div class="idboxtitle">모임원 관리</div>
-                        <hr />
-                    </div>
-                    <form action="${root}groupAccount/groupAccountOpened" method="get">
-                        <div class="flexClass">
-                            <span class="idbox">모임통장 전환 계좌</span>
-                            <select id="accounts" name="accounts" class="rec6" onchange="fetchAccountInfo(this.value)">
-                                <option value="" selected>선택</option>
-                                <c:forEach var="groupAccount" items="${groupAccountList}">
-                                    <option value="${groupAccount.account} ">[NC뱅크]${groupAccount.account}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </form>
-                    <div class="contents">
-                        <div class="contents-1">
-                            <div class="group71">
-                                <div class="section">
-                                    <span class="idboxtitle">모임원 정보</span>
-                                    <table id="groupMembersTable" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>이름</th>
-                                                <th>전화번호</th>
-                                                <th>모임장 여부</th>
-                                                <th>가입 날짜</th>
-                                                <th>관리</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- 모임원 정보 -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="btn-right-container">
-                                    <button class="autoBtn" onclick="inviteToKakao()">모임원 초대하기</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer>
-            <c:import url="/WEB-INF/views/include/bottom_info.jsp" />
-        </footer>
-    </div>
+			<div class="col-md-10">
+				<div class="main">
+					<div class="traveltitle">
+						<div class="idboxtitle">모임원 관리</div>
+						<hr />
+					</div>
+					<form action="${root}groupAccount/groupAccountOpened" method="get">
+						<div class="flexClass">
+							<span class="idbox">모임통장 전환 계좌</span> <select id="accounts"
+								name="accounts" class="rec6"
+								onchange="fetchAccountInfo(this.value)">
+								<option value="" selected>선택</option>
+								<c:forEach var="groupAccount" items="${groupAccountList}">
+									<option value="${groupAccount.account} "><script>
+													document
+															.write(formatAccountNumber("[NC뱅크]&nbsp;${groupAccount.account}"));
+												</script></option>
+								</c:forEach>
+							</select>
+						</div>
+					</form>
+					<div class="contents">
+						<div class="contents-1">
+							<div class="group71">
+								<div class="section">
+									<span class="idboxtitle">모임원 정보</span>
+									<table id="groupMembersTable" class="table">
+										<thead>
+											<tr>
+												<th>이름</th>
+												<th>전화번호</th>
+												<th>모임장 여부</th>
+												<th>가입 날짜</th>
+												<th>관리</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- 모임원 정보 -->
+										</tbody>
+									</table>
+								</div>
+								<div class="btn-right-container">
+									<button class="autoBtn" onclick="inviteToKakao()">모임원
+										초대하기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer>
+			<c:import url="/WEB-INF/views/include/bottom_info.jsp" />
+		</footer>
+	</div>
 </body>
 </html>

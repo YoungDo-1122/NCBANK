@@ -105,6 +105,8 @@ public interface GroupAccountMapper {
 	@Delete("DELETE FROM groupinfo WHERE group_leader = 0")
 	void deleteMember(int userNum);
 
-	@Select("SELECT * FROM transfer WHERE trans_type = 2 and user_num = 1")
+	@Select("SELECT g.user_num, t.trans_type, t.trans_money, t.trans_balance, t.trans_date, t.trans_text, m.name "
+			+ "FROM transfer t, groupinfo g, member m "
+			+ "WHERE g.user_num = t.user_num AND g.user_num = m.user_num AND t.from_account = #{account}")
 	List<TransferBean> getAccountTransfers(String account);
 }

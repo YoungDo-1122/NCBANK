@@ -34,7 +34,7 @@
 		<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 		<div class="container-fluid">
 			<div class="row">
-					<div class="col-md-2">
+				<div class="col-md-2">
 					<div class="enquiry">조회</div>
 					<div class="enquiryhr">
 						<hr />
@@ -72,6 +72,9 @@
 											</c:when>
 														<c:when test="${account.ac_type == 1}">
 											모임통장
+											</c:when>
+														<c:when test="${account.ac_type == 2}">
+											적금통장
 											</c:when>
 													</c:choose></td>
 												<td><script>
