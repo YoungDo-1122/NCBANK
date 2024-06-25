@@ -168,7 +168,7 @@
     // 환전 신청 JavaScript
     var tradeMoney;
     var tradeRate = {
-        <c:forEach var="item" items="${exchangeAskList}">
+        <c:forEach var="item" items="${FinalExchangeRateList}"> /* 수정한 곳 */
             '${item.code_money}': ${item.ex_standard}<c:if test="${item != exchangeAskList[exchangeAskList.size() - 1]}">,</c:if>
         </c:forEach>
     };

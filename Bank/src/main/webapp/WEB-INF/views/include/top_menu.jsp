@@ -33,9 +33,9 @@
 		<li><a href="${root}exchange/rateInquiry">환전</a>
 			<ul id=sub-menu>
 				<li><a href="${root}exchange/rateInquiry">환율 조회</a></li>
-				<li><a href="${root}exchange/notice">환율 알림 서비스</a></li>
+				<li><a href="${root}exchange/notice">환율 알림</a></li>
 				<li><a href="${root}exchange/exchangeAsk">환전 신청</a></li>
-				<li><a href="${root}exchange/exchangeHistory">환전 내역 조회</a></li>
+				<li><a href="${root}exchange/exchangeHistory">환전 내역</a></li>
 			</ul></li>
 		<li><a href="${root}board/main?board_info_idx=1">게시판</a>
 			<ul id=sub-menu>
