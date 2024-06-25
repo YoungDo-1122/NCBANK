@@ -45,11 +45,29 @@
 	    }
 	
 	    function formatAutoType(autoType) {
-	        return autoType == 0 ? '주간' : '월간';
+	        switch(autoType) {
+	            case '0':
+	                return '매일';
+	            case '1':
+	                return '주간';
+	            case '2':
+	                return '월간';
+	            default:
+	                return '알 수 없음';
+	        }
 	    }
-	
+
 	    function formatAutoNextDate(autoType, autoNextDate) {
-	        return autoType == 0 ? autoNextDate + '요일' : autoNextDate + '일';
+	        switch(autoType) {
+	            case '0':
+	                return autoNextDate;
+	            case '1':
+	                return autoNextDate + '요일';
+	            case '2':
+	                return autoNextDate + '일';
+	            default:
+	                return '알 수 없음';
+	        }
 	    }
 	
 	    function fetchAccountInfo(account) {
@@ -196,12 +214,13 @@
 .btn-container button {
 	margin: 0 10px;
 }
-   footer {
-    margin-top: auto; /* 자동으로 아래로 밀리게 설정 */
-    width: 100%; 
-    background-color: #f1f1f1;
-    text-align: center;
-    padding: 0px 0;
+
+footer {
+	margin-top: auto; /* 자동으로 아래로 밀리게 설정 */
+	width: 100%;
+	background-color: #f1f1f1;
+	text-align: center;
+	padding: 0px 0;
 }
 </style>
 </head>
@@ -211,13 +230,13 @@
 			<c:import url="/WEB-INF/views/include/top_menu.jsp" />
 			<div class="col-md-2">
 				<div class="menu1">
-                <div class="menu1-1">모임통장 정보</div>
-                <div class="menuhr">
-                    <hr/>
-                </div>
-                <a href="${root}groupAccount/members">모임원 관리</a>
-                <a href="${root}groupAccount/book">회비 관리</a>
-            </div>
+					<div class="menu1-1">모임통장 정보</div>
+					<div class="menuhr">
+						<hr />
+					</div>
+					<a href="${root}groupAccount/members">모임원 관리</a> <a
+						href="${root}groupAccount/book">회비 관리</a>
+				</div>
 
 			</div>
 			<div class="col-md-10">
@@ -320,9 +339,9 @@
 								<button class="applyBtn" onclick="inviteToKakao()">모임원
 									초대하기</button>
 								<button class="applyBtn"
-									onclick="location.href='${root}trans/transfer'">송금하기</button>
-		
-									<button class="deleteBtn" onclick="confirmDelete()">모임해체</button>
+									onclick="location.href='${root}trans/transfer'">이체하기</button>
+
+								<button class="deleteBtn" onclick="confirmDelete()">모임해체</button>
 
 							</div>
 						</div>

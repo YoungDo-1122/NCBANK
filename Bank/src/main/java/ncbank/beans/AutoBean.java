@@ -24,7 +24,6 @@ public class AutoBean {
 
 	@Size(max = 2)
 	private String auto_next_date;
-
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date auto_start;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

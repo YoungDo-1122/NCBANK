@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var='root' value="${pageContext.request.contextPath}/" />
@@ -10,13 +10,13 @@
 <title>openedNext</title>
 <link rel="stylesheet" href="${root}css/createnext.css">
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script type="text/javascript">
     function confirmAndSubmit() {
         var result = confirm("모임통장을 개설하시겠습니까?");
@@ -26,12 +26,32 @@
     }
 
     function formatAutoType(autoType) {
-        return autoType == 0 ? '주간' : '월간';
+        switch(autoType) {
+            case '0':
+                return '매일';
+            case '1':
+                return '주간';
+            case '2':
+                return '월간';
+            default:
+                return '알 수 없음';
+        }
     }
 
     function formatAutoNextDate(autoType, autoNextDate) {
-        return autoType == 0 ? autoNextDate + '요일' : autoNextDate + '일';
+        switch(autoType) {
+            case '0':
+                return autoNextDate;
+            case '1':
+                return autoNextDate + '요일';
+            case '2':
+                return autoNextDate + '일';
+            default:
+                return '알 수 없음';
+        }
     }
+    
+    
 
     function formatMoney(money) {
         return money + '원';
@@ -42,9 +62,17 @@
         var autoNextDateElement = document.getElementById("auto_next_date");
         var autoMoneyElement = document.getElementById("auto_money");
 
-        autoTypeElement.value = formatAutoType(autoTypeElement.value);
-        autoNextDateElement.value = formatAutoNextDate(autoTypeElement.value, autoNextDateElement.value);
+        console.log("Before formatting: ", autoTypeElement.value, autoNextDateElement.value, autoMoneyElement.value);
+
+        var originalAutoType = autoTypeElement.value;
+
+      
+        var formattedAutoType = formatAutoType(originalAutoType);
+        autoTypeElement.value = formattedAutoType;
+        autoNextDateElement.value = formatAutoNextDate(originalAutoType, autoNextDateElement.value);
         autoMoneyElement.value = formatMoney(autoMoneyElement.value);
+
+        console.log("After formatting: ", autoTypeElement.value, autoNextDateElement.value, autoMoneyElement.value);
     }
 </script>
 </head>
@@ -98,10 +126,12 @@
                     <div class="flexClass">
                         <span class="idbox">자동이체 주기</span>
                         <input type="text" id="auto_type" name="auto_type" class="rec6" value="${accountInfo.auto_type}" readonly>
+                        
                     </div>
                     <div class="flexClass">
                         <span class="idbox">자동이체 납부일</span>
                         <input type="text" id="auto_next_date" name="auto_next_date" class="rec6" value="${accountInfo.auto_next_date}" readonly>
+                        
                     </div>
                     
                     <div class="flexClass">

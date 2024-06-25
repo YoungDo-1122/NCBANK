@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -22,13 +24,18 @@ public interface GroupAccountMapper {
 
     @Select("SELECT a.auto_type, a.auto_next_date, a.auto_money, ac.ac_password "
             + "FROM auto a, account ac, member m "
-            + "WHERE a.to_account = ac.account AND ac.user_num = m.user_num AND ac.account = #{account} AND m.user_num = #{user_num}")
+            + "WHERE ac.user_num = m.user_num AND ac.account = #{account} AND m.user_num = #{user_num}")
+    @Results({
+        @Result(property = "auto_type", column = "auto_type"),
+        @Result(property = "auto_next_date", column = "auto_next_date"),
+        @Result(property = "auto_money", column = "auto_money")
+    })
     List<AutoBean> infoList(@Param("account") String account, @Param("user_num") int user_num);
 
     @Select("SELECT account, ac_password FROM account WHERE account = #{account}")
     AccountBean selectAccountByAccountNumber(@Param("account") String account);
 
-    
+    @Result
     
     
     @Insert("INSERT INTO groupinfo (group_num, user_num, group_joindate, group_leader, group_name) " +
@@ -88,10 +95,9 @@ public interface GroupAccountMapper {
     
     
     
-    @Select("SELECT a.auto_money, a.auto_type, a.auto_next_date, a.auto_end " +
-            "FROM auto a " +
-            "JOIN account acc ON a.to_account = acc.account " +
-            "WHERE acc.account = #{account} AND acc.ac_type = 1")
+    @Select("SELECT a.auto_money, a.auto_type, a.auto_next_date, a.auto_end "
+    		+ "FROM auto a, account ac "
+    		+ "where ac.account = #{account} and ac.ac_type = 1")
     AutoBean getAutoInfo(@Param("account") String account);
 
     @Select("SELECT g.group_joindate, g.group_leader, g.group_name " +
