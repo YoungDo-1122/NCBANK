@@ -33,9 +33,9 @@
 
 		transferDaySelect.innerHTML = "";
 
-		if (selectedValue == "1") {
+		if (selectedValue == "0") {
 			document.getElementById("transferDayRow").style.display = "none";
-		} else if (selectedValue == "2") {
+		} else if (selectedValue == "1") {
 			document.getElementById("transferDayRow").style.display = "table-row";
 			var daysOfWeek = [ "일", "월", "화", "수", "목", "금", "토" ];
 			daysOfWeek.forEach(function(day, index) {
@@ -44,7 +44,7 @@
 				option.text = day;
 				transferDaySelect.appendChild(option);
 			});
-		} else if (selectedValue == "3") {
+		} else if (selectedValue == "2") {
 			document.getElementById("transferDayRow").style.display = "table-row";
 			for (var day = 1; day <= 31; day++) {
 				var option = document.createElement("option");

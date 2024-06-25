@@ -111,9 +111,9 @@
 																pattern="yyyy.MM.dd" /></td>
 														<td><fmt:formatDate value="${auto.auto_end}"
 																pattern="yyyy.MM.dd" /></td>
-														<td><c:if test="${auto.auto_type eq 1}">매일</c:if> <c:if
-																test="${auto.auto_type eq 2}">매주</c:if> <c:if
-																test="${auto.auto_type eq 3}">매월</c:if></td>
+														<td><c:if test="${auto.auto_type eq 0}">매일</c:if> <c:if
+																test="${auto.auto_type eq 1}">매주</c:if> <c:if
+																test="${auto.auto_type eq 2}">매월</c:if></td>
 														<td>${auto.auto_next_date}</td>
 														<td>
 															<button class="transfer-check-button"
