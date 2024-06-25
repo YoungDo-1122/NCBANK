@@ -2,7 +2,6 @@ package ncbank.service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
@@ -56,18 +55,18 @@ public class AccountService {
 		// 동일한 회원의 모든 계좌 조회
 		List<AccountBean> accounts = accountDAO.getAccount(userNum);
 
-		// 최근 계좌 개설일 찾기
-		Date lastCreateDate = getLastAccountCreateDate(accounts);
-
-		// 30일이 지났는지 확인
-		if (lastCreateDate != null) {
-			long diffInMillis = new Date().getTime() - lastCreateDate.getTime();
-			long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
-
-			if (diffInDays < 30) {
-				throw new Exception("계좌 개설 후 30일이 지나지 않았습니다.");
-			}
-		}
+//		// 최근 계좌 개설일 찾기
+//		Date lastCreateDate = getLastAccountCreateDate(accounts);
+//
+//		// 30일이 지났는지 확인
+//		if (lastCreateDate != null) {
+//			long diffInMillis = new Date().getTime() - lastCreateDate.getTime();
+//			long diffInDays = TimeUnit.DAYS.convert(diffInMillis, TimeUnit.MILLISECONDS);
+//
+//			if (diffInDays < 30) {
+//				throw new Exception("계좌 개설 후 30일이 지나지 않았습니다.");
+//			}
+//		}
 
 		// 가장 높은 일련번호 찾기
 		int maxSequenceNumber = findMaxSequenceNumber(accounts);

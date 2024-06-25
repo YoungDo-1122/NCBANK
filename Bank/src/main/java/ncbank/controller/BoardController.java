@@ -107,6 +107,7 @@ public class BoardController {
 		boardService.addContentInfo(writeContentBean);
 
 		return "board/write_success";
+
 	}
 
 	@GetMapping("/not_writer")
