@@ -23,6 +23,11 @@ public class ExchangeRateDAO {
     public List<ExchangeRateBean> getFinalExchangeRate() {
     	return exchangeRateMapper.getFinalExchangeRate();
     }
+    // 최근 고시일 기준으로 전날 환율 데이터
+    public List<ExchangeRateBean> findPrevExchangeRate() {
+    	return exchangeRateMapper.findPrevExchangeRate();
+    }
+    
     // 최신 환율 데이터중 원하는 동화의 데이터
     public ExchangeRateBean findFinalExchangeRate(String code_money) {
     	return exchangeRateMapper.findFinalExchangeRate(code_money);

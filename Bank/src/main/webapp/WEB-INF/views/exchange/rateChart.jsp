@@ -5,6 +5,29 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="root" value="${pageContext.request.contextPath}/" />
+
+	<%
+		String comparedParam = request.getParameter("compared");
+		boolean isAjax = "XMLHttpRequest".equals(request.getHeader("X-Requested-With"));
+		if (isAjax && comparedParam != null) {
+			double comparedVal = Double.parseDouble(comparedParam);
+			String result = "";
+		
+			if (comparedVal > 0) {
+				result = "{\"status\":\"increase\", \"url\":\"" + request.getContextPath() + "/img/increase.png\"}";
+			} else if (comparedVal < 0) {
+				result = "{\"status\":\"decrease\", \"url\":\"" + request.getContextPath() + "/img/decrease.png\"}";
+			} else {
+				result = "{\"status\":\"none\"}";
+			}
+		
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(result);
+			return;
+		}
+	%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +42,7 @@
 <link rel="stylesheet" href="${root}css/exchange/rateChart.css">
 
 <body>
+    
     
     <div class="contentBox">
     
@@ -60,8 +84,17 @@
                     <option value="6month">6개월</option>
                 </select>
             </div> <!-- div.selectArea -->
-
-            <div class="textArea">
+			
+			<!-- 전일대비환율 --> 
+			<!-- 
+			 <div class="textArea01">
+			 	<p class="FinalRate"></p>
+			 	<p class="PrevRate"></p>
+			 	<p class="prevCompared"></p>
+			 </div>
+			  -->
+			
+            <div class="textArea02">
                 <p class="textType01">(${finalInquiryDate} 기준)</p>
             </div>
 
@@ -76,9 +109,10 @@
 
 <script>
 $(document).ready(function() {
+
     // 데이터 초기화
     const exchangeRates = {};
-
+	
     // JSP 변수를 JSON 배열 형식으로 변환
     const exchangeRateList = [
         <c:forEach var="obj" items="${ExchangeRateList}">
@@ -121,6 +155,7 @@ $(document).ready(function() {
     // 차트 객체 저장 변수
     let exchangeRateChart;
     
+    
     function renderChart(codeMoney, FXRate, period) {
         const ctx = document.getElementById('exchangeRateChart').getContext('2d');
         const dates = Object.keys(exchangeRates).sort();
@@ -159,7 +194,6 @@ $(document).ready(function() {
         });
         
         console.log("codeMoney : " + codeMoney);
-        
         
         console.log("FXRate : " + FXRate);
         let datasets = [];
@@ -232,19 +266,91 @@ $(document).ready(function() {
         }); // exchangeRateChart
         
     } // renderChart
+	
+    
+    
+ 	// JAVA List > js
+	// 최종 고시 환율
+	const finalExchangeRates = {
+			standard: {},
+			buy: {},
+			sell: {}
+		};
+	<c:forEach var="obj" items="${FinalExchangeRateList}">
+		finalExchangeRates.standard["${obj.code_money}"] = ${obj.ex_standard};
+		finalExchangeRates.buy["${obj.code_money}"] = ${obj.ex_buy};
+		finalExchangeRates.sell["${obj.code_money}"] = ${obj.ex_sell};
+	</c:forEach>
+	// 최종고시기준 전날의 환율
+	const prevExchangeRates = {
+			standard: {},
+			buy: {},
+			sell: {}
+		};
+	// PrevExchangeRateList
+	<c:forEach var="obj" items="${PrevExchangeRateList}">
+		prevExchangeRates.standard["${obj.code_money}"] = ${obj.ex_standard};
+		prevExchangeRates.buy["${obj.code_money}"] = ${obj.ex_buy};
+		prevExchangeRates.sell["${obj.code_money}"] = ${obj.ex_sell};
+	</c:forEach>
+	
+	let finalRates = finalExchangeRates.standard;
+	let prevRates = prevExchangeRates.standard;
+	
+    function setComparePrevRate(codeMoney, FXRate) {
+    	
+    	// [1 : 매매 기준율] [2 : 솧금 보낼때] [3 : 송금받을때]
+		var standard = parseInt(FXRate);
+		console.log("standard : " + standard);
+		
+		switch (standard) {
+		case 1:
+			finalRates = finalExchangeRates.standard[codeMoney];
+			prevRates = prevExchangeRates.standard[codeMoney];
+			break;
+			
+		case 2:
+			finalRates = finalExchangeRates.buy[codeMoney];
+			prevRates = prevExchangeRates.buy[codeMoney];
+			break;
+			
+		case 3:
+			finalRates = finalExchangeRates.sell[codeMoney];
+			prevRates = prevExchangeRates.sell[codeMoney];
+			break;
 
+		default:
+			finalRates = finalExchangeRates.standard[codeMoney];
+			prevRates = prevExchangeRates.standard[codeMoney];
+			break;
+		}
+		
+		// 전일 대비
+    	$('.FinalRate').text(finalRates);
+    	$('.PrevRate').text(prevRates);
+    	
+		var prevCompared = finalRates - prevRates;
+		console.log(prevCompared);
+    	$('.prevCompared').text(prevCompared.toFixed(2));
+    	
+    	
+    	
+	} // setComparePrevRate()
+    
     // 통화 변경시
     $('#currency').change(function() {
     	const selectedCodeMoney = $('#currency').val();
     	const selectedRate = $('#FXRate').val();
         const selectedPeriod = $('#period').val();
         renderChart(selectedCodeMoney, selectedRate, selectedPeriod);
+        setComparePrevRate(selectedCodeMoney, selectedRate);
     });
     $('#FXRate').change(function() {
     	const selectedCodeMoney = $('#currency').val();
     	const selectedRate = $('#FXRate').val();
         const selectedPeriod = $('#period').val();
         renderChart(selectedCodeMoney, selectedRate, selectedPeriod);
+        setComparePrevRate(selectedCodeMoney, selectedRate);
     });
     $('#period').change(function() {
     	const selectedCodeMoney = $('#currency').val();
@@ -255,6 +361,7 @@ $(document).ready(function() {
 
     // 초기 그래프 렌더링
     renderChart($('#currency').val(), $('#FXRate').val(), $('#period').val());
+    setComparePrevRate($('#currency').val(), $('#FXRate').val());
     
 });
 

@@ -21,6 +21,12 @@ public interface ExchangeRateMapper {
     		+ "where code_date = (select max(code_date) from exchange)")
     public List<ExchangeRateBean> getFinalExchangeRate();
     
+    // 최근 고시일 기준으로 전날 환율 데이터
+    @Select("SELECT * from exchange "
+    		+ "where code_date = (select max(code_date) from exchange "
+    		+ "where code_date < (select max(code_date) from exchange)) ")
+    public List<ExchangeRateBean> findPrevExchangeRate();
+    
     // 최신 환율 데이터중 원하는 동화의 데이터
     @Select("select * from exchange "
     		+ "where code_date = (select max(code_date) from exchange) "

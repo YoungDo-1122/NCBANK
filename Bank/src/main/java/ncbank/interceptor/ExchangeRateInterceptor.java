@@ -66,6 +66,20 @@ public class ExchangeRateInterceptor implements HandlerInterceptor {
 		String inquiryDate = dateManager.parseDateToString(fianlRateDtoList.get(0).getCode_date(), "yyyy.MM.dd");
         request.setAttribute("finalInquiryDate", inquiryDate);
         
+        
+        /* PrevExchangeRateList - 최종고시환율의 전날환율정보를 가져옴 */
+        List<ExchangeRateBean> prevExchangeRateList = exchangeRateService.findPrevExchangeRate();
+        
+        List<ExchangeRateDTO> prevRateDtoList = exchangeRateService.convertExchangeDTOList(prevExchangeRateList);
+        if (null == prevRateDtoList) {
+			System.out.println("ExchangeRateInterceptor preHandle()");
+			System.out.println("prevRateDtoList is null");
+			return true;
+        }
+        
+        request.setAttribute("PrevExchangeRateList", prevRateDtoList);
+        
+        
 		/* 환율 차트 */
 		// DB에 존재하는 환율 데이터 중 지정한 날짜범위에 해당하는 데이터를 가져옴
     	List<ExchangeRateBean> ExchangeRateList = exchangeRateService.getDateRangeExchangeRate( 

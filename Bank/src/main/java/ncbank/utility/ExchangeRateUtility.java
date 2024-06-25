@@ -28,6 +28,7 @@ public class ExchangeRateUtility {
 	private final String requestURL = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON";
 	/* 요청 변수 */
 	// 인증키
+	/* 떔빵 orVizHCxNgTCW5vfV4o6cvfWpYEOB7BQ */
 	private final String authKey = "V8mETPuk3L60CYJjpfWW3nssE0ZbRgiY"; // 실제 인증 키로 교체
 	// 검색 요청 API타입 : AP01 - 환율, AP02 - 대출금리, AP03 - 국제금리
 	private final String dataType = "AP01";

@@ -30,7 +30,7 @@
         <div class="top">
             <div class="topSubjectArea">
                 <i class="fa-brands fa-reddit fa-3x chatBotIcon"></i>
-                <h1 class="subject">ChatBot</h1>
+                <h1 class="subject">NullCrush Bot</h1>
             </div>
             <div class="logo">
                 <img src="${root}img/NCBankIcon_2.png" alt="NCBank" class="iconStyle01">
@@ -41,7 +41,8 @@
         <div class="content">
             <form action="${root}chat" method="get">
                 <div class="questionArea">
-                    <i class="fa-solid fa-comment-dots fa-3x questionIcon"></i>
+                    <!-- <i class="fa-solid fa-comment-dots fa-3x questionIcon"></i> -->
+                    <i class="fa-brands fa-weixin fa-3x questionIcon"></i>
                     <!--
                 <label for="prompt" class="questionLab">Enter any prompt&nbsp;:&nbsp;</label>
                 -->

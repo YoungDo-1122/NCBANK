@@ -67,7 +67,9 @@
                         </div>
                     </form>
                     <!-- Starg~End 날짜 기간의 환율 데이터 추가 test -->
+                    <!-- 
                     <a href="${root}exchange/addRateInquiry_DateRange">범위기간DB추가</a>
+                     -->
                     <!-- 메일 전송 test -->
                     <!-- 
                     <a href="${root}exchange/sendNoticeMail">메일전송</a>

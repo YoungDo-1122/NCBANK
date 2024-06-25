@@ -109,7 +109,17 @@ body {
     color: #333;
 }
 
-.textArea {
+.textArea01 {
+	margin: 20px 0;
+    text-align: center;
+}
+.iconFluctuation {
+	width: 30px;
+	height: 30px;
+}
+
+
+.textArea02 {
     margin: 20px 0;
     text-align: right;
 }
