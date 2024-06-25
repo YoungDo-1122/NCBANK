@@ -161,3 +161,22 @@ ul.login .nav-item {
 	opacity: 1;
 	visibility: visible;
 }
+
+/* chatBotIcon */
+.chatBotIcon {
+    padding: 5px;
+	text-decoration: none;
+    border: 1px solid white;
+    border-radius: 5px;
+    
+    /* opacity 투명도 */
+    opacity: 1;
+    visibility: visible;
+    transition: background-color 0.5s, border 0.5s, opacity 0.5s;
+}
+.chatBotIcon:hover {
+    border: 1px solid gray;
+    background-color: #f0f0f0;
+    
+    opacity: .8;
+}
