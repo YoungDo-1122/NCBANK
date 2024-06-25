@@ -324,6 +324,7 @@ public class GroupAccountController {
 	 @GetMapping("/getAccountTransfers")
 	    @ResponseBody
 	    public List<TransferBean> getAccountTransfers(@RequestParam("account") String account) {
+
 	        return groupAccountService.getAccountTransfers(account);
 	    }
 

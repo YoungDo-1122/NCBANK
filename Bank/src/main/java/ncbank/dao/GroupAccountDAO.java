@@ -148,7 +148,9 @@ public class GroupAccountDAO {
     }
     
     public List<TransferBean> getAccountTransfers(String account) {
-        return groupAccountMapper.getAccountTransfers(account);
+    	List<TransferBean> trans = groupAccountMapper.getAccountTransfers(account);
+    	System.out.println("DAO trans = " + trans);
+        return trans;
     }
     
     public String getAccountNumberByGroupNum(int group_num) {

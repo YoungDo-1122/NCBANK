@@ -150,7 +150,16 @@ public class GroupAccountService {
     }
     
     public List<TransferBean> getAccountTransfers(String account) {
-        return groupAccountDAO.getAccountTransfers(account);
+        List<TransferBean> trans = groupAccountDAO.getAccountTransfers(account);
+        System.out.println("Service trans = " + trans);
+        if (trans == null || trans.isEmpty()) {
+            System.out.println("No transfers found for account: " + account);
+        } else {
+            for (TransferBean transfer : trans) {
+                System.out.println("Transfer: " + transfer);
+            }
+        }
+        return trans;
     }
     
     public String getAccountNumberByGroupNum(int group_num) {

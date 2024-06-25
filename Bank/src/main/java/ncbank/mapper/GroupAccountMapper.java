@@ -51,6 +51,8 @@ public interface GroupAccountMapper {
     void addMemberToGroup(GroupAccountBean groupAccount);
 
     
+    
+    
     @Delete("DELETE FROM groupinfo WHERE group_num = #{group_num}")
     void deleteGroup(@Param("group_num") int group_num);
 
@@ -59,6 +61,15 @@ public interface GroupAccountMapper {
 
     @Select("SELECT account FROM account WHERE user_num = (SELECT user_num FROM groupinfo WHERE group_num = #{group_num}) AND ROWNUM = 1")
     String getAccountNumberByGroupNum(@Param("group_num") int group_num);
+    
+    @Delete("DELETE FROM groupinfo WHERE group_leader = 0")
+    void deleteMember(int userNum);
+    
+    @Select("SELECT g.user_num, t.trans_type, t.trans_money, t.trans_balance, t.trans_date, t.trans_text, m.name "
+            + "FROM transfer t, groupinfo g, member m "
+            + "WHERE g.user_num = t.user_num AND g.user_num = m.user_num AND t.from_account = #{account}")
+    List<TransferBean> getAccountTransfers(String account);
+    
     
     
     
@@ -128,9 +139,4 @@ public interface GroupAccountMapper {
     		+ "where a.user_num = g.user_num and a.ac_type=1 and account = #{account}")
     AccountBean totalBalance(@Param("account") String account);
     
-    @Delete("DELETE FROM groupinfo WHERE user_num = 2")
-    void deleteMember(int userNum);
-    
-    @Select("SELECT * FROM transfer WHERE trans_type = 2 and user_num = 1")
-    List<TransferBean> getAccountTransfers(String account);
 }
