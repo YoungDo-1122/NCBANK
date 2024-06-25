@@ -65,7 +65,11 @@
 											<option value="">계좌를 선택하세요</option>
 											<c:forEach var="account" items="${accounts}">
 												<option value="${account.account}"
-													<c:if test="${account.account eq selectedAccount}">selected</c:if>>${account.account}</option>
+													<c:if test="${account.account eq selectedAccount}">selected</c:if>>[NC뱅크]&nbsp;
+													<script>
+														document
+																.write(formatAccount("${account.account}"));
+													</script></option>
 											</c:forEach>
 									</select>
 										<button onclick="filterTransfers()">조회</button></td>
@@ -117,7 +121,7 @@
 														</script></td>
 														<td>${transfer.trans_text}</td>
 														<td><fmt:formatDate value="${transfer.trans_date}"
-																pattern="yyyy.MM.d" /></td>
+																pattern="yyyy.MM.dd" /></td>
 													</tr>
 												</c:forEach>
 											</tbody>

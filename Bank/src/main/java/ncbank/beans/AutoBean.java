@@ -2,30 +2,50 @@ package ncbank.beans;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class AutoBean {
 	private int auto_num;
+
+	@NotNull
+	@Size(max = 50)
 	private String auto_name;
+
+	@NotNull
+	@Size(max = 30)
 	private String auto_money;
+
+	@NotNull
+	@Size(max = 3)
 	private String auto_type;
+
+	@Size(max = 2)
 	private String auto_next_date;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date auto_start;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date auto_end;
+
+	@NotNull
+	@Size(max = 20)
 	private String to_account;
+
+	@NotNull
+	@Size(max = 3)
 	private String code_organ;
+
+	@NotNull
+	@Size(max = 20)
 	private String from_account;
+
+	@NotNull
 	private int user_num;
 
 	private String code_organ_name;
-
-	public String getCode_organ_name() {
-		return code_organ_name;
-	}
-
-	public void setCode_organ_name(String code_organ_name) {
-		this.code_organ_name = code_organ_name;
-	}
 
 	public int getAuto_num() {
 		return auto_num;
@@ -114,4 +134,13 @@ public class AutoBean {
 	public void setUser_num(int user_num) {
 		this.user_num = user_num;
 	}
+
+	public String getCode_organ_name() {
+		return code_organ_name;
+	}
+
+	public void setCode_organ_name(String code_organ_name) {
+		this.code_organ_name = code_organ_name;
+	}
+
 }

@@ -66,7 +66,11 @@
 											<option value="">계좌를 선택하세요</option>
 											<c:forEach var="account" items="${accounts}">
 												<option value="${account.account}"
-													<c:if test="${account.account eq selectedAccount}">selected</c:if>>${account.account}</option>
+													<c:if test="${account.account eq selectedAccount}">selected</c:if>>[NC뱅크]&nbsp;
+													<script>
+														document
+																.write(formatAccount("${account.account}"));
+													</script></option>
 											</c:forEach>
 									</select>
 										<button onclick="filterTransfers()">조회</button></td>
@@ -104,9 +108,9 @@
 																	.write(formatAccount("${auto.to_account}"));
 														</script></td>
 														<td><fmt:formatDate value="${auto.auto_start}"
-																pattern="yyyy.MM.d" /></td>
+																pattern="yyyy.MM.dd" /></td>
 														<td><fmt:formatDate value="${auto.auto_end}"
-																pattern="yyyy.MM.d" /></td>
+																pattern="yyyy.MM.dd" /></td>
 														<td><c:if test="${auto.auto_type eq 1}">매일</c:if> <c:if
 																test="${auto.auto_type eq 2}">매주</c:if> <c:if
 																test="${auto.auto_type eq 3}">매월</c:if></td>

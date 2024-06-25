@@ -162,8 +162,8 @@
                                     </tbody>
                                 </table>
                                 <div class="btn-right-container">
-                                <button class="bookBtn1" onclick="location.href='${root}trans/transfer'">송금하기</button>
-                                <button class="bookBtn2" onclick="location.href='${root}trans/transfer'">출금하기</button>
+                                <%-- <button class="bookBtn1" onclick="location.href='${root}trans/transfer'">송금하기</button>
+                                <button class="bookBtn2" onclick="location.href='${root}trans/transfer'">출금하기</button> --%>
                                 </div>
                             </div>
                         </div>

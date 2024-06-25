@@ -17,6 +17,15 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script>
+	function formatAccount(account) {
+		if (account.startsWith("005")) {
+			return account.replace(/(\d{3})(\d{8})(\d{2})(\d{1})/,
+					"$1-$2-$3-$4");
+		}
+		return account;
+	}
+</script>
 </head>
 <body>
 	<div class="container">
@@ -52,9 +61,21 @@
 											<c:forEach var="account" items="${accounts}">
 												<form:option value="${account.account}">
 													<c:choose>
-														<c:when test="${account.ac_type == 0}">[저축예금]${account.account}</c:when>
-														<c:when test="${account.ac_type == 1}">[모임통장]${account.account}</c:when>
-														<c:when test="${account.ac_type == 2}">[적금통장]${account.account}</c:when>
+														<c:when test="${account.ac_type == 0}">[저축예금]&nbsp;<script>
+															document
+																	.write(formatAccount("${account.account}"));
+														</script>
+														</c:when>
+														<c:when test="${account.ac_type == 1}">[모임통장]&nbsp;<script>
+															document
+																	.write(formatAccount("${account.account}"));
+														</script>
+														</c:when>
+														<c:when test="${account.ac_type == 2}">[적금통장]&nbsp;<script>
+															document
+																	.write(formatAccount("${account.account}"));
+														</script>
+														</c:when>
 													</c:choose>
 												</form:option>
 											</c:forEach>

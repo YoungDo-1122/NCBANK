@@ -101,7 +101,7 @@
 									<form:option value="">선택</form:option>
 									<c:forEach var="account" items="${accounts}">
 										<form:option value="${account.account}"
-											<c:if test="${account.account == autoBean.from_account}">selected="selected"</c:if>>
+											${account.account == autoBean.from_account ? 'selected="selected"' : ''}>
 											<c:choose>
 												<c:when test="${account.ac_type == 0}">[저축예금]${account.account}</c:when>
 												<c:when test="${account.ac_type == 1}">[모임통장]${account.account}</c:when>
@@ -119,14 +119,18 @@
 									path="from_account" cssClass="error" /></td>
 						</tr>
 						<tr>
-							<td>입금은행</td>
-							<td><form:select path="code_organ" required="required">
+							<td>출금계좌</td>
+							<td><form:select path="from_account" id="account"
+									required="required">
 									<form:option value="">선택</form:option>
-									<c:forEach var="codeOrgan" items="${codeOrganNames}">
-										<form:option value="${codeOrgan.code_organ}"
-											<c:if test="${codeOrgan.code_organ == autoBean.code_organ}">selected="selected"</c:if>>
-                                            ${codeOrgan.code_organ_name}
-                                        </form:option>
+									<c:forEach var="account" items="${accounts}">
+										<form:option value="${account.account}">
+											<c:choose>
+												<c:when test="${account.ac_type == 0}">[저축예금]${account.account}</c:when>
+												<c:when test="${account.ac_type == 1}">[모임통장]${account.account}</c:when>
+												<c:when test="${account.ac_type == 2}">[적금통장]${account.account}</c:when>
+											</c:choose>
+										</form:option>
 									</c:forEach>
 								</form:select></td>
 						</tr>

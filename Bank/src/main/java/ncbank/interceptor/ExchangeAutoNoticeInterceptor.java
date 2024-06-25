@@ -26,9 +26,8 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 	private UserBean loginUserBean;
 	private DateManager dateManager;
 	private EmailManager emailManager;
-	
 	private String noticeEmail;
-	
+
 	public ExchangeAutoNoticeInterceptor(ExchangeAutoNoticeService autoNoticeService,
 			ExchangeNoticeService noticeService, UserBean loginUserBean, DateManager dateManager,
 			EmailManager emailManager) {
@@ -49,9 +48,9 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 	}
 
 	private void sendNoticeMail(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		noticeEmail = "";
-		
+
 		// 로그인 상태가 아니면 메일전송 x
 		if (null == loginUserBean && !loginUserBean.isUserLogin()) {
 			System.out.println("ExchangeAutoNoticeInterceptor sendNoticeMail()");
@@ -77,7 +76,6 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 			System.out.println("setJspContentData : false");
 			return;
 		}
-		
 
 		/* 메일전송 */
 		// 메일 보내는 기준 잡아야됨 -> Intercepter 에서?
@@ -118,7 +116,7 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 		ExchangeRateDTO exchangeRateBean = null;
 		// 알림을 신청한 통화의 최종고시 환율 탐색
 		for (ExchangeRateDTO dto : rateDtoList) {
-			if (exchangeNoticeBean.getCode_money().toUpperCase().equals(dto.getCode_money().toUpperCase())) { 
+			if (exchangeNoticeBean.getCode_money().toUpperCase().equals(dto.getCode_money().toUpperCase())) {
 				exchangeRateBean = dto;
 				break;
 			}
@@ -181,9 +179,9 @@ public class ExchangeAutoNoticeInterceptor implements HandlerInterceptor {
 		System.out.println("inquiryDate : " + inquiryDate);
 		request.setAttribute("ExchangeRateBean", exchangeRateBean);
 		request.setAttribute("inquiryDate", inquiryDate);
-		
+
 		noticeEmail = exchangeNoticeBean.getNotice_email();
-		
+
 		return true;
 
 	} // setJspContentData()

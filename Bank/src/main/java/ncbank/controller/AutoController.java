@@ -74,12 +74,10 @@ public class AutoController {
 
 	// 등록 페이지
 	@GetMapping("/transferAuto")
-	public String addTransferAuto(Model model) {
-		// 로그인 확인
+	public String TransferAuto(Model model) {
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
 			return "user/not_login";
 		}
-		// 로그인한 회원의 회원번호
 		int userNum = loginUserBean.getUser_num();
 		List<AccountBean> accounts = accountService.getAccount(userNum);
 		model.addAttribute("accounts", accounts);
@@ -96,15 +94,19 @@ public class AutoController {
 	// 등록 API
 	@PostMapping("/transferAuto") // 자동이체 등록 폼 제출을 처리하는 메소드 추가
 	public String addTransferAuto(@Valid @ModelAttribute("autoBean") AutoBean autoBean,
-			@RequestParam("ac_password") String acPassword, Model model, BindingResult result) {
+			@RequestParam("ac_password") String acPassword, Model model, BindingResult result) throws Exception {
+
 		if (result.hasErrors()) {
-			logger.error("폼 검증 오류: {}", result.getAllErrors());
-			model.addAttribute("accounts", accountService.getAccount(loginUserBean.getUser_num()));
-			model.addAttribute("codeOrganNames", codeOrganService.getCode_organ_name());
+			logger.error("Validation errors: {}", result.getAllErrors());
+			int userNum = loginUserBean.getUser_num();
+			List<AccountBean> accounts = accountService.getAccount(userNum);
+			model.addAttribute("accounts", accounts);
+
+			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
+			model.addAttribute("codeOrganNames", codeOrganNames);
 			return "auto/transferAuto";
 		}
 		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
-			logger.warn("로그인되지 않은 사용자 접근");
 			return "user/not_login";
 		}
 
@@ -113,7 +115,7 @@ public class AutoController {
 		AccountBean accounts = accountService.getAccountByNumber(accountNumber);
 
 		if (accounts == null || !accounts.getAc_password().equals(acPassword)) {
-			logger.warn("비밀번호가 일치하지 않음");
+			logger.error("Validation errors: {}", result.getAllErrors());
 			result.rejectValue("from_account", "error.from_account", "비밀번호가 일치하지 않습니다");
 			model.addAttribute("accounts", accounts);
 
@@ -123,32 +125,23 @@ public class AutoController {
 		}
 
 		try {
+			// 로그인한 사용자의 user_num 설정
 			autoBean.setUser_num(loginUserBean.getUser_num());
 
-			// 자동이체 종료일이 선택되지 않았을 때 null로 설정하여 계속 자동이체 되도록 설정
-			if (autoBean.getAuto_end() == null) {
-				autoBean.setAuto_end(null);
-			}
+			// 자동이체 정보를 데이터베이스에 추가
 			autoService.addAuto(autoBean);
-		} catch (ExceptionMessage e) {
-			logger.error("자동이체 등록 중 오류: {}", e.getMessage());
-			result.rejectValue("to_account", "error.to_account", e.getMessage());
-			System.out.println("자동이체 : " + e.getMessage());
-			model.addAttribute("accounts", accounts);
-			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
-			model.addAttribute("codeOrganNames", codeOrganNames);
-			return "auto/transferAuto";
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + autoBean.getAuto_start());
+			System.out.println("2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + autoBean.getAuto_end());
 		} catch (Exception e) {
-			logger.error("예기치 않은 오류", e);
+			logger.error("Validation errors: {}", result.getAllErrors());
 			e.printStackTrace();
-			System.out.println(e);
-			result.rejectValue("to_account", "error.to_account", "자동이체 등록 중 오류가 발생했습니다.");
-			model.addAttribute("accounts", accounts);
-			List<CodeOrganBean> codeOrganNames = codeOrganService.getCode_organ_name();
-			model.addAttribute("codeOrganNames", codeOrganNames);
+			System.out.println("Exception : " + e);
+			System.out.println("Exception : " + e.getMessage());
+
 			return "auto/transferAuto";
 		}
-
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + autoBean.getAuto_start());
+		System.out.println("2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + autoBean.getAuto_end());
 		return "redirect:/auto/transferAutoCheck"; // 자동이체 조회 페이지로 리디렉션
 	}
 

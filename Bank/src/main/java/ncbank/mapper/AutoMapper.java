@@ -14,7 +14,7 @@ public interface AutoMapper {
 			+ "VALUES (seq_auto.nextval, #{auto_name}, #{auto_money}, #{auto_type}, #{auto_next_date}, #{auto_start}, #{auto_end}, #{to_account}, #{code_organ}, #{from_account}, #{user_num})")
 	void addAuto(AutoBean autoBean);
 
-	@Select("SELECT * FROM auto WHERE user_num = #{user_num}")
+	@Select("SELECT * FROM auto WHERE user_num = #{user_num} order by auto_start desc")
 	List<AutoBean> getAuto(int user_num);
 
 	@Select("SELECT * FROM auto WHERE auto_num = #{auto_num}")
