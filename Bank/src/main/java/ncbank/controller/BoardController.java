@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ncbank.beans.ContentBean;
 import ncbank.beans.PageBean;
 import ncbank.beans.UserBean;
-import ncbank.service.BoardMainSerivce;
 import ncbank.service.BoardService;
 
 @Controller
@@ -30,7 +29,7 @@ public class BoardController {
 	private BoardService boardService;
 
 	@Resource(name = "loginUserBean")
-	private UserBean loginUserbean;
+	private UserBean loginUserBean;
 
 //	@ModelAttribute("boardInfoList")
 //	public List<BoardInfoList> boardInfoList(){
@@ -43,9 +42,10 @@ public class BoardController {
 			@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 
 		model.addAttribute("board_info_idx", board_info_idx);
+		System.out.println("게시판 번호 : " + board_info_idx);
 		String boardInfoName = boardService.getBoardInfoName(board_info_idx);
 		model.addAttribute("boardInfoName", boardInfoName);
-
+		System.out.println("게시판 이름" + boardInfoName);
 		List<ContentBean> contentList = boardService.getContentList(board_info_idx, page);
 		model.addAttribute("contentList", contentList);
 
@@ -53,7 +53,7 @@ public class BoardController {
 		model.addAttribute("pageBean", pageBean);
 		model.addAttribute("page", page);
 
-		model.addAttribute("loginUserId", loginUserbean.getId());
+		model.addAttribute("loginUserId", loginUserBean.getId());
 
 //		System.out.println(loginUserbean.getId());
 
@@ -65,7 +65,7 @@ public class BoardController {
 			@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		model.addAttribute("board_info_idx", board_info_idx);
 		model.addAttribute("content_idx", content_idx);
-		model.addAttribute("loginUserBean", loginUserbean);
+		model.addAttribute("loginUserBean", loginUserBean);
 
 		ContentBean readContentBean = boardService.getContentInfo(content_idx);
 		model.addAttribute("readContentBean", readContentBean);
@@ -77,6 +77,9 @@ public class BoardController {
 	@GetMapping("/write")
 	public String write(@ModelAttribute("writeContentBean") ContentBean writeContentBean,
 			@RequestParam("board_info_idx") int board_info_idx) {
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 
 		writeContentBean.setContent_board_idx(board_info_idx);
 
@@ -86,6 +89,10 @@ public class BoardController {
 	@PostMapping("/writer_pro")
 	public String writer_pro(@Valid @ModelAttribute("writeContentBean") ContentBean writeContentBean,
 			BindingResult result) {
+
+		if (null == loginUserBean || !loginUserBean.isUserLogin()) {
+			return "user/not_login";
+		}
 
 		if (result.hasErrors()) {
 			System.out.println("유효성 검사 에러 발생:");
