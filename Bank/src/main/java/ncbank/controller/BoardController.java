@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ncbank.beans.ContentBean;
 import ncbank.beans.PageBean;
 import ncbank.beans.UserBean;
-import ncbank.service.BoardMainSerivce;
 import ncbank.service.BoardService;
 
 @Controller
@@ -43,9 +42,10 @@ public class BoardController {
 			@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 
 		model.addAttribute("board_info_idx", board_info_idx);
+		System.out.println("게시판 번호 : "+board_info_idx);
 		String boardInfoName = boardService.getBoardInfoName(board_info_idx);
 		model.addAttribute("boardInfoName", boardInfoName);
-
+		System.out.println("게시판 이름" + boardInfoName);
 		List<ContentBean> contentList = boardService.getContentList(board_info_idx, page);
 		model.addAttribute("contentList", contentList);
 

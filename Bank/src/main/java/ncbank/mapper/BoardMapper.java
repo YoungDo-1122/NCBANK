@@ -23,7 +23,7 @@ public interface BoardMapper {
 	void addContentInfo(ContentBean writeContentBean);
 
 	// 게시판 이름
-	@Select("select board_info_name " + "from board_info_table " + "where board_info_idx = #{board_info_idx}")
+	@Select("select board_info_name from board_info_table where board_info_idx =#{board_info_idx}")
 	String getBoardInfoName(int board_info_idx);
 
 	// 글 목록
