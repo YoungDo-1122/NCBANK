@@ -87,7 +87,7 @@
 						action="${root}auto/transferAuto" method="post">
 						<table>
 							<tr>
-								<th colspan="2"><h2>자동이체 등록</h2></th>
+								<th colspan="2"><h3>자동이체 등록</h3></th>
 							</tr>
 							<tr>
 								<td>자동이체명</td>

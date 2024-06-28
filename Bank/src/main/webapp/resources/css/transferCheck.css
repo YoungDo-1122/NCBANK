@@ -50,6 +50,16 @@ body {
 	margin-bottom: 15px;
 }
 
+.col-md-10 h3 {
+	border: rgb(83, 169, 255);
+}
+
+.col-md-10 th h3 {
+	border-bottom: 2px solid rgb(83, 169, 255);
+	padding-bottom: 10px;
+	font-size: 15px;
+}
+
 .col-md-2 li a:hover {
 	background-color: rgb(83, 169, 255);
 	color: white;

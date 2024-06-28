@@ -78,7 +78,7 @@
 							</table>
 							<table>
 								<tr>
-									<th><h2>자동이체 조회/수정/삭제</h2></th>
+									<th><h3>자동이체 조회/수정/삭제</h3></th>
 								</tr>
 								<tr>
 									<td>
@@ -116,8 +116,8 @@
 																test="${auto.auto_type eq 2}">매월</c:if></td>
 														<td>${auto.auto_next_date}</td>
 														<td>
-															<button class="transfer-check-button"
-																onclick="window.location.href='${root}auto/transferAutoFix?auto_num=${auto.auto_num}'">수정</button>
+															<%-- <button class="transfer-check-button"
+																onclick="window.location.href='${root}auto/transferAutoFix?auto_num=${auto.auto_num}'">수정</button> --%>
 															<form:form action="${root}auto/deleteTransferAuto"
 																method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
 																<input type="hidden" name="auto_num"

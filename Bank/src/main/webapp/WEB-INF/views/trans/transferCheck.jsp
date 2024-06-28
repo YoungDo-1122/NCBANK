@@ -77,7 +77,7 @@
 							</table>
 							<table>
 								<tr>
-									<th><h4>입 / 출금 계좌</h4></th>
+									<th><h3>입 / 출금 계좌</h3></th>
 								</tr>
 								<tr>
 									<td>

@@ -214,7 +214,7 @@ function sendSMSVerification() {
 								maxlength="13" required="required" />
 							<div class="input-group-append">
 								<button type="button" class="btn btn-primary"
-									onclick="sendSMSVerification()">인증번호 받기</button>
+									onclick="sendSMSVerification()">인증번호 발송</button>
 							</div>
 						</div>
 						<form:errors path="phone" style='color:red' />

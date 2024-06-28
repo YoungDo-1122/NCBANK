@@ -9,7 +9,7 @@
 <script type="text/javascript">
     function showAlertAndRedirect(message) {
         alert(message);
-        window.location.href = "${root}main";
+        window.location.href = "${root}groupAccount/management";
     }
 </script>
 </head>
